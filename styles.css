@@ -1,0 +1,7 @@
+/* css styles */
+
+.navbar-brand > img {
+  max-height: 40px;
+  padding: 1px;
+  margin: 1px;
+}

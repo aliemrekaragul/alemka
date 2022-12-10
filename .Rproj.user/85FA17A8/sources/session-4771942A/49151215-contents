@@ -1,0 +1,113 @@
+---
+title: "Test Equating"
+description: |
+  Equating two test forms: 
+  This is a simple test equating study. The data used in this study is simulated from real data. We don't use the real data for privacy purposes here.
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: TOBB ETU- University of Economics & Technology
+date: "09.20.2022"
+categories: [psychometrics, CTT, test equating]
+image: "image.jpg"
+output:
+    self_contained: false
+    code_folding: false
+---
+
+This is a simple test equating study. The data used in this study is simulated from real data. We don't use the real data for privacy purposes here.
+
+2020-2021 Fall Term A Level's first quiz has 40 items. 2022-2023 Fall Term A Level's first quiz has 40 items. 35 of the items in each test forms are unique items while 5 of them are common, thus will be called as "anchor items" in this study. For the readers interest, the items belong to four main domains (listening, structure, vocabbulary and reading), yet the common items are only in the reading section. This is obviously a violation of assumptions of test equating. Still, this study is conveyed for demonstration purposes. Therefore, let's continue:
+
+To ensure statistical equation of these two forms, we first introduced the data in R Studio and the first five rows can be seen below:
+
+```{r  echo=TRUE, code_folding=TRUE}
+Q1 <- read.csv("kitap1.csv", header = TRUE)
+head(Q1)
+
+```
+
+Later, we introduced the unique and anchor items separately. First 35 items are unique items, and the last 5 items are anchor items.
+
+```{r  echo=TRUE, code_folding=TRUE}
+
+# Calculate total scores based on unique items
+Q1$total <- rowSums(Q1[, 1:35])
+
+# Calculate scores based on anchor items
+Q1$anchor <- rowSums(Q1[, 36:40])
+```
+
+As we will use the ***equate*** package, the data should be contained as frequency tables: Form x (20-21 fall) had a sample of 200 while form y (22-23 fall) had a sample of 133 students. They are defined as:
+
+```{r  echo=TRUE, code_folding=TRUE}
+#first introduce the equate package:
+library(equate)
+# Create frequency tables (total score range: 0-35; anchor score range: 0-5)
+Q1_x <- freqtab(Q1[1:200, c("total", "anchor")], scales = list(0:35, 0:5))
+Q1_y <- freqtab(Q1[201:334, c("total", "anchor")], scales = list(0:35, 0:5))
+
+```
+
+To consideration of the reader one more time, we must state that these forms are the first quizzes of the students. They usually get high marks. For instance, you can see below that the students' scores are distributed left-skewed in both forms. Their total correct answers are distributed between 20 and 35 for the unique items , and between 3 and 5 for anchor items in form X. The situation isn't different for form y.
+
+```{r  echo=TRUE, code_folding=TRUE}
+#distrubution of the data among forms and unique/common items
+plot(Q1_x, xlab = "Total Scores Form X", ylab = "Common Anchor Scores Form X")
+plot(Q1_y, xlab = "Total Scores Form y", ylab = "Common Anchor Scores Form y")
+```
+
+Still, let's continue... with the smoothing procedure. For both forms, we utilized loglinear presmoothing. Of course there are several other methods, yet literature shows not much a big difference between them, thus not much care given to this issue. again as this is a study with demonstration purposes. After the smoothing, it can be realized that the distribution is highly eye-pleasing right now. Also it is much easier to match the scores even if there isn't an equivalent of it in the other form.
+
+```{r   echo=TRUE, code_folding=TRUE}
+#PRESMOOTHING
+smooth_x <- presmoothing(Q1_x, smoothmethod = "loglinear")
+smooth_y <- presmoothing(Q1_y, smoothmethod = "loglinear")
+plot(smooth_x, xlab = "Total Scores Form X", ylab = "Common Anchor Scores Form X")
+plot(smooth_y, xlab = "Total Scores Form y", ylab = "Common Anchor Scores Form y")
+ 
+```
+
+Now, it can be roughly said that the forms are ready to be equated. Before we try several methods, lets see the results of the Tucker method as it can produce equating error as well:
+
+```{r   echo=TRUE, code_folding=TRUE}
+## Linear Tucker Equating
+Q1_tucker <- equate(Q1_x, Q1_y, type = "linear", method = "tucker")
+Q1_tucker$concordance
+```
+
+You will see that the equating errors are above 1 before the score of 25 as there isn't much data in the low scores. Also, as we investigate the lower marks, we see that the gap between equated scores are increasing. For instance, 0 on form X is equal to 6.597617 on form Y. This is because there isn't data in these regions of the scores. Despite that, equated scores get more meaningful after 20. Especially after the total score 30, the equated scores are too close and the equation error is too low, which would be quite better if the situation was like that on all total score ranges. Let's see some other equating methods:
+
+```{r   echo=TRUE, code_folding=TRUE}
+## Comparing Multiple Methods
+# Nominal method with mean equating
+Q1_nom <- equate(Q1_x, Q1_y, type = "mean", method = "nom")
+
+# Frequency method with equipercentile
+Q1_freq <- equate(Q1_x, Q1_y, type = "equip", method = "freq")
+
+# Braun method with linear equating
+Q1_braun <- equate(Q1_x, Q1_y, type = "linear", method = "braun")
+
+# Compare equated scores
+round(cbind(xscale = 0:35, 
+            nominal = Q1_nom$concordance$yx,
+            tucker = Q1_tucker$concordance$yx, 
+            freq = Q1_freq$concordance$yx, 
+            braun = Q1_braun$concordance$yx), 2)
+
+```
+
+Although the equating methods vary, the results are similar to those of Tucker method. Especially Frequency Estimation method shows how important it is to have data in different score ranges because there is no meaningful equation before the scale score of 20 and all lower scores are equated to -.5 in this method. Let's also see the plotting of the chart above:
+
+```{r  echo=TRUE, code_folding=TRUE}
+# Plot the results
+plot(Q1_tucker, Q1_nom, Q1_freq, Q1_braun, lty=c(1,2,3,4),
+     col=c("blue", "black", "red", "forestgreen"), addident = FALSE)
+```
+
+As also can be seen in the plot above, after the scale score of 20, all equating methods are quite similar to each other. Scores lower than 20 are equated with linear methods much better than the equi-percentile method as there isn't adequate data in those score ranges.
+
+This study is conducted for demonstrative purposes and still we can say that scale scores over 30 can be equated in the given forms.
