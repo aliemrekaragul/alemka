@@ -1,0 +1,2 @@
+"0","hist(data5$theta, xlab= ""YETENEK"", cex.main = 1, ylab = ""FREKANS"" , col.main= ""red"", font.axis= 3, font.lab=2, main = ""BİREY YETENEK PUANLARI"")"
+"0",""

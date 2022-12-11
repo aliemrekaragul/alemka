@@ -1,0 +1,3 @@
+"0",""
+"0","#sadece running olan günlere ait veri:"
+"0","data_for_plotting<-daily_metrics[!is.na(daily_metrics$Running.duration..ms.),]"

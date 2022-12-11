@@ -1,0 +1,2 @@
+"0","Q1 <- read.csv(""kitap1.csv"", header = TRUE)"
+"0","head(Q1)"

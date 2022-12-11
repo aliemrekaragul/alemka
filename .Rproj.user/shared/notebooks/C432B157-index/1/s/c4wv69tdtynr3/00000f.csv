@@ -1,0 +1,5 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0","plot(model2, type=""IIC"", items = 0, xlab= ""YETENEK"", cex.main = 1, main = ""TEST   BİLGİ   FONKSİYONU"", ylab = ""BİLGİ"" , lwd= 2,col.main=""red"",col=""blue"", font.axis= 3, font.lab=2, axes=F)"

@@ -1,0 +1,7 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0","data4a<-data4[1:12]"
+"0","data4b<-data4[13:20]"
+"0",""

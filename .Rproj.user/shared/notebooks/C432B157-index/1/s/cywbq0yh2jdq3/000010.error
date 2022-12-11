@@ -1,0 +1,1 @@
+{"frames":[{"func":"data4a[j, 1:12]","file":"","line_number":3,"end_line_number":4,"character_number":10,"end_character_number":51},{"func":"`[.data.frame`(data4a, j, 1:12)","file":"","line_number":3,"end_line_number":4,"character_number":10,"end_character_number":51}],"message":"no loop for break/next, jumping to top level"}

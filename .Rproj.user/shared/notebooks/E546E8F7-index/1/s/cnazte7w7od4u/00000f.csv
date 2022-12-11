@@ -1,0 +1,15 @@
+"0","#first introduce the equate package:"
+"0","library(equate)"
+"2","
+Attaching package: ‘equate’
+
+"
+"2","The following object is masked from ‘package:ltm’:
+
+    margins
+
+"
+"0","# Create frequency tables (total score range: 0-35; anchor score range: 0-5)"
+"0","Q1_x <- freqtab(Q1[1:200, c(""total"", ""anchor"")], scales = list(0:35, 0:5))"
+"0","Q1_y <- freqtab(Q1[201:334, c(""total"", ""anchor"")], scales = list(0:35, 0:5))"
+"0",""

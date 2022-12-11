@@ -1,0 +1,7 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0","fig<-plotly::plot_ly(data=data_for_plotting, type =""scatter"", mode=""lines+markers"",  "
+"0","                     y=data_for_plotting$Step.count, x=~Date)"
+"0","fig"

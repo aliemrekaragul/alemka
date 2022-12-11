@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -222,7 +222,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#pre-processing-süreci" id="toc-pre-processing-süreci" class="nav-link active" data-scroll-target="#pre-processing-süreci">Pre-processing süreci</a></li>
+  <li><a href="#analiz-süreci" id="toc-analiz-süreci" class="nav-link" data-scroll-target="#analiz-süreci">Analiz Süreci</a>
+  <ul>
+  <li><a href="#doğrulayıcı-faktör-analizi-dfa" id="toc-doğrulayıcı-faktör-analizi-dfa" class="nav-link" data-scroll-target="#doğrulayıcı-faktör-analizi-dfa">Doğrulayıcı Faktör Analizi (DFA)</a></li>
+  <li><a href="#bi-factor-modeller" id="toc-bi-factor-modeller" class="nav-link" data-scroll-target="#bi-factor-modeller">BI-FACTOR MODELLER</a></li>
+  <li><a href="#en-uyumlu-modeldwls-çıktıları" id="toc-en-uyumlu-modeldwls-çıktıları" class="nav-link" data-scroll-target="#en-uyumlu-modeldwls-çıktıları">EN UYUMLU MODEL:DWLS çıktıları</a>
+  <ul class="collapse">
+  <li><a href="#model-uyum-indeksleri" id="toc-model-uyum-indeksleri" class="nav-link" data-scroll-target="#model-uyum-indeksleri">Model uyum indeksleri</a></li>
+  <li><a href="#faktör-kovaryansları" id="toc-faktör-kovaryansları" class="nav-link" data-scroll-target="#faktör-kovaryansları">Faktör Kovaryansları</a></li>
+  <li><a href="#artık-residual-varyanslar" id="toc-artık-residual-varyanslar" class="nav-link" data-scroll-target="#artık-residual-varyanslar">Artık (residual) Varyanslar</a></li>
+  <li><a href="#model-gösterimi" id="toc-model-gösterimi" class="nav-link" data-scroll-target="#model-gösterimi">Model gösterimi</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -304,6 +324,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>Bu beş faktörün altında tanımlanan yapıya göre DFA uygulayacağız ve bir geçerlilik çalışması yürüteceğiz. Bunun için öncelikle modelimizi R’a tanıtalım:</p>
 <div class="cell" data-code_folding="true">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Science.model <span class="ot">&lt;-</span> <span class="st">'ST092 =~ 1* ST092Q01TA+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q04TA+</span></span>
@@ -353,6 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST131</span></span>
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST129 ~~ ST131'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Şimdi Türkiye örnekleminden elde edilen verimizin bu modele uyum sağlayıp sağlamadığına bakacağız. Bu aşamada çeşitli modelleme yaklaşımlarından çıktılar alarak bunları karşılaştıracağız. Bu modelleme yaklaşımları şunlardır:</p>
 <ul>
@@ -363,14 +386,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Yukarıdaki lsitede görüldüğü sıra ile modellerimizi <code>lavaan</code> paketiyle oluşturalım:</p>
 <div class="cell" data-code_folding="true">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model_mlm <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">data =</span> science_data)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model_wls <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">WLS.V =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> science_data)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>model_rml <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">estimator =</span> <span class="st">"MLM"</span>, <span class="at">se =</span> <span class="st">"robust.mlm"</span>, <span class="at">data =</span> science_data)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>model_dwls<span class="ot">&lt;-</span><span class="fu">cfa</span>(Science.model, <span class="at">data =</span> science_data, <span class="at">estimator=</span><span class="st">"DWLS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Her biri için de ayrı ayrı analiz çıktılarını <code>summary()</code> fonksiyonu ile tanımlayalım:</p>
 <div class="cell" data-code_folding="true">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>science.mlm<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  model_mlm,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
@@ -399,16 +427,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Tabi ki hem literatürde en yaygın kullanılan hem de alan uzmanları tarafından en ok önerilen yöntem olması sebebiyle MLM yöntemi önceliğimiz. Bu yöntemde normallik varsayımı karşılandığı sürece güçlü analizler elde edilebilmektedir. Veri setimiz de büyük bir örneklemden elde edildiği için bu varsayımın karşılandığı düşünülmektedir. Grafik incelemelerinde de bu durum görülecektir. Dolayısıyla öncelikle MLM’ye ait uyum indekslerini görelim:</p>
 <div class="cell" data-code_folding="true">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>science.mlm[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-code_folding="false">
-<div class="cell-output cell-output-stderr">
-<pre><code>This is lavaan 0.6-12
-lavaan is FREE software! Please report any bugs.</code></pre>
-</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Science.model <span class="ot">&lt;-</span> <span class="st">'ST092 =~ 1* ST092Q01TA+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q04TA+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q05TA+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q06NA+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q08NA+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q09NA</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q02NA+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q03NA+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q04NA+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q05NA</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q02TA+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q03TA+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q04TA</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="st">                  </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q02TA+</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q03TA+</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q04TA+</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q05TA+</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q06TA+</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q07TA+</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q08TA</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q03NA+</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q04NA+</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q06NA+</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q08NA+</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q11NA            </span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="st">                    </span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="st">                           </span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST094</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST113</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST129</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST131</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST113</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST129</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST131</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST129</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST131</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST129 ~~ ST131'</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>model_mlm <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">data =</span> science_data)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>science.mlm<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  model_mlm,</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>science.mlm[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>             npar              fmin             chisq                df 
            70.000             0.652          6055.193           395.000 
@@ -427,7 +514,10 @@ lavaan is FREE software! Please report any bugs.</code></pre>
 <p>Bu çıktılar incelendiğinde, 70 parametreli 395 serbestlik derecesinde bir model oluştuğu görülmektedir. CFI ve TLI uyum indekleri .90 eşik değerin üzerindeyken, RMSEA ve SRMR .06’nın altında yer almaktadır. Bu durumda modelimizin uyumlu olduğu düşünülebilir. Yine de diğer modeller ile de karşılaştırmak gerekir. Onların uyum indeklerini de görelim:</p>
 <p><strong>WLS model:</strong></p>
 <div class="cell" data-code_folding="true">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>science.wls[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-code_folding="false">
 <div class="cell-output cell-output-stdout">
@@ -515,6 +605,8 @@ lavaan is FREE software! Please report any bugs.</code></pre>
 <h3 class="anchored" data-anchor-id="bi-factor-modeller">BI-FACTOR MODELLER</h3>
 <p>Bi faktör modellemede yapıyı oluşturan faktörlerin tüm maddelerden oluşan genel faktör ile ilişkisi incelenerek karar verilir. Bu amaçla DFA örneğinde olduğu gibi model tanımlamamızı yapıyoruz:</p>
 <div class="cell" data-code_folding="true">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Science.bifactormodel <span class="ot">&lt;-</span> <span class="st">'general.factor =~</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q01TA+</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
@@ -602,9 +694,12 @@ lavaan is FREE software! Please report any bugs.</code></pre>
 <span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST131</span></span>
 <span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST129 ~~ ST131'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Ardından modellerimizi veri setimiz ile sınıyoruz.</p>
 <div class="cell" data-code_folding="true">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Science.bifactormodel_mlm <span class="ot">&lt;-</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cfa</span>(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    Science.bifactormodel,</span>
@@ -628,8 +723,70 @@ lavaan is FREE software! Please report any bugs.</code></pre>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>bifactor_mlm[[<span class="st">'fit'</span>]]</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>bifactor_rml[[<span class="st">'fit'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>bifactor_mlm[[<span class="st">'fit'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>             npar              fmin             chisq                df 
+           95.000             0.634          5891.081           370.000 
+           pvalue    baseline.chisq       baseline.df   baseline.pvalue 
+            0.000         96221.017           435.000             0.000 
+              cfi               tli              logl unrestricted.logl 
+            0.942             0.932       -135449.054       -132503.514 
+              aic               bic            ntotal              bic2 
+       271088.109        271700.266          4646.000        271398.392 
+            rmsea    rmsea.ci.lower    rmsea.ci.upper      rmsea.pvalue 
+            0.057             0.055             0.058             0.000 
+             srmr 
+            0.328 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bifactor_rml[[<span class="st">'fit'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                         npar                          fmin 
+                       95.000                         0.634 
+                        chisq                            df 
+                     5891.081                       370.000 
+                       pvalue                  chisq.scaled 
+                        0.000                      4166.363 
+                    df.scaled                 pvalue.scaled 
+                      370.000                         0.000 
+         chisq.scaling.factor                baseline.chisq 
+                        1.414                     96221.017 
+                  baseline.df               baseline.pvalue 
+                      435.000                         0.000 
+        baseline.chisq.scaled            baseline.df.scaled 
+                    19393.334                       435.000 
+       baseline.pvalue.scaled baseline.chisq.scaling.factor 
+                        0.000                         4.962 
+                          cfi                           tli 
+                        0.942                         0.932 
+                   cfi.scaled                    tli.scaled 
+                        0.800                         0.765 
+                   cfi.robust                    tli.robust 
+                        0.943                         0.933 
+                         logl             unrestricted.logl 
+                  -135449.054                   -132503.514 
+                          aic                           bic 
+                   271088.109                    271700.266 
+                       ntotal                          bic2 
+                     4646.000                    271398.392 
+                        rmsea                rmsea.ci.lower 
+                        0.057                         0.055 
+               rmsea.ci.upper                  rmsea.pvalue 
+                        0.058                         0.000 
+                 rmsea.scaled         rmsea.ci.lower.scaled 
+                        0.047                         0.046 
+        rmsea.ci.upper.scaled           rmsea.pvalue.scaled 
+                        0.048                         1.000 
+                 rmsea.robust         rmsea.ci.lower.robust 
+                        0.056                         0.054 
+        rmsea.ci.upper.robust           rmsea.pvalue.robust 
+                        0.057                            NA 
+                         srmr 
+                        0.328 </code></pre>
+</div>
 </div>
 <p><strong>BI-FAKTÖR ML model:</strong></p>
 <div class="cell" data-code_folding="false">

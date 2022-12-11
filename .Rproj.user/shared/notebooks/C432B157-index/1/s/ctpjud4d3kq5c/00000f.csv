@@ -1,0 +1,6 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0","fa_model1 <- fa.poly(data4)"
+"0","fa_model2 <- fa(data4, nfactors = 2, cor=""poly"")"
