@@ -1,26 +1,26 @@
 {
-    "id": "D3F66339",
+    "id": "05034D7C",
     "path": "C:/Users/akaragul/Desktop/alemka/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1670688754578.0,
+    "created": 1671045773933.0,
     "source_on_save": false,
-    "relative_order": 2,
+    "relative_order": 1,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "23,8",
-        "scrollLine": "11"
+        "cursorPosition": "20,40",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1670753913,
+    "lastKnownWriteTime": 1671042359,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1670753913143,
+    "last_content_update": 1671042359,
     "read_only": false,
     "read_only_alternatives": []
 }

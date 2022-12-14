@@ -156,6 +156,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-apps">    
+        <li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
+ <span class="dropdown-text">Test Analyze-R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://itp-calculator.com/">
+ <span class="dropdown-text">ITP Score Calculator</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../index.html">About me</a>
   </li>  
@@ -609,388 +622,19 @@ X1    1 1000 -0.01 0.92   0.05       0 0.89 -2.19 2.5  4.69 -0.04    -0.14 0.03<
 <p>Faktör yüklerinin her madde için her iki modelde de .60’nın üzerinde olduğu görülmektedir. Tek bileşenli yapının açıkladığı varyansın ise %61 olduğu anlaşılmaktadır. Bunun yanı sıra, iki bileşenli yapının birinci bileşenin %40, ikinci bileşenin %28 olmak üzere toplamda %68 oranında açıklanan varyansa sahip olduğu görülmektedir. Açıklanan varyans açısından modeller arasındaki farkın çok büyük olmadığı düşünüldüğünden, ileri analizlere tek bileşenli model ile devam edilmesine karar verilmiştir.&nbsp;&nbsp;</p>
 <p>Yerel bağımsızlık varsayımının kontrolü için Yen’in Q analizi (Yen, 1984)&nbsp; uygulanmıştır. Bu süreçte sirt paketinden (Robitzsch, 2020) yararlanılmış ve aşağıdaki adımlar izlenmiştir.&nbsp;</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>------------------------------------------------------------
-Semiparametric Marginal Maximum Likelihood Estimation 
-Raschtype Model with generalized logistic link function: alpha1= 0 , alpha2= 0  
-------------------------------------------------------------
-...........................................................
-Iteration 1     2022-12-11 18:10:28 
-   Deviance=16821.3972
-    Maximum b parameter change=0.177231 
-...........................................................
-Iteration 2     2022-12-11 18:10:28 
-   Deviance=16266.0078 | Deviance change=555.389418
-    Maximum b parameter change=0.102223 
-...........................................................
-Iteration 3     2022-12-11 18:10:28 
-   Deviance=16073.974 | Deviance change=192.033807
-    Maximum b parameter change=0.075399 
-...........................................................
-Iteration 4     2022-12-11 18:10:28 
-   Deviance=16008.6979 | Deviance change=65.27609
-    Maximum b parameter change=0.059514 
-...........................................................
-Iteration 5     2022-12-11 18:10:28 
-   Deviance=15982.8096 | Deviance change=25.888241
-    Maximum b parameter change=0.050211 
-...........................................................
-Iteration 6     2022-12-11 18:10:28 
-   Deviance=15969.2378 | Deviance change=13.571861
-    Maximum b parameter change=0.04423 
-...........................................................
-Iteration 7     2022-12-11 18:10:28 
-   Deviance=15960.115 | Deviance change=9.122827
-    Maximum b parameter change=0.039895 
-...........................................................
-Iteration 8     2022-12-11 18:10:28 
-   Deviance=15953.0997 | Deviance change=7.015221
-    Maximum b parameter change=0.036411 
-...........................................................
-Iteration 9     2022-12-11 18:10:28 
-   Deviance=15947.3857 | Deviance change=5.71405
-    Maximum b parameter change=0.033414 
-...........................................................
-Iteration 10     2022-12-11 18:10:28 
-   Deviance=15942.6175 | Deviance change=4.768184
-    Maximum b parameter change=0.030741 
-...........................................................
-Iteration 11     2022-12-11 18:10:28 
-   Deviance=15938.5938 | Deviance change=4.023702
-    Maximum b parameter change=0.028313 
-...........................................................
-Iteration 12     2022-12-11 18:10:28 
-   Deviance=15935.1781 | Deviance change=3.41568
-    Maximum b parameter change=0.026094 
-...........................................................
-Iteration 13     2022-12-11 18:10:28 
-   Deviance=15932.268 | Deviance change=2.910084
-    Maximum b parameter change=0.024057 
-...........................................................
-Iteration 14     2022-12-11 18:10:28 
-   Deviance=15929.7824 | Deviance change=2.485665
-    Maximum b parameter change=0.022187 
-...........................................................
-Iteration 15     2022-12-11 18:10:28 
-   Deviance=15927.6549 | Deviance change=2.127468
-    Maximum b parameter change=0.02047 
-...........................................................
-Iteration 16     2022-12-11 18:10:28 
-   Deviance=15925.8308 | Deviance change=1.82414
-    Maximum b parameter change=0.018892 
-...........................................................
-Iteration 17     2022-12-11 18:10:28 
-   Deviance=15924.2641 | Deviance change=1.566669
-    Maximum b parameter change=0.017442 
-...........................................................
-Iteration 18     2022-12-11 18:10:28 
-   Deviance=15922.9164 | Deviance change=1.347715
-    Maximum b parameter change=0.01611 
-...........................................................
-Iteration 19     2022-12-11 18:10:28 
-   Deviance=15921.7552 | Deviance change=1.161213
-    Maximum b parameter change=0.014885 
-...........................................................
-Iteration 20     2022-12-11 18:10:28 
-   Deviance=15920.753 | Deviance change=1.002112
-    Maximum b parameter change=0.013759 
-...........................................................
-Iteration 21     2022-12-11 18:10:28 
-   Deviance=15919.8869 | Deviance change=0.866184
-    Maximum b parameter change=0.012723 
-...........................................................
-Iteration 22     2022-12-11 18:10:28 
-   Deviance=15919.137 | Deviance change=0.749885
-    Maximum b parameter change=0.011769 
-...........................................................
-Iteration 23     2022-12-11 18:10:28 
-   Deviance=15918.4867 | Deviance change=0.650234
-    Maximum b parameter change=0.010891 
-...........................................................
-Iteration 24     2022-12-11 18:10:28 
-   Deviance=15917.922 | Deviance change=0.564722
-    Maximum b parameter change=0.010082 
-...........................................................
-Iteration 25     2022-12-11 18:10:28 
-   Deviance=15917.4308 | Deviance change=0.491235
-    Maximum b parameter change=0.009335 
-...........................................................
-Iteration 26     2022-12-11 18:10:28 
-   Deviance=15917.0028 | Deviance change=0.427989
-    Maximum b parameter change=0.008647 
-...........................................................
-Iteration 27     2022-12-11 18:10:28 
-   Deviance=15916.6293 | Deviance change=0.373478
-    Maximum b parameter change=0.008012 
-...........................................................
-Iteration 28     2022-12-11 18:10:28 
-   Deviance=15916.3029 | Deviance change=0.326427
-    Maximum b parameter change=0.007426 
-...........................................................
-Iteration 29     2022-12-11 18:10:28 
-   Deviance=15916.0171 | Deviance change=0.285755
-    Maximum b parameter change=0.006884 
-...........................................................
-Iteration 30     2022-12-11 18:10:28 
-   Deviance=15915.7666 | Deviance change=0.250548
-    Maximum b parameter change=0.006384 
-...........................................................
-Iteration 31     2022-12-11 18:10:28 
-   Deviance=15915.5466 | Deviance change=0.220026
-    Maximum b parameter change=0.005921 
-...........................................................
-Iteration 32     2022-12-11 18:10:28 
-   Deviance=15915.353 | Deviance change=0.193528
-    Maximum b parameter change=0.005493 
-...........................................................
-Iteration 33     2022-12-11 18:10:28 
-   Deviance=15915.1825 | Deviance change=0.170491
-    Maximum b parameter change=0.005097 
-...........................................................
-Iteration 34     2022-12-11 18:10:28 
-   Deviance=15915.0321 | Deviance change=0.150434
-    Maximum b parameter change=0.004731 
-...........................................................
-Iteration 35     2022-12-11 18:10:28 
-   Deviance=15914.8992 | Deviance change=0.132946
-    Maximum b parameter change=0.004392 
-...........................................................
-Iteration 36     2022-12-11 18:10:28 
-   Deviance=15914.7815 | Deviance change=0.117677
-    Maximum b parameter change=0.004077 
-...........................................................
-Iteration 37     2022-12-11 18:10:28 
-   Deviance=15914.6772 | Deviance change=0.104326
-    Maximum b parameter change=0.003786 
-...........................................................
-Iteration 38     2022-12-11 18:10:28 
-   Deviance=15914.5845 | Deviance change=0.092635
-    Maximum b parameter change=0.003516 
-...........................................................
-Iteration 39     2022-12-11 18:10:28 
-   Deviance=15914.5021 | Deviance change=0.082383
-    Maximum b parameter change=0.003266 
-...........................................................
-Iteration 40     2022-12-11 18:10:28 
-   Deviance=15914.4288 | Deviance change=0.07338
-    Maximum b parameter change=0.003034 
-...........................................................
-Iteration 41     2022-12-11 18:10:28 
-   Deviance=15914.3633 | Deviance change=0.065462
-    Maximum b parameter change=0.002819 
-...........................................................
-Iteration 42     2022-12-11 18:10:28 
-   Deviance=15914.3048 | Deviance change=0.058488
-    Maximum b parameter change=0.002619 
-...........................................................
-Iteration 43     2022-12-11 18:10:28 
-   Deviance=15914.2525 | Deviance change=0.052337
-    Maximum b parameter change=0.002434 
-...........................................................
-Iteration 44     2022-12-11 18:10:28 
-   Deviance=15914.2056 | Deviance change=0.046904
-    Maximum b parameter change=0.002262 
-...........................................................
-Iteration 45     2022-12-11 18:10:28 
-   Deviance=15914.1635 | Deviance change=0.042097
-    Maximum b parameter change=0.002102 
-...........................................................
-Iteration 46     2022-12-11 18:10:28 
-   Deviance=15914.1256 | Deviance change=0.037839
-    Maximum b parameter change=0.001954 
-...........................................................
-Iteration 47     2022-12-11 18:10:28 
-   Deviance=15914.0916 | Deviance change=0.034061
-    Maximum b parameter change=0.001817 
-...........................................................
-Iteration 48     2022-12-11 18:10:28 
-   Deviance=15914.0609 | Deviance change=0.030704
-    Maximum b parameter change=0.001689 
-...........................................................
-Iteration 49     2022-12-11 18:10:28 
-   Deviance=15914.0332 | Deviance change=0.027716
-    Maximum b parameter change=0.00157 
-...........................................................
-Iteration 50     2022-12-11 18:10:28 
-   Deviance=15914.0081 | Deviance change=0.025053
-    Maximum b parameter change=0.00146 
-...........................................................
-Iteration 51     2022-12-11 18:10:28 
-   Deviance=15913.9854 | Deviance change=0.022677
-    Maximum b parameter change=0.001358 
-...........................................................
-Iteration 52     2022-12-11 18:10:28 
-   Deviance=15913.9649 | Deviance change=0.020552
-    Maximum b parameter change=0.001263 
-...........................................................
-Iteration 53     2022-12-11 18:10:28 
-   Deviance=15913.9462 | Deviance change=0.018651
-    Maximum b parameter change=0.001174 
-...........................................................
-Iteration 54     2022-12-11 18:10:28 
-   Deviance=15913.9293 | Deviance change=0.016946
-    Maximum b parameter change=0.001092 
-...........................................................
-Iteration 55     2022-12-11 18:10:28 
-   Deviance=15913.9139 | Deviance change=0.015415
-    Maximum b parameter change=0.001016 
-...........................................................
-Iteration 56     2022-12-11 18:10:28 
-   Deviance=15913.8998 | Deviance change=0.014039
-    Maximum b parameter change=0.000945 
-...........................................................
-Iteration 57     2022-12-11 18:10:28 
-   Deviance=15913.887 | Deviance change=0.0128
-    Maximum b parameter change=0.000879 
-...........................................................
-Iteration 58     2022-12-11 18:10:28 
-   Deviance=15913.8753 | Deviance change=0.011683
-    Maximum b parameter change=0.000817 
-...........................................................
-Iteration 59     2022-12-11 18:10:28 
-   Deviance=15913.8647 | Deviance change=0.010675
-    Maximum b parameter change=0.00076 
-...........................................................
-Iteration 60     2022-12-11 18:10:28 
-   Deviance=15913.8549 | Deviance change=0.009763
-    Maximum b parameter change=0.000707 
-...........................................................
-Iteration 61     2022-12-11 18:10:28 
-   Deviance=15913.846 | Deviance change=0.008938
-    Maximum b parameter change=0.000658 
-...........................................................
-Iteration 62     2022-12-11 18:10:28 
-   Deviance=15913.8378 | Deviance change=0.00819
-    Maximum b parameter change=0.000612 
-...........................................................
-Iteration 63     2022-12-11 18:10:28 
-   Deviance=15913.8303 | Deviance change=0.007511
-    Maximum b parameter change=0.000569 
-...........................................................
-Iteration 64     2022-12-11 18:10:28 
-   Deviance=15913.8234 | Deviance change=0.006894
-    Maximum b parameter change=0.00053 
-...........................................................
-Iteration 65     2022-12-11 18:10:28 
-   Deviance=15913.817 | Deviance change=0.006333
-    Maximum b parameter change=0.000493 
-...........................................................
-Iteration 66     2022-12-11 18:10:28 
-   Deviance=15913.8112 | Deviance change=0.005822
-    Maximum b parameter change=0.000458 
-...........................................................
-Iteration 67     2022-12-11 18:10:28 
-   Deviance=15913.8059 | Deviance change=0.005357
-    Maximum b parameter change=0.000426 
-...........................................................
-Iteration 68     2022-12-11 18:10:28 
-   Deviance=15913.8009 | Deviance change=0.004931
-    Maximum b parameter change=0.000397 
-...........................................................
-Iteration 69     2022-12-11 18:10:28 
-   Deviance=15913.7964 | Deviance change=0.004543
-    Maximum b parameter change=0.000369 
-...........................................................
-Iteration 70     2022-12-11 18:10:28 
-   Deviance=15913.7922 | Deviance change=0.004188
-    Maximum b parameter change=0.000343 
-...........................................................
-Iteration 71     2022-12-11 18:10:28 
-   Deviance=15913.7883 | Deviance change=0.003862
-    Maximum b parameter change=0.00032 
-...........................................................
-Iteration 72     2022-12-11 18:10:28 
-   Deviance=15913.7848 | Deviance change=0.003564
-    Maximum b parameter change=0.000297 
-...........................................................
-Iteration 73     2022-12-11 18:10:28 
-   Deviance=15913.7815 | Deviance change=0.003291
-    Maximum b parameter change=0.000277 
-...........................................................
-Iteration 74     2022-12-11 18:10:28 
-   Deviance=15913.7784 | Deviance change=0.00304
-    Maximum b parameter change=0.000257 
-...........................................................
-Iteration 75     2022-12-11 18:10:28 
-   Deviance=15913.7756 | Deviance change=0.00281
-    Maximum b parameter change=0.00024 
-...........................................................
-Iteration 76     2022-12-11 18:10:28 
-   Deviance=15913.773 | Deviance change=0.002598
-    Maximum b parameter change=0.000223 
-...........................................................
-Iteration 77     2022-12-11 18:10:28 
-   Deviance=15913.7706 | Deviance change=0.002403
-    Maximum b parameter change=0.000207 
-...........................................................
-Iteration 78     2022-12-11 18:10:28 
-   Deviance=15913.7684 | Deviance change=0.002224
-    Maximum b parameter change=0.000193 
-...........................................................
-Iteration 79     2022-12-11 18:10:28 
-   Deviance=15913.7663 | Deviance change=0.002059
-    Maximum b parameter change=0.00018 
-...........................................................
-Iteration 80     2022-12-11 18:10:28 
-   Deviance=15913.7644 | Deviance change=0.001906
-    Maximum b parameter change=0.000167 
-...........................................................
-Iteration 81     2022-12-11 18:10:28 
-   Deviance=15913.7627 | Deviance change=0.001766
-    Maximum b parameter change=0.000155 
-...........................................................
-Iteration 82     2022-12-11 18:10:28 
-   Deviance=15913.761 | Deviance change=0.001636
-    Maximum b parameter change=0.000145 
-...........................................................
-Iteration 83     2022-12-11 18:10:28 
-   Deviance=15913.7595 | Deviance change=0.001517
-    Maximum b parameter change=0.000135 
-...........................................................
-Iteration 84     2022-12-11 18:10:28 
-   Deviance=15913.7581 | Deviance change=0.001406
-    Maximum b parameter change=0.000125 
-...........................................................
-Iteration 85     2022-12-11 18:10:28 
-   Deviance=15913.7568 | Deviance change=0.001304
-    Maximum b parameter change=0.000117 
-...........................................................
-Iteration 86     2022-12-11 18:10:28 
-   Deviance=15913.7556 | Deviance change=0.001209
-    Maximum b parameter change=0.000108 
-...........................................................
-Iteration 87     2022-12-11 18:10:28 
-   Deviance=15913.7545 | Deviance change=0.001122
-    Maximum b parameter change=0.000101 
-...........................................................
-Iteration 88     2022-12-11 18:10:28 
-   Deviance=15913.7534 | Deviance change=0.001041
-    Maximum b parameter change=9.4e-05 
-------------------------------------------------------------
-Start: 2022-12-11 18:10:28 
-End: 2022-12-11 18:10:28 
-Time difference of 0.4380932 secs
-Difference: 0.4380932 
-------------------------------------------------------------</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-WLE Reliability= 0.711 </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Yen's Q3 Statistic based on an estimated theta score 
-*** 20 Items | 190 item pairs
-*** Q3 Descriptives
-     M     SD    Min    10%    25%    50%    75%    90%    Max 
--0.030  0.110 -0.236 -0.167 -0.121 -0.039  0.049  0.120  0.325 </code></pre>
-</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">rasch.mml2</span>(data5)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>model.wle <span class="ot">&lt;-</span><span class="fu">wle.rasch</span>( <span class="at">dat=</span>data5, <span class="at">b=</span>model<span class="sc">$</span>item<span class="sc">$</span>b )</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>yenq3 <span class="ot">&lt;-</span><span class="fu">Q3</span>( <span class="at">dat=</span>data5, <span class="at">theta=</span>model.wle<span class="sc">$</span>theta, <span class="at">b=</span>model<span class="sc">$</span>item<span class="sc">$</span>b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Yerel bağımsızlık varsayımının karşılandığı görülmektedir. Bu nedenle model-veri uyumu incleme aşamasına geçilmiştir. Bu aşamada ltm paketinden (Rizopoulos, 2006) faydalanılmıştır. Aşağıdaki kod satırları kullanılarak elde edilen Benzerlik oranı tabloları görülebilir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">rasch</span>(data5)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">ltm</span>(data5 <span class="sc">~</span> z1)  </span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">tpm</span>(data5)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1, model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">rasch</span>(data5)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">ltm</span>(data5 <span class="sc">~</span> z1)  </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">tpm</span>(data5)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1, model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -998,7 +642,7 @@ WLE Reliability= 0.711 </code></pre>
 model1 15975.79 16078.85 -7966.89                  
 model2 15913.21 16109.52 -7916.61 100.58 19  &lt;0.001</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1, model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1, model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -1006,7 +650,7 @@ model2 15913.21 16109.52 -7916.61 100.58 19  &lt;0.001</code></pre>
 model1 15975.79 16078.85 -7966.89                  
 model3 15914.14 16208.61 -7897.07 139.64 39  &lt;0.001</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2, model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2, model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -1021,7 +665,7 @@ model3 15914.14 16208.61 -7897.07 39.07 20   0.007</code></pre>
 <h3 class="anchored" data-anchor-id="b.-madde-parametreleri-1"><strong>2.b. Madde Parametreleri</strong></h3>
 <p>Model-veri uyumu sınandıktan ve en uygun model belirlendikten sonra, madde parametrelerinin incelenmesi aşamasına geçilmiştir. Model-2 üzerinden <code>coef()</code> fonksiyonu kullanılarak elde edilen madde parametreleri aşağıdadır.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Dffclt   Dscrmn
 L1  -0.8112296 2.832181
@@ -1052,18 +696,18 @@ L20 -0.8162163 2.864486</code></pre>
 <h3 class="anchored" data-anchor-id="c.-örnek-madde-karakteristik-eğrileri-1"><strong>2.c.&nbsp; Örnek Madde Karakteristik Eğrileri</strong></h3>
 <p>Çalışmanın bu aşamasında, iki kategorili puanlanan maddelerin analizinde madde karakteristik eğrisi ideal ve sorunlu olan birer madde incelenmiş ve yorumlanmıştır. Bu nedenle, öncelikle birinci bileşeni oluşturan tüm maddelerin madde bilgi eğrileri <code>plot()</code> fonksiyonu ile oluşturulmuş, aşağıdaki kod satırları kullanılmıştır:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"IIC"</span>,<span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"MADDE BİLGİ  EĞRİLERİ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"IIC"</span>,<span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"MADDE BİLGİ  EĞRİLERİ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Madde bilgi eğrileri incelendiğinde, en çok bilgiyi dördüncü maddenin sağladığı görülmektedir. En düşük bilgi sağlayan maddelerden birisinin ise 12. madde olduğu görülmektedir. Bu nedenle madde karakteristik eğrilerinin incelenmesi sürecinde örnek olarak bu iki madde tercih edilmiştir. Bu maddelere ait karakteristik eğrileri aşağıdaki kod satırları ile elde edilmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"ICC"</span>, <span class="at">items =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">12</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"madde-4"</span>, <span class="st">"madde-12"</span>), <span class="at">legend =</span> T, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ"</span>, <span class="at">ylab =</span> <span class="st">"OLASILIK"</span> , <span class="at">lwd=</span> <span class="dv">2</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="sc">-</span>.<span class="dv">81</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">pch=</span> <span class="dv">3</span>)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span>.<span class="dv">81</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">labels =</span> <span class="st">"b par.: -0.81"</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="sc">-</span>.<span class="dv">85</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">col=</span> <span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">5</span>)</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span>.<span class="dv">85</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">labels =</span> <span class="st">"b par.: -0.85"</span>, <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col=</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"ICC"</span>, <span class="at">items =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">12</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"madde-4"</span>, <span class="st">"madde-12"</span>), <span class="at">legend =</span> T, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ"</span>, <span class="at">ylab =</span> <span class="st">"OLASILIK"</span> , <span class="at">lwd=</span> <span class="dv">2</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="sc">-</span>.<span class="dv">81</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">pch=</span> <span class="dv">3</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span>.<span class="dv">81</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">labels =</span> <span class="st">"b par.: -0.81"</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="sc">-</span>.<span class="dv">85</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">col=</span> <span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">5</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span>.<span class="dv">85</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">labels =</span> <span class="st">"b par.: -0.85"</span>, <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col=</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1074,10 +718,10 @@ L20 -0.8162163 2.864486</code></pre>
 <h3 class="anchored" data-anchor-id="d.-test-bilgi-fonksiyonu-1"><strong>2.d. Test Bilgi Fonksiyonu</strong></h3>
 <p>İki kategorili puanlanan maddelere yönelik test bilgi fonksiyonunu elde etmek için aşağıdaki kod satırları kullanılmıştır. <code>locator()</code> fonksiyonu aracılığı ile test bilgi fonksiyonunun tepe noktası tespit edilmiş ve ardından <code>abline()</code> fonksiyonu ile tepe noktasının koordinat çizgileri grafiğe eklenmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"IIC"</span>, <span class="at">items =</span> <span class="dv">0</span>, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">lwd=</span> <span class="dv">2</span>,<span class="at">col.main=</span><span class="st">"red"</span>,<span class="at">col=</span><span class="st">"blue"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span><span class="dv">5</span>))</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">by =</span> .<span class="dv">1</span>))</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">27.74</span>, <span class="at">v=</span><span class="sc">-</span>.<span class="dv">8451</span>, <span class="at">lty=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"IIC"</span>, <span class="at">items =</span> <span class="dv">0</span>, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">lwd=</span> <span class="dv">2</span>,<span class="at">col.main=</span><span class="st">"red"</span>,<span class="at">col=</span><span class="st">"blue"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span><span class="dv">5</span>))</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">by =</span> .<span class="dv">1</span>))</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">27.74</span>, <span class="at">v=</span><span class="sc">-</span>.<span class="dv">8451</span>, <span class="at">lty=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1089,28 +733,28 @@ L20 -0.8162163 2.864486</code></pre>
 <h3 class="anchored" data-anchor-id="e.-yetenek-puanları-1"><strong>2.e. Yetenek Puanları</strong></h3>
 <p>İki kategorili puanlanan maddelere yönelik olarak yürütülen analizlerin son aşamasında bireylere ait yetenek puanları hesaplanmış ve bunların dağılımı incelenmiştir. Şu kod satırları ile hesaplanan yetenek puanları veri setine eklenmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>score_d5<span class="ot">&lt;-</span> <span class="fu">factor.scores.ltm</span>(model2)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>oruntu_d5 <span class="ot">&lt;-</span> score_d5[[<span class="dv">1</span>]]</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>oruntu_d5<span class="sc">$</span>toplam <span class="ot">&lt;-</span> <span class="fu">rowSums</span>((oruntu_d5[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]))</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>theta_d5 <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">454</span>){</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> (<span class="fu">sum</span> (oruntu_d5[i, <span class="dv">1</span><span class="sc">:</span> <span class="dv">20</span>] <span class="sc">==</span> data5[j, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])<span class="sc">==</span><span class="dv">20</span>)</span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>             theta_d5[j] <span class="ot">&lt;-</span> oruntu_d5[i, <span class="dv">23</span>] }}</span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>data5<span class="sc">$</span>theta<span class="ot">&lt;-</span>theta_d5</span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>data5<span class="sc">$</span>toplam<span class="ot">&lt;-</span><span class="fu">rowSums</span>(data5[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>score_d5<span class="ot">&lt;-</span> <span class="fu">factor.scores.ltm</span>(model2)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>oruntu_d5 <span class="ot">&lt;-</span> score_d5[[<span class="dv">1</span>]]</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>oruntu_d5<span class="sc">$</span>toplam <span class="ot">&lt;-</span> <span class="fu">rowSums</span>((oruntu_d5[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]))</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>theta_d5 <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">454</span>){</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> (<span class="fu">sum</span> (oruntu_d5[i, <span class="dv">1</span><span class="sc">:</span> <span class="dv">20</span>] <span class="sc">==</span> data5[j, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])<span class="sc">==</span><span class="dv">20</span>)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>             theta_d5[j] <span class="ot">&lt;-</span> oruntu_d5[i, <span class="dv">23</span>] }}</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>data5<span class="sc">$</span>theta<span class="ot">&lt;-</span>theta_d5</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>data5<span class="sc">$</span>toplam<span class="ot">&lt;-</span><span class="fu">rowSums</span>(data5[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Bunun ardından <code>describe()</code> fonksiyonu ile birey yetenek puanlarının betimsel istatikleri elde edilmiştir. Ayrıca hist() fonksiyonu ile histogram grafikleri oluşturulmuştur. Bu süreçlerde kullanılan kod satırları şunlardır:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-1</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data5<span class="sc">$</span>theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-1</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data5<span class="sc">$</span>theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   vars    n  mean   sd median trimmed  mad   min  max range  skew kurtosis
 X1    1 1000 -0.03 0.81   0.05    0.04 1.24 -2.17 0.89  3.06 -0.45     -0.8
      se
 X1 0.03</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data5<span class="sc">$</span>theta, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FREKANS"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"BİREY YETENEK PUANLARI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data5<span class="sc">$</span>theta, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FREKANS"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"BİREY YETENEK PUANLARI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>

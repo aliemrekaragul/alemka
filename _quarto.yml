@@ -13,7 +13,13 @@ website:
         file: index1.qmd
       - text: "Data-Viz"
         file: index2.qmd
-    right:      
+    right: 
+      - text: "Apps"
+        menu:
+          - text: "Test Analyze-R"
+            href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
+          - text: "ITP Score Calculator"
+            href: https://itp-calculator.com/   
       - text: "About me"
         file: index.qmd
       - icon: github

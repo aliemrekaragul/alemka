@@ -380,8 +380,8 @@ Yerel bağımsızlık varsayımının kontrolü için Yen'in Q analizi (Yen, 198
 
 ```{r}
 #| warning: false
-#| eval: true
-#| echo: false
+#| eval: false
+#| echo: true
 #| code-fold: true
 model <- rasch.mml2(data5)
 model.wle <-wle.rasch( dat=data5, b=model$item$b )
