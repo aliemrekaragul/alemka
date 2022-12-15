@@ -3,11 +3,11 @@ project:
   output-dir: docs
 
 website:
-  title: " "
+  title: "notebook "
   navbar:
     logo: "alemka.png"
-    background: warning
-    foreground: dark
+    background: rgb(246, 107, 14) #turuncu
+    foreground: rgb(17, 43, 60) #laci
     left:
       - text: "Psychometrics"
         file: index1.qmd
@@ -29,13 +29,19 @@ website:
 cookie-consent: true
 format: 
   html:
-    theme:  literia  # morph #simplex  # solar #cerulean  #
+    theme: literia  # morph #simplex  # solar #cerulean  #
     css: styles.css
     toc: true
     toc-depth: 4
     toc-title: Contents
     citations-hover: true
     footnotes-hover: true
-
+    # font-family: Gill Sans  #
+    mainfont: roboto #monospace
+    background: rgb(239, 239, 239) # mat bir  beyaz
+    fontcolor: rgb(17, 43, 60) #navy?
+    fontsize: 1.1em
+    linestretch: 1.5
+    # code-block-bg:  rgb(224, 216, 176) # yellowish brown gibi bişi
 editor: visual
 

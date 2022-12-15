@@ -12,33 +12,43 @@ library(ltm)
 library(corrplot)
 library(CTT)
 library(ShinyItemAnalysis)
-
+library(bslib)
 
 #######UTILS###########################################################################
-
+tema <- bs_theme( bg= "white",fg = "navy ", primary = "tomato",
+  base_font = font_google("Space Mono"),
+  code_font = font_google("Space Mono")
+)
 
 #GÜÇLÜK AYIRTEDİCİLİK FONKSİYONLARI:
 labelDifficulties<-function (itemDifficulties){
   difficultycommemnt <- c()
   for (difficulty in 1:length(itemDifficulties)){
-    if(itemDifficulties[difficulty] <= 0.2){difficultycommemnt[difficulty]<- "difficult" 
-    }else if(itemDifficulties[difficulty] > 0.2 & itemDifficulties[difficulty] < 0.8){difficultycommemnt[difficulty]<- "moderate"
-    }else{difficultycommemnt[difficulty]<- "easy"
+    if(itemDifficulties[difficulty] <= 0.2){difficultycommemnt[difficulty]<- "(3) DIFFICULT" 
+    }else if(itemDifficulties[difficulty] > 0.2 & itemDifficulties[difficulty] < 0.8){difficultycommemnt[difficulty]<- "(2) MEDIOCRE"
+    }else{difficultycommemnt[difficulty]<- "(1) ACHIEVABLE"
     }
   }
   return(difficultycommemnt)
 }
 
 
+percent_al<-function(df){
+  x<- vector("numeric", length=length(df))
+  for (i in 1:length(df))
+    x[i]<-round(df[i]/sum(df),3)
+  
+  return(x)
+}
 
 labelDiscriminations<- function(itemDiscriminations){
   discriminationcomment<-c()
   for (discrimination in 1:length(itemDiscriminations)) {
-    if(itemDiscriminations[discrimination] <= 0 | is.na(itemDiscriminations[discrimination] )  ){discriminationcomment[discrimination]<- "DISCARD"
-    }else if(itemDiscriminations[discrimination] <= 0.2 & itemDiscriminations[discrimination] > 0){ discriminationcomment[discrimination]<- "revise"
-    }else if(itemDiscriminations[discrimination] <= 0.3 & itemDiscriminations[discrimination] > 0.2){ discriminationcomment[discrimination]<- "mediocre"
-    }else if(itemDiscriminations[discrimination] <= 0.4 & itemDiscriminations[discrimination] > 0.3){ discriminationcomment[discrimination]<- "good"
-    }else if(itemDiscriminations[discrimination] > 0.4){ discriminationcomment[discrimination]<- "very good"
+    if(itemDiscriminations[discrimination] <= 0 | is.na(itemDiscriminations[discrimination] )  ){discriminationcomment[discrimination]<- "(1) DISCARD"
+    }else if(itemDiscriminations[discrimination] <= 0.2 & itemDiscriminations[discrimination] > 0){ discriminationcomment[discrimination]<- "(2) REVISE"
+    }else if(itemDiscriminations[discrimination] <= 0.3 & itemDiscriminations[discrimination] > 0.2){ discriminationcomment[discrimination]<- "(3) ACCEPTED"
+    }else if(itemDiscriminations[discrimination] <= 0.4 & itemDiscriminations[discrimination] > 0.3){ discriminationcomment[discrimination]<- "(4) PROPER"
+    }else if(itemDiscriminations[discrimination] > 0.4){ discriminationcomment[discrimination]<- "(5) PERFECT"
     }
   }
   return(discriminationcomment)
@@ -299,18 +309,22 @@ main_function<- function ( datapath,
   difficulties<-round(colMeans(scored_respo),2)
   discriminations<-round(item.total(scored_respo)$Item.Total,2)
   
-  disc.Labels<-labelDiscriminations(discriminations)
-  diff.Labels<-labelDifficulties(difficulties)
+  DISC.LABELS<-labelDiscriminations(discriminations)
+  DIFF.LABELS<-labelDifficulties(difficulties)
   
   
-  item_stats<- cbind(difficulties, discriminations, disc.Labels,diff.Labels )
+  item_stats<- cbind(difficulties, discriminations, DIFF.LABELS, DISC.LABELS )
   colnames(item_stats)<- c("difficulty index", "discrimination index", "difficulty comment", "discrimination comment")
   
   
   
   #requested_output 7:TEST LEVEL ANALYSIS:
-  mytable<-table( diff.Labels, disc.Labels)
-  
+  mytable<-table( DIFF.LABELS, DISC.LABELS)
+  TOTAL<-colSums(mytable)
+  PERCENTAGE<-round(percent_al(TOTAL)*100)
+  mytable<-rbind(mytable,  TOTAL,  PERCENTAGE)
+  ...TOTAL<-rowSums(mytable)
+  mytable<-cbind(mytable  , ...TOTAL     )
   
   
   #requested_output 3:TEST LEVEL ANALYSIS:
@@ -335,19 +349,22 @@ main_function<- function ( datapath,
 }
 
 ##########USER INTERFACE################################################################
-
+#shiny::runGitHub("dreamRs/fresh", subdir = "inst/examples/create")
 ui <- fluidPage(
+  theme = tema,
+
   
-  tags$a(href="https://www.etu.edu.tr/en/bolum/department-of-foreign-languages/duyuru/-", 
-         tags$img(src='tobb_etu__logo_tr.png',
-                  align="right",    
-                  height = "60px", 
-                  style='padding-top:15px')),
-  
-  titlePanel(tags$b(' Test Analyze-R ')),
+
                 sidebarLayout(
                   sidebarPanel(
                     width = 3,
+                    tags$a(href="https://www.etu.edu.tr/en/bolum/department-of-foreign-languages/duyuru/-", 
+                           tags$img(src='tobb_etu__logo_tr.png',
+                                    align="middle",    
+                                    height = "49px", 
+                                    style='padding-top: 1px')),
+                    
+                    tags$hr(),
                     fileInput('file1', 'Upload your .dat file'),
                     tags$b(
                       "Please enter the number of items and maximum possible score for each part below."
@@ -356,7 +373,7 @@ ui <- fluidPage(
                     tags$br(),
                     tags$p(
                       tags$b(
-                        "If there are less than fOUR parts, please enter ZERO for both cells of the unwanted part(s)."
+                        "If there are LESS THAN FOUR parts, please enter ZERO for both cells."
                       )
                     ),
                     hr(),
@@ -412,57 +429,57 @@ ui <- fluidPage(
                   ),
                   
                   mainPanel(
+                    titlePanel(tags$b(' Test Analyze-R ')),
+                    tags$p(
+                      "This is an application developed specifically for obtaining test scores and for conducting elementary item analysis on test data 
+                          which were scanned directly by optical mark recognition machines at TOBB ETÜ-DFL.
+                          With this application, you can easily read .dat files, conduct item analysis, and generate detailed reports
+                          to measure student performance and identify areas of improvement. 
+                           This is a reactive application - 
+                          meaning; you do not need to click anywhere to get the output.
+                          So, for optimum performance, enter your input into the cells (on the left) before you upload any files. 
+                          Then, wait for a few seconds. Reload the page any time you upload a new file.", 
+                      tags$b("The only accepted file format is .dat.")),
+                    tags$p("You can download",tags$a(href="https://drive.google.com/file/d/1hVEldl2mKDec1NIcRhTKq00v_zPNp_mJ/view?usp=share_link",
+                                                     "a sample .dat file"), "in order to try the app (Keep the default input values for the sample)."),
+                    hr(),
                     tabsetPanel(
                       tabPanel(
                         "Student Scores",
                         hr(),
                         tags$br(),
-                        tags$h2(tags$b("WELCOME!")),
-                        tags$p(
-                          "Welcome to TestAnalyze-R! This is an application developed specifically for conducting elementary item analysis on test data 
-                          read directly by optical form machine at TOBB ETÜ-DFL.
-                          With this application, you can easily read .dat files, conduct item analysis, and generate detailed reports
-                          to measure student performance and identify areas of improvement. 
-                           This is a reactive application - 
-                          meaning you do not need to click anywhere to get the output,
-                          so please enter your input into the cells (on the left) before you upload any data files. Then, wait for a few seconds.
-                          
-                          Start optimizing your tests and assessing student performance with TestAnalyze-R!"),
-                        tags$p("The only accepted file format is .dat for now. "),
-                        tags$p(tags$a(href="https://drive.google.com/file/d/1u_A6oulOECNyCRwmGAkZJqBymCrl6mi1/view?usp=share_link",
-                        "Download sample .dat file"), "with 3 parts (part 1: 50 items,
-                               part 2: 40 items, part 3: 50 items)"),
                         dataTableOutput(outputId = 'table.output')
                       ),
                       tabPanel(
                         "Test Statistics",
                         hr(),
                         tags$br(),
-                        tags$h3("DESCRIPTIVE STATISTICS"),
+                        tags$b("DESCRIPTIVE STATISTICS"),
                         tags$p(
                           "Descriptive statistics gives us an insight to our test and sample.
                         We investigate descriptives depending on the data's distribution."
                         ),
-                        tags$h3(" RELIABILITY"),
+                        tags$b(" RELIABILITY"),
                         tags$p(
                           "Cronbach's α is an estimate of the internal consistency of a test. 
-                          It is always between 0 and 1. The higher the better for educational tests."
+                          The α index is between 0 and 1. The higher the better for educational tests."
                         ),
-                        tags$h3("VALIDITY"),
-                        tags$b(" SCREE PLOT "),
+                        tags$b("VALIDITY"),
+                        tags$p("Test Analyze-R provides two types of output currently:"),
+                        tags$p(tags$b(" Scree Plot ")),
                         tags$p(
                           "A scree plot might give us a clue about the factors of the test.
                         In the screeplot, each dot/triangle located above the red line might indicate a factor.
                         If there are any items with zero variance (meaning: all students gave the same response to an item),
                         a scree plot will NOT be calculated. In that case, you might also use a correlation heat map (below) as a validity check."
                         ),
-                        tags$b("CORRELATION HEAT MAPS"),
+                        tags$b("Correlation Heat Map"),
                         tags$p(
                           "A correlation heat map displays the correlation between item pairs.
                                  The color of circles indicates in which way the items are correlated-
                                  a blue color means possitive correlation and a red color means negative correlation.
                                  The diogonal will always be dark blue. Other than that, we do not want red or dark blue dots.
-                                 LIGHT BLUE DOTS are expected output in this plot."
+                                 Instead, LIGHT BLUE DOTS are expected output in this plot."
                         ),
                         hr(),
                         verbatimTextOutput(outputId = "summary_stats"),
@@ -474,6 +491,7 @@ ui <- fluidPage(
                           width = "100%",
                           height = "400px"
                         ),
+                        tags$br(),
                         plotOutput(
                           outputId = "cor_plot",
                           width = "100%",
@@ -508,17 +526,19 @@ ui <- fluidPage(
                         tags$p(tags$b("Group 3"), "is the test takers with the highest scores."),
                         tags$p("In the rows, you will see numbers referring to options. 1-5 means A-E.
                                If you don't see an option, it means it is not selected by any test takers."),
-                        radioButtons(inputId = "p_table", label = "Choose one to swap between outputs:", 
+                        radioButtons(inputId = "p_table", label = "Choose to swap:", 
                                      choices = c("Counts", "Percentages"), selected = "Counts"),
                     
                         
-                        verbatimTextOutput(outputId = "distractor.anal")
+                         verbatimTextOutput(outputId = "distractor.anal")
+                      #  dataTableOutput(outputId = "distractor.anal")
                       ),
                       tabPanel(
                         "Item Writer Report",
                         hr(),
                         tags$br(),
                         verbatimTextOutput(outputId = "commenttable")
+                        #  dataTableOutput(outputId = "commenttable")
                       )
                     )
                     
@@ -574,7 +594,7 @@ server <- function(input, output) {
       p_table = input$p_table
     )
     
-    scree_pl <- fa.parallel(scored_respo, fa = "fa")
+    scree_pl <- fa.parallel(scored_respo, fa = "pc")
   })
   #correlation matrix:
   output$cor_plot <- renderPlot({
@@ -594,9 +614,12 @@ server <- function(input, output) {
       p_table = input$p_table
     )
     
-    item_cor <- corrplot(round(cor(scored_respo), 2),
-                         main = "Correlations between item pairs",
-                         type = 'lower')
+    item_cor <- corrplot(round(cor(scored_respo), 1),
+                         method = "circle",
+                         title="Correlations Heat Map",
+                         na.label ="#",
+                         na.label.col = "tomato",
+                         diag=T)
   })
   #item analysis:
   output$item.anal <- renderDataTable({    
@@ -692,7 +715,7 @@ server <- function(input, output) {
   })
   
   # discrimination and difficulty comment table
-  output$commenttable <- renderPrint({
+    output$commenttable <- renderPrint({
     validate(need(try(input$file1 != "")
                   , "Please upload your data to see the output"))
     mycommenttable <-
