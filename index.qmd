@@ -1,5 +1,5 @@
 ---
-title: " "
+title: "Ali Emre Karagül"
 image: profile.png
 about:
   template: jolla
@@ -30,7 +30,7 @@ share:
 ---
 
 ::: {.callout-note icon="false" appearance="minimal" }
-## ALİ EMRE KARAGÜL
+## About me!
 ::: columns
 ::: {.column width="48%"}
 ::: {.callout-note icon="false" }
