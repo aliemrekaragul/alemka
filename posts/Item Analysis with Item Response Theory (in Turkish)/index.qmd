@@ -11,6 +11,8 @@ author:
 date: 2021-11-20
 categories: [psychometrics, IRT]
 image: "mtk.png"
+execute:
+  freeze: auto  # re-render only when source changes
 ---
 
 ## GİRİŞ
