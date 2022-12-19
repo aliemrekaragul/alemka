@@ -19,8 +19,6 @@ website:
             href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
           - text: "ITP Score Calculator"
             href: https://itp-calculator.com/   
-      - text: "About me"
-        file: index.qmd
       - icon: github
         href: https://github.com/aliemrekaragul
       - icon: linkedin
