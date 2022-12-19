@@ -27,11 +27,10 @@ share:
   tumblr: false
   linkedin: true
   email: true
-layout: FULL
+page-layout: full
 ---
-
-::: columns
-::: {.column style="background-color: rgb(218, 221, 252); height: 550px; border-bottom-left-radius: 25px;"}
+::: {.grid}
+::: {.g-col-12 .g-col-md-6 style="background-color: rgb(218, 221, 252);  border-bottom-left-radius: 25px; border-top-right-radius: 25px;"}
 ### GREETINGS!
 
 ------------------------------------------------------------------------
@@ -45,8 +44,8 @@ Currently, I work on my PhD in Educational Assessment and Evaluation. My current
 Always feel free to contact me about any feedback, questions, or maybe just to say "hi".
 :::
 
-::: {.column style="background-color: rgb(255, 245, 225); height: 550px; 
-border-top-right-radius: 25px;"}
+::: {.g-col-12 .g-col-md-6 style="background-color: rgb(255, 245, 225);
+border-top-left-radius: 25px; border-bottom-right-radius: 25px;"}
 ### EDUCATION
 
 ------------------------------------------------------------------------
