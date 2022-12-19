@@ -5,7 +5,7 @@ website:
   title: "notebook "
   navbar:
     logo: "alemka.png"
-    background: rgb(243, 239, 224)
+    background: white 
     foreground: rgb(17, 43, 60) #laci
     left:
       - text: "Psychometrics"
@@ -19,6 +19,8 @@ website:
             href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
           - text: "ITP Score Calculator"
             href: https://itp-calculator.com/   
+      - text: "About me"
+        file: index.qmd
       - icon: github
         href: https://github.com/aliemrekaragul
       - icon: linkedin
