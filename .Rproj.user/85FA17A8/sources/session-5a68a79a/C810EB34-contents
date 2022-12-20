@@ -5,7 +5,7 @@ website:
   title: "notebook "
   navbar:
     logo: "alemka.png"
-    background: white 
+    background: rgb(196, 223, 170)
     foreground: rgb(17, 43, 60) #laci
     left:
       - text: "Psychometrics"

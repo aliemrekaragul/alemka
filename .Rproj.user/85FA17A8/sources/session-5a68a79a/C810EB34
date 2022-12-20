@@ -3,7 +3,7 @@
     "path": "C:/Users/akaragul/Desktop/alemka/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
-    "hash": "0",
+    "hash": "1761871631",
     "contents": "",
     "dirty": false,
     "created": 1671308542987.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "20,48",
-        "scrollLine": "12"
+        "cursorPosition": "7,34",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1671494243,
+    "lastKnownWriteTime": 1671495731,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1671494243992,
+    "last_content_update": 1671495731679,
     "read_only": false,
     "read_only_alternatives": []
 }
