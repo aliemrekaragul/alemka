@@ -1,13 +1,13 @@
 {
     "sortOrder": [
         {
-            "columnIndex": 3,
-            "ascending": false
-        },
-        {
             "columnIndex": 2,
             "ascending": false
         }
     ],
+<<<<<<< HEAD
     "path": "C:/Users/akaragul/Desktop/alemka/posts2"
+=======
+    "path": "C:/Users/akaragul/Desktop/alemka"
+>>>>>>> parent of 713d634 (google-fit)
 }

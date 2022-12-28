@@ -1,7 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0",""
-"0","daily_metrics <- daily_metrics%>% mutate_if(is.numeric, round, digits=0)"
-"0","head(daily_metrics)"
