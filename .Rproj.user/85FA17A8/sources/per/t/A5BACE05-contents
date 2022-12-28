@@ -1,0 +1,255 @@
+---
+title: "Visualisation of My Personal Google Data (2): My exercise routine"
+#preview: images/paste-A04B6DB6.png
+description: |
+  This post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize personal movement data. 
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: TOBB ETU- University of Economics & Technology
+date: 2022-12-11
+categories: [Google Data, Data-viz]
+image: "image.png"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction to the series: "Visualisation of My Personal Google Data"
+
+If you give permission to Google to store your location data, they will keep them in their databases forever. You can also allow them to store it for a while and then ask them delete it. They will directly do so.
+
+What makes this study a fun project is its being very personal. I decided to analyze my personal data in August, 2022. Therefore, I granted many new permissions to Google along with many previously granted permissions. They keep them in various formats including .csv, .json, .mbox etc. When you query for your personal data, they provide it within a couple of days depending on the size of the data you queried.
+
+Usually, I provide the readers with the data in my posts. However, in this series, the data are very personal and so I will not.
+
+## Introduction: "My exercise routine"
+
+In this part of the series, we will investigate my personal location data. We will visualize the spots I visited within a period of time. This way, I personally will gain insights about how boring my days are :)
+
+The R packages that we use in this post are as follows:
+
+```{r eval=TRUE, echo=FALSE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+library("psych")
+library("dplyr")
+library("plotly")
+```
+
+## Understand the Data & Pre-processing
+
+Let's start the procedure by reading the data into R. The `head()` function provides us with the first six observations of the data frame. There are 16 variables some of which are filled with many many `NA`s. such as `Biking.duration..ms.` The reason for that is pretty simple; I do not ride around. The variables are mostly numeric, yet `Date`gives us information about the date of the observation. The variable `Running.duration..ms.` has many `NA`s too. But it also has some observations because I run only a few days a week. I will use this variable to filter my data later.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+daily_metrics<-read.csv("Daily activity metrics.csv",sep=",", header = TRUE)
+head(daily_metrics) 
+
+```
+
+As the data contains some variables with decimal numbers, I would love to round them to increase meaningfulness. The `mutate_if` function combined with `is.numeric` gives me the opportunity to pick only the numeric variables to round.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+daily_metrics <- daily_metrics%>% mutate_if(is.numeric, round, digits=2)
+```
+
+So far so good. Now I want to select the variables that I want to visualize in my project and filter my data accordingly. Let's see the variable names:
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+colnames(daily_metrics)
+```
+
+In this project, I will use following variables: `date`, `Move.Minutes.count`,`Calories..kcal.`,`Distance..m.`,`Average.speed..m.s.`,`Biking.duration..ms.`,`Step.caoun` and `walking.duration.ms.`. Let's use `subset` function to get rid of the unnecessary part of the data.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+daily_metrics <- subset(daily_metrics, select = -c(5,6,8,9,14, 13,12,11) ) #idk why so randomly ordered numbers
+head(daily_metrics)
+```
+
+As mentioned before, I would like to work on the days that I run. That's why I will also get rid of observations that do not contain any running data and then my data will be ready for the visualization.
+
+Finally, let's get the scatter plots of whatever we have left to see a bigger picture. There are some outliers; you will easily recognize some bubles sitting alone in their plots. However, they don't look like they need further investigation.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+data_for_plotting<-daily_metrics[!is.na(daily_metrics$Running.duration..ms.),]
+plot(data_for_plotting)
+```
+
+## Data Visualization
+
+`plotly` is an amazing alternative to `ggplot2.` Today we will work on this package with our data. Our first chart contains information about the **number of steps I took each day that I ran from May 2021 to November 2022.**
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+fig<-plotly::plot_ly(data=data_for_plotting, type ="scatter", mode="lines+markers",  
+                     y=data_for_plotting$Step.count, x=~Date)
+fig
+```
+
+When you hover over the chart you might see the date and the number of steps that I took. For instance on 12th and 28th of August, I took more than 16k steps.
+
+Now let's add two dimensions to our chart: **the duration of walking and running in a day** using the `addtrace` function. Also `layout` function helps us name our plot.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+########################
+# walking VS runing duration bars
+#########################
+ay<- list(
+  tickfont =list(color ="red"),
+  overlaying = "y",
+  side= "right",
+  title= "<b> secondary</b> y axis"
+)
+
+
+fig<-plotly::plot_ly()
+fig<- fig %>%
+  add_trace(type ="bar",  
+            y =data_for_plotting$Walking.duration..ms.,
+            x=data_for_plotting$Date, 
+            name="walking duration (ms)"
+  )
+fig<- fig %>% add_trace (type ="scatter", mode="lines+markers" , #yaxis="y2",
+                         y=data_for_plotting$Running.duration..ms., 
+                         x=data_for_plotting$Date , 
+                         name="running duration (ms)")
+
+
+fig <- fig %>% layout(
+  title="two axis",
+  yaxis2 = ay,
+  xaxis = list( title= "Days"),
+  yaxis = list( title= "Time I moved in miliseconds")
+)
+fig
+
+```
+
+This chart brings another aspect of my exercise routine. The days I ran in the last year, I walked a lot more than I ran, obviously. One exception to that might be 25th of July when I almost walked and ran same amount of time.
+
+Now, besides time, let's add another dimension of distance. This chart will have another y axis. We need to let plotly know that we will use another dimension. `overlaying = "y"` argument will do it. Also, we use another `addtrace` function to add the second y axis properties. `yaxis="y2"` argument will link this trace to our new dimension. `y2` here is defined by `plotly` as default setting.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+ay<- list(
+  tickfont =list(color ="red"),
+  overlaying = "y",
+  side= "right",
+  title= "Distance I walked in meters"
+)
+
+
+fig<-plotly::plot_ly()
+
+fig<- fig %>%
+  add_trace(y =data_for_plotting$Move.Minutes.count,
+            x=data_for_plotting$Date, 
+            name="movemnt(min.)", 
+            type ="bar" )
+
+
+fig<- fig %>% add_trace (y=data_for_plotting$Distance..m., 
+                         x=data_for_plotting$Date , 
+                         name="distance(m.)", yaxis="y2",
+                         type ="scatter", mode="lines+markers")
+
+fig <- fig %>% layout(
+  title="My movement VS distance in 2022",
+  yaxis2 = ay,
+  xaxis = list( title= "Days"),
+  yaxis = list( title= "Time I moved in minutes ")
+)
+fig
+
+
+```
+
+As the final result, you can see that on the first y axis there are the number of minutes (from 0 to 200) when I was in a moving state. On the other side, we have the distance I walked or run in meters (from 0 to 10k). For example; on sixth of Auust in 2022, I walked almost 7k meters in 150 minutes.
+
+As a final step, let's see the calories I burnt during that time. Another `addtrace` would help us draw the line for the calories that I burnt throughout these days:
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+########################
+# steps VS distance VS calories 
+#########################
+
+
+fig<-plotly::plot_ly()
+
+fig<- fig %>%
+  add_trace(y =data_for_plotting$Step.count,
+            x=data_for_plotting$Date, 
+            name="Steps ", 
+            type ="scatter", mode="lines")
+
+fig<- fig %>% add_trace (y=data_for_plotting$Distance..m., 
+                         x=data_for_plotting$Date , 
+                         name="distance", 
+                         type ="bar" )
+
+
+fig<- fig %>% add_trace (y=data_for_plotting$Calories..kcal., 
+                         x=data_for_plotting$Date , 
+                         name="calories",
+                         type ="scatter", mode="lines")
+
+
+
+fig <- fig %>% layout(
+  title=" <b>My movement in 2022</b>",
+  xaxis = list( title= "<b>Days</b>"),
+  yaxis = list( title= "<b> steps(n)</b> / <b> distance(m)</b> / <b> calories(kcal) </b> ")
+)
+fig
+```
+
+The reason why there are not many diversity in the calories that I burnt might be because of two reasons: either the calories are not counted correctly by Google, which I believe is the case, or as the charts contain information for only the days that I run, I spent similar amounts of calories. Either way, we can see that the calories don't change much even though took much more steps and spent more time moving on some days than some other days.
+
+## Conclusion
+
+The plotly package have many useful embedded features. Especially the hovering property of the charts make it much more appealing easily. Another beautiful feature of `plotly` is that you can use certain HTML tags on your charts. For example here in the last chart, we used `<b> bolt </b>`tag in order for making our titles stand out in the `layout` function.
+
+Finally I must also mention that plotly have some features to create different types of graphs, animations and many other. [Their website for R](https://plotly.com/r/) worths a visit.
