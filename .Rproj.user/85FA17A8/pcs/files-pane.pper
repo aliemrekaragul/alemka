@@ -1,9 +1,13 @@
 {
     "sortOrder": [
         {
+            "columnIndex": 3,
+            "ascending": false
+        },
+        {
             "columnIndex": 2,
             "ascending": false
         }
     ],
-    "path": "C:/Users/akaragul/Desktop/alemka"
+    "path": "C:/Users/akaragul/Desktop/alemka/posts2/Visualisation of My Personal Google Data (2)"
 }

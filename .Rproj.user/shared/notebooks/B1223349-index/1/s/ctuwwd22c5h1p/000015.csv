@@ -2,6 +2,5 @@
 "0","#| eval: true"
 "0","#| echo: true"
 "0","#| code-fold: false"
-"0","library(""psych"")"
-"0","library(""dplyr"")"
-"0","library(""plotly"")"
+"0",""
+"0","daily_metrics <- daily_metrics%>% mutate_if(is.numeric, round, digits=2)"

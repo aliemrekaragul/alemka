@@ -1,8 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0","daily_metrics<-read.csv(""Daily activity metrics.csv"",sep="","", header = TRUE)"
-"0","daily_metrics <- daily_metrics%>% mutate_if(is.numeric, round, digits=0)"
-"0","daily_metrics <- subset(daily_metrics, select = -c(5,6,8,9,14, 13,12,11) )"
-"0","plot(daily_metrics)"
