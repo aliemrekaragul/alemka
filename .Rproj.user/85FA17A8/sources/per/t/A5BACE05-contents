@@ -53,7 +53,6 @@ Let's start the procedure by reading the data into R. The `head()` function prov
 #| code-fold: false
 daily_metrics<-read.csv("Daily activity metrics.csv",sep=",", header = TRUE)
 head(daily_metrics) 
-
 ```
 
 As the data contains some variables with decimal numbers, I would love to round them to increase meaningfulness. The `mutate_if` function combined with `is.numeric` gives me the opportunity to pick only the numeric variables to round.
@@ -99,6 +98,7 @@ Finally, let's get the scatter plots of whatever we have left to see a bigger pi
 #| eval: true
 #| echo: true
 #| code-fold: false
+
 data_for_plotting<-daily_metrics[!is.na(daily_metrics$Running.duration..ms.),]
 plot(data_for_plotting)
 ```
@@ -115,6 +115,7 @@ plot(data_for_plotting)
 fig<-plotly::plot_ly(data=data_for_plotting, type ="scatter", mode="lines+markers",  
                      y=data_for_plotting$Step.count, x=~Date)
 fig
+
 ```
 
 When you hover over the chart you might see the date and the number of steps that I took. For instance on 12th and 28th of August, I took more than 16k steps.
@@ -170,11 +171,12 @@ Now, besides time, let's add another dimension of distance. This chart will have
 #| echo: true
 #| code-fold: false
 
+
 ay<- list(
   tickfont =list(color ="red"),
   overlaying = "y",
   side= "right",
-  title= "Distance I walked in meters"
+  title= "<b> Distance I walked in meters </b>"
 )
 
 
@@ -193,10 +195,10 @@ fig<- fig %>% add_trace (y=data_for_plotting$Distance..m.,
                          type ="scatter", mode="lines+markers")
 
 fig <- fig %>% layout(
-  title="My movement VS distance in 2022",
+  title="My movement VS distance  <b>in 2022</b>",
   yaxis2 = ay,
-  xaxis = list( title= "Days"),
-  yaxis = list( title= "Time I moved in minutes ")
+  xaxis = list( title= "<b>Days</b>"),
+  yaxis = list( title= "<b> Time I moved in minutes </b> ")
 )
 fig
 
@@ -212,9 +214,6 @@ As a final step, let's see the calories I burnt during that time. Another `addtr
 #| eval: true
 #| echo: true
 #| code-fold: false
-########################
-# steps VS distance VS calories 
-#########################
 
 
 fig<-plotly::plot_ly()

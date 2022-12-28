@@ -1,0 +1,7 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0",""
+"0","data_for_plotting<-daily_metrics[!is.na(daily_metrics$Running.duration..ms.),]"
+"0","plot(data_for_plotting)"

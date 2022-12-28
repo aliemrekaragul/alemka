@@ -3,7 +3,7 @@
     "path": "C:/Users/akaragul/Desktop/alemka/posts2/Visualisation of My Personal Google Data (2)/index.qmd",
     "project_path": "posts2/Visualisation of My Personal Google Data (2)/index.qmd",
     "type": "quarto_markdown",
-    "hash": "1710474749",
+    "hash": "1642674345",
     "contents": "",
     "dirty": false,
     "created": 1672189680401.0,
@@ -16,17 +16,17 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "2:0",
+        "rmdVisualModeLocation": "14:0",
         "cursorPosition": "0,0",
-        "scrollLine": "83",
-        "last_setup_crc32": ""
+        "scrollLine": "246",
+        "last_setup_crc32": "da7547cec4e2d899"
     },
     "folds": "",
-    "lastKnownWriteTime": 1672195207,
+    "lastKnownWriteTime": 1672199155,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1672196213824,
+    "last_content_update": 1672199155292,
     "read_only": false,
     "read_only_alternatives": []
 }

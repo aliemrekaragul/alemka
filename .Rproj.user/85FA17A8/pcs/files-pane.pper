@@ -1,17 +1,9 @@
 {
+    "path": "C:/Users/akaragul/Desktop/alemka",
     "sortOrder": [
         {
             "columnIndex": 2,
-            "ascending": false
+            "ascending": true
         }
-    ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "path": "C:/Users/akaragul/Desktop/alemka/posts2"
-=======
-    "path": "C:/Users/akaragul/Desktop/alemka"
->>>>>>> parent of 713d634 (google-fit)
-=======
-    "path": "C:/Users/akaragul/Desktop/alemka/posts2/Visualisation of My Personal Google Data (2)"
->>>>>>> parent of 169eaa5 (permalink fixed)
+    ]
 }
