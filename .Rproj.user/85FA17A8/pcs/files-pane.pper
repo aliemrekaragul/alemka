@@ -2,8 +2,12 @@
     "sortOrder": [
         {
             "columnIndex": 2,
-            "ascending": true
+            "ascending": false
         }
     ],
-    "path": "C:/Users/akaragul/Desktop/alemka/posts2/Web Scraping with Rvest"
+<<<<<<< HEAD
+    "path": "C:/Users/akaragul/Desktop/alemka/posts2"
+=======
+    "path": "C:/Users/akaragul/Desktop/alemka"
+>>>>>>> parent of 713d634 (google-fit)
 }

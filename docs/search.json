@@ -18,7 +18,7 @@
     "href": "index2.html",
     "title": "Data Visualization",
     "section": "",
-    "text": "[under development] Web scraping with Rvest package\n\n\n\n\n\n\n\nRvest\n\n\nWordcloud\n\n\nData-viz\n\n\n\n\n“Rvest” is a package for web scraping and harvesting which is developed by Hadley Wickham. He states that he was inspired by python libraries such as “beautiful soup” and “RoboBrowser”.\n\n\n\n\n\n\nJan 6, 2023\n\n\nAli Emre Karagül, Ali Emre Karagül\n\n\n\n\n\n\n  \n\n\n\n\n[under development] Visualisation of My Personal Google Data (2): My exercise routine\n\n\n\n\n\n\n\nGoogle Data\n\n\nData-viz\n\n\n\n\nThis post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize personal movement data.\n\n\n\n\n\n\nDec 11, 2022\n\n\nAli Emre Karagül, Ali Emre Karagül\n\n\n\n\n\n\n  \n\n\n\n\nVisualisation of My Personal Google Data (1): My Locations\n\n\n\n\n\n\n\nGoogle Data\n\n\nMaps\n\n\nData-viz\n\n\n\n\nThis post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize the locations I visited within a time period on a map.\n\n\n\n\n\n\nNov 16, 2022\n\n\nAli Emre Karagül, Ali Emre Karagül\n\n\n\n\n\n\nNo matching items"
+    "text": "[under development] Visualisation of My Personal Google Data (2): My exercise routine\n\n\n\n\n\n\n\nGoogle Data\n\n\nData-viz\n\n\n\n\nThis post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize personal movement data.\n\n\n\n\n\n\nDec 11, 2022\n\n\nAli Emre Karagül, Ali Emre Karagül\n\n\n\n\n\n\n  \n\n\n\n\nVisualisation of My Personal Google Data (1): My Locations\n\n\n\n\n\n\n\nGoogle Data\n\n\nMaps\n\n\nData-viz\n\n\n\n\nThis post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize the locations I visited within a time period on a map.\n\n\n\n\n\n\nNov 16, 2022\n\n\nAli Emre Karagül, Ali Emre Karagül\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/Item Analysis with Item Response Theory (in Turkish)/index.html",
@@ -152,26 +152,5 @@
     "title": "[under development] Visualisation of My Personal Google Data (2): My exercise routine",
     "section": "Conclusion",
     "text": "Conclusion"
-  },
-  {
-    "objectID": "posts2/Web Scraping with Rvest/index.html",
-    "href": "posts2/Web Scraping with Rvest/index.html",
-    "title": "[under development] Web scraping with Rvest package",
-    "section": "",
-    "text": "In this post, we will delve into harvesting a web page, Ekşi Sözlük. This process won’t include the automation of the process. Ekşi Sözlük is a reddit-like web site where users share their ideas on certain topics. Our target topic is “veri bilimi” (a.k.a. data science in English).\nThe R packages that we use in this post are as follows:\n\nlibrary(rvest)\nlibrary(dplyr)\nlibrary(wordcloud)\nlibrary(tm)"
-  },
-  {
-    "objectID": "posts2/Web Scraping with Rvest/index.html#processing",
-    "href": "posts2/Web Scraping with Rvest/index.html#processing",
-    "title": "[under development] Web scraping with Rvest package",
-    "section": "Processing",
-    "text": "Processing\nFirst things first; we start by introducing the webpage that we want to harvest.\n\nhtml <- read_html(\"https://eksisozluk.com/veri-bilimi--3426406\")\n\nRvest allos us to collect any type of HTML tag from the current page. Let’s suppose we would like to collect all the links in a topic page:\n\nlinks <- html %>% html_nodes(\"a.url\")  %>%  html_attr(\"href\")\nlinks\n\n[1] \"http://e-k.in/introduction-to-data-science/\"                                                     \n[2] \"https://www.edx.org/course/introduction-big-data-apache-spark-uc-berkeleyx-cs100-1x#.VMK0q3v-t3U\"\n\n\nOr maybe we would like to collect all the entries on the given page:\n\nentries        <- html %>% html_nodes(\".content\") %>%html_text()    \n\n#Let's see the first three entries:\nhead(entries, 3)\n\n[1] \"\\r\\n    internette milyonlarca veri var. bu milyonlarca veriyi işleyen milyonlarca uygulama var. işte bu uygulamalar sayesinde var olan veriyi kullanıp yeni veri uygulamaları yaratma işine veri bilimi denir.\\r\\n  \"\n[2] \"\\r\\n    istatistik ile cok alakali bilim. (bkz: veri madenciligi)\\r\\n  \"                                                                                                                                              \n[3] \"\\r\\n    bana veri olmadan çalışan bir adet bilim türü gösterildiği anda varlığını ve özgünlüğünü kabul edeceğim ilim kategorisi.yoksa şununla yarışır bence:(bkz: deney bilimi) *\"                                    \n\n\nNow that you have all the entries in a page, it is easy to carry out a text analysis with it. Let’s simply create a word cloud:\n\n#turn entries into corpus\n\nentries<-Corpus(VectorSource(entries))\n\n#apply several functions such as remove punctuation or numbers etc.\n\nentries <- entries %>%\n  tm_map(removeNumbers) %>%\n  tm_map(removePunctuation) %>%\n  tm_map(stripWhitespace)\nentries <- tm_map(entries, content_transformer(tolower))\n\n#turn into a matrix\nterm_matrix <- as.matrix(TermDocumentMatrix(entries) )\n\n#frequency table:\nword_freqs <- sort(rowSums(term_matrix),decreasing=TRUE) \nword_freqs <- data.frame(word=names(word_freqs),freq=word_freqs )\n\n## word cloud:\nwordcloud(words = word_freqs$word, freq = word_freqs$freq, min.freq = 1,          \n          max.words=200, random.order=FALSE, rot.per=0.35,            \n          colors=brewer.pal(8, \"Dark2\"))"
-  },
-  {
-    "objectID": "posts2/Web Scraping with Rvest/index.html#conclusion",
-    "href": "posts2/Web Scraping with Rvest/index.html#conclusion",
-    "title": "[under development] Web scraping with Rvest package",
-    "section": "Conclusion",
-    "text": "Conclusion\nThis post is not complete, yet will be completed soon."
   }
 ]

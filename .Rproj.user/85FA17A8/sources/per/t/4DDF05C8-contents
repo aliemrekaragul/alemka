@@ -1,0 +1,24 @@
+---
+title: "Psychometrics"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+filters:
+  - social-share
+share:
+  permalink: "emrekaragul.com"
+  description: "awesome blog"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+---
