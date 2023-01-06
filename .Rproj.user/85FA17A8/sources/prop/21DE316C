@@ -1,11 +1,19 @@
 {
-    "rmdVisualMode": "false",
+    "rmdVisualMode": "true",
     "rmdVisualWrapConfigured": "true",
     "source_window_id": "",
     "Source": "Source",
     "docOutlineVisible": "1",
     "rmdVisualCollapsedChunks": "",
-    "rmdVisualModeLocation": "573:1400",
-    "cursorPosition": "45,0",
-    "scrollLine": "27"
+<<<<<<< HEAD
+    "rmdVisualModeLocation": "553:148",
+    "cursorPosition": "0,0",
+    "scrollLine": "83",
+    "last_setup_crc32": ""
+=======
+    "rmdVisualModeLocation": "2:4474",
+    "cursorPosition": "1,28",
+    "scrollLine": "0",
+    "last_setup_crc32": "E441C35Ac4e2d899"
+>>>>>>> parent of 713d634 (google-fit)
 }

@@ -1,12 +1,20 @@
 {
     "left": {
-        "splitterpos": 334,
+<<<<<<< HEAD
+        "splitterpos": 359,
+=======
+        "splitterpos": 336,
+>>>>>>> parent of 713d634 (google-fit)
         "topwindowstate": "NORMAL",
         "panelheight": 779,
         "windowheight": 817
     },
     "right": {
+<<<<<<< HEAD
+        "splitterpos": 538,
+=======
         "splitterpos": 501,
+>>>>>>> parent of 713d634 (google-fit)
         "topwindowstate": "NORMAL",
         "panelheight": 779,
         "windowheight": 817
