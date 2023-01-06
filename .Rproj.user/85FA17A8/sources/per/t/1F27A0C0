@@ -1,14 +1,14 @@
 {
-    "id": "94D92894",
-    "path": "C:/Users/akaragul/Desktop/alemka/index.qmd",
-    "project_path": "index.qmd",
+    "id": "1F27A0C0",
+    "path": "C:/Users/akaragul/Desktop/alemka/posts2/Visualisation of My Personal Google Data (2)/index.qmd",
+    "project_path": "posts2/Visualisation of My Personal Google Data (2)/index.qmd",
     "type": "quarto_markdown",
-    "hash": "984600849",
+    "hash": "1642674345",
     "contents": "",
     "dirty": false,
-    "created": 1671321898664.0,
+    "created": 1673028484299.0,
     "source_on_save": false,
-    "relative_order": 2,
+    "relative_order": 7,
     "properties": {
         "rmdVisualMode": "false",
         "rmdVisualWrapConfigured": "true",
@@ -16,16 +16,16 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "cursorPosition": "48,13",
-        "scrollLine": "0",
-        "rmdVisualModeLocation": "1254:762"
+        "rmdVisualModeLocation": "573:1400",
+        "cursorPosition": "45,0",
+        "scrollLine": "27"
     },
     "folds": "",
-    "lastKnownWriteTime": 1671493084,
+    "lastKnownWriteTime": 1673028521,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1671493084221,
+    "last_content_update": 1673028521586,
     "read_only": false,
     "read_only_alternatives": []
 }
