@@ -19,6 +19,8 @@ website:
             href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
           - text: "ITP Score Calculator"
             href: https://itp-calculator.com/   
+          - text: "Ekşi KazaR"
+            href: https://aliemrekaragul.shinyapps.io/eksi-kazaR/              
       - icon: github
         href: https://github.com/aliemrekaragul
       - icon: linkedin
