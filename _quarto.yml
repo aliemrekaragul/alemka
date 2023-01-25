@@ -5,7 +5,7 @@ website:
   title: "notebook "
   navbar:
     logo: "alemka.png"
-    background: rgb(196, 223, 170)
+    background: rgb(255,165,0) # now: orange, previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
     left:
       - text: "Psychometrics"
@@ -33,6 +33,10 @@ website:
     tracking-id: "G-VJBZWP0G2H"
     anonymize-ip: false
     storage: cookies
+    
+  page-footer:
+    right: "For  the   ❤️  of  📉📈  and  ☕"
+    left: "© 2023-Ali Emre Karagül"
 format: 
   html:
     theme: literia  # morph #simplex  # solar #cerulean  #
@@ -48,6 +52,10 @@ format:
     fontcolor: rgb(17, 43, 60) #navy?
     fontsize: 1.1em
     linestretch: 1.5
+    code-tools: false
+    code-block-border-left: true
+    code-link: true
+    code-fold: show
     # code-block-bg:  rgb(224, 216, 176) # yellowish brown gibi bişi
 editor: visual
 

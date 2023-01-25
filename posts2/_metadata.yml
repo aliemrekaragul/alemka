@@ -8,7 +8,7 @@ freeze: false
 title-block-banner: true
 
 # Author name of all blog posts
-author: 'Ali Emre Karagül'
+# author: 'Ali Emre Karagül'
 
 # Table of content settings
 toc: true

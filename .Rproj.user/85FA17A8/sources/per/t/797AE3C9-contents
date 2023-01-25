@@ -14,17 +14,17 @@ about:
       href: https://github.com/aliemrekaragul
     - icon: mail
       text: E-mail
-      href: mailto:aliemrekaragul@gmail.com
+      href: mailto:me@emrekaragul.com
 filters:
   - social-share
 share:
-  permalink: "https://aliemrekaragul.github.io/alemka/"
+  permalink: "https://emrekaragul.com/"
   description: "check this out!"
   twitter: true
   facebook: true
   reddit: true
   stumble: false
-  tumblr: false
+  tumblr: true
   linkedin: true
   email: true
 page-layout: full

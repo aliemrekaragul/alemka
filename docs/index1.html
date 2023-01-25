@@ -43,8 +43,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,9 +72,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title','listing-description','listing-date','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -221,21 +219,40 @@ cookieconsent.run({
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="psychometrics,SEM" data-listing-date-sort="1667077200000" data-listing-file-modified-sort="1670762695695" data-listing-reading-time-sort="75.005">
-<div class="thumbnail">
-<p><a href="./posts/Structural Equation Modelling (in Turkish)/index.html"> <img src="./posts/Structural Equation Modelling (in Turkish)/image.png" class="thumnail-image"> </a></p>
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
 </div>
-<div class="body">
-<a href="./posts/Structural Equation Modelling (in Turkish)/index.html">
-<h3 class="no-anchor listing-title">
+<div class="list grid quarto-listing-cols-2">
+<div class="g-col-1" data-index="0" data-categories="psychometrics,SEM" data-listing-date-sort="1667077200000" data-listing-file-modified-sort="1670762695695" data-listing-reading-time-sort="75.005">
+<a href="./posts/Structural Equation Modelling (in Turkish)/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Structural Equation Modelling (in Turkish)/image.png" class="thumbnail-image card-img" style="height: 250px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Structural Equation Modelling (in Turkish)
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="listing-reading-time card-text text-muted">
+75 min
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
 psychometrics
@@ -244,36 +261,31 @@ psychometrics
 SEM
 </div>
 </div>
-<a href="./posts/Structural Equation Modelling (in Turkish)/index.html">
-<div class="listing-description">
-<p>YEM: ‘Your View on Science’ ölçeğinden elde edilen 2015 PISA Turkiye örneklemi ile bir örnek çalışma. Bu çalışma Gazi üniversitesi’nde ‘Yapısal Eşitlik Modellemeleri’ dersi kapsamında rapor olarak hazırlanmıştır.</p>
+<div class="card-text listing-description">
+YEM: ‘Your View on Science’ ölçeğinden elde edilen 2015 PISA Turkiye örneklemi ile bir örnek çalışma. Bu çalışma Gazi üniversitesi’nde ‘Yapısal Eşitlik Modellemeleri’ dersi…
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Structural Equation Modelling (in Turkish)/index.html">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Oct 30, 2022
 </div>
-<div class="listing-author">
-Ali Emre Karagül, Ali Emre Karagül
+</div>
+</div>
 </div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="psychometrics,CTT,test equating" data-listing-date-sort="1663621200000" data-listing-file-modified-sort="1672244325528" data-listing-reading-time-sort="4.635">
-<div class="thumbnail">
-<p><a href="./posts/Test Equating/index.html"> <img src="./posts/Test Equating/image.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Test Equating/index.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="1" data-categories="psychometrics,CTT,test equating" data-listing-date-sort="1663621200000" data-listing-file-modified-sort="1672244325528" data-listing-reading-time-sort="4.635">
+<a href="./posts/Test Equating/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Test Equating/image.jpg" class="thumbnail-image card-img" style="height: 250px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Test Equating
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="listing-reading-time card-text text-muted">
+4 min
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
 psychometrics
@@ -285,36 +297,31 @@ CTT
 test equating
 </div>
 </div>
-<a href="./posts/Test Equating/index.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 <p>Equating two test forms: This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here.</p>
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Test Equating/index.html">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Sep 20, 2022
 </div>
-<div class="listing-author">
-Ali Emre Karagül, Ali Emre Karagül
+</div>
+</div>
 </div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="psychometrics,IRT" data-listing-date-sort="1637355600000" data-listing-file-modified-sort="1671320836777" data-listing-reading-time-sort="14.825">
-<div class="thumbnail">
-<p><a href="./posts/Item Analysis with Item Response Theory (in Turkish)/index.html"> <img src="./posts/Item Analysis with Item Response Theory (in Turkish)/mtk.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Item Analysis with Item Response Theory (in Turkish)/index.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="2" data-categories="psychometrics,IRT" data-listing-date-sort="1637355600000" data-listing-file-modified-sort="1671320836777" data-listing-reading-time-sort="14.825">
+<a href="./posts/Item Analysis with Item Response Theory (in Turkish)/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Item Analysis with Item Response Theory (in Turkish)/mtk.png" class="thumbnail-image card-img" style="height: 250px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Item Analysis with Item Response Theory (in Turkish)
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="listing-reading-time card-text text-muted">
+14 min
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
 psychometrics
@@ -323,22 +330,17 @@ psychometrics
 IRT
 </div>
 </div>
-<a href="./posts/Item Analysis with Item Response Theory (in Turkish)/index.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 <p>Madde Tepki Kuramı temelli madde analizi. Hem çok kategorili hem de iki kategorili maddeler için MTK temelli madde analizi uygulama süreçleri…</p>
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Item Analysis with Item Response Theory (in Turkish)/index.html">
+<div class="card-attribution card-text-small end">
 <div class="listing-date">
 Nov 20, 2021
 </div>
-<div class="listing-author">
-Ali Emre Karagül, Ali Emre Karagül
+</div>
+</div>
 </div>
 </a>
-</div>
 </div>
 </div>
 <div class="listing-no-matching d-none">
@@ -481,10 +483,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
+    <div class="nav-footer-left">© 2023-Ali Emre Karagül</div>   
       <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">For the ❤️ of 📉📈 and ☕</div>
   </div>
 </footer>
-<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=emrekaragul.com&amp;text=awesome blog" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=emrekaragul.com&amp;title=awesome blog" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=awesome blog&amp;body=Check out this link:emrekaragul.com" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=emrekaragul.com" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="https://reddit.com/submit?url=emrekaragul.com&amp;title=awesome blog" target="_blank" class="reddit">   <i class="fa-brands fa-reddit-alien fa-fw fa-lg"></i></a></div></div>
 
 
 

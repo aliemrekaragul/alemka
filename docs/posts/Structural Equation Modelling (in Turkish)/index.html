@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.269">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2022-10-30">
 <meta name="description" content="YEM: ‘Your View on Science’ ölçeğinden elde edilen 2015 PISA Turkiye örneklemi ile bir örnek çalışma. Bu çalışma Gazi üniversitesi’nde ‘Yapısal Eşitlik Modellemeleri’ dersi kapsamında rapor olarak hazırlanmıştır.">
-
 <title>notebook - Structural Equation Modelling (in Turkish)</title>
 <style>
 code{white-space: pre-wrap;}
@@ -88,7 +85,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -106,8 +102,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -125,18 +120,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -149,23 +139,15 @@ cookieconsent.run({
   "website_name":""
   });
 });
-</script> 
-  
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../alemka.png" alt="" class="navbar-logo">
-    </a>
+    <img src="../../alemka.png" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">notebook</span>
     </a>
@@ -175,7 +157,7 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index1.html">
  <span class="menu-text">Psychometrics</span></a>
   </li>  
@@ -184,13 +166,13 @@ cookieconsent.run({
  <span class="menu-text">Data-Viz</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item dropdown ">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-apps">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-apps">
+<li>
     <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
   </li>  
@@ -203,7 +185,7 @@ cookieconsent.run({
  <span class="dropdown-text">Ekşi KazaR</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/aliemrekaragul"><i class="bi bi-github" role="img">
 </i> 
@@ -215,14 +197,10 @@ cookieconsent.run({
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+<div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Structural Equation Modelling (in Turkish)</h1>
                   <div>
@@ -269,97 +247,93 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#pre-processing-süreci" id="toc-pre-processing-süreci" class="nav-link active" data-scroll-target="#pre-processing-süreci">Pre-processing süreci</a></li>
-  <li><a href="#analiz-süreci" id="toc-analiz-süreci" class="nav-link" data-scroll-target="#analiz-süreci">Analiz Süreci</a>
+<li><a href="#pre-processing-s%C3%BCreci" id="toc-pre-processing-süreci" class="nav-link active" data-scroll-target="#pre-processing-s%C3%BCreci">Pre-processing süreci</a></li>
+  <li>
+<a href="#analiz-s%C3%BCreci" id="toc-analiz-süreci" class="nav-link" data-scroll-target="#analiz-s%C3%BCreci">Analiz Süreci</a>
   <ul>
-  <li><a href="#doğrulayıcı-faktör-analizi-dfa" id="toc-doğrulayıcı-faktör-analizi-dfa" class="nav-link" data-scroll-target="#doğrulayıcı-faktör-analizi-dfa">Doğrulayıcı Faktör Analizi (DFA)</a></li>
+<li><a href="#do%C4%9Frulay%C4%B1c%C4%B1-fakt%C3%B6r-analizi-dfa" id="toc-doğrulayıcı-faktör-analizi-dfa" class="nav-link" data-scroll-target="#do%C4%9Frulay%C4%B1c%C4%B1-fakt%C3%B6r-analizi-dfa">Doğrulayıcı Faktör Analizi (DFA)</a></li>
   <li><a href="#bi-factor-modeller" id="toc-bi-factor-modeller" class="nav-link" data-scroll-target="#bi-factor-modeller">BI-FACTOR MODELLER</a></li>
-  <li><a href="#en-uyumlu-modeldwls-çıktıları" id="toc-en-uyumlu-modeldwls-çıktıları" class="nav-link" data-scroll-target="#en-uyumlu-modeldwls-çıktıları">EN UYUMLU MODEL:DWLS çıktıları</a>
+  <li>
+<a href="#en-uyumlu-modeldwls-%C3%A7%C4%B1kt%C4%B1lar%C4%B1" id="toc-en-uyumlu-modeldwls-çıktıları" class="nav-link" data-scroll-target="#en-uyumlu-modeldwls-%C3%A7%C4%B1kt%C4%B1lar%C4%B1">EN UYUMLU MODEL:DWLS çıktıları</a>
   <ul class="collapse">
-  <li><a href="#model-uyum-indeksleri" id="toc-model-uyum-indeksleri" class="nav-link" data-scroll-target="#model-uyum-indeksleri">Model uyum indeksleri</a></li>
-  <li><a href="#faktör-kovaryansları" id="toc-faktör-kovaryansları" class="nav-link" data-scroll-target="#faktör-kovaryansları">Faktör Kovaryansları</a></li>
-  <li><a href="#artık-residual-varyanslar" id="toc-artık-residual-varyanslar" class="nav-link" data-scroll-target="#artık-residual-varyanslar">Artık (residual) Varyanslar</a></li>
-  <li><a href="#model-gösterimi" id="toc-model-gösterimi" class="nav-link" data-scroll-target="#model-gösterimi">Model gösterimi</a></li>
-  </ul></li>
-  </ul></li>
+<li><a href="#model-uyum-indeksleri" id="toc-model-uyum-indeksleri" class="nav-link" data-scroll-target="#model-uyum-indeksleri">Model uyum indeksleri</a></li>
+  <li><a href="#fakt%C3%B6r-kovaryanslar%C4%B1" id="toc-faktör-kovaryansları" class="nav-link" data-scroll-target="#fakt%C3%B6r-kovaryanslar%C4%B1">Faktör Kovaryansları</a></li>
+  <li><a href="#art%C4%B1k-residual-varyanslar" id="toc-artık-residual-varyanslar" class="nav-link" data-scroll-target="#art%C4%B1k-residual-varyanslar">Artık (residual) Varyanslar</a></li>
+  <li><a href="#model-g%C3%B6sterimi" id="toc-model-gösterimi" class="nav-link" data-scroll-target="#model-g%C3%B6sterimi">Model gösterimi</a></li>
   </ul>
-</nav>
+</li>
+  </ul>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<p>Bu çalışmada PISA 2015 <a href="https://www.oecd.org/pisa/data/CY6_QST_MS_STQ_PBA_Final.pdf">“student questionnaire: paper based verison”</a> içerisindeki en son alt ölçek olan ‘Your View on Science’ ölçeğinden elde edilen veriler kullanılmıştır. Türkiye örnekleminden faydalanılmıştır. Bu örneklem ile bahsi geçen ölçeğin yapısal eşitlik modelleri oluşturulmuş ve karşılaştırılmıştır. Adım adım veri setinin R ile analize hazır hale getirilmesi anlatılmaktadır. Doğrudan analiz ile ilgileniyorsanız aşağıda <strong>‘Analiz Süreci’</strong> başlığına ilerleyiniz.</p>
-<section id="pre-processing-süreci" class="level2">
-<h2 class="anchored" data-anchor-id="pre-processing-süreci">Pre-processing süreci</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>Bu çalışmada PISA 2015 <a href="https://www.oecd.org/pisa/data/CY6_QST_MS_STQ_PBA_Final.pdf">“student questionnaire: paper based verison”</a> içerisindeki en son alt ölçek olan ‘Your View on Science’ ölçeğinden elde edilen veriler kullanılmıştır. Türkiye örnekleminden faydalanılmıştır. Bu örneklem ile bahsi geçen ölçeğin yapısal eşitlik modelleri oluşturulmuş ve karşılaştırılmıştır. Adım adım veri setinin R ile analize hazır hale getirilmesi anlatılmaktadır. Doğrudan analiz ile ilgileniyorsanız aşağıda <strong>‘Analiz Süreci’</strong> başlığına ilerleyiniz.</p>
+<section id="pre-processing-süreci" class="level2"><h2 class="anchored" data-anchor-id="pre-processing-süreci">Pre-processing süreci</h2>
 <p>Öncelikle <a href="https://www.oecd.org/pisa/data/2015database/">OECD</a> tarafından yayınlanan veri setini <a href="https://webfs.oecd.org/pisa/PUF_SPSS_COMBINED_CMB_STU_QQQ.zip">şuradan</a> indiriyoruz. İndirilen bu dosya .sav uzantılı bbir dosya. Bu tür dosyaları açmak için <code>haven</code> paketi <code>read_sav</code> fonksiyonundan faydalanabiliriz. Veri setinin tamamına ihtiyacımız yok, zaten oldukça büyük bir veri. Ülke değilşkeni ve ilgili ölçeğin maddeleri yeterli olacaktır. İndirdiğimiz .sav uzantılı dosyayı <em>working directory’</em>mize taşıdıktan sonra çalıştıracağımız kod satırı şunlar:</p>
 <div class="cell" data-code_folding="true">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(<span class="fu">read_sav</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CY6_MS_CMB_STU_QQQ.sav"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_select =</span> <span class="fu">c</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CNT"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q01TA"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q02TA"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q04TA"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q05TA"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q06NA"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q08NA"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST092Q09NA"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST094Q01NA"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST094Q02NA"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST094Q03NA"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST094Q04NA"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST094Q05NA"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST113Q01TA"</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST113Q02TA"</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST113Q03TA"</span>,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST113Q04TA"</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q01TA"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q02TA"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q03TA"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q04TA"</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q05TA"</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q06TA"</span>,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q07TA"</span>,</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST129Q08TA"</span>,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST131Q01NA"</span>,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST131Q03NA"</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST131Q04NA"</span>,</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST131Q06NA"</span>,</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST131Q08NA"</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST131Q11NA"</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span> </span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span><span class="op">(</span></span>
+<span>  <span class="st">"CY6_MS_CMB_STU_QQQ.sav"</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"CNT"</span>,</span>
+<span>    <span class="st">"ST092Q01TA"</span>,</span>
+<span>    <span class="st">"ST092Q02TA"</span>,</span>
+<span>    <span class="st">"ST092Q04TA"</span>,</span>
+<span>    <span class="st">"ST092Q05TA"</span>,</span>
+<span>    <span class="st">"ST092Q06NA"</span>,</span>
+<span>    <span class="st">"ST092Q08NA"</span>,</span>
+<span>    <span class="st">"ST092Q09NA"</span>,</span>
+<span>    </span>
+<span>    <span class="st">"ST094Q01NA"</span>,</span>
+<span>    <span class="st">"ST094Q02NA"</span>,</span>
+<span>    <span class="st">"ST094Q03NA"</span>,</span>
+<span>    <span class="st">"ST094Q04NA"</span>,</span>
+<span>    <span class="st">"ST094Q05NA"</span>,</span>
+<span>    </span>
+<span>    <span class="st">"ST113Q01TA"</span>,</span>
+<span>    <span class="st">"ST113Q02TA"</span>,</span>
+<span>    <span class="st">"ST113Q03TA"</span>,</span>
+<span>    <span class="st">"ST113Q04TA"</span>,</span>
+<span>    </span>
+<span>    <span class="st">"ST129Q01TA"</span>,</span>
+<span>    <span class="st">"ST129Q02TA"</span>,</span>
+<span>    <span class="st">"ST129Q03TA"</span>,</span>
+<span>    <span class="st">"ST129Q04TA"</span>,</span>
+<span>    <span class="st">"ST129Q05TA"</span>,</span>
+<span>    <span class="st">"ST129Q06TA"</span>,</span>
+<span>    <span class="st">"ST129Q07TA"</span>,</span>
+<span>    <span class="st">"ST129Q08TA"</span>,</span>
+<span>    </span>
+<span>    <span class="st">"ST131Q01NA"</span>,</span>
+<span>    <span class="st">"ST131Q03NA"</span>,</span>
+<span>    <span class="st">"ST131Q04NA"</span>,</span>
+<span>    <span class="st">"ST131Q06NA"</span>,</span>
+<span>    <span class="st">"ST131Q08NA"</span>,</span>
+<span>    <span class="st">"ST131Q11NA"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Ülke değişkenine artık ihtiyacımız yok. O nedenle veri setimizi sadece ölçek maddelerini içerecek şekilde yeniden tanımlayalım:</p>
 <div class="cell" data-code_folding="true">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>science_data<span class="ot">&lt;-</span><span class="fu">filter</span>(data, CNT<span class="sc">==</span><span class="st">"TUR"</span>)[,<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">science_data</span><span class="op">&lt;-</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">CNT</span><span class="op">==</span><span class="st">"TUR"</span><span class="op">)</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Bu veri setini şu kod satırını yürüterek .csv uzantılı bir dosya olarak bilgisayarıma kaydediyorum. Böylece analiz aşamasında o halini de paylaşabileceğim:</p>
 <div class="cell" data-code_folding="true">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(science_data, <span class="st">"science_data.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">science_data</span>, <span class="st">"science_data.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="analiz-süreci" class="level2">
-<h2 class="anchored" data-anchor-id="analiz-süreci">Analiz Süreci</h2>
+</section><section id="analiz-süreci" class="level2"><h2 class="anchored" data-anchor-id="analiz-süreci">Analiz Süreci</h2>
 <p>İlgili ölçekten elde edilen veriyi <a href="https://drive.google.com/file/d/1HVNyhK1J6PmwS04_W4B7LCVXEDakFShg/view?usp=sharing">.csv uzantılı dosya</a> olarak indirebilirsiniz. Bunu read.csv fonksiyonu ile R ortamına aktarabilirsiniz. Veri setimiz hazır. Analizimizde öncelikle doğrulayı faktör analizi kullanacağız. Daha sonra da bi-faktör modelleme yapacağız. Veri setimizi tekrar yükleyelim:</p>
 <div class="cell">
 
 </div>
-<section id="doğrulayıcı-faktör-analizi-dfa" class="level3">
-<h3 class="anchored" data-anchor-id="doğrulayıcı-faktör-analizi-dfa">Doğrulayıcı Faktör Analizi (DFA)</h3>
+<section id="doğrulayıcı-faktör-analizi-dfa" class="level3"><h3 class="anchored" data-anchor-id="doğrulayıcı-faktör-analizi-dfa">Doğrulayıcı Faktör Analizi (DFA)</h3>
 <p>Çalışmamıza konu olan ölçek beş faktörden oluşmaktadır. Bu yapı ile ölçek geliştirme sürecinde tanımlanmıştır. Her faktörde farklı sayılarda maddeler yer almaktadır. Veri setinde bunlar ST ön eki ve faktör numarası ile tanımlanmıştır. Faktörleri ve veri setindeki kodlamalarını şu şekilde listeleyelim:</p>
 <ol type="1">
 <li><p>ST092: How informed are you about the following environmental issues?</p></li>
@@ -370,57 +344,55 @@ cookieconsent.run({
 </ol>
 <p>Bu beş faktörün altında tanımlanan yapıya göre DFA uygulayacağız ve bir geçerlilik çalışması yürüteceğiz. Bunun için öncelikle modelimizi R’a tanıtalım:</p>
 <div class="cell" data-code_folding="true">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Science.model <span class="ot">&lt;-</span> <span class="st">'ST092 =~ 1* ST092Q01TA+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q04TA+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q05TA+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q06NA+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q08NA+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q09NA</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q02NA+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q03NA+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q04NA+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q05NA</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q02TA+</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q03TA+</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q04TA</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">                  </span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q02TA+</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q03TA+</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q04TA+</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q05TA+</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q06TA+</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q07TA+</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q08TA</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q03NA+</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q04NA+</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q06NA+</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q08NA+</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q11NA            </span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="st">                    </span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="st">                           </span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST094</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST113</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST129</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST131</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST113</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST129</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST131</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST129</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST131</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST129 ~~ ST131'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Science.model</span> <span class="op">&lt;-</span> <span class="st">'ST092 =~ 1* ST092Q01TA+</span></span>
+<span><span class="st">                              ST092Q02TA+</span></span>
+<span><span class="st">                              ST092Q04TA+</span></span>
+<span><span class="st">                              ST092Q05TA+</span></span>
+<span><span class="st">                              ST092Q06NA+</span></span>
+<span><span class="st">                              ST092Q08NA+</span></span>
+<span><span class="st">                              ST092Q09NA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
+<span><span class="st">                              ST094Q02NA+</span></span>
+<span><span class="st">                              ST094Q03NA+</span></span>
+<span><span class="st">                              ST094Q04NA+</span></span>
+<span><span class="st">                              ST094Q05NA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
+<span><span class="st">                              ST113Q02TA+</span></span>
+<span><span class="st">                              ST113Q03TA+</span></span>
+<span><span class="st">                              ST113Q04TA</span></span>
+<span><span class="st">                  </span></span>
+<span><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
+<span><span class="st">                              ST129Q02TA+</span></span>
+<span><span class="st">                              ST129Q03TA+</span></span>
+<span><span class="st">                              ST129Q04TA+</span></span>
+<span><span class="st">                              ST129Q05TA+</span></span>
+<span><span class="st">                              ST129Q06TA+</span></span>
+<span><span class="st">                              ST129Q07TA+</span></span>
+<span><span class="st">                              ST129Q08TA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
+<span><span class="st">                              ST131Q03NA+</span></span>
+<span><span class="st">                              ST131Q04NA+</span></span>
+<span><span class="st">                              ST131Q06NA+</span></span>
+<span><span class="st">                              ST131Q08NA+</span></span>
+<span><span class="st">                              ST131Q11NA            </span></span>
+<span><span class="st">                    </span></span>
+<span><span class="st">                           </span></span>
+<span><span class="st">                            ST092 ~~ ST094</span></span>
+<span><span class="st">                            ST092 ~~ ST113</span></span>
+<span><span class="st">                            ST092 ~~ ST129</span></span>
+<span><span class="st">                            ST092 ~~ ST131</span></span>
+<span><span class="st">                            </span></span>
+<span><span class="st">                            ST094 ~~ ST113</span></span>
+<span><span class="st">                            ST094 ~~ ST129</span></span>
+<span><span class="st">                            ST094 ~~ ST131</span></span>
+<span><span class="st">                            </span></span>
+<span><span class="st">                            ST113 ~~ ST129</span></span>
+<span><span class="st">                            ST113 ~~ ST131</span></span>
+<span><span class="st">                            </span></span>
+<span><span class="st">                            ST129 ~~ ST131'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Şimdi Türkiye örnekleminden elde edilen verimizin bu modele uyum sağlayıp sağlamadığına bakacağız. Bu aşamada çeşitli modelleme yaklaşımlarından çıktılar alarak bunları karşılaştıracağız. Bu modelleme yaklaşımları şunlardır:</p>
@@ -432,117 +404,111 @@ cookieconsent.run({
 </ul>
 <p>Yukarıdaki lsitede görüldüğü sıra ile modellerimizi <code>lavaan</code> paketiyle oluşturalım:</p>
 <div class="cell" data-code_folding="true">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model_mlm <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">data =</span> science_data)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model_wls <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">WLS.V =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> science_data)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>model_rml <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">estimator =</span> <span class="st">"MLM"</span>, <span class="at">se =</span> <span class="st">"robust.mlm"</span>, <span class="at">data =</span> science_data)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>model_dwls<span class="ot">&lt;-</span><span class="fu">cfa</span>(Science.model, <span class="at">data =</span> science_data, <span class="at">estimator=</span><span class="st">"DWLS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span></span>
+<span><span class="va">model_mlm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">Science.model</span>, data <span class="op">=</span> <span class="va">science_data</span><span class="op">)</span></span>
+<span><span class="va">model_wls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">Science.model</span>, WLS.V <span class="op">=</span> <span class="cn">TRUE</span>, data <span class="op">=</span> <span class="va">science_data</span><span class="op">)</span></span>
+<span><span class="va">model_rml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">Science.model</span>, estimator <span class="op">=</span> <span class="st">"MLM"</span>, se <span class="op">=</span> <span class="st">"robust.mlm"</span>, data <span class="op">=</span> <span class="va">science_data</span><span class="op">)</span></span>
+<span><span class="va">model_dwls</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">Science.model</span>, data <span class="op">=</span> <span class="va">science_data</span>, estimator<span class="op">=</span><span class="st">"DWLS"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Her biri için de ayrı ayrı analiz çıktılarını <code>summary()</code> fonksiyonu ile tanımlayalım:</p>
+<p>Her biri için de ayrı ayrı analiz çıktılarını <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> fonksiyonu ile tanımlayalım:</p>
 <div class="cell" data-code_folding="true">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>science.mlm<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  model_mlm,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>science.wls<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  model_wls,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>science.rml<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  model_rml,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>science.dwls<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  model_dwls,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">science.mlm</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_mlm</span>,</span>
+<span>  fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rsquare <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  modindices <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">science.wls</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_wls</span>,</span>
+<span>  fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rsquare <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  modindices <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">science.rml</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_rml</span>,</span>
+<span>  fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rsquare <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  modindices <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">science.dwls</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_dwls</span>,</span>
+<span>  fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rsquare <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  modindices <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Tabi ki hem literatürde en yaygın kullanılan hem de alan uzmanları tarafından en ok önerilen yöntem olması sebebiyle MLM yöntemi önceliğimiz. Bu yöntemde normallik varsayımı karşılandığı sürece güçlü analizler elde edilebilmektedir. Veri setimiz de büyük bir örneklemden elde edildiği için bu varsayımın karşılandığı düşünülmektedir. Grafik incelemelerinde de bu durum görülecektir. Dolayısıyla öncelikle MLM’ye ait uyum indekslerini görelim:</p>
 <div class="cell" data-code_folding="true">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>science.mlm[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">science.mlm</span><span class="op">[[</span><span class="st">"fit"</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-code_folding="false">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Science.model <span class="ot">&lt;-</span> <span class="st">'ST092 =~ 1* ST092Q01TA+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q04TA+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q05TA+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q06NA+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q08NA+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q09NA</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q02NA+</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q03NA+</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q04NA+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q05NA</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q02TA+</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q03TA+</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q04TA</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="st">                  </span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q02TA+</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q03TA+</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q04TA+</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q05TA+</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q06TA+</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q07TA+</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q08TA</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q03NA+</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q04NA+</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q06NA+</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q08NA+</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q11NA            </span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="st">                    </span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="st">                           </span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST094</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST113</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST129</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST131</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST113</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST129</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST131</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST129</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST131</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="st">                            </span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST129 ~~ ST131'</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>model_mlm <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Science.model, <span class="at">data =</span> science_data)</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>science.mlm<span class="ot">&lt;-</span><span class="fu">summary</span>(</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  model_mlm,</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">modindices =</span> <span class="cn">TRUE</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>science.mlm[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span></span>
+<span><span class="va">Science.model</span> <span class="op">&lt;-</span> <span class="st">'ST092 =~ 1* ST092Q01TA+</span></span>
+<span><span class="st">                              ST092Q02TA+</span></span>
+<span><span class="st">                              ST092Q04TA+</span></span>
+<span><span class="st">                              ST092Q05TA+</span></span>
+<span><span class="st">                              ST092Q06NA+</span></span>
+<span><span class="st">                              ST092Q08NA+</span></span>
+<span><span class="st">                              ST092Q09NA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
+<span><span class="st">                              ST094Q02NA+</span></span>
+<span><span class="st">                              ST094Q03NA+</span></span>
+<span><span class="st">                              ST094Q04NA+</span></span>
+<span><span class="st">                              ST094Q05NA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
+<span><span class="st">                              ST113Q02TA+</span></span>
+<span><span class="st">                              ST113Q03TA+</span></span>
+<span><span class="st">                              ST113Q04TA</span></span>
+<span><span class="st">                  </span></span>
+<span><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
+<span><span class="st">                              ST129Q02TA+</span></span>
+<span><span class="st">                              ST129Q03TA+</span></span>
+<span><span class="st">                              ST129Q04TA+</span></span>
+<span><span class="st">                              ST129Q05TA+</span></span>
+<span><span class="st">                              ST129Q06TA+</span></span>
+<span><span class="st">                              ST129Q07TA+</span></span>
+<span><span class="st">                              ST129Q08TA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
+<span><span class="st">                              ST131Q03NA+</span></span>
+<span><span class="st">                              ST131Q04NA+</span></span>
+<span><span class="st">                              ST131Q06NA+</span></span>
+<span><span class="st">                              ST131Q08NA+</span></span>
+<span><span class="st">                              ST131Q11NA            </span></span>
+<span><span class="st">                    </span></span>
+<span><span class="st">                           </span></span>
+<span><span class="st">                            ST092 ~~ ST094</span></span>
+<span><span class="st">                            ST092 ~~ ST113</span></span>
+<span><span class="st">                            ST092 ~~ ST129</span></span>
+<span><span class="st">                            ST092 ~~ ST131</span></span>
+<span><span class="st">                            </span></span>
+<span><span class="st">                            ST094 ~~ ST113</span></span>
+<span><span class="st">                            ST094 ~~ ST129</span></span>
+<span><span class="st">                            ST094 ~~ ST131</span></span>
+<span><span class="st">                            </span></span>
+<span><span class="st">                            ST113 ~~ ST129</span></span>
+<span><span class="st">                            ST113 ~~ ST131</span></span>
+<span><span class="st">                            </span></span>
+<span><span class="st">                            ST129 ~~ ST131'</span></span>
+<span><span class="va">model_mlm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">Science.model</span>, data <span class="op">=</span> <span class="va">science_data</span><span class="op">)</span></span>
+<span><span class="va">science.mlm</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_mlm</span>,</span>
+<span>  fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rsquare <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  modindices <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">science.mlm</span><span class="op">[[</span><span class="st">"fit"</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>             npar              fmin             chisq                df 
            70.000             0.652          6055.193           395.000 
            pvalue    baseline.chisq       baseline.df   baseline.pvalue 
@@ -560,9 +526,7 @@ cookieconsent.run({
 <p>Bu çıktılar incelendiğinde, 70 parametreli 395 serbestlik derecesinde bir model oluştuğu görülmektedir. CFI ve TLI uyum indekleri .90 eşik değerin üzerindeyken, RMSEA ve SRMR .06’nın altında yer almaktadır. Bu durumda modelimizin uyumlu olduğu düşünülebilir. Yine de diğer modeller ile de karşılaştırmak gerekir. Onların uyum indeklerini de görelim:</p>
 <p><strong>WLS model:</strong></p>
 <div class="cell" data-code_folding="true">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>science.wls[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">science.wls</span><span class="op">[[</span><span class="st">"fit"</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-code_folding="false">
@@ -583,7 +547,8 @@ cookieconsent.run({
 </div>
 <p><strong>RML model:</strong></p>
 <div class="cell" data-code_folding="true">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>science.rml[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">science.rml</span><span class="op">[[</span><span class="st">"fit"</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-code_folding="false">
 <div class="cell-output cell-output-stdout">
@@ -633,7 +598,8 @@ cookieconsent.run({
 </div>
 <p><strong>DWLS model:</strong></p>
 <div class="cell" data-code_folding="true">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>science.dwls[[<span class="st">"fit"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">science.dwls</span><span class="op">[[</span><span class="st">"fit"</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-code_folding="false">
 <div class="cell-output cell-output-stdout">
@@ -646,132 +612,125 @@ cookieconsent.run({
 </div>
 </div>
 <p>Tüm bu çıktılar incelendiğinde, en uygun modelin <em>diagonally weighted least squares (DWLS)</em> olduğu düşünülmektedir. Veri setinin farklı ölçek düzeyinde olması ve kategorik olması bu durumun sebebi olabilir. DWLS modeli, liteatürde yaygın bir şekilde bu tür veri setleri için önerilmektedir.</p>
-</section>
-<section id="bi-factor-modeller" class="level3">
-<h3 class="anchored" data-anchor-id="bi-factor-modeller">BI-FACTOR MODELLER</h3>
+</section><section id="bi-factor-modeller" class="level3"><h3 class="anchored" data-anchor-id="bi-factor-modeller">BI-FACTOR MODELLER</h3>
 <p>Bi faktör modellemede yapıyı oluşturan faktörlerin tüm maddelerden oluşan genel faktör ile ilişkisi incelenerek karar verilir. Bu amaçla DFA örneğinde olduğu gibi model tanımlamamızı yapıyoruz:</p>
 <div class="cell" data-code_folding="true">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Science.bifactormodel <span class="ot">&lt;-</span> <span class="st">'general.factor =~</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q01TA+</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q04TA+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q05TA+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q06NA+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q08NA+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q09NA+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q01NA+</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q02NA+</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q03NA+</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q04NA+</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q05NA+</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q01TA+</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q02TA+</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q03TA+</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q04TA+</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q01TA+</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q02TA+</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q03TA+</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q04TA+</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q05TA+</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q06TA+</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q07TA+</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q08TA+</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q01NA+</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q03NA+</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q04NA+</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q06NA+</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q08NA+</span></span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q11NA</span></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST092 =~ 1* ST092Q01TA+</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q02TA+</span></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q04TA+</span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q05TA+</span></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q06NA+</span></span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q08NA+</span></span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST092Q09NA</span></span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q02NA+</span></span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q03NA+</span></span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q04NA+</span></span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST094Q05NA</span></span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q02TA+</span></span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q03TA+</span></span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST113Q04TA</span></span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q02TA+</span></span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q03TA+</span></span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q04TA+</span></span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q05TA+</span></span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q06TA+</span></span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q07TA+</span></span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST129Q08TA</span></span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
-<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q03NA+</span></span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q04NA+</span></span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q06NA+</span></span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q08NA+</span></span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="st">                              ST131Q11NA</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a><span class="st">                              </span></span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a><span class="st">                general.factor  ~~ 0*ST092</span></span>
-<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a><span class="st">                general.factor  ~~ 0*ST094</span></span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a><span class="st">                general.factor  ~~ 0*ST113</span></span>
-<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="st">                general.factor  ~~ 0*ST129</span></span>
-<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a><span class="st">                general.factor  ~~ 0*ST131</span></span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="st">                </span></span>
-<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST094</span></span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST113</span></span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST129</span></span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST092 ~~ ST131</span></span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST113</span></span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST129</span></span>
-<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST094 ~~ ST131</span></span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST129</span></span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST113 ~~ ST131</span></span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a><span class="st">                            ST129 ~~ ST131'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Science.bifactormodel</span> <span class="op">&lt;-</span> <span class="st">'general.factor =~</span></span>
+<span><span class="st">                              ST092Q01TA+</span></span>
+<span><span class="st">                              ST092Q02TA+</span></span>
+<span><span class="st">                              ST092Q04TA+</span></span>
+<span><span class="st">                              ST092Q05TA+</span></span>
+<span><span class="st">                              ST092Q06NA+</span></span>
+<span><span class="st">                              ST092Q08NA+</span></span>
+<span><span class="st">                              ST092Q09NA+</span></span>
+<span><span class="st">                              ST094Q01NA+</span></span>
+<span><span class="st">                              ST094Q02NA+</span></span>
+<span><span class="st">                              ST094Q03NA+</span></span>
+<span><span class="st">                              ST094Q04NA+</span></span>
+<span><span class="st">                              ST094Q05NA+</span></span>
+<span><span class="st">                              ST113Q01TA+</span></span>
+<span><span class="st">                              ST113Q02TA+</span></span>
+<span><span class="st">                              ST113Q03TA+</span></span>
+<span><span class="st">                              ST113Q04TA+</span></span>
+<span><span class="st">                              ST129Q01TA+</span></span>
+<span><span class="st">                              ST129Q02TA+</span></span>
+<span><span class="st">                              ST129Q03TA+</span></span>
+<span><span class="st">                              ST129Q04TA+</span></span>
+<span><span class="st">                              ST129Q05TA+</span></span>
+<span><span class="st">                              ST129Q06TA+</span></span>
+<span><span class="st">                              ST129Q07TA+</span></span>
+<span><span class="st">                              ST129Q08TA+</span></span>
+<span><span class="st">                              ST131Q01NA+</span></span>
+<span><span class="st">                              ST131Q03NA+</span></span>
+<span><span class="st">                              ST131Q04NA+</span></span>
+<span><span class="st">                              ST131Q06NA+</span></span>
+<span><span class="st">                              ST131Q08NA+</span></span>
+<span><span class="st">                              ST131Q11NA</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                  ST092 =~ 1* ST092Q01TA+</span></span>
+<span><span class="st">                              ST092Q02TA+</span></span>
+<span><span class="st">                              ST092Q04TA+</span></span>
+<span><span class="st">                              ST092Q05TA+</span></span>
+<span><span class="st">                              ST092Q06NA+</span></span>
+<span><span class="st">                              ST092Q08NA+</span></span>
+<span><span class="st">                              ST092Q09NA</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                  ST094 =~ 1* ST094Q01NA+</span></span>
+<span><span class="st">                              ST094Q02NA+</span></span>
+<span><span class="st">                              ST094Q03NA+</span></span>
+<span><span class="st">                              ST094Q04NA+</span></span>
+<span><span class="st">                              ST094Q05NA</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                  ST113 =~ 1* ST113Q01TA+</span></span>
+<span><span class="st">                              ST113Q02TA+</span></span>
+<span><span class="st">                              ST113Q03TA+</span></span>
+<span><span class="st">                              ST113Q04TA</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                  ST129 =~ 1* ST129Q01TA+</span></span>
+<span><span class="st">                              ST129Q02TA+</span></span>
+<span><span class="st">                              ST129Q03TA+</span></span>
+<span><span class="st">                              ST129Q04TA+</span></span>
+<span><span class="st">                              ST129Q05TA+</span></span>
+<span><span class="st">                              ST129Q06TA+</span></span>
+<span><span class="st">                              ST129Q07TA+</span></span>
+<span><span class="st">                              ST129Q08TA</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                  ST131 =~ 1* ST131Q01NA+</span></span>
+<span><span class="st">                              ST131Q03NA+</span></span>
+<span><span class="st">                              ST131Q04NA+</span></span>
+<span><span class="st">                              ST131Q06NA+</span></span>
+<span><span class="st">                              ST131Q08NA+</span></span>
+<span><span class="st">                              ST131Q11NA</span></span>
+<span><span class="st">                              </span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                general.factor  ~~ 0*ST092</span></span>
+<span><span class="st">                general.factor  ~~ 0*ST094</span></span>
+<span><span class="st">                general.factor  ~~ 0*ST113</span></span>
+<span><span class="st">                general.factor  ~~ 0*ST129</span></span>
+<span><span class="st">                general.factor  ~~ 0*ST131</span></span>
+<span><span class="st">                </span></span>
+<span><span class="st">                            ST092 ~~ ST094</span></span>
+<span><span class="st">                            ST092 ~~ ST113</span></span>
+<span><span class="st">                            ST092 ~~ ST129</span></span>
+<span><span class="st">                            ST092 ~~ ST131</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                            ST094 ~~ ST113</span></span>
+<span><span class="st">                            ST094 ~~ ST129</span></span>
+<span><span class="st">                            ST094 ~~ ST131</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                            ST113 ~~ ST129</span></span>
+<span><span class="st">                            ST113 ~~ ST131</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">                            ST129 ~~ ST131'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Ardından modellerimizi veri setimiz ile sınıyoruz.</p>
 <div class="cell" data-code_folding="true">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Science.bifactormodel_mlm <span class="ot">&lt;-</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cfa</span>(</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    Science.bifactormodel,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> science_data,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">std.lv =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">information =</span> <span class="st">"observed"</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Science.bifactormodel_rml <span class="ot">&lt;-</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cfa</span>(</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    Science.bifactormodel,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> science_data,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimator =</span> <span class="st">"MLM"</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="st">"robust.mlm"</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">std.lv =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">information =</span> <span class="st">"observed"</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>bifactor_mlm <span class="ot">&lt;-</span> <span class="fu">summary</span>(Science.bifactormodel_mlm ,</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>bifactor_rml <span class="ot">&lt;-</span> <span class="fu">summary</span>(Science.bifactormodel_rml ,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>bifactor_mlm[[<span class="st">'fit'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Science.bifactormodel_mlm</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span></span>
+<span>    <span class="va">Science.bifactormodel</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">science_data</span>,</span>
+<span>    std.lv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    information <span class="op">=</span> <span class="st">"observed"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">Science.bifactormodel_rml</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span></span>
+<span>    <span class="va">Science.bifactormodel</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">science_data</span>,</span>
+<span>    estimator <span class="op">=</span> <span class="st">"MLM"</span>,</span>
+<span>    se <span class="op">=</span> <span class="st">"robust.mlm"</span>,</span>
+<span>    std.lv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    information <span class="op">=</span> <span class="st">"observed"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">bifactor_mlm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">Science.bifactormodel_mlm</span> ,</span>
+<span>        fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">bifactor_rml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">Science.bifactormodel_rml</span> ,</span>
+<span>        fit.measures <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bifactor_mlm</span><span class="op">[[</span><span class="st">'fit'</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>             npar              fmin             chisq                df 
            95.000             0.634          5891.081           370.000 
            pvalue    baseline.chisq       baseline.df   baseline.pvalue 
@@ -785,11 +744,8 @@ cookieconsent.run({
              srmr 
             0.328 </code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bifactor_rml[[<span class="st">'fit'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details><summary>Code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bifactor_rml</span><span class="op">[[</span><span class="st">'fit'</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>                         npar                          fmin 
                        95.000                         0.634 
                         chisq                            df 
@@ -899,38 +855,23 @@ cookieconsent.run({
 </div>
 </div>
 <p>Bu çıktılar incelendiğinde de bi faktör modelin verimize DWLS model kadar uyumlu olmadığı görülmektedir. Bu nedenle DWLS modelin en uyumlu model olduğu düşünülmektedir. Bu modelin çıktılarını tablolaştıralım.</p>
-</section>
-<section id="en-uyumlu-modeldwls-çıktıları" class="level3">
-<h3 class="anchored" data-anchor-id="en-uyumlu-modeldwls-çıktıları">EN UYUMLU MODEL:DWLS çıktıları</h3>
+</section><section id="en-uyumlu-modeldwls-çıktıları" class="level3"><h3 class="anchored" data-anchor-id="en-uyumlu-modeldwls-çıktıları">EN UYUMLU MODEL:DWLS çıktıları</h3>
 <p>NOT: Faktör varyansları sabitlenerek model oluşturulduğu için faktör varyansları tablosu raporlaştırılmamıştır.</p>
-<section id="model-uyum-indeksleri" class="level4">
-<h4 class="anchored" data-anchor-id="model-uyum-indeksleri">Model uyum indeksleri</h4>
+<section id="model-uyum-indeksleri" class="level4"><h4 class="anchored" data-anchor-id="model-uyum-indeksleri">Model uyum indeksleri</h4>
 <p><img src="images/paste-E29C1283.png" class="img-fluid"></p>
 <p>Parametre Tahminleri</p>
 <p><img src="images/paste-30D7D53C.png" class="img-fluid"></p>
-</section>
-<section id="faktör-kovaryansları" class="level4">
-<h4 class="anchored" data-anchor-id="faktör-kovaryansları">Faktör Kovaryansları</h4>
+</section><section id="faktör-kovaryansları" class="level4"><h4 class="anchored" data-anchor-id="faktör-kovaryansları">Faktör Kovaryansları</h4>
 <p><img src="images/paste-2111BA05.png" class="img-fluid"></p>
-</section>
-<section id="artık-residual-varyanslar" class="level4">
-<h4 class="anchored" data-anchor-id="artık-residual-varyanslar">Artık (residual) Varyanslar</h4>
+</section><section id="artık-residual-varyanslar" class="level4"><h4 class="anchored" data-anchor-id="artık-residual-varyanslar">Artık (residual) Varyanslar</h4>
 <p><img src="images/paste-883E5B7B.png" class="img-fluid"></p>
-</section>
-<section id="model-gösterimi" class="level4">
-<h4 class="anchored" data-anchor-id="model-gösterimi">Model gösterimi</h4>
+</section><section id="model-gösterimi" class="level4"><h4 class="anchored" data-anchor-id="model-gösterimi">Model gösterimi</h4>
 <p><img src="images/paste-A04B6DB6.png" class="img-fluid"></p>
 
 
-</section>
-</section>
-</section>
-
-</main> <!-- /main -->
-<div> 
+</section></section></section></main><!-- /main --><div> 
 <hr>
-<!-- Begin Mailchimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
 	
@@ -942,8 +883,7 @@ cookieconsent.run({
 <div class="mc-field-group">
 	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
 </label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
-	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
 </div>
 	<div id="mce-responses" class="clear foot">
 		<div class="response" id="mce-error-response" style="display:none"></div>
@@ -953,14 +893,12 @@ cookieconsent.run({
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-            </div>
+</div>
         </div>
     </div>
 </form>
 </div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-<!--End mc_embed_signup-->
-<hr>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
 </div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1094,16 +1032,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">© 2023-Ali Emre Karagül</div>   
       <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">For the ❤️ of 📉📈 and ☕</div>
   </div>
 </footer>
-
 
 
 </body></html>
