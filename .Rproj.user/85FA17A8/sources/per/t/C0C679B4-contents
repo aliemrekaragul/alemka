@@ -29,14 +29,15 @@ website:
     type: implied
     style: simple
     palette: light
+    prefs-text: "🍪"
   google-analytics:
     tracking-id: "G-VJBZWP0G2H"
     anonymize-ip: false
     storage: cookies
     
   page-footer:
-    right: "For  the   ❤️  of  📉📈  and  ☕"
-    left: "© 2023-Ali Emre Karagül"
+    right: "📈❤️☕"
+    left: "© Emre Karagül"
 format: 
   html:
     theme: literia  # morph #simplex  # solar #cerulean  #
