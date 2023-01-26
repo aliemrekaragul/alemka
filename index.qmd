@@ -31,7 +31,7 @@ page-layout: full
 ---
 
 ::: grid
-::: {.g-col-12 .g-col-md-6 style="background-color: rgb(218, 221, 252);  border-bottom-left-radius: 25px; border-top-right-radius: 25px;"}
+::: {.g-col-12 .g-col-md-6 style="background-color: rgb(252, 239, 180);  border-bottom-left-radius: 25px; border-top-right-radius: 25px;"}
 ### GREETINGS!
 
 ------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Currently, I work on my PhD in Educational Assessment and Evaluation. My current
 Always feel free to contact me about any feedback, questions, or maybe just to say "hi".
 :::
 
-::: {.g-col-12 .g-col-md-6 style="background-color: rgb(255, 245, 225); border-top-left-radius: 25px; border-bottom-right-radius: 25px;"}
+::: {.g-col-12 .g-col-md-6 style="background-color: rgb(202, 233, 255); border-top-left-radius: 25px; border-bottom-right-radius: 25px;"}
 ### EDUCATION
 
 ------------------------------------------------------------------------

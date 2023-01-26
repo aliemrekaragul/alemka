@@ -5,7 +5,7 @@ website:
   title: "notebook "
   navbar:
     logo: "alemka.png"
-    background: rgb(255,165,0) # now: orange, previously: 196, 223, 170 a soft green
+    background: rgb(249, 220, 92) # now: yellow, previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
     left:
       - text: "Psychometrics"
