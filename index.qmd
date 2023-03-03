@@ -15,18 +15,6 @@ about:
     - icon: mail
       text: E-mail
       href: mailto:me@emrekaragul.com
-filters:
-  - social-share
-share:
-  permalink: "https://emrekaragul.com/"
-  description: "check this out!"
-  twitter: true
-  facebook: true
-  reddit: true
-  stumble: false
-  tumblr: true
-  linkedin: true
-  email: true
 page-layout: full
 ---
 

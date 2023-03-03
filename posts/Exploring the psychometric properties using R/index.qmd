@@ -1,0 +1,181 @@
+---
+title: "Item difficulty & discrimination: Exploring the psychometric properties using R"
+description: |
+  This blog post explains the importance of examining item difficulty and discrimination in the development and validation of psychological measures and provides a step-by-step guide on how to calculate item difficulty and discrimination in R using an example dataset.
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: TOBB ETU- University of Economics & Technology
+date: "04.03.2023"
+categories: [psychometrics, CTT, difficulty, discrimination]
+image: "image.gif"
+output:
+    self_contained: false
+    code_folding: false
+---
+
+## Introduction
+
+Developing and validating psychological measures requires examining their psychometric properties, including their reliability and validity. One aspect of a measure's validity is its item difficulty, which refers to how easy or difficult each individual item is for respondents to answer correctly. Another important aspect is item discrimination, which measures the extent to which each item distinguishes between participants who have high or low levels of the construct being measured.
+
+Understanding item difficulty and item discrimination is crucial for several reasons. First, items that are too easy or too difficult can limit the variability of responses, making it harder to discriminate between participants who have different levels of the construct being measured. Second, items with low discrimination may not effectively differentiate between participants with different levels of the construct, leading to decreased validity.
+
+In this blog post, we'll explore how to calculate item difficulty and item discrimination in R using [an example dataset](https://drive.google.com/file/d/1Roi2GScsgL_p1j3n0wgO5R8M9LdNlrkZ/view?usp=sharing). We'll explain what each of these psychometric properties are, why they're important, and how to interpret the results. We'll also discuss some limitations and considerations when examining these properties. So let's get started!
+
+The dataset is generated via [this web application](https://erguldemir.shinyapps.io/ED_GenerateIRTdata/) based on Item Response Theory 2-Parameter Logistic Model. The dataset consists of randomly generated 40 items with a sample size of 500. The a-parameters of the items vary between 0.8 and 1.3 while b-parameters vary between -3 and 3. The c and d parameters are fixed to 0 and 1 respectively for all items.
+
+Here are the package(s) we use in this post:
+
+```{r eval=TRUE, echo=FALSE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: false
+#| code-fold: false
+library(multilevel)
+library(ShinyItemAnalysis)
+```
+
+## Item Difficulty
+
+Item difficulty is a psychometric property that measures how easy or difficult an item is for respondents to answer correctly. Examining item difficulty is important because it can help identify items that are too easy or too difficult, which can limit the variability of responses and make it harder to discriminate between participants who have different levels of the construct being measured.
+
+The proportion of correct responses for each item is calculated and reported as the item difficulty value. This calculation can be done manually using spreadsheet software or programmatically using statistical software such as R or SPSS. R has many packages and functions out there that we can use to calculate item difficulties. Yet we will calculate them simply with `colMeans()` function.
+
+Let's start by introducing the dataset to R environment.
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+my_data<-read.csv("data for post about item difficulty and discrimination.csv",sep=";", header = TRUE)
+head(my_data) 
+
+```
+
+Now let's get the item difficulties:
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+# Calculate item difficulty
+item_difficulty <- colMeans(my_data)
+item_difficulty
+```
+
+Interpreting the results of item difficulty is straightforward. Items with higher difficulty values indicate that they were easier for participants to answer correctly, while items with lower difficulty values were more difficult. In our example dataset, the output shows that item 40 had the highest difficulty value of 0.952, meaning that 95.2% of participants answered this item correctly. Item 30, on the other hand, had the lowest difficulty value of 0.044, meaning that only 4.4% of participants answered this item correctly.
+
+It's important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as **\"easy\" if the index is 0.85 or above; \"moderate\" if it is between 0.41 and 0.84; and \"hard\" if it is 0.40 or below**. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.
+
+## Item Discrimination
+
+Item discrimination is another important psychometric property that measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured. It indicates how well an item distinguishes between participants with different levels of the construct.
+
+It's important to note that (just like item difficulties) each construct should be evaluated within its own concept while interpreting item discriminations. Yet, for achievement tests, a generic classification might be defined as **\"good\" if the index is above 0.30; \"fair\" if it is between 0.10 and 0.30; and \"poor\" if it is below** **0.10.**
+
+To obtain a value for item discrimination, there are several statistical approaches that we can utilize. Here we will discuss (1) correlation between item and total score with the item, (2) correlation between item and total score without the item, and (3) upper-lower groups index.
+
+### 1. Correlation between item and total score with the item
+
+This approach is based on calculating the point-biserial correlation coefficient (rpb) between each item and the total score of the measure. The total score is calculated by summing the scores of all items. The rpb ranges from -1 to 1, with values closer to 1 indicating higher discrimination.
+
+Let's first calculate the total score for each participant in our example dataset. Then, use a for loop to calculate rpb coefficients for each item:
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+#get the total score for each participant
+total_score <- rowSums(my_data)
+
+#There are 40 items in the test:
+item_discrimination1 <- 40  
+
+#calculate rpb for each item:
+for(i in 1:40){        
+  item_discrimination1[i] <- cor(total_score, my_data[,i])  
+}
+round(item_discrimination1,4)
+```
+
+### 2. Correlation between item and total score without the item
+
+This approach is very similar to the first one. The only difference is that when we calculate the correlation between an item and the total score, we do not include the item. This type of an approach will result in slightly reduced index values when compared to the first approach. Therefore, it is usually a more-preferred approach by test developers (we would love to stay in the safe-zone).
+
+The package `multilevel` has a specific function for this index. The `item.total()` function takes only the dataset as input and provides us with a dataframe with four columns: item name, discrimination index, a reliability index without the item and the sample size. Yet, we only need the discrimination index. Here how we get it:
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+item_discrimination2<-multilevel::item.total(my_data)
+item_discrimination2$Item.Total
+
+```
+
+### 3.  Upper-lower groups index
+
+Personally, I feel that this approach is the most meaningfully-related approach in terms of "discrimination". That's because while calculating it, we divide the whole group into sub-groups (usually three groups) according to their total scores. Then, we calculate the discrimination index for an item by comparing these groups' responses to that item. This definition feels more like a discrimination index to my illiterate ears.
+
+In R environment, `ShinyItemAnalysis` package has a specific function for this index. The `gDiscrim()` function has several arguements such as `Data`(the data set), `k` (the number of sub groups and 3 is default), `l` and `u` (numeric values to define the lower and upper groups and the defaults are 1 and 3 consecutively). There are other arguments that should be checked on the manual before using the function.
+
+We simply use the function as:
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+
+item_discrimination3<-ShinyItemAnalysis::gDiscrim(my_data)
+item_discrimination3
+```
+
+Note that if you change the number of subgroups, you should be careful while interpreting the results.
+
+No matter what statistical approach you use to estimate discrimination indexes, it's also important to note that item discrimination can be influenced by factors such as the sample size, the range of scores, and the homogeneity of the sample. Therefore, it's recommended to examine item discrimination in conjunction with other psychometric properties such as item difficulty and reliability.
+
+## A Package of Personal Preferrance
+
+While we can calculate both difficulty and discrimination indexes manually or by using different functions from different packages, my totally-subjective opinion is that `ItemAnalysis()` function from the `ShinyItemAnalysis` package gives a well-groomed output for many item statistics. The following code snippet simply provides us with many indexes including difficulty and three types of discrimination indexes:
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+
+head(ShinyItemAnalysis::ItemAnalysis(my_data))
+```
+
+The same package also provides us with a nice visualization function (`DDplot`) for item difficulty and discrimination of any approach stated above. It takes `discrim` argument that can be defined as `RIT` (the first approach), `RIR` (the second approach above) or `ULI` (the third approach). Also, you can define a threshold value to draw a line on the plot via the `thr` argument. Here is a sample usage for our case:
+
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+DDplot(my_data, discrim = 'ULI', k = 3, l = 1, u = 3, thr=0.1)
+```
+
+It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 30 is the easiest one. What a weirdo... :D
+
+## Conclusion
+
+Examining item difficulty and item discrimination are important aspects of evaluating the psychometric properties of a measure. Item difficulty measures how easy or difficult each individual item is for respondents to answer correctly, while item discrimination measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured.
+
+In this blog post, we explored how to calculate item difficulty and item discrimination in R using an example dataset. We explained what each of these psychometric properties are, why they're important, and how to interpret the results. We also discussed some limitations and considerations when examining these properties.
+
+Overall, understanding and evaluating the psychometric properties of a measure can help ensure its reliability and validity, and inform decisions about item selection and revision.

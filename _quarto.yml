@@ -29,7 +29,7 @@ website:
     type: implied
     style: simple
     palette: light
-    prefs-text: "🍪"
+    prefs-text: "🍪 Cookies"
   google-analytics:
     tracking-id: "G-VJBZWP0G2H"
     anonymize-ip: false
