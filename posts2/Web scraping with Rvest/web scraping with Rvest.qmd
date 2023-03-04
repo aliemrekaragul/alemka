@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
-#### In this post, we will delve into harvesting a web page, [Ekşi Sözlük](https://eksisozluk.com/). This process won't include the automation of the process. Yet, [a completed web application](https://aliemrekaragul.shinyapps.io/eksi-kazaR/) for harvesting Ekşi Sözlük is available.
+**In this post, we will delve into harvesting a web page, [Ekşi Sözlük](https://eksisozluk.com/). This process won't include the automation of the process. Yet, [a completed web application](https://aliemrekaragul.shinyapps.io/eksi-kazaR/) for harvesting Ekşi Sözlük is available.**
 
 Ekşi Sözlük is a reddit-like satirical web site where users share their ideas on certain topics in Turkish. Our target topic is "veri bilimi" (a.k.a. data science in English). The R packages that we use in this post are as follows:
 

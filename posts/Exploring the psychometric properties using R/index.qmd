@@ -28,10 +28,10 @@ The dataset is generated via [this web application](https://erguldemir.shinyapps
 
 Here are the package(s) we use in this post:
 
-```{r eval=TRUE, echo=FALSE, code_folding=FALSE}
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE}
 #| warning: false
 #| eval: true
-#| echo: false
+#| echo: true
 #| code-fold: false
 library(multilevel)
 library(ShinyItemAnalysis)
@@ -53,7 +53,6 @@ Let's start by introducing the dataset to R environment.
 
 my_data<-read.csv("data for post about item difficulty and discrimination.csv",sep=";", header = TRUE)
 head(my_data) 
-
 ```
 
 Now let's get the item difficulties:
@@ -71,13 +70,13 @@ item_difficulty
 
 Interpreting the results of item difficulty is straightforward. Items with higher difficulty values indicate that they were easier for participants to answer correctly, while items with lower difficulty values were more difficult. In our example dataset, the output shows that item 40 had the highest difficulty value of 0.952, meaning that 95.2% of participants answered this item correctly. Item 30, on the other hand, had the lowest difficulty value of 0.044, meaning that only 4.4% of participants answered this item correctly.
 
-It's important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as **\"easy\" if the index is 0.85 or above; \"moderate\" if it is between 0.41 and 0.84; and \"hard\" if it is 0.40 or below**. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.
+It's important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as **"easy" if the index is 0.85 or above; "moderate" if it is between 0.41 and 0.84; and "hard" if it is 0.40 or below**. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.
 
 ## Item Discrimination
 
 Item discrimination is another important psychometric property that measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured. It indicates how well an item distinguishes between participants with different levels of the construct.
 
-It's important to note that (just like item difficulties) each construct should be evaluated within its own concept while interpreting item discriminations. Yet, for achievement tests, a generic classification might be defined as **\"good\" if the index is above 0.30; \"fair\" if it is between 0.10 and 0.30; and \"poor\" if it is below** **0.10.**
+It's important to note that (just like item difficulties) each construct should be evaluated within its own concept while interpreting item discriminations. Yet, for achievement tests, a generic classification might be defined as **"good" if the index is above 0.30; "fair" if it is between 0.10 and 0.30; and "poor" if it is below** **0.10.**
 
 To obtain a value for item discrimination, there are several statistical approaches that we can utilize. Here we will discuss (1) correlation between item and total score with the item, (2) correlation between item and total score without the item, and (3) upper-lower groups index.
 
@@ -122,7 +121,7 @@ item_discrimination2$Item.Total
 
 ```
 
-### 3.  Upper-lower groups index
+### 3. Upper-lower groups index
 
 Personally, I feel that this approach is the most meaningfully-related approach in terms of "discrimination". That's because while calculating it, we divide the whole group into sub-groups (usually three groups) according to their total scores. Then, we calculate the discrimination index for an item by comparing these groups' responses to that item. This definition feels more like a discrimination index to my illiterate ears.
 
@@ -155,8 +154,10 @@ While we can calculate both difficulty and discrimination indexes manually or by
 #| echo: true
 #| code-fold: false
 
-
-head(ShinyItemAnalysis::ItemAnalysis(my_data))
+#round is for rounding the values in the results.
+item_stats<-round(ShinyItemAnalysis::ItemAnalysis(my_data),2)
+#to see all the output in a table:
+knitr::kable(item_stats)
 ```
 
 The same package also provides us with a nice visualization function (`DDplot`) for item difficulty and discrimination of any approach stated above. It takes `discrim` argument that can be defined as `RIT` (the first approach), `RIR` (the second approach above) or `ULI` (the third approach). Also, you can define a threshold value to draw a line on the plot via the `thr` argument. Here is a sample usage for our case:
@@ -170,7 +171,7 @@ The same package also provides us with a nice visualization function (`DDplot`) 
 DDplot(my_data, discrim = 'ULI', k = 3, l = 1, u = 3, thr=0.1)
 ```
 
-It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 30 is the easiest one. What a weirdo... :D
+It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 40 is the easiest one. What a weirdo... :D
 
 ## Conclusion
 

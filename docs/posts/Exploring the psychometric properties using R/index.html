@@ -274,14 +274,15 @@ cookieconsent.run({
 <p>The dataset is generated via <a href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">this web application</a> based on Item Response Theory 2-Parameter Logistic Model. The dataset consists of randomly generated 40 items with a sample size of 500. The a-parameters of the items vary between 0.8 and 1.3 while b-parameters vary between -3 and 3. The c and d parameters are fixed to 0 and 1 respectively for all items.</p>
 <p>Here are the package(s) we use in this post:</p>
 <div class="cell" data-code_folding="false">
-
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.r-project.org">multilevel</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.ShinyItemAnalysis.org">ShinyItemAnalysis</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="item-difficulty" class="level2"><h2 class="anchored" data-anchor-id="item-difficulty">Item Difficulty</h2>
 <p>Item difficulty is a psychometric property that measures how easy or difficult an item is for respondents to answer correctly. Examining item difficulty is important because it can help identify items that are too easy or too difficult, which can limit the variability of responses and make it harder to discriminate between participants who have different levels of the construct being measured.</p>
 <p>The proportion of correct responses for each item is calculated and reported as the item difficulty value. This calculation can be done manually using spreadsheet software or programmatically using statistical software such as R or SPSS. R has many packages and functions out there that we can use to calculate item difficulties. Yet we will calculate them simply with <code><a href="https://rdrr.io/r/base/colSums.html">colMeans()</a></code> function.</p>
 <p>Let’s start by introducing the dataset to R environment.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data for post about item difficulty and discrimination.csv"</span>,sep<span class="op">=</span><span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data for post about item difficulty and discrimination.csv"</span>,sep<span class="op">=</span><span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 i11 i12 i13 i14 i15 i16 i17 i18 i19 i20 i21
@@ -302,7 +303,7 @@ cookieconsent.run({
 </div>
 <p>Now let’s get the item difficulties:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calculate item difficulty</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calculate item difficulty</span></span>
 <span><span class="va">item_difficulty</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
 <span><span class="va">item_difficulty</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -317,26 +318,26 @@ cookieconsent.run({
 </div>
 </div>
 <p>Interpreting the results of item difficulty is straightforward. Items with higher difficulty values indicate that they were easier for participants to answer correctly, while items with lower difficulty values were more difficult. In our example dataset, the output shows that item 40 had the highest difficulty value of 0.952, meaning that 95.2% of participants answered this item correctly. Item 30, on the other hand, had the lowest difficulty value of 0.044, meaning that only 4.4% of participants answered this item correctly.</p>
-<p>It’s important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as <strong>"easy" if the index is 0.85 or above; "moderate" if it is between 0.41 and 0.84; and "hard" if it is 0.40 or below</strong>. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.</p>
+<p>It’s important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as <strong>“easy” if the index is 0.85 or above; “moderate” if it is between 0.41 and 0.84; and “hard” if it is 0.40 or below</strong>. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.</p>
 </section><section id="item-discrimination" class="level2"><h2 class="anchored" data-anchor-id="item-discrimination">Item Discrimination</h2>
 <p>Item discrimination is another important psychometric property that measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured. It indicates how well an item distinguishes between participants with different levels of the construct.</p>
-<p>It’s important to note that (just like item difficulties) each construct should be evaluated within its own concept while interpreting item discriminations. Yet, for achievement tests, a generic classification might be defined as <strong>"good" if the index is above 0.30; "fair" if it is between 0.10 and 0.30; and "poor" if it is below</strong> <strong>0.10.</strong></p>
+<p>It’s important to note that (just like item difficulties) each construct should be evaluated within its own concept while interpreting item discriminations. Yet, for achievement tests, a generic classification might be defined as <strong>“good” if the index is above 0.30; “fair” if it is between 0.10 and 0.30; and “poor” if it is below</strong> <strong>0.10.</strong></p>
 <p>To obtain a value for item discrimination, there are several statistical approaches that we can utilize. Here we will discuss (1) correlation between item and total score with the item, (2) correlation between item and total score without the item, and (3) upper-lower groups index.</p>
 <section id="correlation-between-item-and-total-score-with-the-item" class="level3"><h3 class="anchored" data-anchor-id="correlation-between-item-and-total-score-with-the-item">1. Correlation between item and total score with the item</h3>
 <p>This approach is based on calculating the point-biserial correlation coefficient (rpb) between each item and the total score of the measure. The total score is calculated by summing the scores of all items. The rpb ranges from -1 to 1, with values closer to 1 indicating higher discrimination.</p>
 <p>Let’s first calculate the total score for each participant in our example dataset. Then, use a for loop to calculate rpb coefficients for each item:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#get the total score for each participant</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#get the total score for each participant</span></span>
 <span><span class="va">total_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#There are 40 items in the test:</span></span>
-<span><span class="va">item_discrimination</span> <span class="op">&lt;-</span> <span class="fl">40</span>  </span>
+<span><span class="va">item_discrimination1</span> <span class="op">&lt;-</span> <span class="fl">40</span>  </span>
 <span></span>
 <span><span class="co">#calculate rpb for each item:</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">40</span><span class="op">)</span><span class="op">{</span>        </span>
-<span>  <span class="va">item_discrimination</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">total_score</span>, <span class="va">my_data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span>  </span>
+<span>  <span class="va">item_discrimination1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">total_score</span>, <span class="va">my_data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span>  </span>
 <span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">item_discrimination</span>,<span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">item_discrimination1</span>,<span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.3984 0.2162 0.2308 0.4485 0.3019 0.4847 0.4148 0.4548 0.2796 0.3335
 [11] 0.4498 0.5138 0.2735 0.4336 0.4423 0.1956 0.4288 0.4133 0.3297 0.4214
@@ -345,11 +346,11 @@ cookieconsent.run({
 </div>
 </div>
 </section><section id="correlation-between-item-and-total-score-without-the-item" class="level3"><h3 class="anchored" data-anchor-id="correlation-between-item-and-total-score-without-the-item">2. Correlation between item and total score without the item</h3>
-<p>This approach is very similar to the first one. The only difference is that when we calculate the correlation between an item and the total score, we do not include the item. This type of an approach will result in slightly reduced indexes when compared to the first approach. Therefore, it is usually a more-preferred approach by test developers (we would love to stay in the safe-zone).</p>
-<p>The package <code>multilevel</code> has a specific function for this index. The <code>item.total()</code> function takes only the dataset as input and provides us with a dataframe with four columns: item name, discrimination index, a reliability index without the item and the sample size. Yet, we only need the discrimination index. Here how we get it:</p>
+<p>This approach is very similar to the first one. The only difference is that when we calculate the correlation between an item and the total score, we do not include the item. This type of an approach will result in slightly reduced index values when compared to the first approach. Therefore, it is usually a more-preferred approach by test developers (we would love to stay in the safe-zone).</p>
+<p>The package <code>multilevel</code> has a specific function for this index. The <code><a href="https://rdrr.io/pkg/multilevel/man/item.total.html">item.total()</a></code> function takes only the dataset as input and provides us with a dataframe with four columns: item name, discrimination index, a reliability index without the item and the sample size. Yet, we only need the discrimination index. Here how we get it:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">item_discrimination</span><span class="op">&lt;-</span><span class="fu">multilevel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/multilevel/man/item.total.html">item.total</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
-<span><span class="va">item_discrimination</span><span class="op">$</span><span class="va">Item.Total</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">item_discrimination2</span><span class="op">&lt;-</span><span class="fu">multilevel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/multilevel/man/item.total.html">item.total</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span><span class="va">item_discrimination2</span><span class="op">$</span><span class="va">Item.Total</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.3365024 0.1703597 0.1832279 0.3887597 0.2511883 0.4160659 0.3493047
  [8] 0.3837360 0.2232991 0.2803945 0.3892913 0.4477891 0.2207879 0.3648121
@@ -360,11 +361,12 @@ cookieconsent.run({
 </div>
 </div>
 </section><section id="upper-lower-groups-index" class="level3"><h3 class="anchored" data-anchor-id="upper-lower-groups-index">3. Upper-lower groups index</h3>
-<p>Personally, I feel that this approach is the most meaningfully-related approach in terms of “discrimination”. That’s because while calculating it, we divide the whole group into sub-groups (usually three groups) according to their total scores. Then, we calculate the discrimination index for an item by comparing these groups’ responses to that item.</p>
-<p>In R environment, <code>ShinyItemAnalysis</code> package has a specific function for this index. The gDiscrim() function has several arguements such as <code>Data</code>(the data set), <code>k</code> (the number of sub groups and 3 is default), <code>l</code> and <code>u</code> (numeric values to define the lower and upper groups and the defaults are 1 and 3 consecutively). There are other arguments that should be checked on the manual before using the function.</p>
+<p>Personally, I feel that this approach is the most meaningfully-related approach in terms of “discrimination”. That’s because while calculating it, we divide the whole group into sub-groups (usually three groups) according to their total scores. Then, we calculate the discrimination index for an item by comparing these groups’ responses to that item. This definition feels more like a discrimination index to my illiterate ears.</p>
+<p>In R environment, <code>ShinyItemAnalysis</code> package has a specific function for this index. The <code><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/gDiscrim.html">gDiscrim()</a></code> function has several arguements such as <code>Data</code>(the data set), <code>k</code> (the number of sub groups and 3 is default), <code>l</code> and <code>u</code> (numeric values to define the lower and upper groups and the defaults are 1 and 3 consecutively). There are other arguments that should be checked on the manual before using the function.</p>
 <p>We simply use the function as:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ShinyItemAnalysis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/gDiscrim.html">gDiscrim</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">item_discrimination3</span><span class="op">&lt;-</span><span class="fu">ShinyItemAnalysis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/gDiscrim.html">gDiscrim</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span><span class="va">item_discrimination3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        i1         i2         i3         i4         i5         i6         i7 
 0.35177700 0.11253051 0.12801251 0.42537370 0.20042709 0.57908786 0.40470561 
@@ -381,43 +383,953 @@ cookieconsent.run({
 </div>
 </div>
 <p>Note that if you change the number of subgroups, you should be careful while interpreting the results.</p>
-<p>It’s also important to note that no matter what statistical approach you use to estimate discrimination indexes, item discrimination can be influenced by factors such as the sample size, the range of scores, and the homogeneity of the sample. Therefore, it’s recommended to examine item discrimination in conjunction with other psychometric properties such as item difficulty and reliability.</p>
+<p>No matter what statistical approach you use to estimate discrimination indexes, it’s also important to note that item discrimination can be influenced by factors such as the sample size, the range of scores, and the homogeneity of the sample. Therefore, it’s recommended to examine item discrimination in conjunction with other psychometric properties such as item difficulty and reliability.</p>
 </section></section><section id="a-package-of-personal-preferrance" class="level2"><h2 class="anchored" data-anchor-id="a-package-of-personal-preferrance">A Package of Personal Preferrance</h2>
-<p>While we can calculate both difficulty and discrimination indexes manually or by using different functions from different packages, my totally-subjective opinion is that <code>ItemAnalysis()</code> function from the <code>ShinyItemAnalysis</code> package gives a well-groomed output for many item statistics. The following code snippet simply provides us with many indexes including difficulty and three types of discrimination indexes:</p>
+<p>While we can calculate both difficulty and discrimination indexes manually or by using different functions from different packages, my totally-subjective opinion is that <code><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/ItemAnalysis.html">ItemAnalysis()</a></code> function from the <code>ShinyItemAnalysis</code> package gives a well-groomed output for many item statistics. The following code snippet simply provides us with many indexes including difficulty and three types of discrimination indexes:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">ShinyItemAnalysis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/ItemAnalysis.html">ItemAnalysis</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Difficulty  Mean        SD Cut.score obs.min Min.score obs.max Max.score
-i1      0.212 0.212 0.4091342        NA       0         0       1         1
-i2      0.918 0.918 0.2746395        NA       0         0       1         1
-i3      0.910 0.910 0.2864684        NA       0         0       1         1
-i4      0.782 0.782 0.4133009        NA       0         0       1         1
-i5      0.112 0.112 0.3156823        NA       0         0       1         1
-i6      0.394 0.394 0.4891242        NA       0         0       1         1
-   Prop.max.score       RIR       RIT Corr.criterion       ULI gULI Alpha.drop
-i1          0.212 0.3365024 0.3984124             NA 0.3517770   NA  0.8334251
-i2          0.918 0.1703597 0.2162265             NA 0.1125305   NA  0.8370508
-i3          0.910 0.1832279 0.2308225             NA 0.1280125   NA  0.8368467
-i4          0.782 0.3887597 0.4485068             NA 0.4253737   NA  0.8319742
-i5          0.112 0.2511883 0.3019160             NA 0.2004271   NA  0.8355353
-i6          0.394 0.4160659 0.4846843             NA 0.5790879   NA  0.8309156
-    Index.rel Index.val Perc.miss Perc.nr
-i1 0.16300412        NA         0       0
-i2 0.05938434        NA         0       0
-i3 0.06612334        NA         0       0
-i4 0.18536825        NA         0       0
-i5 0.09530954        NA         0       0
-i6 0.23707084        NA         0       0</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#round is for rounding the values in the results.</span></span>
+<span><span class="va">item_stats</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu">ShinyItemAnalysis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/ItemAnalysis.html">ItemAnalysis</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#to see all the output in a table:</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">item_stats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 8%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 4%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Difficulty</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">Cut.score</th>
+<th style="text-align: right;">obs.min</th>
+<th style="text-align: right;">Min.score</th>
+<th style="text-align: right;">obs.max</th>
+<th style="text-align: right;">Max.score</th>
+<th style="text-align: right;">Prop.max.score</th>
+<th style="text-align: right;">RIR</th>
+<th style="text-align: right;">RIT</th>
+<th style="text-align: right;">Corr.criterion</th>
+<th style="text-align: right;">ULI</th>
+<th style="text-align: right;">gULI</th>
+<th style="text-align: right;">Alpha.drop</th>
+<th style="text-align: right;">Index.rel</th>
+<th style="text-align: right;">Index.val</th>
+<th style="text-align: right;">Perc.miss</th>
+<th style="text-align: right;">Perc.nr</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">i1</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i2</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i3</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i4</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i5</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i6</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i7</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i8</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i9</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i10</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i11</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i12</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i13</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i14</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i15</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i16</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i17</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i18</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i19</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i20</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i21</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i22</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i23</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i24</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i25</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i26</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i27</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i28</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i29</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i30</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i31</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i32</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i33</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i34</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i35</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i36</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i37</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i38</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">i39</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i40</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The same package also provides us with a nice visualization function (<code>DDplot</code>) for item difficulty and discrimination of any approach stated above. It takes <code>discrim</code> argument that can be defined as <code>RIT</code> (the first approach), <code>RIR</code> (the second approach above) or <code>ULI</code> (the third approach). Also, you can define a threshold value to draw a line on the plot via the <code>thr</code> argument. Here is a sample usage for our case:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">DDplot</span><span class="op">(</span><span class="va">my_data</span>, discrim <span class="op">=</span> <span class="st">'ULI'</span>, k <span class="op">=</span> <span class="fl">3</span>, l <span class="op">=</span> <span class="fl">1</span>, u <span class="op">=</span> <span class="fl">3</span>, thr<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ShinyItemAnalysis/man/DDplot.html">DDplot</a></span><span class="op">(</span><span class="va">my_data</span>, discrim <span class="op">=</span> <span class="st">'ULI'</span>, k <span class="op">=</span> <span class="fl">3</span>, l <span class="op">=</span> <span class="fl">1</span>, u <span class="op">=</span> <span class="fl">3</span>, thr<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 30 is the easiest one. What a weirdo… :D</p>
+<p>It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 40 is the easiest one. What a weirdo… :D</p>
 </section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Examining item difficulty and item discrimination are important aspects of evaluating the psychometric properties of a measure. Item difficulty measures how easy or difficult each individual item is for respondents to answer correctly, while item discrimination measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured.</p>
 <p>In this blog post, we explored how to calculate item difficulty and item discrimination in R using an example dataset. We explained what each of these psychometric properties are, why they’re important, and how to interpret the results. We also discussed some limitations and considerations when examining these properties.</p>
