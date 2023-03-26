@@ -8,7 +8,7 @@ author:
     email: aliemrekaragul@gmail.com
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
-date: "04.03.2023"
+date: "03.04.2023"
 categories: [psychometrics, CTT, difficulty, discrimination]
 image: "image.gif"
 output:
