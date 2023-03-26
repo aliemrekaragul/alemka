@@ -58,5 +58,14 @@
   },
   "pychometrics.qmd": {
     "pychometrics.html": "6f3276e0"
+  },
+  "posts/Visualisation of My Personal Google Data (1)/index.qmd": {
+    "index.html": "f3d77212"
+  },
+  "posts/Visualisation of My Personal Google Data (2)/index.qmd": {
+    "index.html": "fa7951ca"
+  },
+  "posts/Web scraping with Rvest/web scraping with Rvest.qmd": {
+    "web scraping with Rvest.html": "b32ef32b"
   }
 }

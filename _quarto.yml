@@ -8,19 +8,30 @@ website:
     background: rgb(249, 220, 92) # now: yellow, previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
     left:
-      - text: "Psychometrics"
+      - text: "About me!"
+        file: index.qmd    
+      - text: "📝 Blog Posts"
         file: index1.qmd
-      - text: "Data-Viz"
-        file: index2.qmd
+        
     right: 
-      - text: "Apps"
+      - text: "🛠️ Apps"
         menu:
           - text: "Test Analyze-R"
             href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
           - text: "ITP Score Calculator"
             href: https://itp-calculator.com/   
           - text: "Ekşi KazaR"
-            href: https://aliemrekaragul.shinyapps.io/eksi-kazaR/              
+            href: https://aliemrekaragul.shinyapps.io/eksi-kazaR/  
+      - text: "⭐ Favorite Links"
+        menu: 
+          - text: "R cheatsheets"
+            href: https://posit.cloud/learn/cheat-sheets
+          - text: "R 4 D S"
+            href: https://r4ds.hadley.nz/          
+          - text: "Generate IRT Data"
+            href: https://erguldemir.shinyapps.io/ED_GenerateIRTdata/
+          - text: "Google Ngram Viewer"
+            href: https://books.google.com/ngrams/
       - icon: github
         href: https://github.com/aliemrekaragul
       - icon: linkedin

@@ -1,0 +1,21 @@
+---
+title: "Web scraping with Rvest package"
+#preview: images/paste-A04B6DB6.png
+description: |
+  In this post, we will delve into harvesting a web page, Ekşi Sözlük. This doesn't include the automation of the process. Yet, a completed web application for harvesting Ekşi Sözlük is available.
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: TOBB ETU- University of Economics & Technology
+date: 2023-01-06
+categories: [Rvest, Wordcloud, Data-viz]
+image: "image.gif"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## This post is reverted until an unspecified time as eksisozluk.com is cencorred by the Turkish government.

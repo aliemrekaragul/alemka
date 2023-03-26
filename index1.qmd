@@ -1,5 +1,5 @@
 ---
-title: "Psychometrics"
+title: "Psychometrics & Data Visualization"
 listing:
   contents: posts
   fields: [image, title, description, date, categories, reading-time]
