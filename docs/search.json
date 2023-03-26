@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html",
+    "href": "posts/Top 5 Data Sources/index.html",
+    "title": "Top 5 Data Sources",
+    "section": "",
+    "text": "In the world of data analysis, having access to quality data sources can make all the difference. Whether you’re a researcher, a business owner, or just someone who loves playing with numbers, finding the right data can help you uncover insights and make better decisions. With so many data sources available online, it can be hard to know where to start. In this blog post, I’ll be sharing my top 5 favorite data sources, each of which I’ve found to be reliable, user-friendly, and full of valuable information. From the Cloud Google Marketplace to the Bureau of Labor Statistics, these data sources offer a wealth of insights that I hope you’ll find as useful and inspiring as I have. So without further ado, let’s dive in!"
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#cloud-google-marketplace",
+    "href": "posts/Top 5 Data Sources/index.html#cloud-google-marketplace",
+    "title": "Top 5 Data Sources",
+    "section": "1. Cloud Google Marketplace",
+    "text": "1. Cloud Google Marketplace\nThe Cloud Google Marketplace is a collection of datasets, APIs, and applications that are hosted on the Google Cloud Platform. The marketplace offers a wide range of data sources from different industries, including finance, healthcare, and transportation. Some of the popular datasets available on the Cloud Google Marketplace include:\n\nCOVID-19 Open Research Dataset (CORD-19)\nNew York City Taxi and Limousine Commission (TLC) Trip Data\nChicago Crime Data\nOpenFDA Drug Label API\nUS Census Bureau Data\n\nI have used the Cloud Google Marketplace for various projects. The platform offers an intuitive interface that allows users to search for datasets, preview data, and access documentation. The marketplace also provides access to cloud-based tools for data exploration, visualization, and analysis.\nOne example of how this data could be useful is for a business owner looking to expand into a new market. By using datasets such as US Census Bureau Data, they can gain insights into the demographic characteristics of a particular region, which can inform decisions about marketing, product development, and customer targeting."
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#drought.gov",
+    "href": "posts/Top 5 Data Sources/index.html#drought.gov",
+    "title": "Top 5 Data Sources",
+    "section": "2. Drought.gov",
+    "text": "2. Drought.gov\nDrought.gov is a comprehensive resource for drought-related data, maps, and tools in the United States. The website provides a variety of data sources, including:\n\nDrought Monitor\nSoil Moisture Active Passive (SMAP) data\nEvaporative Demand Drought Index (EDDI)\nU.S. Drought Atlas\n\nAs a researcher, I have used Drought.gov extensively for analyzing trends in drought conditions and predicting future impacts of climate change. The website offers easy access to a wide range of data, including both historical and real-time data. Additionally, the site provides a number of interactive maps and visualizations that make it easy to explore the data and gain insights.\nFor example, if you’re a farmer looking to optimize your crop yields in a drought-prone region, you could use Drought Monitor data to track changes in drought severity and plan your irrigation and planting schedules accordingly."
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#unicef-statistical-tables",
+    "href": "posts/Top 5 Data Sources/index.html#unicef-statistical-tables",
+    "title": "Top 5 Data Sources",
+    "section": "3. UNICEF Statistical Tables",
+    "text": "3. UNICEF Statistical Tables\nUNICEF Statistical Tables is a data source that provides a wide range of data on child welfare and development across the globe. The data is collected from various sources, including national surveys and administrative records. Some of the data available on the UNICEF Statistical Tables includes:\n\nChild mortality rates\nNutrition indicators\nEducation indicators\nChild protection indicators\n\nAs someone who is interested in social justice issues, I have found the UNICEF Statistical Tables to be a valuable resource for understanding the state of child welfare around the world. The platform offers a user-friendly interface that allows users to browse data by country, indicator, or year.\nFor instance, policymakers looking to design effective policies to improve child welfare in their countries could use data from UNICEF Statistical Tables to identify areas where interventions are most needed, such as high child mortality rates or low school enrollment rates."
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#openpolicing.stanford.edu",
+    "href": "posts/Top 5 Data Sources/index.html#openpolicing.stanford.edu",
+    "title": "Top 5 Data Sources",
+    "section": "4. OpenPolicing.Stanford.edu",
+    "text": "4. OpenPolicing.Stanford.edu\nOpenPolicing.Stanford.edu is a data source that provides access to millions of records of police stops and searches across the United States. The data is collected from various law enforcement agencies and compiled into a standardized format for analysis. The platform also provides tools for exploring the data, including interactive maps and dashboards.\nAs someone who is interested in understanding police behavior and racial disparities in policing, I have found OpenPolicing.Stanford.edu to be an invaluable resource. The platform provides detailed data on police stops and searches, including the race and ethnicity of the individuals involved, the reason for the stop, and the outcome of the encounter.\nOne example of how this data could be used is to identify patterns of racial bias in policing. By analyzing the data on police stops and searches, researchers can identify whether certain racial or ethnic groups are more likely to be stopped or searched than others, and whether these disparities are driven by legitimate factors (such as crime rates) or by bias."
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#bureau-of-labor-statistics-bls-tables",
+    "href": "posts/Top 5 Data Sources/index.html#bureau-of-labor-statistics-bls-tables",
+    "title": "Top 5 Data Sources",
+    "section": "5. Bureau of Labor Statistics (BLS) Tables",
+    "text": "5. Bureau of Labor Statistics (BLS) Tables\nThe Bureau of Labor Statistics (BLS) Tables is a data source that provides access to a wide range of data on the U.S. labor market. The platform offers a wealth of data, including:\n\nUnemployment rates\nEmployment by industry and occupation\nLabor force participation rates\nAverage wages and salaries\nJob openings and hires\n\nAs someone who works in the field of economics and finance, I have used BLS Tables extensively for analyzing trends in the labor market and predicting future economic conditions. The platform provides a variety of tools for data exploration and analysis, including charts, tables, and interactive visualizations.\nFor example, if you’re a policymaker looking to design policies that promote job growth and reduce unemployment, you could use BLS Tables data to identify which industries are experiencing job growth, which occupations are in high demand, and which regions have the highest unemployment rates."
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#an-easter-egg-openpsychometrics.org",
+    "href": "posts/Top 5 Data Sources/index.html#an-easter-egg-openpsychometrics.org",
+    "title": "Top 5 Data Sources",
+    "section": "An Easter Egg: OpenPsychometrics.org",
+    "text": "An Easter Egg: OpenPsychometrics.org\nAs a surprise addition to my list of favorite data sources, I would like to introduce OpenPsychometrics.org. I came across with this website during a Ph.D. course on Item Response Theory carried by Associate Professor Ergül Demir. This website provides access to a collection of free psychological tests and assessments, which can be used for a wide range of purposes, from self-reflection to academic research.\nSome of the psychological tests available on the site include:\n\nThe Big Five personality traits\nEmotional intelligence\nCognitive abilities\nMoral reasoning\n\nAs someone who is interested in both data science and psychology, I have found OpenPsychometrics.org to be an incredibly interesting and valuable resource. The website offers a wide range of psychological tests that can help individuals gain insights into their own personality traits, cognitive abilities, and emotional intelligence. Additionally, researchers can use the site to conduct studies on these topics and collect data for analysis.\nIn conclusion, OpenPsychometrics.org is a valuable resource for anyone interested in psychology, personal development, or academic research. The platform offers a variety of free psychological tests that can help individuals gain insights into themselves, as well as collect data for research purposes."
+  },
+  {
+    "objectID": "posts/Top 5 Data Sources/index.html#conclusion",
+    "href": "posts/Top 5 Data Sources/index.html#conclusion",
+    "title": "Top 5 Data Sources",
+    "section": "Conclusion",
+    "text": "Conclusion\nThese are just a few of my favorite data sources that have proven to be invaluable for my work as a researcher. Each of these data sources provides a unique perspective on different aspects of the world, from labor markets to child welfare to police behavior. By combining and analyzing data from these sources, we can gain a more comprehensive understanding of the world around us and make better-informed decisions."
+  },
+  {
+    "objectID": "index1.html",
+    "href": "index1.html",
+    "title": "Psychometrics",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nItem difficulty & discrimination: Exploring the psychometric properties using R\n\n\n8 min\n\n\n\npsychometrics\n\n\nCTT\n\n\ndifficulty\n\n\ndiscrimination\n\n\n\nThis blog post explains the importance of examining item difficulty and discrimination in the development and validation of psychological measures and provides a…\n\n\n\nApr 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTop 5 Data Sources\n\n\n6 min\n\n\n\npsychometrics\n\n\nBig data\n\n\n\nThis blog post explains some of the sources that I personally prefer to obtain data. I became aware of most of these sources from Google Data Analytics Certificate program.…\n\n\n\nApr 3, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStructural Equation Modelling (in Turkish)\n\n\n75 min\n\n\n\npsychometrics\n\n\nSEM\n\n\n\nYEM: ‘Your View on Science’ ölçeğinden elde edilen 2015 PISA Turkiye örneklemi ile bir örnek çalışma. Bu çalışma Gazi üniversitesi’nde ‘Yapısal Eşitlik Modellemeleri’ dersi…\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest Equating\n\n\n4 min\n\n\n\npsychometrics\n\n\nCTT\n\n\ntest equating\n\n\n\nEquating two test forms: This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here.\n\n\n\nSep 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nItem Analysis with Item Response Theory (in Turkish)\n\n\n14 min\n\n\n\npsychometrics\n\n\nIRT\n\n\n\nMadde Tepki Kuramı temelli madde analizi. Hem çok kategorili hem de iki kategorili maddeler için MTK temelli madde analizi uygulama süreçleri…\n\n\n\nNov 20, 2021\n\n\n\n\n\n\n\n\nNo matching items"
+  }
+]

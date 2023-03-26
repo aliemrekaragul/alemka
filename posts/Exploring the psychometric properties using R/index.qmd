@@ -158,6 +158,7 @@ While we can calculate both difficulty and discrimination indexes manually or by
 item_stats<-round(ShinyItemAnalysis::ItemAnalysis(my_data),2)
 #to see all the output in a table:
 knitr::kable(item_stats)
+
 ```
 
 The same package also provides us with a nice visualization function (`DDplot`) for item difficulty and discrimination of any approach stated above. It takes `discrim` argument that can be defined as `RIT` (the first approach), `RIR` (the second approach above) or `ULI` (the third approach). Also, you can define a threshold value to draw a line on the plot via the `thr` argument. Here is a sample usage for our case:
