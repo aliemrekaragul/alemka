@@ -2,19 +2,25 @@ project:
   type: website
   output-dir: docs
 website:
-  title: "notebook "
+  title: " "
+  favicon: images/alemka.svg
+  site-url: https://emrekaragul.com/
   navbar:
-    logo: "alemka.png"
-    background: rgb(249, 220, 92) # now: yellow, previously: 196, 223, 170 a soft green
+    pinned: true
+    logo: "images/logo with title.svg"
+    background: tomato  # now: electric yellow, previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
+    right:
+      - icon: info-square-fill
+        href: about-me.qmd
+        text: " "
+      - icon: github
+        href: https://github.com/aliemrekaragul
+      - icon: linkedin
+        href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/        
     left:
-      - text: "About me!"
-        file: index.qmd    
-      - text: "📝 Blog Posts"
-        file: index1.qmd
-        
-    right: 
-      - text: "🛠️ Apps"
+      - text: "Apps"
+        icon: terminal-fill
         menu:
           - text: "Test Analyze-R"
             href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
@@ -22,7 +28,8 @@ website:
             href: https://itp-calculator.com/   
           - text: "Ekşi KazaR"
             href: https://aliemrekaragul.shinyapps.io/eksi-kazaR/  
-      - text: "⭐ Favorite Links"
+      - text: "Favs"
+        icon: star-fill
         menu: 
           - text: "R cheatsheets"
             href: https://posit.cloud/learn/cheat-sheets
@@ -32,10 +39,10 @@ website:
             href: https://erguldemir.shinyapps.io/ED_GenerateIRTdata/
           - text: "Google Ngram Viewer"
             href: https://books.google.com/ngrams/
-      - icon: github
-        href: https://github.com/aliemrekaragul
-      - icon: linkedin
-        href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
+          - text: "Style Guide (H.Wickham)"
+            href: http://adv-r.had.co.nz/Style.html
+          - text: "Style Guide (Google)"
+            href: https://google.github.io/styleguide/Rguide.html
   cookie-consent:
     type: implied
     style: simple
@@ -48,7 +55,7 @@ website:
     
   page-footer:
     right: "📈❤️☕"
-    left: "© Emre Karagül"
+    left: "© Ali Emre Karagül"
 format: 
   html:
     theme: literia  # morph #simplex  # solar #cerulean  #

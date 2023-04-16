@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>notebook - Data Visualization</title>
+<title>- Data Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,12 +24,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./images/alemka.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-listing/list.min.js"></script>
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/cookie-consent/cookie-consent.js"></script>
@@ -130,10 +130,10 @@ cookieconsent.run({
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./alemka.png" alt="" class="navbar-logo">
+    <img src="./images/logo with title.svg" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">notebook</span>
+    <span class="navbar-title"></span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -141,21 +141,13 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html">
- <span class="menu-text">About me!</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./index1.html">
- <span class="menu-text">📝 Blog Posts</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">🛠️ Apps</span>
+      <i class="bi bi-terminal-fill" role="img">
+</i> 
+ <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-apps">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
         <li>
     <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
@@ -171,10 +163,12 @@ cookieconsent.run({
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favorite-links" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">⭐ Favorite Links</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-star-fill" role="img">
+</i> 
+ <span class="menu-text">Favs</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-favorite-links">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
         <li>
     <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
  <span class="dropdown-text">R cheatsheets</span></a>
@@ -191,8 +185,23 @@ cookieconsent.run({
     <a class="dropdown-item" href="https://books.google.com/ngrams/">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+ <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+ <span class="dropdown-text">Style Guide (Google)</span></a>
+  </li>  
     </ul>
   </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about-me.html"><i class="bi bi-info-square-fill" role="img">
+</i> 
+ <span class="menu-text"> </span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/aliemrekaragul"><i class="bi bi-github" role="img">
 </i> 
@@ -263,7 +272,7 @@ cookieconsent.run({
     </div>
 </div>
 <div class="list grid quarto-listing-cols-2">
-<div class="g-col-1" data-index="0" data-categories="Rvest,Wordcloud,Data-viz" data-listing-date-sort="1672952400000" data-listing-file-modified-sort="1679870063722" data-listing-reading-time-sort="0.025">
+<div class="g-col-1" data-index="0" data-categories="Rvest,Wordcloud,Data-viz" data-listing-date-sort="1672952400000" data-listing-file-modified-sort="1680537750571" data-listing-reading-time-sort="0.025">
 <a href="./posts2/Web scraping with Rvest/web scraping with Rvest.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -299,7 +308,7 @@ Jan 6, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Google Data,Data-viz" data-listing-date-sort="1670706000000" data-listing-file-modified-sort="1674684680085" data-listing-reading-time-sort="8.43">
+<div class="g-col-1" data-index="1" data-categories="Google Data,Data-viz" data-listing-date-sort="1670706000000" data-listing-file-modified-sort="1680537750551" data-listing-reading-time-sort="8.43">
 <a href="./posts2/Visualisation of My Personal Google Data (2)/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -332,7 +341,7 @@ Dec 11, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="Google Data,Maps,Data-viz" data-listing-date-sort="1668546000000" data-listing-file-modified-sort="1670753222053" data-listing-reading-time-sort="11.33">
+<div class="g-col-1" data-index="2" data-categories="Google Data,Maps,Data-viz" data-listing-date-sort="1668546000000" data-listing-file-modified-sort="1680537750509" data-listing-reading-time-sort="11.33">
 <a href="./posts2/Visualisation of My Personal Google Data (1)/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -509,7 +518,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Emre Karagül</div>   
+    <div class="nav-footer-left">© Ali Emre Karagül</div>   
       <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
     <div class="nav-footer-right">📈❤️☕</div>
   </div>

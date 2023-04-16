@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2022-11-16">
 <meta name="description" content="This post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize the locations I visited within a time period on a map.">
-<title>notebook - Visualisation of My Personal Google Data (1): My Locations</title>
+
+<title>../../ - Visualisation of My Personal Google Data (1): My Locations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,13 +88,14 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../images/alemka.svg" rel="icon" type="image/svg+xml">
 <script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
@@ -102,7 +106,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -120,13 +125,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
+
+<script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
-</script><script type="text/javascript" charset="UTF-8">
+</script>
+
+<script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -139,20 +149,34 @@ cookieconsent.run({
   "website_name":""
   });
 });
-</script><script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script><link href="../../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
-<script src="../../site_libs/leaflet-1.3.1/leaflet.js"></script><link href="../../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
-<script src="../../site_libs/proj4-2.6.2/proj4.min.js"></script><script src="../../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="../../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="../../site_libs/leaflet-binding-2.1.1/leaflet.js"></script><link rel="stylesheet" href="../../styles.css">
+</script> 
+  
+<script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="../../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="../../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="../../site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="../../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="../../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-binding-2.1.1/leaflet.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
 </head>
+
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../alemka.png" alt="" class="navbar-logo"></a>
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">notebook</span>
+    <span class="navbar-title"></span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -160,22 +184,14 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">About me!</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../index1.html">
- <span class="menu-text">📝 Blog Posts</span></a>
-  </li>  
-</ul>
-<ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item dropdown ">
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">🛠️ Apps</span>
+      <i class="bi bi-terminal-fill" role="img">
+</i> 
+ <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-apps">
-<li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
+        <li>
     <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
   </li>  
@@ -188,13 +204,15 @@ cookieconsent.run({
  <span class="dropdown-text">Ekşi KazaR</span></a>
   </li>  
     </ul>
-</li>
+  </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favorite-links" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">⭐ Favorite Links</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-star-fill" role="img">
+</i> 
+ <span class="menu-text">Favs</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-favorite-links">
-<li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
+        <li>
     <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
  <span class="dropdown-text">R cheatsheets</span></a>
   </li>  
@@ -210,8 +228,23 @@ cookieconsent.run({
     <a class="dropdown-item" href="https://books.google.com/ngrams/">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+ <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+ <span class="dropdown-text">Style Guide (Google)</span></a>
+  </li>  
     </ul>
-</li>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"><i class="bi bi-info-square-fill" role="img">
+</i> 
+ <span class="menu-text"> </span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/aliemrekaragul"><i class="bi bi-github" role="img">
 </i> 
@@ -223,10 +256,14 @@ cookieconsent.run({
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-<div id="quarto-search" class="" title="Search"></div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Visualisation of My Personal Google Data (1): My Locations</h1>
                   <div>
@@ -274,48 +311,62 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-<li><a href="#introduction-to-the-series-visualisation-of-my-personal-google-data" id="toc-introduction-to-the-series-visualisation-of-my-personal-google-data" class="nav-link active" data-scroll-target="#introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</a></li>
+  <li><a href="#introduction-to-the-series-visualisation-of-my-personal-google-data" id="toc-introduction-to-the-series-visualisation-of-my-personal-google-data" class="nav-link active" data-scroll-target="#introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</a></li>
   <li><a href="#introduction-my-locations" id="toc-introduction-my-locations" class="nav-link" data-scroll-target="#introduction-my-locations">Introduction: “My Locations”</a></li>
   <li><a href="#understand-the-data" id="toc-understand-the-data" class="nav-link" data-scroll-target="#understand-the-data">Understand the Data</a></li>
   <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-processing</a></li>
   <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  </ul></nav>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2"><h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
 <p>If you give permission to Google to store your location data, they will keep them in their databases forever. You can also allow them to store it for a while and then ask them delete it. They will directly do so.</p>
 <p>What makes this study a fun project is its being very personal. I decided to analyze my personal data in August, 2022. Therefore, I granted many new permissions to Google along with many previously granted permissions. They keep them in various formats including .csv, .json, .mbox etc. When you query for your personal data, they provide it within a couple of days depending on the size of the data you queried.</p>
 <p>Usually, I provide the readers with the data in my posts. However, in this series, the data are very personal and so I will not.</p>
-</section><section id="introduction-my-locations" class="level2"><h2 class="anchored" data-anchor-id="introduction-my-locations">Introduction: “My Locations”</h2>
+</section>
+<section id="introduction-my-locations" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-my-locations">Introduction: “My Locations”</h2>
 <p>In this part of the series, we will investigate my personal location data. We will visualize the spots I visited within a period of time. This way, I personally will gain insights about how boring my days are :)</p>
 <p>The R packages that we use in this post are as follows: <code>rjson</code>, <code>tidyr</code>, <code>dplyr</code>, <code>purrr</code>, <code>lubridate</code>, <code>sp</code> and <code>leaflet</code>.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##packs for data processing</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexcb/rjson">rjson</a></span><span class="op">)</span>      <span class="co"># to read .JSON files.</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>      <span class="co"># to process data</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>      <span class="co"># to process data</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span>      <span class="co"># to process data</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span>  <span class="co"># to deal with date variables</span></span>
-<span><span class="co">#packs for data viz</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/edzer/sp/">sp</a></span><span class="op">)</span>         <span class="co"># a pack for spatial objects</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span>    <span class="co"># map and its functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##packs for data processing</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rjson)      <span class="co"># to read .JSON files.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)      <span class="co"># to process data</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)      <span class="co"># to process data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)      <span class="co"># to process data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)  <span class="co"># to deal with date variables</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#packs for data viz</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)         <span class="co"># a pack for spatial objects</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)    <span class="co"># map and its functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 
 </div>
-</section><section id="understand-the-data" class="level2"><h2 class="anchored" data-anchor-id="understand-the-data">Understand the Data</h2>
+</section>
+<section id="understand-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="understand-the-data">Understand the Data</h2>
 <p>Inside the takeout folder that I received from Google, there is a folder named “Location History”. Inside it, “Semantic Location History” contains the location data based on the months and years. From that folder, I have called the locations I visited in November. Thus, we will use 2022_NOVEMBER.json file. Let’s investigate the data. Start with reading the file into R environment.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjson/man/fromJSON.html">fromJSON</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"2022_NOVEMBER.json"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_locations <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="at">file =</span> <span class="st">"2022_NOVEMBER.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, let’s try to understand the structure of the data, how and what kind of information is stored into its cells. The list object <code>my_locations</code> contains many lists inside it. Let’s try to understand each one of them one by one:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Length Class  Mode
  [1,] 1      -none- list
@@ -339,7 +390,7 @@ cookieconsent.run({
 </div>
 <p>There are many smaller lists in the first indexed list. Let’s try the first one and see what’s inside:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Length Class  Mode
 placeVisit 11     -none- list</code></pre>
@@ -347,7 +398,7 @@ placeVisit 11     -none- list</code></pre>
 </div>
 <p>There is a single list inside. Sad :( Let’s dive one more step:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        Length Class  Mode     
 location                8      -none- list     
@@ -365,7 +416,7 @@ placeVisitImportance    1      -none- character</code></pre>
 </div>
 <p>Finally, here we have several items. There is a list called <code>location</code> containing 8 items inside. There is <code>duration</code> with 2 items and <code>otherCandidateLocations</code> with 4 items. Other lists contain only one item each. Let’s check these one by one:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">location</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>location)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      Length Class  Mode     
 latitudeE7            1      -none- numeric  
@@ -379,7 +430,7 @@ calibratedProbability 1      -none- numeric  </code></pre>
 </div>
 </div>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">duration</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>duration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Length Class  Mode     
 startTimestamp 1      -none- character
@@ -387,7 +438,7 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 </div>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">otherCandidateLocations</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>otherCandidateLocations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Length Class  Mode
 [1,] 7      -none- list
@@ -397,34 +448,36 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 </div>
 <p>We can obtain much information through this investigation process. For instance, inside the <code>location</code> I can see information about the latitude, longitude, address, the confidence that I have to this place, and some other. Here, if you are following along with me, please spare some time to understand your data. Delve into them and digest as much information as you can. I will see you in the next section: data processing.</p>
-</section><section id="pre-processing" class="level2"><h2 class="anchored" data-anchor-id="pre-processing">Pre-processing</h2>
+</section>
+<section id="pre-processing" class="level2">
+<h2 class="anchored" data-anchor-id="pre-processing">Pre-processing</h2>
 <p>You can use as many items as you want in your work. You should decide the meaningful information while understanding your data. Now let’s re-define our lists as a dataframe.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="st">"timelineObjects"</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.data.frame</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="co"># there is one empty row after each entry. Let's drop them through one of the complete columns:</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">placeVisit.location.latitudeE7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(my_locations[[<span class="st">"timelineObjects"</span>]], as.data.frame)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(df)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># there is one empty row after each entry. Let's drop them through one of the complete columns:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(df, placeVisit.location.latitudeE7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are many columns, some of which I won’t need. Especially, I am not interested in the locations defined as “candidate”. I will exclude them from my study. They are probably the locations that might be the place that I visited ordered by possibility. I just need the one with the highest possibility, which is tagged with <code>placeVisit.location.</code> . These locations are also defined as “HIGH CONFIDENCE”. Let’s continue the analysis with these locations, only.</p>
 <p>Also, there are some columns with no entry. Let me exclude them with a function. Let the function be called <code>not_all_na</code>. This is a function that drops all the columns which are completely empty:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">not_all_na</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#use the function on the dataframe:</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">not_all_na</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>not_all_na <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.na</span>(x))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#use the function on the dataframe:</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(not_all_na))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, I have a dataframe with 150+ columns. However, I just need the information about latitude, altitude, date and address of the locations that I visited. Let’s write a query to get this data into a new dataframe:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.location.latitudeE7"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.location.longitudeE7"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">address</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.location.address"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.duration.startTimestamp"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.latitudeE7"</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.longitudeE7"</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.address"</span>))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.duration.startTimestamp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The chunks of code above ask for columns whose names contain the extensions written in quotation marks in them. Still, this raw information isn’t enough for several reasons. Firstly, <code>lat</code> and <code>lot</code> are coordinates in E7 format. With a quick research on the internet, I learned that they simply need to be divided by 10000000. Also, <code>date</code> contains day, month, year, hour, minute, second and time zone (which is in GMT+0 format) information all in the same column. They need to be handled. Let’s start with the second issue (the one about <code>date</code>):</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#re-name the only column:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Date"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#re-name the only column:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(date) <span class="ot">&lt;-</span> <span class="st">"Date"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      Date
 1 2022-11-06T13:12:38.091Z
@@ -437,29 +490,29 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 <p>As can be seen above, there are two separators: One is “T” separating day and time info. The other is “.” separating time and time zone info. Follow the notes in the code to grasp the process:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#divide the day and hour info from the time zone info, then drop the time zone:</span></span>
-<span><span class="va">date</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">date</span>,</span>
-<span>    col <span class="op">=</span> <span class="va">Date</span>,</span>
-<span>    into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Date"</span>, <span class="st">"zone"</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"\\."</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="va">date</span> <span class="op">&lt;-</span> <span class="va">date</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
-<span></span>
-<span><span class="co">#Now, transform the time in local time zone which is GMT+3:</span></span>
-<span><span class="va">date</span><span class="op">$</span><span class="va">Date</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="va">date</span><span class="op">$</span><span class="va">Date</span>, format<span class="op">=</span><span class="st">"%Y-%m-%dT%H:%M:%S"</span>, tz<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html">hours</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#divide the day and hour info:</span></span>
-<span><span class="va">date</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">date</span>,</span>
-<span>    col <span class="op">=</span> <span class="va">Date</span>,</span>
-<span>    into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Day"</span>, <span class="st">"Hour"</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">" "</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#see the new format:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#divide the day and hour info from the time zone info, then drop the time zone:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> date,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> Date,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"zone"</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> date[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>)]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Now, transform the time in local time zone which is GMT+3:</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>date<span class="sc">$</span>Date<span class="ot">&lt;-</span><span class="fu">as.POSIXct</span>(date<span class="sc">$</span>Date, <span class="at">format=</span><span class="st">"%Y-%m-%dT%H:%M:%S"</span>, <span class="at">tz=</span><span class="fu">Sys.timezone</span>())<span class="sc">+</span> <span class="fu">hours</span>(<span class="dv">3</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co">#divide the day and hour info:</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> date,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> Date,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Day"</span>, <span class="st">"Hour"</span>),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" "</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co">#see the new format:</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Day     Hour
 1 2022-11-06 16:12:38
@@ -472,59 +525,63 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 <p>Nicely done! Now gather all the information that we need into a dataframe. Again follow along the notes in the code:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coords</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>    lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">lat</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10000000</span>, <span class="co">#divide lat and lon by 10000000 to get rid of the E7 format</span></span>
-<span>    lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">lon</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10000000</span>, </span>
-<span>    address <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">address</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>    <span class="va">date</span> <span class="co"># we processed this before</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(<span class="fu">data.frame</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> <span class="fu">unlist</span>(lat, <span class="at">use.names =</span> <span class="cn">FALSE</span>) <span class="sc">/</span> <span class="dv">10000000</span>, <span class="co">#divide lat and lon by 10000000 to get rid of the E7 format</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon =</span> <span class="fu">unlist</span>(lon, <span class="at">use.names =</span> <span class="cn">FALSE</span>) <span class="sc">/</span> <span class="dv">10000000</span>, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">address =</span> <span class="fu">unlist</span>(address, <span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    date <span class="co"># we processed this before</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So far, we have worked to prepare for the data visualization process. Our data is ready with the name <code>coords</code>. Let’s continue with the visualization.</p>
-</section><section id="data-visualization" class="level2"><h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
+</section>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
 <p>At this point, we will visualize the locations I visited in November of 2022 on a world map. You can’t be as disappointed as me when you see that I live a life between home and work. Yet, the point here is to see the process of visualization. We owe this beautiful project to the <a href="https://rstudio.github.io/leaflet/">R package leaflet</a>. It is actually <a href="https://leafletjs.com/index.html">a javascript library</a>, all its arguments are deployed into R environment too. Therefore, we can work with it. If you are still with me, I mhighly recommend you to read the documentation of the package <code>leaflet</code>. Then, follow along the notes in the code and try to understand it if you are not familiar with it.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/coordinates.html">coordinates</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet</a></span><span class="op">(</span><span class="va">coords</span>,</span>
-<span></span>
-<span><span class="co"># formating the outer of the map:</span></span>
-<span>        width <span class="op">=</span> <span class="st">"800px"</span>,</span>
-<span>        height <span class="op">=</span> <span class="st">"400px"</span>, </span>
-<span>        padding <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span></span>
-<span><span class="co">#formating the markers on the map:</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addCircleMarkers</a></span><span class="op">(</span></span>
-<span>    color <span class="op">=</span> <span class="st">"tomato"</span>, <span class="co">#my favorite colour</span></span>
-<span>    fillOpacity <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    radius <span class="op">=</span> <span class="fl">7</span>,</span>
-<span>    stroke <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    </span>
-<span><span class="co">#address pops up when you click on a marker:</span></span>
-<span>    popup <span class="op">=</span> <span class="va">coords</span><span class="op">$</span><span class="va">address</span>,</span>
-<span></span>
-<span><span class="co">#the date and hour shows up with a fancy personal note when you hover on a marker:</span></span>
-<span>    label <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"I have been around here on "</span>, <span class="va">coords</span><span class="op">$</span><span class="va">Day</span>, <span class="st">" at around "</span>, <span class="va">coords</span><span class="op">$</span><span class="va">Hour</span><span class="op">)</span>,</span>
-<span></span>
-<span><span class="co">#formating the label that shows up when you hover:</span></span>
-<span>    labelOptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-options.html">labelOptions</a></span><span class="op">(</span></span>
-<span>      noHide <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>      direction <span class="op">=</span> <span class="st">"top"</span>,</span>
-<span>      style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>        <span class="st">"color"</span> <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>        <span class="st">"font-family"</span> <span class="op">=</span> <span class="st">"calibri"</span>, <span class="co">#I love calibri</span></span>
-<span>        <span class="st">"box-shadow"</span> <span class="op">=</span> <span class="st">"3px 3px rgba(0,0,0,0.25)"</span>,</span>
-<span>        <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"12px"</span>,</span>
-<span>        <span class="st">"border-color"</span> <span class="op">=</span> <span class="st">"rgba(0,0,0,0.5)"</span></span>
-<span>      <span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(coords) <span class="ot">&lt;-</span> <span class="er">~</span> lon <span class="sc">+</span> lat</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(coords,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formating the outer of the map:</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="st">"800px"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="st">"400px"</span>, </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">padding =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#formating the markers on the map:</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"tomato"</span>, <span class="co">#my favorite colour</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fillOpacity =</span> <span class="dv">1</span>,</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">radius =</span> <span class="dv">7</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">stroke =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#address pops up when you click on a marker:</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> coords<span class="sc">$</span>address,</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#the date and hour shows up with a fancy personal note when you hover on a marker:</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span>  <span class="fu">paste0</span>(<span class="st">"I have been around here on "</span>, coords<span class="sc">$</span>Day, <span class="st">" at around "</span>, coords<span class="sc">$</span>Hour),</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="co">#formating the label that shows up when you hover:</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">labelOptions =</span> <span class="fu">labelOptions</span>(</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">noHide =</span> F,</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">direction =</span> <span class="st">"top"</span>,</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color"</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"font-family"</span> <span class="ot">=</span> <span class="st">"calibri"</span>, <span class="co">#I love calibri</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"box-shadow"</span> <span class="ot">=</span> <span class="st">"3px 3px rgba(0,0,0,0.25)"</span>,</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"font-size"</span> <span class="ot">=</span> <span class="st">"12px"</span>,</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"border-color"</span> <span class="ot">=</span> <span class="st">"rgba(0,0,0,0.5)"</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="htmlwidget-e89f608a73d1db18a340" style="width:800px;height:400px;" class="leaflet html-widget"></div>
 <script type="application/json" data-for="htmlwidget-e89f608a73d1db18a340">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[39.9107968,39.9077105,39.9107968,39.9020001,39.9107968,39.9211819,39.9033022,39.9107968],[32.865052,32.8704428,32.865052,32.8601762,32.865052,32.7983108,32.860418,32.865052],7,null,null,{"interactive":true,"className":"","stroke":false,"color":"tomato","weight":5,"opacity":0.5,"fill":true,"fillColor":"tomato","fillOpacity":1},null,null,["Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye","Muhsin Ertuğrul, Belligün Cd. No:18, 06660 Çankaya/Ankara, Türkiye","Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye","Çankaya Kuğulu, Çankaya, Park, 06690 Çankaya/Ankara, Türkiye","Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye","Söğütözü, Söğütözü Cd. No:43, 06510 Çankaya/Ankara, Türkiye","Remzi Oğuz Arık, Tunalı Hilmi Cd. No:119/A, 06680 Çankaya/Ankara, Türkiye","Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye"],null,["I have been around here on 2022-11-06 at around 16:12:38","I have been around here on 2022-11-06 at around 16:24:32","I have been around here on 2022-11-06 at around 16:59:00","I have been around here on 2022-11-06 at around 17:17:15","I have been around here on 2022-11-06 at around 17:39:29","I have been around here on 2022-11-07 at around 08:32:14","I have been around here on 2022-11-07 at around 17:14:12","I have been around here on 2022-11-07 at around 17:46:44"],{"interactive":false,"permanent":false,"direction":"top","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"style":{"color":"black","font-family":"calibri","box-shadow":"3px 3px rgba(0,0,0,0.25)","font-size":"12px","border-color":"rgba(0,0,0,0.5)"},"className":"","sticky":true},null]}],"limits":{"lat":[39.9020001,39.9211819],"lng":[32.7983108,32.8704428]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Working with your personal data gives you the opportunity to understand your own habits, likes, dislikes, and maybe future expectations. Here, you can only see my locations in November. When I worked on longer periods, I realized that I need to travel and see new places more often. Even if they are in my own city, a new place is a new vision of life.</p>
 <p>Visualizing data on spatial environments is a new challenge for me. Rather than graphs and charts, working with maps are more attractive obviously. While visualizing location data on maps, <code>leaflet</code> is an amazing, open source library. There are other options. One needs a mention here: <code>ggmap</code>. Yet, to use this package you need an API key obtained from Google. For more information about API keys, <a href="https://developers.google.com/maps/documentation/embed/get-api-key#:~:text=Go%20to%20the%20Google%20Maps%20Platform%20%3E%20Credentials%20page.&amp;text=On%20the%20Credentials%20page%2C%20click,Click%20Close.">visit here</a>. As of the package, you can visit the <a href="https://cran.r-project.org/web/packages/ggmap/readme/README.html">CRAN page of ggmap</a>. Under the title “Google Maps API key”, you will see the procedure to buy a personal API key. It reads as follows:</p>
 <p>GOOGLE MAPS API KEY <span class="citation" data-cites="ggmap">[@ggmap]</span></p>
@@ -535,13 +592,19 @@ endTimestamp   1      -none- character</code></pre>
 <li><p><em>Inside R, after loading the new version of <strong>ggmap</strong>, you’ll need provide <strong>ggmap</strong> with your API key, a <a href="https://en.wikipedia.org/wiki/Hash_function">hash value</a> (think string of jibberish) that authenticates you to Google’s servers. This can be done on a temporary basis with <code>register_google(key = "[your key]")</code> or permanently using <code>register_google(key = "[your key]", write = TRUE)</code> (note: this will overwrite your <code>~/.Renviron</code> file by replacing/adding the relevant line). If you use the former, know that you’ll need to re-do it every time you reset R.</em></p></li>
 </ol>
 <p><em>Your API key is private and unique to you, so be careful not to share it online, for example in a GitHub issue or saving it in a shared R script file. If you share it inadvertantly, just get on Google’s website and regenerate your key - this will retire the old one. Keeping your key private is made a bit easier by <strong>ggmap</strong> scrubbing the key out of queries by default, so when URLs are shown in your console, they’ll look something like <code>key=xxx</code>. (Read the details section of the <code>register_google()</code> documentation for a bit more info on this point.)</em></p>
-<section id="stay-tuned" class="level5"><h5 class="anchored" data-anchor-id="stay-tuned">Stay tuned!</h5>
+<section id="stay-tuned" class="level5">
+<h5 class="anchored" data-anchor-id="stay-tuned">Stay tuned!</h5>
 <p>This series continues with the visualization of my Google Fit data. We will delve into my exercise habbits.</p>
 
 
-</section></section></main><!-- /main --><div> 
+</section>
+</section>
+
+</main> <!-- /main -->
+<div> 
 <hr>
-<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<!-- Begin Mailchimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
 	
@@ -553,7 +616,8 @@ endTimestamp   1      -none- character</code></pre>
 <div class="mc-field-group">
 	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
 </label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
+	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
 </div>
 	<div id="mce-responses" class="clear foot">
 		<div class="response" id="mce-error-response" style="display:none"></div>
@@ -563,12 +627,14 @@ endTimestamp   1      -none- character</code></pre>
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-</div>
+            </div>
         </div>
     </div>
 </form>
 </div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+<hr>
 </div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -702,15 +768,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+<script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">© Emre Karagül</div>   
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© Ali Emre Karagül</div>   
       <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
     <div class="nav-footer-right">📈❤️☕</div>
   </div>
 </footer>
+
 
 
 </body></html>

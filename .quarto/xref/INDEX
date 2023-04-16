@@ -67,5 +67,11 @@
   },
   "posts/Web scraping with Rvest/web scraping with Rvest.qmd": {
     "web scraping with Rvest.html": "b32ef32b"
+  },
+  "blog-posts.qmd": {
+    "blog-posts.html": "bbe8b1c3"
+  },
+  "about-me.qmd": {
+    "about-me.html": "974116bf"
   }
 }
