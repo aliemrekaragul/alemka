@@ -1,8 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0","not_all_na <- function(x)"
-"0","  any(!is.na(x))"
-"0","#use the function on the dataframe:"
-"0","df <- df %>% select(where(not_all_na))"

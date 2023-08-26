@@ -1,8 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0","df <- map_dfr(my_locations[[""timelineObjects""]], as.data.frame)"
-"0","View(df)"
-"0","# there is one empty row after each entry. Let's drop them through one of the complete columns:"
-"0","df <- drop_na(df, placeVisit.location.latitudeE7)"

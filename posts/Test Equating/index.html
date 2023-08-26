@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.2.335" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="Ali Emre Karagül" />
+<meta name="dcterms.date" content="2022-09-20" />
+<meta name="description" content="Equating two test forms: This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here." />
+
+<title>  – Test Equating</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="/index.html" class="navbar-brand navbar-brand-logo">
+    <img src="/images/logo with title.svg" alt="" class="navbar-logo" />
+    </a>
+    <a class="navbar-brand" href="/index.html">
+    <span class="navbar-title"> </span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i 
+  class="bi bi-terminal-fill" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text">Apps</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
+        <li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
+ <span class="dropdown-text">Test Analyze-R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://itp-calculator.com/">
+ <span class="dropdown-text">ITP Score Calculator</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">
+ <span class="dropdown-text">Ekşi KazaR</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i 
+  class="bi bi-star-fill" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text">Favs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
+        <li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
+ <span class="dropdown-text">R cheatsheets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
+ <span class="dropdown-text">R 4 D S</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
+ <span class="dropdown-text">Generate IRT Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
+ <span class="dropdown-text">Google Ngram Viewer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+ <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+ <span class="dropdown-text">Style Guide (Google)</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/about-me.html"><i 
+  class="bi bi-info-square-fill" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text"> </span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"><i 
+  class="bi bi-github" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"><i 
+  class="bi bi-linkedin" 
+  role="img" 
+>
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <div id="quarto-toc-target"></div>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+  <div class="quarto-title-banner">
+    <div class="quarto-title column-body">
+      <h1 class="title">Test Equating</h1>
+                  <div>
+        <div class="description">
+          <p>Equating two test forms: This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">psychometrics</div>
+                <div class="quarto-category">CTT</div>
+                <div class="quarto-category">test equating</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      Ali Emre Karagül <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              TOBB ETU- University of Economics &amp; Technology
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 20, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header>
+
+<p>This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here.</p>
+<p>2020-2021 Fall Term A Level’s first quiz has 40 items. 2022-2023 Fall Term A Level’s first quiz has 40 items. 35 of the items in each test forms are unique items while 5 of them are common, thus will be called as “anchor items” in this study. For the readers interest, the items belong to four main domains (listening, structure, vocabbulary and reading), yet the common items are only in the reading section. This is obviously a violation of assumptions of test equating. Still, this study is conveyed for demonstration purposes. Therefore, let’s continue:</p>
+<p>To ensure statistical equation of these two forms, we first introduced the data in R Studio and the first five rows can be seen below:</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;kitap1.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Q1)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  L1 L2 L3 L4 L5 L6 L7 L8 L9 L10 S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 V1 V2 V3 V4 V5
+1  0  1  0  1  1  1  0  1  1   0  1  1  0  1  0  0  0  0  0   1  0  1  1  0  1
+2  1  1  1  1  1  1  1  1  1   1  0  1  1  0  1  1  0  0  0   0  1  1  1  1  0
+3  1  1  1  1  1  1  0  1  1   0  1  1  0  1  1  0  0  1  1   0  0  1  0  1  0
+4  1  1  1  1  1  1  1  0  1   0  1  1  0  1  1  0  1  1  0   0  0  1  1  0  1
+5  1  1  1  1  1  1  1  0  1   1  1  1  1  1  0  1  0  1  0   0  1  1  1  0  0
+6  1  1  1  1  0  0  1  1  1   1  0  0  0  0  0  1  1  1  1   1  1  1  1  0  0
+  V6 V7 V8 V9 V10 R1 R2 R3 R4 R5 R6 R7 R8 R9 R10 form
+1  0  1  1  1   1  1  1  0  1  1  1  1  1  1   1    x
+2  0  1  1  0   0  1  0  1  1  0  1  1  0  1   1    x
+3  1  0  1  1   1  1  0  0  1  1  1  0  1  1   1    x
+4  1  1  1  0   1  1  1  1  1  0  1  0  0  1   1    x
+5  1  1  1  0   1  1  1  1  0  1  1  1  0  1   1    x
+6  1  1  1  1   1  1  1  1  1  1  1  1  1  1   1    x</code></pre>
+</div>
+</div>
+<p>Later, we introduced the unique and anchor items separately. First 35 items are unique items, and the last 5 items are anchor items.</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate total scores based on unique items</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Q1<span class="sc">$</span>total <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(Q1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate scores based on anchor items</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Q1<span class="sc">$</span>anchor <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(Q1[, <span class="dv">36</span><span class="sc">:</span><span class="dv">40</span>])</span></code></pre></div>
+</details>
+</div>
+<p>As we will use the <strong><em>equate</em></strong> package, the data should be contained as frequency tables: Form x (20-21 fall) had a sample of 200 while form y (22-23 fall) had a sample of 133 students. They are defined as:</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#first introduce the equate package:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(equate)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency tables (total score range: 0-35; anchor score range: 0-5)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Q1_x <span class="ot">&lt;-</span> <span class="fu">freqtab</span>(Q1[<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="fu">c</span>(<span class="st">&quot;total&quot;</span>, <span class="st">&quot;anchor&quot;</span>)], <span class="at">scales =</span> <span class="fu">list</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Q1_y <span class="ot">&lt;-</span> <span class="fu">freqtab</span>(Q1[<span class="dv">201</span><span class="sc">:</span><span class="dv">334</span>, <span class="fu">c</span>(<span class="st">&quot;total&quot;</span>, <span class="st">&quot;anchor&quot;</span>)], <span class="at">scales =</span> <span class="fu">list</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>))</span></code></pre></div>
+</details>
+</div>
+<p>To consideration of the reader one more time, we must state that these forms are the first quizzes of the students. They usually get high marks. For instance, you can see below that the students’ scores are distributed left-skewed in both forms. Their total correct answers are distributed between 20 and 35 for the unique items , and between 3 and 5 for anchor items in form X. The situation isn’t different for form y.</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#distrubution of the data among forms and unique/common items</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Q1_x, <span class="at">xlab =</span> <span class="st">&quot;Total Scores Form X&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Common Anchor Scores Form X&quot;</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672" /></p>
+</div>
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Q1_y, <span class="at">xlab =</span> <span class="st">&quot;Total Scores Form y&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Common Anchor Scores Form y&quot;</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672" /></p>
+</div>
+</div>
+<p>Still, let’s continue… with the smoothing procedure. For both forms, we utilized loglinear presmoothing. Of course there are several other methods, yet literature shows not much a big difference between them, thus not much care given to this issue. again as this is a study with demonstration purposes. After the smoothing, it can be realized that the distribution is highly eye-pleasing right now. Also it is much easier to match the scores even if there isn’t an equivalent of it in the other form.</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PRESMOOTHING</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>smooth_x <span class="ot">&lt;-</span> <span class="fu">presmoothing</span>(Q1_x, <span class="at">smoothmethod =</span> <span class="st">&quot;loglinear&quot;</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: glm.fit: fitted rates numerically 0 occurred</code></pre>
+</div>
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>smooth_y <span class="ot">&lt;-</span> <span class="fu">presmoothing</span>(Q1_y, <span class="at">smoothmethod =</span> <span class="st">&quot;loglinear&quot;</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: glm.fit: algorithm did not converge
+
+Warning: glm.fit: fitted rates numerically 0 occurred</code></pre>
+</div>
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(smooth_x, <span class="at">xlab =</span> <span class="st">&quot;Total Scores Form X&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Common Anchor Scores Form X&quot;</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672" /></p>
+</div>
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(smooth_y, <span class="at">xlab =</span> <span class="st">&quot;Total Scores Form y&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Common Anchor Scores Form y&quot;</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672" /></p>
+</div>
+</div>
+<p>Now, it can be roughly said that the forms are ready to be equated. Before we try several methods, lets see the results of the Tucker method as it can produce equating error as well:</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Linear Tucker Equating</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Q1_tucker <span class="ot">&lt;-</span> <span class="fu">equate</span>(Q1_x, Q1_y, <span class="at">type =</span> <span class="st">&quot;linear&quot;</span>, <span class="at">method =</span> <span class="st">&quot;tucker&quot;</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>Q1_tucker<span class="sc">$</span>concordance</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   scale        yx      se.n      se.g
+1      0  6.597617 2.0378528 3.3547355
+2      1  7.404998 1.9751403 3.2551073
+3      2  8.212379 1.9124541 3.1554875
+4      3  9.019759 1.8497970 3.0558770
+5      4  9.827140 1.7871721 2.9562768
+6      5 10.634520 1.7245827 2.8566879
+7      6 11.441901 1.6620331 2.7571116
+8      7 12.249282 1.5995277 2.6575492
+9      8 13.056662 1.5370720 2.5580024
+10     9 13.864043 1.4746724 2.4584730
+11    10 14.671423 1.4123363 2.3589634
+12    11 15.478804 1.3500723 2.2594761
+13    12 16.286185 1.2878911 2.1600141
+14    13 17.093565 1.2258052 2.0605812
+15    14 17.900946 1.1638299 1.9611818
+16    15 18.708326 1.1019838 1.8618212
+17    16 19.515707 1.0402899 1.7625060
+18    17 20.323088 0.9787772 1.6632444
+19    18 21.130468 0.9174818 1.5640464
+20    19 21.937849 0.8564507 1.4649252
+21    20 22.745229 0.7957445 1.3658973
+22    21 23.552610 0.7354438 1.2669847
+23    22 24.359991 0.6756570 1.1682166
+24    23 25.167371 0.6165338 1.0696330
+25    24 25.974752 0.5582849 0.9712903
+26    25 26.782132 0.5012154 0.8732696
+27    26 27.589513 0.4457784 0.7756933
+28    27 28.396894 0.3926659 0.6787528
+29    28 29.204274 0.3429596 0.5827655
+30    29 30.011655 0.2983669 0.4882941
+31    30 30.819035 0.2615166 0.3964236
+32    31 31.626416 0.2360629 0.3094791
+33    32 32.433797 0.2258919 0.2330408
+34    33 33.241177 0.2330134 0.1809526
+35    34 34.048558 0.2559883 0.1763087
+36    35 34.855938 0.2910866 0.2221053</code></pre>
+</div>
+</div>
+<p>You will see that the equating errors are above 1 before the score of 25 as there isn’t much data in the low scores. Also, as we investigate the lower marks, we see that the gap between equated scores are increasing. For instance, 0 on form X is equal to 6.597617 on form Y. This is because there isn’t data in these regions of the scores. Despite that, equated scores get more meaningful after 20. Especially after the total score 30, the equated scores are too close and the equation error is too low, which would be quite better if the situation was like that on all total score ranges. Let’s see some other equating methods:</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Comparing Multiple Methods</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Nominal method with mean equating</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Q1_nom <span class="ot">&lt;-</span> <span class="fu">equate</span>(Q1_x, Q1_y, <span class="at">type =</span> <span class="st">&quot;mean&quot;</span>, <span class="at">method =</span> <span class="st">&quot;nom&quot;</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency method with equipercentile</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Q1_freq <span class="ot">&lt;-</span> <span class="fu">equate</span>(Q1_x, Q1_y, <span class="at">type =</span> <span class="st">&quot;equip&quot;</span>, <span class="at">method =</span> <span class="st">&quot;freq&quot;</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Braun method with linear equating</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>Q1_braun <span class="ot">&lt;-</span> <span class="fu">equate</span>(Q1_x, Q1_y, <span class="at">type =</span> <span class="st">&quot;linear&quot;</span>, <span class="at">method =</span> <span class="st">&quot;braun&quot;</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare equated scores</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cbind</span>(<span class="at">xscale =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">35</span>, </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">nominal =</span> Q1_nom<span class="sc">$</span>concordance<span class="sc">$</span>yx,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">tucker =</span> Q1_tucker<span class="sc">$</span>concordance<span class="sc">$</span>yx, </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">freq =</span> Q1_freq<span class="sc">$</span>concordance<span class="sc">$</span>yx, </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">braun =</span> Q1_braun<span class="sc">$</span>concordance<span class="sc">$</span>yx), <span class="dv">2</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      xscale nominal tucker  freq braun
+ [1,]      0   -0.01   6.60 -0.50  5.65
+ [2,]      1    0.99   7.40 -0.50  6.49
+ [3,]      2    1.99   8.21 -0.50  7.32
+ [4,]      3    2.99   9.02 -0.50  8.16
+ [5,]      4    3.99   9.83 -0.50  9.00
+ [6,]      5    4.99  10.63 -0.50  9.83
+ [7,]      6    5.99  11.44 -0.50 10.67
+ [8,]      7    6.99  12.25 -0.50 11.50
+ [9,]      8    7.99  13.06 -0.50 12.34
+[10,]      9    8.99  13.86 -0.50 13.17
+[11,]     10    9.99  14.67 -0.50 14.01
+[12,]     11   10.99  15.48 -0.50 14.84
+[13,]     12   11.99  16.29 -0.50 15.68
+[14,]     13   12.99  17.09 -0.50 16.51
+[15,]     14   13.99  17.90 -0.50 17.35
+[16,]     15   14.99  18.71 -0.50 18.19
+[17,]     16   15.99  19.52 -0.50 19.02
+[18,]     17   16.99  20.32 -0.50 19.86
+[19,]     18   17.99  21.13 -0.50 20.69
+[20,]     19   18.99  21.94 -0.50 21.53
+[21,]     20   19.99  22.75 -0.50 22.36
+[22,]     21   20.99  23.55 23.66 23.20
+[23,]     22   21.99  24.36 23.82 24.03
+[24,]     23   22.99  25.17 24.10 24.87
+[25,]     24   23.99  25.97 24.38 25.71
+[26,]     25   24.99  26.78 24.57 26.54
+[27,]     26   25.99  27.59 25.35 27.38
+[28,]     27   26.99  28.40 27.28 28.21
+[29,]     28   27.99  29.20 29.14 29.05
+[30,]     29   28.99  30.01 30.65 29.88
+[31,]     30   29.99  30.82 31.34 30.72
+[32,]     31   30.99  31.63 31.76 31.55
+[33,]     32   31.99  32.43 32.35 32.39
+[34,]     33   32.99  33.24 33.09 33.22
+[35,]     34   33.99  34.05 33.88 34.06
+[36,]     35   34.99  34.86 34.86 34.90</code></pre>
+</div>
+</div>
+<p>Although the equating methods vary, the results are similar to those of Tucker method. Especially Frequency Estimation method shows how important it is to have data in different score ranges because there is no meaningful equation before the scale score of 20 and all lower scores are equated to -.5 in this method. Let’s also see the plotting of the chart above:</p>
+<div class="cell" data-code_folding="true">
+<details open>
+<summary>Code</summary>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Q1_tucker, Q1_nom, Q1_freq, Q1_braun, <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), <span class="at">addident =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672" /></p>
+</div>
+</div>
+<p>As also can be seen in the plot above, after the scale score of 20, all equating methods are quite similar to each other. Scores lower than 20 are equated with linear methods much better than the equi-percentile method as there isn’t adequate data in those score ranges.</p>
+<p>This study is conducted for demonstrative purposes and still we can say that scale scores over 30 can be equated in the given forms.</p>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">../../</span> <span class="hidden" data-render-id="quarto-int-navbar-title"></span> <span class="hidden" data-render-id="quarto-int-navbar:Apps">Apps</span> <span class="hidden" data-render-id="quarto-int-navbar:Test Analyze-R">Test Analyze-R</span> <span class="hidden" data-render-id="quarto-int-navbar:ITP Score Calculator">ITP Score Calculator</span> <span class="hidden" data-render-id="quarto-int-navbar:Ekşi KazaR">Ekşi KazaR</span> <span class="hidden" data-render-id="quarto-int-navbar:Favs">Favs</span> <span class="hidden" data-render-id="quarto-int-navbar:R cheatsheets">R cheatsheets</span> <span class="hidden" data-render-id="quarto-int-navbar:R 4 D S">R 4 D S</span> <span class="hidden" data-render-id="quarto-int-navbar:Generate IRT Data">Generate IRT Data</span> <span class="hidden" data-render-id="quarto-int-navbar:Google Ngram Viewer">Google Ngram Viewer</span> <span class="hidden" data-render-id="quarto-int-navbar:Style Guide (H.Wickham)">Style Guide (H.Wickham)</span> <span class="hidden" data-render-id="quarto-int-navbar:Style Guide (Google)">Style Guide (Google)</span> <span class="hidden" data-render-id="quarto-int-navbar:"></span> <span class="hidden" data-render-id="footer-left">© Ali Emre Karagül</span> <span class="hidden" data-render-id="footer-center"></span> <span class="hidden" data-render-id="footer-right">📈❤️☕</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">../../ - Test Equating</span> <span class="hidden" data-render-id="quarto-twittercardtitle">../../ - Test Equating</span> <span class="hidden" data-render-id="quarto-ogcardtitle">../../ - Test Equating</span> <span class="hidden" data-render-id="quarto-metasitename">../../</span></p>
+</div>
+
+</main> <!-- /main -->
+<div> 
+<hr>
+<!-- Begin Mailchimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
+	
+</style>
+<div id="mc_embed_signup">
+    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll" >
+        <h2>You can subscribe to be notified about my new posts</h2>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required>
+	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+</div>
+	<div id="mce-responses" class="clear foot">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_e72720e0214b2266cab41097e_5cddb1a68e" tabindex="-1" value=""></div>
+        <div class="optionalParent">
+            <div class="clear foot">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<!--End mc_embed_signup-->
+<hr>
+</div>
+<script id = "quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js"
+  repo="aliemrekaragul/blog-comments"
+  issue-term="pathname"
+  theme="github-light"
+  crossorigin="anonymous"
+  async>
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <div class='footer-contents'>© Ali Emre Karagül</div>  
+    </div>   
+      <div class="nav-footer-center">
+        <div class='footer-contents'> </div>  
+      </div>
+    <div class="nav-footer-right">
+      <div class='footer-contents'>📈❤️☕</div>  
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>

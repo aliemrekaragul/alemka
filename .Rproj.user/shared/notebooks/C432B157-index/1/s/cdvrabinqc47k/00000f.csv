@@ -1,6 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0","set.seed(16611106)  # olur da sen de denemek istersen diye aynı veri setini üretmemizi sağlar."
-"0","data3 <- data2[sample(1:495, 1000, replace = T), ] #adını da değiştirelim "

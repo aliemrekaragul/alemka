@@ -1,5 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0","data1<-data1[,-1] # fazla kalabalığa gerek yok, aynı isimle devam."
