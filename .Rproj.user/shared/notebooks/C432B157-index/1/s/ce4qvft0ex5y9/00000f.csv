@@ -1,0 +1,5 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0","data2<- na.omit(data1)"

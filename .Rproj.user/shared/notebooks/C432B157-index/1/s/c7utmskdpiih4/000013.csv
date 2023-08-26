@@ -1,0 +1,12 @@
+"0","#| warning: false"
+"0","#| eval: true"
+"0","#| echo: true"
+"0","#| code-fold: false"
+"0","model1_d4a<- grm(data4a)"
+"0","model2_d4a<- grm(data4a, constrained = TRUE)"
+"0","model1_d4b<- grm(data4b)"
+"0","model2_d4b<- grm(data4b, constrained = TRUE)"
+"0","anova(model2_d4a, model1_d4a)"
+"1","
+ Likelihood Ratio Table
+"

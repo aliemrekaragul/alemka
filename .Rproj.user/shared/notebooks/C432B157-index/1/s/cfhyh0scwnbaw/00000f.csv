@@ -1,0 +1,32 @@
+"0","#| warning: false"
+"2","Warning messages:
+"
+"2","1: "
+"2","In formals(fun) :"
+"2"," argument is not a function
+"
+"2","2: "
+"2","In formals(fun) :"
+"2"," argument is not a function
+"
+"2","3: "
+"2","In formals(fun) :"
+"2"," argument is not a function
+"
+"0","#| eval: true"
+"0","#| echo: false"
+"0","#| code-fold: true"
+"0","model <- rasch.mml2(data5)"
+"1","------------------------------------------------------------
+"
+"1","Semiparametric Marginal Maximum Likelihood Estimation 
+"
+"1","Raschtype Model with generalized logistic link function: alpha1= 0 , alpha2= 0  
+"
+"1","------------------------------------------------------------
+"
+"1","revise fixed guessing estimates
+"
+"2","Error in `$<-.data.frame`(`*tmp*`, ""mean"", value = c(NA, NA, NA, 1.36363636363636,  : 
+  replacement has 812 rows, data has 454
+"

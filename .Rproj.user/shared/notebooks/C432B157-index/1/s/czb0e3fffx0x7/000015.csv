@@ -1,0 +1,2 @@
+"0",""
+"0","plot(model1_d4a, type=""ICC"",xlab= ""YETENEK"", cex.main = 1, ylab = ""OLASILIK"" , lwd= 2, col.main= ""red"", font.axis= 3, font.lab=2, main = ""MADDE KARAKTERİSTİK EĞRİSİ- Madde: 2"", items = 2)"

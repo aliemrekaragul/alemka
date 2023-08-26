@@ -1,0 +1,1 @@
+"0","plot(model1_d4b, type=""IIC"",xlab= ""YETENEK"", cex.main = 1, ylab = ""BİLGİ"" , col.main= ""red"", font.axis= 3, font.lab=2, main = ""2. BİLEŞEN MADDE BİLGİ  EĞRİLERİ"")"
