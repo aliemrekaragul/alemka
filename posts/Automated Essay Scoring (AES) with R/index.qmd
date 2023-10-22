@@ -28,7 +28,7 @@ The packages and some of their functions that we will be using in this topic are
 ::: {layout-ncol=2}
 ![A robot drawn by Dall-e](image.png){width=30%}
 
-```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Libraries"}
+```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Requirements"}
 #| warning: false 
 #| eval: true 
 #| echo: true 
