@@ -1,59 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://emrekaragul.com/about-me.html</loc>
-    <lastmod>2023-04-16T22:35:21.161Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/index.html</loc>
-    <lastmod>2023-04-16T22:34:46.753Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/index2.html</loc>
-    <lastmod>2023-04-16T22:34:47.121Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts/Exploring the psychometric properties using R/index.html</loc>
-    <lastmod>2023-04-16T22:34:48.369Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts/Item Analysis with Item Response Theory (in Turkish)/index.html</loc>
-    <lastmod>2023-04-16T22:34:49.692Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts/Structural Equation Modelling (in Turkish)/index.html</loc>
-    <lastmod>2023-04-16T22:34:50.947Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts/Test Equating/index.html</loc>
-    <lastmod>2023-04-16T22:34:51.929Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts/Top 5 Data Sources/top-5-data-sources.html</loc>
-    <lastmod>2023-04-16T22:34:52.291Z</lastmod>
+    <loc>https://emrekaragul.com/posts/Web scraping with Rvest/index.html</loc>
+    <lastmod>2023-10-22T23:25:02.405Z</lastmod>
   </url>
   <url>
     <loc>https://emrekaragul.com/posts/Visualisation of My Personal Google Data (1)/index.html</loc>
-    <lastmod>2023-04-16T22:34:53.394Z</lastmod>
+    <lastmod>2023-10-22T23:24:57.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/posts/Test Equating/index.html</loc>
+    <lastmod>2023-10-22T23:24:53.423Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/posts/Item Analysis with Item Response Theory (in Turkish)/index.html</loc>
+    <lastmod>2023-10-22T23:24:48.421Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/posts/Automated Essay Scoring (AES) with R/index.html</loc>
+    <lastmod>2023-10-22T23:24:41.205Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/about-me.html</loc>
+    <lastmod>2023-10-22T23:24:35.980Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/index.html</loc>
+    <lastmod>2023-10-22T23:24:38.010Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/posts/Exploring the psychometric properties using R/index.html</loc>
+    <lastmod>2023-10-22T23:24:45.078Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/posts/Structural Equation Modelling (in Turkish)/index.html</loc>
+    <lastmod>2023-10-22T23:24:51.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://emrekaragul.com/posts/Top 5 Data Sources/index.html</loc>
+    <lastmod>2023-10-22T23:24:54.573Z</lastmod>
   </url>
   <url>
     <loc>https://emrekaragul.com/posts/Visualisation of My Personal Google Data (2)/index.html</loc>
-    <lastmod>2023-04-16T22:34:54.690Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts/Web scraping with Rvest/web scraping with Rvest.html</loc>
-    <lastmod>2023-04-16T22:34:55.743Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts2/Visualisation of My Personal Google Data (1)/index.html</loc>
-    <lastmod>2023-04-16T22:34:56.824Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts2/Visualisation of My Personal Google Data (2)/index.html</loc>
-    <lastmod>2023-04-16T22:34:58.147Z</lastmod>
-  </url>
-  <url>
-    <loc>https://emrekaragul.com/posts2/Web scraping with Rvest/web scraping with Rvest.html</loc>
-    <lastmod>2023-04-16T22:34:58.939Z</lastmod>
+    <lastmod>2023-10-22T23:25:00.045Z</lastmod>
   </url>
 </urlset>

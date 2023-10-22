@@ -2,22 +2,15 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/Top 5 Data Sources/top-5-data-sources.html",
+      "/posts/Automated Essay Scoring (AES) with R/index.html",
+      "/posts/Top 5 Data Sources/index.html",
       "/posts/Exploring the psychometric properties using R/index.html",
-      "/posts/Web scraping with Rvest/web scraping with Rvest.html",
+      "/posts/Web scraping with Rvest/index.html",
       "/posts/Visualisation of My Personal Google Data (2)/index.html",
       "/posts/Visualisation of My Personal Google Data (1)/index.html",
       "/posts/Structural Equation Modelling (in Turkish)/index.html",
       "/posts/Test Equating/index.html",
       "/posts/Item Analysis with Item Response Theory (in Turkish)/index.html"
-    ]
-  },
-  {
-    "listing": "/index2.html",
-    "items": [
-      "/posts2/Web scraping with Rvest/web scraping with Rvest.html",
-      "/posts2/Visualisation of My Personal Google Data (2)/index.html",
-      "/posts2/Visualisation of My Personal Google Data (1)/index.html"
     ]
   }
 ]

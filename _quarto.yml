@@ -71,10 +71,10 @@ format:
     fontcolor: rgb(17, 43, 60) #navy?
     fontsize: 1.1em
     linestretch: 1.5
-    code-tools: false
-    code-block-border-left: true
     code-link: true
     code-fold: show
-    # code-block-bg:  rgb(224, 216, 176) # yellowish brown gibi bişi
+    code-tools: true
+    code-block-bg: true # rgb(224, 216, 176) yellowish brown gibi bişi
+    code-block-border-left: "#31BAE9"
 editor: visual
 

@@ -73,5 +73,17 @@
   },
   "about-me.qmd": {
     "about-me.html": "974116bf"
+  },
+  "posts/Unlocking the Power of Natural Language Processing (NLP) with R/nlp.qmd": {
+    "nlp.html": "62f8d961"
+  },
+  "posts/Automated Essay Scoring (AES) with R/index.qmd": {
+    "index.html": "0ca4bcb3"
+  },
+  "posts/Top 5 Data Sources/index.qmd": {
+    "index.html": "5a9c5f27"
+  },
+  "posts/Web scraping with Rvest/index.qmd": {
+    "index.html": "10e71688"
   }
 }

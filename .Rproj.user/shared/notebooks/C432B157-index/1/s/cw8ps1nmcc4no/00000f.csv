@@ -1,8 +1,0 @@
-"0","#| warning: false"
-"0","#| eval: true"
-"0","#| echo: true"
-"0","#| code-fold: false"
-"0","model1 <- fa(data5, cor = ""tet"")"
-"2","Error in tetra.mat(x, y = y, correct = correct, smooth = smooth, global = global,  : 
-  Tetrachoric correlations require dictomous data
-"

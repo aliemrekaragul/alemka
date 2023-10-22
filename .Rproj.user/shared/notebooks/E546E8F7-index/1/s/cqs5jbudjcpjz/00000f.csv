@@ -1,3 +1,0 @@
-"0","## Linear Tucker Equating"
-"0","Q1_tucker <- equate(Q1_x, Q1_y, type = ""linear"", method = ""tucker"")"
-"0","Q1_tucker$concordance"

@@ -1,7 +1,0 @@
-"0","#PRESMOOTHING"
-"0","smooth_x <- presmoothing(Q1_x, smoothmethod = ""loglinear"")"
-"2","Warning: glm.fit: fitted rates numerically 0 occurred"
-"0","smooth_y <- presmoothing(Q1_y, smoothmethod = ""loglinear"")"
-"2","Warning: glm.fit: algorithm did not converge"
-"2","Warning: glm.fit: fitted rates numerically 0 occurred"
-"0","plot(smooth_x, xlab = ""Total Scores Form X"", ylab = ""Common Anchor Scores Form X"")"
