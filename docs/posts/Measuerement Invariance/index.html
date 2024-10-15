@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Ali Emre Karagül">
+<meta name="dcterms.date" content="2024-10-15">
+<meta name="description" content="Measurement invariance (MI) is essential in psychometrics to ensure that a test measures the same construct across different sub-groups of the population. Therefore, it is also considered as a validity problem. Without MI, comparing group differences could lead to misleading conclusions. Essentially, MI tests whether the relationships between observed items and the latent variables they represent are equivalent across smaller groups (gender, age etc). Achieving MI in a test will help us ensure that any differences in scores are because of true differences in the latent trait, not the measurement bias.">
+<title>- Measurement Invariance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/alemka.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title"></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-terminal-fill" role="img">
+</i> 
+ <span class="menu-text">Apps</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">
+<li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
+ <span class="dropdown-text">Test Analyze-R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://itp-calculator.com/">
+ <span class="dropdown-text">ITP Score Calculator</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">
+ <span class="dropdown-text">Ekşi KazaR</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-star-fill" role="img">
+</i> 
+ <span class="menu-text">Favs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
+ <span class="dropdown-text">R cheatsheets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
+ <span class="dropdown-text">R 4 D S</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
+ <span class="dropdown-text">Generate IRT Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
+ <span class="dropdown-text">Google Ngram Viewer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+ <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+ <span class="dropdown-text">Style Guide (Google)</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
+</i> 
+<span class="menu-text"> </span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Measurement Invariance</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          <p>Measurement invariance (MI) is essential in psychometrics to ensure that a test measures the same construct across different sub-groups of the population. Therefore, it is also considered as a validity problem. Without MI, comparing group differences could lead to misleading conclusions. Essentially, MI tests whether the relationships between observed items and the latent variables they represent are equivalent across smaller groups (gender, age etc). Achieving MI in a test will help us ensure that any differences in scores are because of true differences in the latent trait, not the measurement bias.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">psychometrics</div>
+                <div class="quarto-category">measusrement invariance</div>
+                <div class="quarto-category">Big data</div>
+                <div class="quarto-category">SEM</div>
+                <div class="quarto-category">Data-viz</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              TOBB ETU- University of Economics &amp; Technology
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 15, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#understand-the-data" id="toc-understand-the-data" class="nav-link" data-scroll-target="#understand-the-data">1. Understand the data</a></li>
+  <li><a href="#fit-the-base-model" id="toc-fit-the-base-model" class="nav-link" data-scroll-target="#fit-the-base-model">2. Fit the base model</a></li>
+  <li>
+<a href="#measurement-invariance" id="toc-measurement-invariance" class="nav-link" data-scroll-target="#measurement-invariance">3. Measurement Invariance</a>
+  <ul>
+<li><a href="#configural-invariance" id="toc-configural-invariance" class="nav-link" data-scroll-target="#configural-invariance">3.1. Configural Invariance</a></li>
+  <li><a href="#metric-invariance" id="toc-metric-invariance" class="nav-link" data-scroll-target="#metric-invariance">3.2. Metric Invariance</a></li>
+  <li><a href="#scalar-invariance" id="toc-scalar-invariance" class="nav-link" data-scroll-target="#scalar-invariance">3.3. Scalar Invariance</a></li>
+  <li><a href="#strict-invariance" id="toc-strict-invariance" class="nav-link" data-scroll-target="#strict-invariance">3.4. Strict Invariance</a></li>
+  </ul>
+</li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">4. Evaluation</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">5. Conclusion</a></li>
+  <li><a href="#further-analysis" id="toc-further-analysis" class="nav-link" data-scroll-target="#further-analysis">6. Further Analysis</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Measurement invariance is critical because if a test is not invariant across groups, differences in test scores might reflect biases in how questions are interpreted. For instance, a math test may appear to show that boys score higher than girls, but this could be because certain items function differently for each group.</p>
+<p>There are different levels of MI:</p>
+<p><strong>Configural Invariance:</strong> Tests whether the overall factor structure (i.e., the number and pattern of factors) is the same across groups. It is the smallest restrictive form of invariance. It allows us to conclude that the groups conceptualize the construct in the same way.</p>
+<p><strong>Metric (Weak) Invariance:</strong> Tests whether the factor loadings (the strength of the relationship between each item and the latent factor) are equal across groups. This ensures that the items are equally good indicators of the latent construct in all groups.</p>
+<p><strong>Scalar (Strong) Invariance:</strong> Tests whether item intercepts are equal across groups. Scalar invariance is necessary for comparing latent means between groups.</p>
+<p><strong>Strict Invariance:</strong> Tests whether item residual variances are equal across groups. It’s the strongest form of invariance, implying that the amount of measurement error is consistent across groups.</p>
+<p>In the context of R, we can use structural equation modeling (SEM) to assess MI. The <code>lavaan</code> package provides a dataset (<code>HolzingerSwineford1939</code>) for several SEM analysis including MI. Let’s load the <code>lavaan</code> and <code>HolzingerSwineford1939</code> data along with the <code>semTools</code> package for visualization.</p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># requirements</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://lavaan.ugent.be">"lavaan"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/SachaEpskamp/semPlot">"semPlot"</a></span><span class="op">)</span><span class="co"># For additional tools related to SEM</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/simsem/semTools/wiki">"semTools"</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="cell quarto-layout-cell" data-code_folding="true" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="code-with-filename">
+
+</div>
+</div>
+</div>
+</div>
+</section><section id="understand-the-data" class="level2"><h2 class="anchored" data-anchor-id="understand-the-data">1. Understand the data</h2>
+<p>Let’s load the data and see the head of them:</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"HolzingerSwineford1939"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">HolzingerSwineford1939</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id sex ageyr agemo  school grade       x1   x2    x3       x4   x5        x6
+1  1   1    13     1 Pasteur     7 3.333333 7.75 0.375 2.333333 5.75 1.2857143
+2  2   2    13     7 Pasteur     7 5.333333 5.25 2.125 1.666667 3.00 1.2857143
+3  3   2    13     1 Pasteur     7 4.500000 5.25 1.875 1.000000 1.75 0.4285714
+4  4   1    13     2 Pasteur     7 5.333333 7.75 3.000 2.666667 4.50 2.4285714
+5  5   2    12     2 Pasteur     7 4.833333 4.75 0.875 2.666667 4.00 2.5714286
+6  6   2    14     1 Pasteur     7 5.333333 5.00 2.250 1.000000 3.00 0.8571429
+        x7   x8       x9
+1 3.391304 5.75 6.361111
+2 3.782609 6.25 7.916667
+3 3.260870 3.90 4.416667
+4 3.000000 5.30 4.861111
+5 3.695652 6.30 5.916667
+6 4.347826 6.65 7.500000</code></pre>
+</div>
+</div>
+<p>The <strong>Holzinger and Swineford</strong> dataset contains data on students’ cognitive abilities, including variables like <strong>sex</strong>, <strong>age</strong>, and <strong>grade</strong>. It also includes information about the school of students. It includes several cognitive test scores (variables x1 to x9) that measure different abilities, which can be used to examine latent traits. These variables and code for the model is provided in the package’s own paper. The dataset measures three latent factors:</p>
+<ul>
+<li><p><strong>Visual</strong> (x1, x2, x3),</p></li>
+<li><p><strong>Textual</strong> (x4, x5, x6),</p></li>
+<li><p><strong>Speed</strong> (x7, x8, x9).</p></li>
+</ul></section><section id="fit-the-base-model" class="level2"><h2 class="anchored" data-anchor-id="fit-the-base-model">2. Fit the base model</h2>
+<p>Let’s specify the CFA model.</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">HS.model</span> <span class="op">&lt;-</span> <span class="st">' visual  =~ x1 + x2 + x3</span></span>
+<span><span class="st">              textual =~ x4 + x5 + x6</span></span>
+<span><span class="st">              speed   =~ x7 + x8 + x9 '</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<p>We fit the model using the entire dataset without considering groups. This step provides a baseline understanding of how well the model fits:</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html">lavaan</a></span><span class="op">(</span><span class="va">HS.model</span>, data <span class="op">=</span> <span class="va">HolzingerSwineford1939</span>, </span>
+<span>              auto.var <span class="op">=</span> <span class="cn">TRUE</span>, auto.fix.first <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>              auto.cov.lv.x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 35 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        21
+
+  Number of observations                           301
+
+Model Test User Model:
+                                                      
+  Test statistic                                85.306
+  Degrees of freedom                                24
+  P-value (Chi-square)                           0.000
+
+Model Test Baseline Model:
+
+  Test statistic                               918.852
+  Degrees of freedom                                36
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.931
+  Tucker-Lewis Index (TLI)                       0.896
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3737.745
+  Loglikelihood unrestricted model (H1)      -3695.092
+                                                      
+  Akaike (AIC)                                7517.490
+  Bayesian (BIC)                              7595.339
+  Sample-size adjusted Bayesian (SABIC)       7528.739
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.092
+  90 Percent confidence interval - lower         0.071
+  90 Percent confidence interval - upper         0.114
+  P-value H_0: RMSEA &lt;= 0.050                    0.001
+  P-value H_0: RMSEA &gt;= 0.080                    0.840
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.065
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.554    0.100    5.554    0.000
+    x3                0.729    0.109    6.685    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5                1.113    0.065   17.014    0.000
+    x6                0.926    0.055   16.703    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8                1.180    0.165    7.152    0.000
+    x9                1.082    0.151    7.155    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.408    0.074    5.552    0.000
+    speed             0.262    0.056    4.660    0.000
+  textual ~~                                          
+    speed             0.173    0.049    3.518    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.549    0.114    4.833    0.000
+   .x2                1.134    0.102   11.146    0.000
+   .x3                0.844    0.091    9.317    0.000
+   .x4                0.371    0.048    7.779    0.000
+   .x5                0.446    0.058    7.642    0.000
+   .x6                0.356    0.043    8.277    0.000
+   .x7                0.799    0.081    9.823    0.000
+   .x8                0.488    0.074    6.573    0.000
+   .x9                0.566    0.071    8.003    0.000
+    visual            0.809    0.145    5.564    0.000
+    textual           0.979    0.112    8.737    0.000
+    speed             0.384    0.086    4.451    0.000</code></pre>
+</div>
+</div>
+<ul>
+<li><p><strong>Chi-Square Test (85.306, df = 24, p &lt; 0.001)</strong>: The significant result indicates that the model doesn’t perfectly fit the data, but Chi-square is highly sensitive to sample size.</p></li>
+<li><p><strong>CFI (0.931)</strong>: This value suggests a reasonably good fit (values above 0.90 are typically considered acceptable).</p></li>
+<li><p><strong>RMSEA (0.092)</strong>: The RMSEA is below the threshold for a good fit (&lt;0.10).</p></li>
+<li><p><strong>SRMR (0.065)</strong>: This is below 0.10.</p></li>
+</ul>
+<p>All latent variables (visual, textual, speed) show significant factor loadings for their respective observed variables (e.g., x1–x3 for visual), indicating that these items effectively measure their intended constructs.</p>
+<p>Covariances between latent variables (visual, textual, speed) are significant, indicating meaningful relationships between these cognitive abilities.<br></p>
+</section><section id="measurement-invariance" class="level2"><h2 class="anchored" data-anchor-id="measurement-invariance">3. Measurement Invariance</h2>
+<p>Now we move on to measurement invariance.</p>
+<section id="configural-invariance" class="level3"><h3 class="anchored" data-anchor-id="configural-invariance">3.1. Configural Invariance</h3>
+<p>The first step is testing <strong>configural invariance</strong>, which checks whether the factor structure (i.e., the number of factors and their loadings) is the same across groups. We’ll use <strong>school</strong> as the grouping variable:</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_configural</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">HS.model</span>, data <span class="op">=</span> <span class="va">HolzingerSwineford1939</span>, group <span class="op">=</span> <span class="st">"school"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_configural</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 57 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        60
+
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+
+Model Test User Model:
+                                                      
+  Test statistic                               115.851
+  Degrees of freedom                                48
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    Pasteur                                     64.309
+    Grant-White                                 51.542
+
+Model Test Baseline Model:
+
+  Test statistic                               957.769
+  Degrees of freedom                                72
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.923
+  Tucker-Lewis Index (TLI)                       0.885
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3682.198
+  Loglikelihood unrestricted model (H1)      -3624.272
+                                                      
+  Akaike (AIC)                                7484.395
+  Bayesian (BIC)                              7706.822
+  Sample-size adjusted Bayesian (SABIC)       7516.536
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.097
+  90 Percent confidence interval - lower         0.075
+  90 Percent confidence interval - upper         0.120
+  P-value H_0: RMSEA &lt;= 0.050                    0.001
+  P-value H_0: RMSEA &gt;= 0.080                    0.897
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.068
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+
+Group 1 [Pasteur]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.394    0.122    3.220    0.001
+    x3                0.570    0.140    4.076    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5                1.183    0.102   11.613    0.000
+    x6                0.875    0.077   11.421    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8                1.125    0.277    4.057    0.000
+    x9                0.922    0.225    4.104    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.479    0.106    4.531    0.000
+    speed             0.185    0.077    2.397    0.017
+  textual ~~                                          
+    speed             0.182    0.069    2.628    0.009
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.941    0.095   52.249    0.000
+   .x2                5.984    0.098   60.949    0.000
+   .x3                2.487    0.093   26.778    0.000
+   .x4                2.823    0.092   30.689    0.000
+   .x5                3.995    0.105   38.183    0.000
+   .x6                1.922    0.079   24.321    0.000
+   .x7                4.432    0.087   51.181    0.000
+   .x8                5.563    0.078   71.214    0.000
+   .x9                5.418    0.079   68.440    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.298    0.232    1.286    0.198
+   .x2                1.334    0.158    8.464    0.000
+   .x3                0.989    0.136    7.271    0.000
+   .x4                0.425    0.069    6.138    0.000
+   .x5                0.456    0.086    5.292    0.000
+   .x6                0.290    0.050    5.780    0.000
+   .x7                0.820    0.125    6.580    0.000
+   .x8                0.510    0.116    4.406    0.000
+   .x9                0.680    0.104    6.516    0.000
+    visual            1.097    0.276    3.967    0.000
+    textual           0.894    0.150    5.963    0.000
+    speed             0.350    0.126    2.778    0.005
+
+
+Group 2 [Grant-White]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.736    0.155    4.760    0.000
+    x3                0.925    0.166    5.583    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5                0.990    0.087   11.418    0.000
+    x6                0.963    0.085   11.377    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8                1.226    0.187    6.569    0.000
+    x9                1.058    0.165    6.429    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.408    0.098    4.153    0.000
+    speed             0.276    0.076    3.639    0.000
+  textual ~~                                          
+    speed             0.222    0.073    3.022    0.003
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.930    0.095   51.696    0.000
+   .x2                6.200    0.092   67.416    0.000
+   .x3                1.996    0.086   23.195    0.000
+   .x4                3.317    0.093   35.625    0.000
+   .x5                4.712    0.096   48.986    0.000
+   .x6                2.469    0.094   26.277    0.000
+   .x7                3.921    0.086   45.819    0.000
+   .x8                5.488    0.087   63.174    0.000
+   .x9                5.327    0.085   62.571    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.715    0.126    5.676    0.000
+   .x2                0.899    0.123    7.339    0.000
+   .x3                0.557    0.103    5.409    0.000
+   .x4                0.315    0.065    4.870    0.000
+   .x5                0.419    0.072    5.812    0.000
+   .x6                0.406    0.069    5.880    0.000
+   .x7                0.600    0.091    6.584    0.000
+   .x8                0.401    0.094    4.249    0.000
+   .x9                0.535    0.089    6.010    0.000
+    visual            0.604    0.160    3.762    0.000
+    textual           0.942    0.152    6.177    0.000
+    speed             0.461    0.118    3.910    0.000</code></pre>
+</div>
+</div>
+<p>The <strong>configural invariance</strong> model provides a baseline for comparing the factor structure across groups (schools: <strong>Pasteur</strong> and <strong>Grant-White</strong>).</p>
+<ul>
+<li>
+<p><strong>Fit Indices</strong>:</p>
+<ul>
+<li><p>The <strong>CFI</strong> of 0.923 and <strong>TLI</strong> of 0.885 suggest a reasonably good fit but not excellent.</p></li>
+<li><p>The <strong>RMSEA</strong> of 0.097 is slightly below the recommended 0.10 threshold.</p></li>
+<li><p>The <strong>SRMR</strong> of 0.068 is within an acceptable range, below 0.10, indicating a good fit.</p></li>
+</ul>
+</li>
+</ul>
+<p>These results show that the overall factor structure is consistent across the two schools, but there’s room for improvement in model fit.</p>
+</section><section id="metric-invariance" class="level3"><h3 class="anchored" data-anchor-id="metric-invariance">3.2. Metric Invariance</h3>
+<p>Next, we would proceed to test <strong>metric invariance</strong>, where we constrain the factor loadings across groups to assess if the model behaves equivalently in both schools.</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_metric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">HS.model</span>, data <span class="op">=</span> <span class="va">HolzingerSwineford1939</span>, group <span class="op">=</span> <span class="st">"school"</span>, group.equal <span class="op">=</span> <span class="st">"loadings"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_metric</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 42 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        60
+  Number of equality constraints                     6
+
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+
+Model Test User Model:
+                                                      
+  Test statistic                               124.044
+  Degrees of freedom                                54
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    Pasteur                                     68.825
+    Grant-White                                 55.219
+
+Model Test Baseline Model:
+
+  Test statistic                               957.769
+  Degrees of freedom                                72
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.921
+  Tucker-Lewis Index (TLI)                       0.895
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3686.294
+  Loglikelihood unrestricted model (H1)      -3624.272
+                                                      
+  Akaike (AIC)                                7480.587
+  Bayesian (BIC)                              7680.771
+  Sample-size adjusted Bayesian (SABIC)       7509.514
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.093
+  90 Percent confidence interval - lower         0.071
+  90 Percent confidence interval - upper         0.114
+  P-value H_0: RMSEA &lt;= 0.050                    0.001
+  P-value H_0: RMSEA &gt;= 0.080                    0.845
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.072
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+
+Group 1 [Pasteur]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2      (.p2.)    0.599    0.100    5.979    0.000
+    x3      (.p3.)    0.784    0.108    7.267    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5      (.p5.)    1.083    0.067   16.049    0.000
+    x6      (.p6.)    0.912    0.058   15.785    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8      (.p8.)    1.201    0.155    7.738    0.000
+    x9      (.p9.)    1.038    0.136    7.629    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.416    0.097    4.271    0.000
+    speed             0.169    0.064    2.643    0.008
+  textual ~~                                          
+    speed             0.176    0.061    2.882    0.004
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.941    0.093   52.991    0.000
+   .x2                5.984    0.100   60.096    0.000
+   .x3                2.487    0.094   26.465    0.000
+   .x4                2.823    0.093   30.371    0.000
+   .x5                3.995    0.101   39.714    0.000
+   .x6                1.922    0.081   23.711    0.000
+   .x7                4.432    0.086   51.540    0.000
+   .x8                5.563    0.078   71.087    0.000
+   .x9                5.418    0.079   68.153    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.551    0.137    4.010    0.000
+   .x2                1.258    0.155    8.117    0.000
+   .x3                0.882    0.128    6.884    0.000
+   .x4                0.434    0.070    6.238    0.000
+   .x5                0.508    0.082    6.229    0.000
+   .x6                0.266    0.050    5.294    0.000
+   .x7                0.849    0.114    7.468    0.000
+   .x8                0.515    0.095    5.409    0.000
+   .x9                0.658    0.096    6.865    0.000
+    visual            0.805    0.171    4.714    0.000
+    textual           0.913    0.137    6.651    0.000
+    speed             0.305    0.078    3.920    0.000
+
+
+Group 2 [Grant-White]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2      (.p2.)    0.599    0.100    5.979    0.000
+    x3      (.p3.)    0.784    0.108    7.267    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5      (.p5.)    1.083    0.067   16.049    0.000
+    x6      (.p6.)    0.912    0.058   15.785    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8      (.p8.)    1.201    0.155    7.738    0.000
+    x9      (.p9.)    1.038    0.136    7.629    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.437    0.099    4.423    0.000
+    speed             0.314    0.079    3.958    0.000
+  textual ~~                                          
+    speed             0.226    0.072    3.144    0.002
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                4.930    0.097   50.763    0.000
+   .x2                6.200    0.091   68.379    0.000
+   .x3                1.996    0.085   23.455    0.000
+   .x4                3.317    0.092   35.950    0.000
+   .x5                4.712    0.100   47.173    0.000
+   .x6                2.469    0.091   27.248    0.000
+   .x7                3.921    0.086   45.555    0.000
+   .x8                5.488    0.087   63.257    0.000
+   .x9                5.327    0.085   62.786    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.645    0.127    5.084    0.000
+   .x2                0.933    0.121    7.732    0.000
+   .x3                0.605    0.096    6.282    0.000
+   .x4                0.329    0.062    5.279    0.000
+   .x5                0.384    0.073    5.270    0.000
+   .x6                0.437    0.067    6.576    0.000
+   .x7                0.599    0.090    6.651    0.000
+   .x8                0.406    0.089    4.541    0.000
+   .x9                0.532    0.086    6.202    0.000
+    visual            0.722    0.161    4.490    0.000
+    textual           0.906    0.136    6.646    0.000
+    speed             0.475    0.109    4.347    0.000</code></pre>
+</div>
+</div>
+<ul>
+<li><p><strong>CFI</strong> (0.921) and <strong>TLI</strong> (0.895) are still relatively good, indicating that the constrained model is acceptable.</p></li>
+<li><p><strong>RMSEA</strong> (0.093) suggests an acceptable fit.</p></li>
+<li><p><strong>SRMR</strong> (0.072) is still below 0.08, indicating acceptable fit.</p></li>
+</ul>
+<p>The comparison between the configural and metric models shows a slight decline in fit, but the invariance model still seems reasonably supported. This indicates that the factor loadings are equivalent across the two schools, allowing us to meaningfully compare relationships between items and latent factors.</p>
+</section><section id="scalar-invariance" class="level3"><h3 class="anchored" data-anchor-id="scalar-invariance">3.3. Scalar Invariance</h3>
+<p>Next, we would proceed with testing <strong>scalar invariance</strong>.</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_scalar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">HS.model</span>, data <span class="op">=</span> <span class="va">HolzingerSwineford1939</span>, group <span class="op">=</span> <span class="st">"school"</span>, group.equal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"loadings"</span>, <span class="st">"intercepts"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_scalar</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 60 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        63
+  Number of equality constraints                    15
+
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+
+Model Test User Model:
+                                                      
+  Test statistic                               164.103
+  Degrees of freedom                                60
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    Pasteur                                     90.210
+    Grant-White                                 73.892
+
+Model Test Baseline Model:
+
+  Test statistic                               957.769
+  Degrees of freedom                                72
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.882
+  Tucker-Lewis Index (TLI)                       0.859
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3706.323
+  Loglikelihood unrestricted model (H1)      -3624.272
+                                                      
+  Akaike (AIC)                                7508.647
+  Bayesian (BIC)                              7686.588
+  Sample-size adjusted Bayesian (SABIC)       7534.359
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.107
+  90 Percent confidence interval - lower         0.088
+  90 Percent confidence interval - upper         0.127
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    0.989
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.082
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+
+Group 1 [Pasteur]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2      (.p2.)    0.576    0.101    5.713    0.000
+    x3      (.p3.)    0.798    0.112    7.146    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5      (.p5.)    1.120    0.066   16.965    0.000
+    x6      (.p6.)    0.932    0.056   16.608    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8      (.p8.)    1.130    0.145    7.786    0.000
+    x9      (.p9.)    1.009    0.132    7.667    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.410    0.095    4.293    0.000
+    speed             0.178    0.066    2.687    0.007
+  textual ~~                                          
+    speed             0.180    0.062    2.900    0.004
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1      (.25.)    5.001    0.090   55.760    0.000
+   .x2      (.26.)    6.151    0.077   79.905    0.000
+   .x3      (.27.)    2.271    0.083   27.387    0.000
+   .x4      (.28.)    2.778    0.087   31.953    0.000
+   .x5      (.29.)    4.035    0.096   41.858    0.000
+   .x6      (.30.)    1.926    0.079   24.426    0.000
+   .x7      (.31.)    4.242    0.073   57.975    0.000
+   .x8      (.32.)    5.630    0.072   78.531    0.000
+   .x9      (.33.)    5.465    0.069   79.016    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.555    0.139    3.983    0.000
+   .x2                1.296    0.158    8.186    0.000
+   .x3                0.944    0.136    6.929    0.000
+   .x4                0.445    0.069    6.430    0.000
+   .x5                0.502    0.082    6.136    0.000
+   .x6                0.263    0.050    5.264    0.000
+   .x7                0.888    0.120    7.416    0.000
+   .x8                0.541    0.095    5.706    0.000
+   .x9                0.654    0.096    6.805    0.000
+    visual            0.796    0.172    4.641    0.000
+    textual           0.879    0.131    6.694    0.000
+    speed             0.322    0.082    3.914    0.000
+
+
+Group 2 [Grant-White]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2      (.p2.)    0.576    0.101    5.713    0.000
+    x3      (.p3.)    0.798    0.112    7.146    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5      (.p5.)    1.120    0.066   16.965    0.000
+    x6      (.p6.)    0.932    0.056   16.608    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8      (.p8.)    1.130    0.145    7.786    0.000
+    x9      (.p9.)    1.009    0.132    7.667    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.427    0.097    4.417    0.000
+    speed             0.329    0.082    4.006    0.000
+  textual ~~                                          
+    speed             0.236    0.073    3.224    0.001
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1      (.25.)    5.001    0.090   55.760    0.000
+   .x2      (.26.)    6.151    0.077   79.905    0.000
+   .x3      (.27.)    2.271    0.083   27.387    0.000
+   .x4      (.28.)    2.778    0.087   31.953    0.000
+   .x5      (.29.)    4.035    0.096   41.858    0.000
+   .x6      (.30.)    1.926    0.079   24.426    0.000
+   .x7      (.31.)    4.242    0.073   57.975    0.000
+   .x8      (.32.)    5.630    0.072   78.531    0.000
+   .x9      (.33.)    5.465    0.069   79.016    0.000
+    visual           -0.148    0.122   -1.211    0.226
+    textual           0.576    0.117    4.918    0.000
+    speed            -0.177    0.090   -1.968    0.049
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1                0.654    0.128    5.094    0.000
+   .x2                0.964    0.123    7.812    0.000
+   .x3                0.641    0.101    6.316    0.000
+   .x4                0.343    0.062    5.534    0.000
+   .x5                0.376    0.073    5.133    0.000
+   .x6                0.437    0.067    6.559    0.000
+   .x7                0.625    0.095    6.574    0.000
+   .x8                0.434    0.088    4.914    0.000
+   .x9                0.522    0.086    6.102    0.000
+    visual            0.708    0.160    4.417    0.000
+    textual           0.870    0.131    6.659    0.000
+    speed             0.505    0.115    4.379    0.000</code></pre>
+</div>
+</div>
+<p>The <strong>scalar invariance</strong> model (which adds constraints on intercepts) shows the following:</p>
+<ul>
+<li><p><strong>Fit indices</strong>: The <strong>CFI</strong> has dropped to 0.882 and <strong>TLI</strong> to 0.859, indicating a lower fit compared to the metric model. <strong>RMSEA</strong> increased to 0.107, which exceeds the acceptable threshold (0.10), suggesting a less satisfactory fit.</p></li>
+<li><p><strong>SRMR</strong> is now 0.082.</p></li>
+</ul>
+<p>Overall, the model fit deteriorates, indicating that the intercepts might not be fully invariant across the two groups.</p>
+</section><section id="strict-invariance" class="level3"><h3 class="anchored" data-anchor-id="strict-invariance">3.4. Strict Invariance</h3>
+<p>Finally lets test the <strong>strict invariance</strong>.</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_strict</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">HS.model</span>, data <span class="op">=</span> <span class="va">HolzingerSwineford1939</span>, group <span class="op">=</span> <span class="st">"school"</span>, group.equal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"loadings"</span>, <span class="st">"intercepts"</span>, <span class="st">"residuals"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_strict</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 59 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        63
+  Number of equality constraints                    24
+
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+
+Model Test User Model:
+                                                      
+  Test statistic                               181.511
+  Degrees of freedom                                69
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    Pasteur                                     93.093
+    Grant-White                                 88.419
+
+Model Test Baseline Model:
+
+  Test statistic                               957.769
+  Degrees of freedom                                72
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.873
+  Tucker-Lewis Index (TLI)                       0.867
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3715.028
+  Loglikelihood unrestricted model (H1)      -3624.272
+                                                      
+  Akaike (AIC)                                7508.055
+  Bayesian (BIC)                              7652.632
+  Sample-size adjusted Bayesian (SABIC)       7528.947
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.104
+  90 Percent confidence interval - lower         0.086
+  90 Percent confidence interval - upper         0.123
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    0.984
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.088
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+
+Group 1 [Pasteur]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2      (.p2.)    0.591    0.104    5.691    0.000
+    x3      (.p3.)    0.837    0.116    7.182    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5      (.p5.)    1.125    0.066   17.134    0.000
+    x6      (.p6.)    0.933    0.056   16.752    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8      (.p8.)    1.121    0.151    7.424    0.000
+    x9      (.p9.)    1.028    0.140    7.356    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.367    0.094    3.915    0.000
+    speed             0.174    0.065    2.666    0.008
+  textual ~~                                          
+    speed             0.176    0.062    2.827    0.005
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1      (.25.)    5.012    0.090   55.461    0.000
+   .x2      (.26.)    6.133    0.077   79.814    0.000
+   .x3      (.27.)    2.314    0.083   28.037    0.000
+   .x4      (.28.)    2.784    0.086   32.193    0.000
+   .x5      (.29.)    4.029    0.096   41.812    0.000
+   .x6      (.30.)    1.927    0.081   23.747    0.000
+   .x7      (.31.)    4.271    0.073   58.428    0.000
+   .x8      (.32.)    5.622    0.072   78.502    0.000
+   .x9      (.33.)    5.461    0.070   78.438    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1      (.10.)    0.638    0.102    6.249    0.000
+   .x2      (.11.)    1.130    0.102   11.124    0.000
+   .x3      (.12.)    0.771    0.090    8.608    0.000
+   .x4      (.13.)    0.383    0.047    8.095    0.000
+   .x5      (.14.)    0.435    0.057    7.616    0.000
+   .x6      (.15.)    0.354    0.042    8.341    0.000
+   .x7      (.16.)    0.769    0.080    9.571    0.000
+   .x8      (.17.)    0.501    0.071    7.021    0.000
+   .x9      (.18.)    0.576    0.069    8.353    0.000
+    visual            0.767    0.164    4.686    0.000
+    textual           0.894    0.131    6.827    0.000
+    speed             0.340    0.085    4.016    0.000
+
+
+Group 2 [Grant-White]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2      (.p2.)    0.591    0.104    5.691    0.000
+    x3      (.p3.)    0.837    0.116    7.182    0.000
+  textual =~                                          
+    x4                1.000                           
+    x5      (.p5.)    1.125    0.066   17.134    0.000
+    x6      (.p6.)    0.933    0.056   16.752    0.000
+  speed =~                                            
+    x7                1.000                           
+    x8      (.p8.)    1.121    0.151    7.424    0.000
+    x9      (.p9.)    1.028    0.140    7.356    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  visual ~~                                           
+    textual           0.422    0.095    4.446    0.000
+    speed             0.331    0.081    4.069    0.000
+  textual ~~                                          
+    speed             0.236    0.074    3.194    0.001
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1      (.25.)    5.012    0.090   55.461    0.000
+   .x2      (.26.)    6.133    0.077   79.814    0.000
+   .x3      (.27.)    2.314    0.083   28.037    0.000
+   .x4      (.28.)    2.784    0.086   32.193    0.000
+   .x5      (.29.)    4.029    0.096   41.812    0.000
+   .x6      (.30.)    1.927    0.081   23.747    0.000
+   .x7      (.31.)    4.271    0.073   58.428    0.000
+   .x8      (.32.)    5.622    0.072   78.502    0.000
+   .x9      (.33.)    5.461    0.070   78.438    0.000
+    visual           -0.157    0.120   -1.316    0.188
+    textual           0.575    0.118    4.888    0.000
+    speed            -0.176    0.090   -1.958    0.050
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .x1      (.10.)    0.638    0.102    6.249    0.000
+   .x2      (.11.)    1.130    0.102   11.124    0.000
+   .x3      (.12.)    0.771    0.090    8.608    0.000
+   .x4      (.13.)    0.383    0.047    8.095    0.000
+   .x5      (.14.)    0.435    0.057    7.616    0.000
+   .x6      (.15.)    0.354    0.042    8.341    0.000
+   .x7      (.16.)    0.769    0.080    9.571    0.000
+   .x8      (.17.)    0.501    0.071    7.021    0.000
+   .x9      (.18.)    0.576    0.069    8.353    0.000
+    visual            0.657    0.150    4.379    0.000
+    textual           0.876    0.132    6.621    0.000
+    speed             0.478    0.116    4.138    0.000</code></pre>
+</div>
+</div>
+<p><strong>Fit Statistics:</strong></p>
+<ul>
+<li><p><strong>Chi-square (181.511, df = 69, p &lt; 0.001):</strong> Significant, indicating that strict invariance does not hold perfectly, but Chi-square is sensitive to large sample sizes.</p></li>
+<li><p><strong>CFI (0.873) and TLI (0.867):</strong> Both are below 0.90, indicating a moderate fit. These indices suggest some misfit when imposing strict invariance.</p></li>
+<li><p><strong>RMSEA (0.104):</strong> Exceeds the desired threshold of 0.10, suggesting that the model fit could be improved.</p></li>
+<li><p><strong>SRMR (0.088):</strong> Slightly below the 0.10 threshold.</p></li>
+</ul>
+<p>Strict invariance constrains residuals to be equal across groups. Although the fit is not ideal, it is common for strict invariance to show worse fit compared to less restrictive models.</p>
+</section></section><section id="evaluation" class="level2"><h2 class="anchored" data-anchor-id="evaluation">4. Evaluation</h2>
+<p>We can all four models with anova() function:<br></p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">fit_configural</span>, <span class="va">fit_metric</span>, <span class="va">fit_scalar</span>, <span class="va">fit_strict</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Chi-Squared Difference Test
+
+               Df    AIC    BIC  Chisq Chisq diff    RMSEA Df diff Pr(&gt;Chisq)
+fit_configural 48 7484.4 7706.8 115.85                                       
+fit_metric     54 7480.6 7680.8 124.04      8.192 0.049272       6    0.22436
+fit_scalar     60 7508.6 7686.6 164.10     40.059 0.194211       6  4.435e-07
+fit_strict     69 7508.1 7652.6 181.51     17.409 0.078790       9    0.04269
+                  
+fit_configural    
+fit_metric        
+fit_scalar     ***
+fit_strict     *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p><strong>Configural Model</strong>: This is the baseline with good fit (Chisq = 115.85).</p></li>
+<li><p><strong>Metric Model</strong>: No significant difference from the configural model (p = 0.224), suggesting factor loadings are invariant across groups.</p></li>
+<li><p><strong>Scalar Model</strong>: Significant difference (p &lt; 0.001), implying that intercepts are not invariant across groups, indicating a potential bias.</p></li>
+<li><p><strong>Strict Model</strong>: Marginally significant difference (p = 0.043), suggesting that residual variances also vary, reducing strict invariance.</p></li>
+</ol>
+<p>Overall, the scalar and strict invariance do not hold as strongly as the other two.</p>
+<p>Let’s investigate all models in a chart and see how the model fit metrics deteriorates after each checkpoint.</p>
+<div class="cell" data-code_folding="true">
+<div class="code-with-filename">
+<details class="code-fold"><summary>Code</summary><div class="code-with-filename-file">
+<pre><strong></strong></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fitMeasures_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Configural"</span>, <span class="st">"Metric"</span>, <span class="st">"Scalar"</span>, <span class="st">"Strict"</span><span class="op">)</span>,</span>
+<span>  CFI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.923</span>, <span class="fl">0.921</span>, <span class="fl">0.882</span>, <span class="fl">0.873</span><span class="op">)</span>,</span>
+<span>  RMSEA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.097</span>, <span class="fl">0.093</span>, <span class="fl">0.107</span>, <span class="fl">0.104</span><span class="op">)</span>,</span>
+<span>  SRMR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.068</span>, <span class="fl">0.072</span>, <span class="fl">0.082</span>, <span class="fl">0.088</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Plot with thresholds and legends</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">fitMeasures_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Model</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">CFI</span>, color <span class="op">=</span> <span class="st">"CFI"</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">RMSEA</span>, color <span class="op">=</span> <span class="st">"RMSEA"</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">SRMR</span>, color <span class="op">=</span> <span class="st">"SRMR"</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">CFI</span>, group <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"CFI"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">RMSEA</span>, group <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"RMSEA"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">SRMR</span>, group <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"SRMR"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add threshold lines</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0.90</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"blue"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># CFI threshold</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0.10</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"tomato"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>   <span class="co"># RMSEA &amp; SRMR threshold</span></span>
+<span>  </span>
+<span>  <span class="co"># Manual legend for threshold lines</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">4.5</span>, y <span class="op">=</span> <span class="fl">0.91</span>, label <span class="op">=</span> <span class="st">"0.90"</span>, color <span class="op">=</span> <span class="st">"blue"</span>, size <span class="op">=</span> <span class="fl">3.5</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">4.5</span>, y <span class="op">=</span> <span class="fl">0.09</span>, label <span class="op">=</span> <span class="st">"0.10"</span>, color <span class="op">=</span> <span class="st">"tomato"</span>, size <span class="op">=</span> <span class="fl">3.5</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Fit Measures"</span>, x <span class="op">=</span> <span class="st">"Model Type"</span>, color <span class="op">=</span> <span class="st">"Fit Index"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Comparison of Fit Measures Across Invariance Models with Thresholds"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you see, configural and metric invariance is fulfilled as their CFI levels are above 0.90, and RMSEA &amp; SRMR are below 0.10. Yet, scalar and strict invariance is slightly above the thresholds for RMSEA and SRMR and below for CFI.</p>
+<p>These findings suggest some modifications might be a good idea on scalar and strict invariance models. Yet, model modifications are another blog post’s issue.</p>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">5. Conclusion</h2>
+<p>In this blog post, we explored the concept of measurement invariance and its importance in ensuring that a test measures the same construct across different sub-groups of the population. Using the lavaan package in R, we conducted a series of tests to assess different levels of MI — configural, metric, scalar, and strict invariance — on the Holzinger and Swineford dataset.</p>
+</section><section id="further-analysis" class="level2"><h2 class="anchored" data-anchor-id="further-analysis">6. Further Analysis</h2>
+<p>As scalar and strict invariance is not completely fulfilled, modifications might be usefull on the model for better fit.</p>
+<p>We have run an analysis on school variable. Measurement invariance can also be checked using the gender variable.</p>
+
+
+<!-- -->
+
+</section></main><!-- /main --><div> 
+<hr>
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
+	
+</style>
+<div id="mc_embed_signup">
+    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+        <div id="mc_embed_signup_scroll">
+        <h2>You can subscribe to be notified about my new posts</h2>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+</div>
+	<div id="mce-responses" class="clear foot">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_e72720e0214b2266cab41097e_5cddb1a68e" tabindex="-1" value=""></div>
+        <div class="optionalParent">
+            <div class="clear foot">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+        </div>
+    </div>
+</form>
+</div>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
+</div>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb18" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Measurement Invariance"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Measurement invariance (MI) is essential in psychometrics to ensure that a test measures the same construct across different sub-groups of the population. Therefore, it is also considered as a validity problem. Without MI, comparing group differences could lead to misleading conclusions. Essentially, MI tests whether the relationships between observed items and the latent variables they represent are equivalent across smaller groups (gender, age etc). Achieving MI in a test will help us ensure that any differences in scores are because of true differences in the latent trait, not the measurement bias.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Ali Emre Karagül</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-5820-8643</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">    email: aliemrekaragul@gmail.com</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: TOBB ETU- University of Economics &amp; Technology</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-10-15</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [psychometrics, measusrement invariance, Big data, SEM, Data-viz]</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "measurement_invariance.png"</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">    self_contained: false</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">    code_folding: false</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>Measurement invariance is critical because if a test is not invariant across groups, differences in test scores might reflect biases in how questions are interpreted. For instance, a math test may appear to show that boys score higher than girls, but this could be because certain items function differently for each group.</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>There are different levels of MI:</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>**Configural Invariance:** Tests whether the overall factor structure (i.e., the number and pattern of factors) is the same across groups. It is the smallest restrictive form of invariance. It allows us to conclude that the groups conceptualize the construct in the same way.</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>**Metric (Weak) Invariance:** Tests whether the factor loadings (the strength of the relationship between each item and the latent factor) are equal across groups. This ensures that the items are equally good indicators of the latent construct in all groups.</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>**Scalar (Strong) Invariance:** Tests whether item intercepts are equal across groups. Scalar invariance is necessary for comparing latent means between groups.</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>**Strict Invariance:** Tests whether item residual variances are equal across groups. It’s the strongest form of invariance, implying that the amount of measurement error is consistent across groups.</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>In the context of R, we can use structural equation modeling (SEM) to assess MI. The <span class="in">`lavaan`</span> package provides a dataset (<span class="in">`HolzingerSwineford1939`</span>) for several SEM analysis including MI. Let's load the <span class="in">`lavaan`</span> and <span class="in">`HolzingerSwineford1939`</span> data along with the <span class="in">`semTools`</span> package for visualization.</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>::: {layout-ncol="2"}</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename="Requirements"}</span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true </span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="in"># requirements</span></span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="in">library("lavaan")</span></span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="in">library("semPlot")# For additional tools related to SEM</span></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="in">library("ggplot2")</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="in">library("semTools")</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Understand the data</span></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>Let's load the data and see the head of them:</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="in">data("HolzingerSwineford1939")</span></span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a><span class="in">head(HolzingerSwineford1939)</span></span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>The **Holzinger and Swineford** dataset contains data on students’ cognitive abilities, including variables like **sex**, **age**, and **grade**. It also includes information about the school of students. It includes several cognitive test scores (variables x1 to x9) that measure different abilities, which can be used to examine latent traits. These variables and code for the model is provided in the package's own paper. The dataset measures three latent factors:</span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Visual** (x1, x2, x3),</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Textual** (x4, x5, x6),</span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Speed** (x7, x8, x9).</span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Fit the base model</span></span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a>Let's specify the CFA model.</span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a><span class="in">HS.model &lt;- ' visual  =~ x1 + x2 + x3</span></span>
+<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a><span class="in">              textual =~ x4 + x5 + x6</span></span>
+<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a><span class="in">              speed   =~ x7 + x8 + x9 '</span></span>
+<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a>We fit the model using the entire dataset without considering groups. This step provides a baseline understanding of how well the model fits:</span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a><span class="in">fit &lt;- lavaan(HS.model, data = HolzingerSwineford1939, </span></span>
+<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a><span class="in">              auto.var = TRUE, auto.fix.first = TRUE,</span></span>
+<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a><span class="in">              auto.cov.lv.x = TRUE)</span></span>
+<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit, fit.measures = TRUE)</span></span>
+<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Chi-Square Test (85.306, df = 24, p \&lt; 0.001)**: The significant result indicates that the model doesn’t perfectly fit the data, but Chi-square is highly sensitive to sample size.</span>
+<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**CFI (0.931)**: This value suggests a reasonably good fit (values above 0.90 are typically considered acceptable).</span>
+<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RMSEA (0.092)**: The RMSEA is below the threshold for a good fit (<span class="sc">\&lt;</span>0.10).</span>
+<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**SRMR (0.065)**: This is below 0.10.</span>
+<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a>All latent variables (visual, textual, speed) show significant factor loadings for their respective observed variables (e.g., x1–x3 for visual), indicating that these items effectively measure their intended constructs.</span>
+<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a>Covariances between latent variables (visual, textual, speed) are significant, indicating meaningful relationships between these cognitive abilities.\</span>
+<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Measurement Invariance</span></span>
+<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a>Now we move on to measurement invariance.</span>
+<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1. Configural Invariance</span></span>
+<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a>The first step is testing **configural invariance**, which checks whether the factor structure (i.e., the number of factors and their loadings) is the same across groups. We’ll use **school** as the grouping variable:</span>
+<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a><span class="in">fit_configural &lt;- cfa(HS.model, data = HolzingerSwineford1939, group = "school")</span></span>
+<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit_configural, fit.measures = TRUE)</span></span>
+<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>The **configural invariance** model provides a baseline for comparing the factor structure across groups (schools: **Pasteur** and **Grant-White**).</span>
+<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Fit Indices**:</span>
+<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The **CFI** of 0.923 and **TLI** of 0.885 suggest a reasonably good fit but not excellent.</span>
+<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The **RMSEA** of 0.097 is slightly below the recommended 0.10 threshold.</span>
+<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>The **SRMR** of 0.068 is within an acceptable range, below 0.10, indicating a good fit.</span>
+<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a>These results show that the overall factor structure is consistent across the two schools, but there's room for improvement in model fit.</span>
+<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2. Metric Invariance</span></span>
+<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a>Next, we would proceed to test **metric invariance**, where we constrain the factor loadings across groups to assess if the model behaves equivalently in both schools.</span>
+<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a><span class="in">fit_metric &lt;- cfa(HS.model, data = HolzingerSwineford1939, group = "school", group.equal = "loadings")</span></span>
+<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit_metric, fit.measures = TRUE)</span></span>
+<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**CFI** (0.921) and **TLI** (0.895) are still relatively good, indicating that the constrained model is acceptable.</span>
+<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RMSEA** (0.093) suggests an acceptable fit.</span>
+<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**SRMR** (0.072) is still below 0.08, indicating acceptable fit.</span>
+<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a>The comparison between the configural and metric models shows a slight decline in fit, but the invariance model still seems reasonably supported. This indicates that the factor loadings are equivalent across the two schools, allowing us to meaningfully compare relationships between items and latent factors.</span>
+<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.3. Scalar Invariance</span></span>
+<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a>Next, we would proceed with testing **scalar invariance**.</span>
+<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a><span class="in">fit_scalar &lt;- cfa(HS.model, data = HolzingerSwineford1939, group = "school", group.equal = c("loadings", "intercepts"))</span></span>
+<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit_scalar, fit.measures = TRUE)</span></span>
+<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a>The **scalar invariance** model (which adds constraints on intercepts) shows the following:</span>
+<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Fit indices**: The **CFI** has dropped to 0.882 and **TLI** to 0.859, indicating a lower fit compared to the metric model. **RMSEA** increased to 0.107, which exceeds the acceptable threshold (0.10), suggesting a less satisfactory fit.</span>
+<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**SRMR** is now 0.082.</span>
+<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a>Overall, the model fit deteriorates, indicating that the intercepts might not be fully invariant across the two groups.</span>
+<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.4. Strict Invariance</span></span>
+<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a>Finally lets test the **strict invariance**.</span>
+<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a><span class="in">fit_strict &lt;- cfa(HS.model, data = HolzingerSwineford1939, group = "school", group.equal = c("loadings", "intercepts", "residuals"))</span></span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit_strict, fit.measures = TRUE)</span></span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>**Fit Statistics:**</span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Chi-square (181.511, df = 69, p \&lt; 0.001):** Significant, indicating that strict invariance does not hold perfectly, but Chi-square is sensitive to large sample sizes.</span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**CFI (0.873) and TLI (0.867):** Both are below 0.90, indicating a moderate fit. These indices suggest some misfit when imposing strict invariance.</span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RMSEA (0.104):** Exceeds the desired threshold of 0.10, suggesting that the model fit could be improved.</span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**SRMR (0.088):** Slightly below the 0.10 threshold.</span>
+<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>Strict invariance constrains residuals to be equal across groups. Although the fit is not ideal, it is common for strict invariance to show worse fit compared to less restrictive models.</span>
+<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Evaluation</span></span>
+<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a>We can all four models with anova() function:\</span>
+<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a><span class="in">anova(fit_configural, fit_metric, fit_scalar, fit_strict)</span></span>
+<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Configural Model**: This is the baseline with good fit (Chisq = 115.85).</span>
+<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Metric Model**: No significant difference from the configural model (p = 0.224), suggesting factor loadings are invariant across groups.</span>
+<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Scalar Model**: Significant difference (p <span class="sc">\&lt;</span> 0.001), implying that intercepts are not invariant across groups, indicating a potential bias.</span>
+<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-231"><a href="#cb18-231" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Strict Model**: Marginally significant difference (p = 0.043), suggesting that residual variances also vary, reducing strict invariance.</span>
+<span id="cb18-232"><a href="#cb18-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a>Overall, the scalar and strict invariance do not hold as strongly as the other two.</span>
+<span id="cb18-234"><a href="#cb18-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-235"><a href="#cb18-235" aria-hidden="true" tabindex="-1"></a>Let's investigate all models in a chart and see how the model fit metrics deteriorates after each checkpoint.</span>
+<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}</span></span>
+<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures_df &lt;- data.frame(</span></span>
+<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a><span class="in">  Model = c("Configural", "Metric", "Scalar", "Strict"),</span></span>
+<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a><span class="in">  CFI = c(0.923, 0.921, 0.882, 0.873),</span></span>
+<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a><span class="in">  RMSEA = c(0.097, 0.093, 0.107, 0.104),</span></span>
+<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a><span class="in">  SRMR = c(0.068, 0.072, 0.082, 0.088)</span></span>
+<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot with thresholds and legends</span></span>
+<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(fitMeasures_df, aes(x = Model)) +</span></span>
+<span id="cb18-250"><a href="#cb18-250" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(aes(y = CFI, color = "CFI"), size = 4) +</span></span>
+<span id="cb18-251"><a href="#cb18-251" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(aes(y = RMSEA, color = "RMSEA"), size = 4) +</span></span>
+<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(aes(y = SRMR, color = "SRMR"), size = 4) +</span></span>
+<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(aes(y = CFI, group = 1, color = "CFI")) +</span></span>
+<span id="cb18-254"><a href="#cb18-254" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(aes(y = RMSEA, group = 1, color = "RMSEA")) +</span></span>
+<span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line(aes(y = SRMR, group = 1, color = "SRMR")) +</span></span>
+<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a><span class="in">  # Add threshold lines</span></span>
+<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_hline(yintercept = 0.90, linetype = "dashed", color = "blue", size = 0.5) +  # CFI threshold</span></span>
+<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_hline(yintercept = 0.10, linetype = "dashed", color = "tomato", size = 0.5) +   # RMSEA &amp; SRMR threshold</span></span>
+<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a><span class="in">  # Manual legend for threshold lines</span></span>
+<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 4.5, y = 0.91, label = "0.90", color = "blue", size = 3.5, hjust = 1) +</span></span>
+<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 4.5, y = 0.09, label = "0.10", color = "tomato", size = 3.5, hjust = 1) +</span></span>
+<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(y = "Fit Measures", x = "Model Type", color = "Fit Index",</span></span>
+<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "Comparison of Fit Measures Across Invariance Models with Thresholds") +</span></span>
+<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a>As you see, configural and metric invariance is fulfilled as their CFI levels are above 0.90, and RMSEA &amp; SRMR are below 0.10. Yet, scalar and strict invariance is slightly above the thresholds for RMSEA and SRMR and below for CFI.</span>
+<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a>These findings suggest some modifications might be a good idea on scalar and strict invariance models. Yet, model modifications are another blog post's issue.</span>
+<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Conclusion</span></span>
+<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a>In this blog post, we explored the concept of measurement invariance and its importance in ensuring that a test measures the same construct across different sub-groups of the population. Using the lavaan package in R, we conducted a series of tests to assess different levels of MI — configural, metric, scalar, and strict invariance — on the Holzinger and Swineford dataset.</span>
+<span id="cb18-278"><a href="#cb18-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-279"><a href="#cb18-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Further Analysis</span></span>
+<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-281"><a href="#cb18-281" aria-hidden="true" tabindex="-1"></a>As scalar and strict invariance is not completely fulfilled, modifications might be usefull on the model for better fit.</span>
+<span id="cb18-282"><a href="#cb18-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a>We have run an analysis on school variable. Measurement invariance can also be checked using the gender variable.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

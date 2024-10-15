@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
-
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2022-11-16">
 <meta name="description" content="This post is a part of a series that demonstrates how to gain insights from personal Google data. Its purpose is to show how to visualize the locations I visited within a time period on a map.">
-
 <title>- Visualisation of My Personal Google Data (1): My Locations</title>
 <style>
 code{white-space: pre-wrap;}
@@ -25,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,14 +73,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,22 +94,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -119,34 +116,22 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
-</script> 
-  
-<script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script>
-<link href="../../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
-<script src="../../site_libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="../../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
-<script src="../../site_libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="../../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="../../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="../../site_libs/leaflet-binding-2.1.1/leaflet.js"></script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script><link href="../../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-1.3.1/leaflet.js"></script><link href="../../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="../../site_libs/proj4-2.6.2/proj4.min.js"></script><script src="../../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="../../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-binding-2.1.1/leaflet.js"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../images/logo with title.svg" alt="" class="navbar-logo">
-    </a>
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title"></span>
     </a>
@@ -157,87 +142,83 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-terminal-fill" role="img">
 </i> 
  <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
-        <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">
+<li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://itp-calculator.com/" rel="" target="">
+    <a class="dropdown-item" href="https://itp-calculator.com/">
  <span class="dropdown-text">ITP Score Calculator</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/" rel="" target="">
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">
  <span class="dropdown-text">Ekşi KazaR</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-star-fill" role="img">
 </i> 
  <span class="menu-text">Favs</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
-        <li>
-    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
  <span class="dropdown-text">R cheatsheets</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://r4ds.hadley.nz/" rel="" target="">
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
  <span class="dropdown-text">R 4 D S</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/" rel="" target="">
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
  <span class="dropdown-text">Generate IRT Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://books.google.com/ngrams/" rel="" target="">
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html" rel="" target="">
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
  <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html" rel="" target="">
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
  <span class="dropdown-text">Style Guide (Google)</span></a>
   </li>  
     </ul>
-  </li>
+</li>
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../about-me.html" rel="" target=""><i class="bi bi-info-square-fill" role="img">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
 </i> 
- <span class="menu-text"> </span></a>
+<span class="menu-text"> </span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/aliemrekaragul" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <div class="quarto-title-block"><div><h1 class="title">Visualisation of My Personal Google Data (1): My Locations</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                   <div>
@@ -258,14 +239,14 @@ cookieconsent.run({
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      <p class="author">Ali Emre Karagül <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
     </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
           <p class="affiliation">
               TOBB ETU- University of Economics &amp; Technology
             </p>
         </div>
-      </div>
+    </div>
 
   <div class="quarto-title-meta">
 
@@ -285,59 +266,45 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#introduction-to-the-series-visualisation-of-my-personal-google-data" id="toc-introduction-to-the-series-visualisation-of-my-personal-google-data" class="nav-link active" data-scroll-target="#introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</a></li>
+<li><a href="#introduction-to-the-series-visualisation-of-my-personal-google-data" id="toc-introduction-to-the-series-visualisation-of-my-personal-google-data" class="nav-link active" data-scroll-target="#introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</a></li>
   <li><a href="#introduction-my-locations" id="toc-introduction-my-locations" class="nav-link" data-scroll-target="#introduction-my-locations">Introduction: “My Locations”</a></li>
   <li><a href="#understand-the-data" id="toc-understand-the-data" class="nav-link" data-scroll-target="#understand-the-data">Understand the Data</a></li>
   <li><a href="#pre-processing" id="toc-pre-processing" class="nav-link" data-scroll-target="#pre-processing">Pre-processing</a></li>
   <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  </ul>
-</nav>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2"><h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
 <p>If you give permission to Google to store your location data, they will keep them in their databases forever. You can also allow them to store it for a while and then ask them delete it. They will directly do so.</p>
 <p>What makes this study a fun project is its being very personal. I decided to analyze my personal data in August, 2022. Therefore, I granted many new permissions to Google along with many previously granted permissions. They keep them in various formats including .csv, .json, .mbox etc. When you query for your personal data, they provide it within a couple of days depending on the size of the data you queried.</p>
 <p>Usually, I provide the readers with the data in my posts. However, in this series, the data are very personal and so I will not.</p>
-</section>
-<section id="introduction-my-locations" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-my-locations">Introduction: “My Locations”</h2>
+</section><section id="introduction-my-locations" class="level2"><h2 class="anchored" data-anchor-id="introduction-my-locations">Introduction: “My Locations”</h2>
 <p>In this part of the series, we will investigate my personal location data. We will visualize the spots I visited within a period of time. This way, I personally will gain insights about how boring my days are :)</p>
 <p>The R packages that we use in this post are as follows: <code>rjson</code>, <code>tidyr</code>, <code>dplyr</code>, <code>purrr</code>, <code>lubridate</code>, <code>sp</code> and <code>leaflet</code>.</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##packs for data processing</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rjson)      <span class="co"># to read .JSON files.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)      <span class="co"># to process data</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)      <span class="co"># to process data</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)      <span class="co"># to process data</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)  <span class="co"># to deal with date variables</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#packs for data viz</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)         <span class="co"># a pack for spatial objects</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)    <span class="co"># map and its functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##packs for data processing</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexcb/rjson">rjson</a></span><span class="op">)</span>      <span class="co"># to read .JSON files.</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>      <span class="co"># to process data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>      <span class="co"># to process data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span>      <span class="co"># to process data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span>  <span class="co"># to deal with date variables</span></span>
+<span><span class="co">#packs for data viz</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/edzer/sp/">sp</a></span><span class="op">)</span>         <span class="co"># a pack for spatial objects</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span>    <span class="co"># map and its functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="understand-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="understand-the-data">Understand the Data</h2>
+</section><section id="understand-the-data" class="level2"><h2 class="anchored" data-anchor-id="understand-the-data">Understand the Data</h2>
 <p>Inside the takeout folder that I received from Google, there is a folder named “Location History”. Inside it, “Semantic Location History” contains the location data based on the months and years. From that folder, I have called the locations I visited in November. Thus, we will use 2022_NOVEMBER.json file. Let’s investigate the data. Start with reading the file into R environment.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_locations <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="at">file =</span> <span class="st">"2022_NOVEMBER.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjson/man/fromJSON.html">fromJSON</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"2022_NOVEMBER.json"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, let’s try to understand the structure of the data, how and what kind of information is stored into its cells. The list object <code>my_locations</code> contains many lists inside it. Let’s try to understand each one of them one by one:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Length Class  Mode
  [1,] 1      -none- list
@@ -361,7 +328,7 @@ cookieconsent.run({
 </div>
 <p>There are many smaller lists in the first indexed list. Let’s try the first one and see what’s inside:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Length Class  Mode
 placeVisit 11     -none- list</code></pre>
@@ -369,7 +336,7 @@ placeVisit 11     -none- list</code></pre>
 </div>
 <p>There is a single list inside. Sad :( Let’s dive one more step:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        Length Class  Mode     
 location                8      -none- list     
@@ -387,7 +354,7 @@ placeVisitImportance    1      -none- character</code></pre>
 </div>
 <p>Finally, here we have several items. There is a list called <code>location</code> containing 8 items inside. There is <code>duration</code> with 2 items and <code>otherCandidateLocations</code> with 4 items. Other lists contain only one item each. Let’s check these one by one:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>location)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">location</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      Length Class  Mode     
 latitudeE7            1      -none- numeric  
@@ -401,7 +368,7 @@ calibratedProbability 1      -none- numeric  </code></pre>
 </div>
 </div>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>duration)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">duration</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Length Class  Mode     
 startTimestamp 1      -none- character
@@ -409,7 +376,7 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 </div>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>otherCandidateLocations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">otherCandidateLocations</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Length Class  Mode
 [1,] 7      -none- list
@@ -419,36 +386,34 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 </div>
 <p>We can obtain much information through this investigation process. For instance, inside the <code>location</code> I can see information about the latitude, longitude, address, the confidence that I have to this place, and some other. Here, if you are following along with me, please spare some time to understand your data. Delve into them and digest as much information as you can. I will see you in the next section: data processing.</p>
-</section>
-<section id="pre-processing" class="level2">
-<h2 class="anchored" data-anchor-id="pre-processing">Pre-processing</h2>
+</section><section id="pre-processing" class="level2"><h2 class="anchored" data-anchor-id="pre-processing">Pre-processing</h2>
 <p>You can use as many items as you want in your work. You should decide the meaningful information while understanding your data. Now let’s re-define our lists as a dataframe.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(my_locations[[<span class="st">"timelineObjects"</span>]], as.data.frame)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(df)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># there is one empty row after each entry. Let's drop them through one of the complete columns:</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(df, placeVisit.location.latitudeE7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr</a></span><span class="op">(</span><span class="va">my_locations</span><span class="op">[[</span><span class="st">"timelineObjects"</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.data.frame</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co"># there is one empty row after each entry. Let's drop them through one of the complete columns:</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">placeVisit.location.latitudeE7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are many columns, some of which I won’t need. Especially, I am not interested in the locations defined as “candidate”. I will exclude them from my study. They are probably the locations that might be the place that I visited ordered by possibility. I just need the one with the highest possibility, which is tagged with <code>placeVisit.location.</code> . These locations are also defined as “HIGH CONFIDENCE”. Let’s continue the analysis with these locations, only.</p>
 <p>Also, there are some columns with no entry. Let me exclude them with a function. Let the function be called <code>not_all_na</code>. This is a function that drops all the columns which are completely empty:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>not_all_na <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.na</span>(x))</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#use the function on the dataframe:</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(not_all_na))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">not_all_na</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#use the function on the dataframe:</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">not_all_na</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, I have a dataframe with 150+ columns. However, I just need the information about latitude, altitude, date and address of the locations that I visited. Let’s write a query to get this data into a new dataframe:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.latitudeE7"</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.longitudeE7"</span>))</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.address"</span>))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.duration.startTimestamp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.location.latitudeE7"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.location.longitudeE7"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">address</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.location.address"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"placeVisit.duration.startTimestamp"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The chunks of code above ask for columns whose names contain the extensions written in quotation marks in them. Still, this raw information isn’t enough for several reasons. Firstly, <code>lat</code> and <code>lot</code> are coordinates in E7 format. With a quick research on the internet, I learned that they simply need to be divided by 10000000. Also, <code>date</code> contains day, month, year, hour, minute, second and time zone (which is in GMT+0 format) information all in the same column. They need to be handled. Let’s start with the second issue (the one about <code>date</code>):</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#re-name the only column:</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(date) <span class="ot">&lt;-</span> <span class="st">"Date"</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#re-name the only column:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Date"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      Date
 1 2022-11-06T13:12:38.091Z
@@ -461,29 +426,29 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 <p>As can be seen above, there are two separators: One is “T” separating day and time info. The other is “.” separating time and time zone info. Follow the notes in the code to grasp the process:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#divide the day and hour info from the time zone info, then drop the time zone:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> date,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> Date,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"zone"</span>),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> date[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>)]</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Now, transform the time in local time zone which is GMT+3:</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>date<span class="sc">$</span>Date<span class="ot">&lt;-</span><span class="fu">as.POSIXct</span>(date<span class="sc">$</span>Date, <span class="at">format=</span><span class="st">"%Y-%m-%dT%H:%M:%S"</span>, <span class="at">tz=</span><span class="fu">Sys.timezone</span>())<span class="sc">+</span> <span class="fu">hours</span>(<span class="dv">3</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co">#divide the day and hour info:</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> date,</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> Date,</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Day"</span>, <span class="st">"Hour"</span>),</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" "</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co">#see the new format:</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#divide the day and hour info from the time zone info, then drop the time zone:</span></span>
+<span><span class="va">date</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">date</span>,</span>
+<span>    col <span class="op">=</span> <span class="va">Date</span>,</span>
+<span>    into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Date"</span>, <span class="st">"zone"</span><span class="op">)</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">"\\."</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">date</span> <span class="op">&lt;-</span> <span class="va">date</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co">#Now, transform the time in local time zone which is GMT+3:</span></span>
+<span><span class="va">date</span><span class="op">$</span><span class="va">Date</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="va">date</span><span class="op">$</span><span class="va">Date</span>, format<span class="op">=</span><span class="st">"%Y-%m-%dT%H:%M:%S"</span>, tz<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html">hours</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#divide the day and hour info:</span></span>
+<span><span class="va">date</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">date</span>,</span>
+<span>    col <span class="op">=</span> <span class="va">Date</span>,</span>
+<span>    into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Day"</span>, <span class="st">"Hour"</span><span class="op">)</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">" "</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#see the new format:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Day     Hour
 1 2022-11-06 16:12:38
@@ -496,63 +461,59 @@ endTimestamp   1      -none- character</code></pre>
 </div>
 <p>Nicely done! Now gather all the information that we need into a dataframe. Again follow along the notes in the code:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(<span class="fu">data.frame</span>(</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> <span class="fu">unlist</span>(lat, <span class="at">use.names =</span> <span class="cn">FALSE</span>) <span class="sc">/</span> <span class="dv">10000000</span>, <span class="co">#divide lat and lon by 10000000 to get rid of the E7 format</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon =</span> <span class="fu">unlist</span>(lon, <span class="at">use.names =</span> <span class="cn">FALSE</span>) <span class="sc">/</span> <span class="dv">10000000</span>, </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">address =</span> <span class="fu">unlist</span>(address, <span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    date <span class="co"># we processed this before</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coords</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">lat</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10000000</span>, <span class="co">#divide lat and lon by 10000000 to get rid of the E7 format</span></span>
+<span>    lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">lon</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10000000</span>, </span>
+<span>    address <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">address</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>    <span class="va">date</span> <span class="co"># we processed this before</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So far, we have worked to prepare for the data visualization process. Our data is ready with the name <code>coords</code>. Let’s continue with the visualization.</p>
-</section>
-<section id="data-visualization" class="level2">
-<h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
+</section><section id="data-visualization" class="level2"><h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
 <p>At this point, we will visualize the locations I visited in November of 2022 on a world map. You can’t be as disappointed as me when you see that I live a life between home and work. Yet, the point here is to see the process of visualization. We owe this beautiful project to the <a href="https://rstudio.github.io/leaflet/">R package leaflet</a>. It is actually <a href="https://leafletjs.com/index.html">a javascript library</a>, all its arguments are deployed into R environment too. Therefore, we can work with it. If you are still with me, I mhighly recommend you to read the documentation of the package <code>leaflet</code>. Then, follow along the notes in the code and try to understand it if you are not familiar with it.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(coords) <span class="ot">&lt;-</span> <span class="er">~</span> lon <span class="sc">+</span> lat</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(coords,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># formating the outer of the map:</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="st">"800px"</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="st">"400px"</span>, </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">padding =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#formating the markers on the map:</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"tomato"</span>, <span class="co">#my favorite colour</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fillOpacity =</span> <span class="dv">1</span>,</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">radius =</span> <span class="dv">7</span>,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">stroke =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#address pops up when you click on a marker:</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> coords<span class="sc">$</span>address,</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#the date and hour shows up with a fancy personal note when you hover on a marker:</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span>  <span class="fu">paste0</span>(<span class="st">"I have been around here on "</span>, coords<span class="sc">$</span>Day, <span class="st">" at around "</span>, coords<span class="sc">$</span>Hour),</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="co">#formating the label that shows up when you hover:</span></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">labelOptions =</span> <span class="fu">labelOptions</span>(</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">noHide =</span> F,</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">direction =</span> <span class="st">"top"</span>,</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color"</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"font-family"</span> <span class="ot">=</span> <span class="st">"calibri"</span>, <span class="co">#I love calibri</span></span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"box-shadow"</span> <span class="ot">=</span> <span class="st">"3px 3px rgba(0,0,0,0.25)"</span>,</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"font-size"</span> <span class="ot">=</span> <span class="st">"12px"</span>,</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"border-color"</span> <span class="ot">=</span> <span class="st">"rgba(0,0,0,0.5)"</span></span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://edzer.github.io/sp/reference/coordinates.html">coordinates</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="va">lon</span> <span class="op">+</span> <span class="va">lat</span></span>
+<span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span><span class="va">coords</span>,</span>
+<span></span>
+<span><span class="co"># formating the outer of the map:</span></span>
+<span>        width <span class="op">=</span> <span class="st">"800px"</span>,</span>
+<span>        height <span class="op">=</span> <span class="st">"400px"</span>, </span>
+<span>        padding <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span><span class="co">#formating the markers on the map:</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addCircleMarkers</a></span><span class="op">(</span></span>
+<span>    color <span class="op">=</span> <span class="st">"tomato"</span>, <span class="co">#my favorite colour</span></span>
+<span>    fillOpacity <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    radius <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    stroke <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    </span>
+<span><span class="co">#address pops up when you click on a marker:</span></span>
+<span>    popup <span class="op">=</span> <span class="va">coords</span><span class="op">$</span><span class="va">address</span>,</span>
+<span></span>
+<span><span class="co">#the date and hour shows up with a fancy personal note when you hover on a marker:</span></span>
+<span>    label <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"I have been around here on "</span>, <span class="va">coords</span><span class="op">$</span><span class="va">Day</span>, <span class="st">" at around "</span>, <span class="va">coords</span><span class="op">$</span><span class="va">Hour</span><span class="op">)</span>,</span>
+<span></span>
+<span><span class="co">#formating the label that shows up when you hover:</span></span>
+<span>    labelOptions <span class="op">=</span> <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-options.html">labelOptions</a></span><span class="op">(</span></span>
+<span>      noHide <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>      direction <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>      style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>        <span class="st">"color"</span> <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>        <span class="st">"font-family"</span> <span class="op">=</span> <span class="st">"calibri"</span>, <span class="co">#I love calibri</span></span>
+<span>        <span class="st">"box-shadow"</span> <span class="op">=</span> <span class="st">"3px 3px rgba(0,0,0,0.25)"</span>,</span>
+<span>        <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"12px"</span>,</span>
+<span>        <span class="st">"border-color"</span> <span class="op">=</span> <span class="st">"rgba(0,0,0,0.5)"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="htmlwidget-e89f608a73d1db18a340" style="width:800px;height:400px;" class="leaflet html-widget"></div>
 <script type="application/json" data-for="htmlwidget-e89f608a73d1db18a340">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[39.9107968,39.9077105,39.9107968,39.9020001,39.9107968,39.9211819,39.9033022,39.9107968],[32.865052,32.8704428,32.865052,32.8601762,32.865052,32.7983108,32.860418,32.865052],7,null,null,{"interactive":true,"className":"","stroke":false,"color":"tomato","weight":5,"opacity":0.5,"fill":true,"fillColor":"tomato","fillOpacity":1},null,null,["Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye","Muhsin Ertuğrul, Belligün Cd. No:18, 06660 Çankaya/Ankara, Türkiye","Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye","Çankaya Kuğulu, Çankaya, Park, 06690 Çankaya/Ankara, Türkiye","Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye","Söğütözü, Söğütözü Cd. No:43, 06510 Çankaya/Ankara, Türkiye","Remzi Oğuz Arık, Tunalı Hilmi Cd. No:119/A, 06680 Çankaya/Ankara, Türkiye","Esatoğlu, Başak Sk. No:24, 06660 Çankaya/Ankara, Türkiye"],null,["I have been around here on 2022-11-06 at around 16:12:38","I have been around here on 2022-11-06 at around 16:24:32","I have been around here on 2022-11-06 at around 16:59:00","I have been around here on 2022-11-06 at around 17:17:15","I have been around here on 2022-11-06 at around 17:39:29","I have been around here on 2022-11-07 at around 08:32:14","I have been around here on 2022-11-07 at around 17:14:12","I have been around here on 2022-11-07 at around 17:46:44"],{"interactive":false,"permanent":false,"direction":"top","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"style":{"color":"black","font-family":"calibri","box-shadow":"3px 3px rgba(0,0,0,0.25)","font-size":"12px","border-color":"rgba(0,0,0,0.5)"},"className":"","sticky":true},null]}],"limits":{"lat":[39.9020001,39.9211819],"lng":[32.7983108,32.8704428]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Working with your personal data gives you the opportunity to understand your own habits, likes, dislikes, and maybe future expectations. Here, you can only see my locations in November. When I worked on longer periods, I realized that I need to travel and see new places more often. Even if they are in my own city, a new place is a new vision of life.</p>
 <p>Visualizing data on spatial environments is a new challenge for me. Rather than graphs and charts, working with maps are more attractive obviously. While visualizing location data on maps, <code>leaflet</code> is an amazing, open source library. There are other options. One needs a mention here: <code>ggmap</code>. Yet, to use this package you need an API key obtained from Google. For more information about API keys, <a href="https://developers.google.com/maps/documentation/embed/get-api-key#:~:text=Go%20to%20the%20Google%20Maps%20Platform%20%3E%20Credentials%20page.&amp;text=On%20the%20Credentials%20page%2C%20click,Click%20Close.">visit here</a>. As of the package, you can visit the <a href="https://cran.r-project.org/web/packages/ggmap/readme/README.html">CRAN page of ggmap</a>. Under the title “Google Maps API key”, you will see the procedure to buy a personal API key. It reads as follows:</p>
 <p>GOOGLE MAPS API KEY <span class="citation" data-cites="ggmap">[@ggmap]</span></p>
@@ -563,21 +524,15 @@ endTimestamp   1      -none- character</code></pre>
 <li><p><em>Inside R, after loading the new version of <strong>ggmap</strong>, you’ll need provide <strong>ggmap</strong> with your API key, a <a href="https://en.wikipedia.org/wiki/Hash_function">hash value</a> (think string of jibberish) that authenticates you to Google’s servers. This can be done on a temporary basis with <code>register_google(key = "[your key]")</code> or permanently using <code>register_google(key = "[your key]", write = TRUE)</code> (note: this will overwrite your <code>~/.Renviron</code> file by replacing/adding the relevant line). If you use the former, know that you’ll need to re-do it every time you reset R.</em></p></li>
 </ol>
 <p><em>Your API key is private and unique to you, so be careful not to share it online, for example in a GitHub issue or saving it in a shared R script file. If you share it inadvertantly, just get on Google’s website and regenerate your key - this will retire the old one. Keeping your key private is made a bit easier by <strong>ggmap</strong> scrubbing the key out of queries by default, so when URLs are shown in your console, they’ll look something like <code>key=xxx</code>. (Read the details section of the <code>register_google()</code> documentation for a bit more info on this point.)</em></p>
-<section id="stay-tuned" class="level5">
-<h5 class="anchored" data-anchor-id="stay-tuned">Stay tuned!</h5>
+<section id="stay-tuned" class="level5"><h5 class="anchored" data-anchor-id="stay-tuned">Stay tuned!</h5>
 <p>This series continues with the visualization of my Google Fit data. We will delve into my exercise habbits.</p>
 
 
 <!-- -->
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<div> 
+</section></section></main><!-- /main --><div> 
 <hr>
-<!-- Begin Mailchimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
 	
@@ -589,8 +544,7 @@ endTimestamp   1      -none- character</code></pre>
 <div class="mc-field-group">
 	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
 </label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
-	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
 </div>
 	<div id="mce-responses" class="clear foot">
 		<div class="response" id="mce-error-response" style="display:none"></div>
@@ -600,14 +554,12 @@ endTimestamp   1      -none- character</code></pre>
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-            </div>
+</div>
         </div>
     </div>
 </form>
 </div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-<!--End mc_embed_signup-->
-<hr>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
 </div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -739,10 +691,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -752,8 +721,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -765,7 +743,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -809,6 +910,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -834,6 +936,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -892,8 +1020,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Visualisation of My Personal Google Data (1): My Locations"</span></span>
@@ -917,7 +1044,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = FALSE)</span></span>
 <span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction to the series: "Visualisation of My Personal Google Data"</span></span>
@@ -935,33 +1062,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>The R packages that we use in this post are as follows: <span class="in">`rjson`</span>, <span class="in">`tidyr`</span>, <span class="in">`dplyr`</span>, <span class="in">`purrr`</span>, <span class="in">`lubridate`</span>, <span class="in">`sp`</span> and <span class="in">`leaflet`</span>.</span>
 <span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE, echo=TRUE}</span></span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="do">##packs for data processing</span></span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rjson)      <span class="co"># to read .JSON files.</span></span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)      <span class="co"># to process data</span></span>
-<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)      <span class="co"># to process data</span></span>
-<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)      <span class="co"># to process data</span></span>
-<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)  <span class="co"># to deal with date variables</span></span>
-<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a><span class="co">#packs for data viz</span></span>
-<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)         <span class="co"># a pack for spatial objects</span></span>
-<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)    <span class="co"># map and its functions</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="in">##packs for data processing</span></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a><span class="in">library(rjson)      # to read .JSON files.</span></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyr)      # to process data</span></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)      # to process data</span></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a><span class="in">library(purrr)      # to process data</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a><span class="in">library(lubridate)  # to deal with date variables</span></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a><span class="in">#packs for data viz</span></span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a><span class="in">library(sp)         # a pack for spatial objects</span></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a><span class="in">library(leaflet)    # map and its functions</span></span>
 <span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=FALSE}</span></span>
-<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a><span class="do">##packs for data processing</span></span>
-<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rjson)      <span class="co"># to read .JSON files.</span></span>
-<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)      <span class="co"># to process data</span></span>
-<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)      <span class="co"># to process data</span></span>
-<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)      <span class="co"># to process data</span></span>
-<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)  <span class="co"># to deal with date variables</span></span>
-<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a><span class="co">#packs for data viz</span></span>
-<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)         <span class="co"># a pack for spatial objects</span></span>
-<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)    <span class="co"># map and its functions</span></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a><span class="in">##packs for data processing</span></span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a><span class="in">library(rjson)      # to read .JSON files.</span></span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyr)      # to process data</span></span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)      # to process data</span></span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="in">library(purrr)      # to process data</span></span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a><span class="in">library(lubridate)  # to deal with date variables</span></span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a><span class="in">#packs for data viz</span></span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="in">library(sp)         # a pack for spatial objects</span></span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a><span class="in">library(leaflet)    # map and its functions</span></span>
 <span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understand the Data</span></span>
@@ -969,68 +1096,68 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a>Inside the takeout folder that I received from Google, there is a folder named "Location History". Inside it, "Semantic Location History" contains the location data based on the months and years. From that folder, I have called the locations I visited in November. Thus, we will use 2022_NOVEMBER.json file. Let's investigate the data. Start with reading the file into R environment.</span>
 <span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a>my_locations <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="at">file =</span> <span class="st">"2022_NOVEMBER.json"</span>)</span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a><span class="in">my_locations &lt;- fromJSON(file = "2022_NOVEMBER.json")</span></span>
 <span id="cb24-80"><a href="#cb24-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a>Then, let's try to understand the structure of the data, how and what kind of information is stored into its cells. The list object <span class="in">`my_locations`</span> contains many lists inside it. Let's try to understand each one of them one by one:</span>
 <span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]])</span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a><span class="in">summary(my_locations[[1]])</span></span>
 <span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-92"><a href="#cb24-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-93"><a href="#cb24-93" aria-hidden="true" tabindex="-1"></a>There are many smaller lists in the first indexed list. Let's try the first one and see what's inside:</span>
 <span id="cb24-94"><a href="#cb24-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-96"><a href="#cb24-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-97"><a href="#cb24-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]])</span>
+<span id="cb24-96"><a href="#cb24-96" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-97"><a href="#cb24-97" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a><span class="in">summary(my_locations[[1]][[1]])</span></span>
 <span id="cb24-101"><a href="#cb24-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-102"><a href="#cb24-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-103"><a href="#cb24-103" aria-hidden="true" tabindex="-1"></a>There is a single list inside. Sad :( Let's dive one more step:</span>
 <span id="cb24-104"><a href="#cb24-104" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-105"><a href="#cb24-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-110"><a href="#cb24-110" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]])</span>
+<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-110"><a href="#cb24-110" aria-hidden="true" tabindex="-1"></a><span class="in">summary(my_locations[[1]][[1]][[1]])</span></span>
 <span id="cb24-111"><a href="#cb24-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-112"><a href="#cb24-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-113"><a href="#cb24-113" aria-hidden="true" tabindex="-1"></a>Finally, here we have several items. There is a list called <span class="in">`location`</span> containing 8 items inside. There is <span class="in">`duration`</span> with 2 items and <span class="in">`otherCandidateLocations`</span> with 4 items. Other lists contain only one item each. Let's check these one by one:</span>
 <span id="cb24-114"><a href="#cb24-114" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-115"><a href="#cb24-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-116"><a href="#cb24-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-117"><a href="#cb24-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>location)</span>
+<span id="cb24-116"><a href="#cb24-116" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-117"><a href="#cb24-117" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a><span class="in">summary(my_locations[[1]][[1]][[1]]$location)</span></span>
 <span id="cb24-121"><a href="#cb24-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-122"><a href="#cb24-122" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-123"><a href="#cb24-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-124"><a href="#cb24-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-125"><a href="#cb24-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-126"><a href="#cb24-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>duration)</span>
+<span id="cb24-124"><a href="#cb24-124" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-125"><a href="#cb24-125" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-126"><a href="#cb24-126" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a><span class="in">summary(my_locations[[1]][[1]][[1]]$duration)</span></span>
 <span id="cb24-129"><a href="#cb24-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-130"><a href="#cb24-130" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-131"><a href="#cb24-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-134"><a href="#cb24-134" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-135"><a href="#cb24-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_locations[[<span class="dv">1</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>otherCandidateLocations)</span>
+<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-134"><a href="#cb24-134" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-135"><a href="#cb24-135" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a><span class="in">summary(my_locations[[1]][[1]][[1]]$otherCandidateLocations)</span></span>
 <span id="cb24-137"><a href="#cb24-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-138"><a href="#cb24-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-139"><a href="#cb24-139" aria-hidden="true" tabindex="-1"></a>We can obtain much information through this investigation process. For instance, inside the <span class="in">`location`</span> I can see information about the latitude, longitude, address, the confidence that I have to this place, and some other. Here, if you are following along with me, please spare some time to understand your data. Delve into them and digest as much information as you can. I will see you in the next section: data processing.</span>
@@ -1040,14 +1167,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-143"><a href="#cb24-143" aria-hidden="true" tabindex="-1"></a>You can use as many items as you want in your work. You should decide the meaningful information while understanding your data. Now let's re-define our lists as a dataframe.</span>
 <span id="cb24-144"><a href="#cb24-144" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-145"><a href="#cb24-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-148"><a href="#cb24-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-149"><a href="#cb24-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(my_locations[[<span class="st">"timelineObjects"</span>]], as.data.frame)</span>
-<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(df)</span>
-<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a><span class="co"># there is one empty row after each entry. Let's drop them through one of the complete columns:</span></span>
-<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(df, placeVisit.location.latitudeE7)</span>
+<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-148"><a href="#cb24-148" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-149"><a href="#cb24-149" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- map_dfr(my_locations[["timelineObjects"]], as.data.frame)</span></span>
+<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a><span class="in">View(df)</span></span>
+<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a><span class="in"># there is one empty row after each entry. Let's drop them through one of the complete columns:</span></span>
+<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- drop_na(df, placeVisit.location.latitudeE7)</span></span>
 <span id="cb24-154"><a href="#cb24-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-155"><a href="#cb24-155" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-156"><a href="#cb24-156" aria-hidden="true" tabindex="-1"></a>There are many columns, some of which I won't need. Especially, I am not interested in the locations defined as "candidate". I will exclude them from my study. They are probably the locations that might be the place that I visited ordered by possibility. I just need the one with the highest possibility, which is tagged with <span class="in">`placeVisit.location.`</span> . These locations are also defined as "HIGH CONFIDENCE". Let's continue the analysis with these locations, only.</span>
@@ -1055,88 +1182,88 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-158"><a href="#cb24-158" aria-hidden="true" tabindex="-1"></a>Also, there are some columns with no entry. Let me exclude them with a function. Let the function be called <span class="in">`not_all_na`</span>. This is a function that drops all the columns which are completely empty:</span>
 <span id="cb24-159"><a href="#cb24-159" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-160"><a href="#cb24-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-161"><a href="#cb24-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-162"><a href="#cb24-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-163"><a href="#cb24-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-164"><a href="#cb24-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-165"><a href="#cb24-165" aria-hidden="true" tabindex="-1"></a>not_all_na <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
-<span id="cb24-166"><a href="#cb24-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">any</span>(<span class="sc">!</span><span class="fu">is.na</span>(x))</span>
-<span id="cb24-167"><a href="#cb24-167" aria-hidden="true" tabindex="-1"></a><span class="co">#use the function on the dataframe:</span></span>
-<span id="cb24-168"><a href="#cb24-168" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(not_all_na))</span>
+<span id="cb24-161"><a href="#cb24-161" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-162"><a href="#cb24-162" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-163"><a href="#cb24-163" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-164"><a href="#cb24-164" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-165"><a href="#cb24-165" aria-hidden="true" tabindex="-1"></a><span class="in">not_all_na &lt;- function(x)</span></span>
+<span id="cb24-166"><a href="#cb24-166" aria-hidden="true" tabindex="-1"></a><span class="in">  any(!is.na(x))</span></span>
+<span id="cb24-167"><a href="#cb24-167" aria-hidden="true" tabindex="-1"></a><span class="in">#use the function on the dataframe:</span></span>
+<span id="cb24-168"><a href="#cb24-168" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- df %&gt;% select(where(not_all_na))</span></span>
 <span id="cb24-169"><a href="#cb24-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-170"><a href="#cb24-170" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-171"><a href="#cb24-171" aria-hidden="true" tabindex="-1"></a>Now, I have a dataframe with 150+ columns. However, I just need the information about latitude, altitude, date and address of the locations that I visited. Let's write a query to get this data into a new dataframe:</span>
 <span id="cb24-172"><a href="#cb24-172" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-173"><a href="#cb24-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-174"><a href="#cb24-174" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-175"><a href="#cb24-175" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-176"><a href="#cb24-176" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-177"><a href="#cb24-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-178"><a href="#cb24-178" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.latitudeE7"</span>))</span>
-<span id="cb24-179"><a href="#cb24-179" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.longitudeE7"</span>))</span>
-<span id="cb24-180"><a href="#cb24-180" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.location.address"</span>))</span>
-<span id="cb24-181"><a href="#cb24-181" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"placeVisit.duration.startTimestamp"</span>))</span>
+<span id="cb24-174"><a href="#cb24-174" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-175"><a href="#cb24-175" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-176"><a href="#cb24-176" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-177"><a href="#cb24-177" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-178"><a href="#cb24-178" aria-hidden="true" tabindex="-1"></a><span class="in">lat &lt;- select(df, contains("placeVisit.location.latitudeE7"))</span></span>
+<span id="cb24-179"><a href="#cb24-179" aria-hidden="true" tabindex="-1"></a><span class="in">lon &lt;- select(df, contains("placeVisit.location.longitudeE7"))</span></span>
+<span id="cb24-180"><a href="#cb24-180" aria-hidden="true" tabindex="-1"></a><span class="in">address &lt;- select(df, contains("placeVisit.location.address"))</span></span>
+<span id="cb24-181"><a href="#cb24-181" aria-hidden="true" tabindex="-1"></a><span class="in">date &lt;- select(df, contains("placeVisit.duration.startTimestamp"))</span></span>
 <span id="cb24-182"><a href="#cb24-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-183"><a href="#cb24-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-184"><a href="#cb24-184" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-185"><a href="#cb24-185" aria-hidden="true" tabindex="-1"></a>The chunks of code above ask for columns whose names contain the extensions written in quotation marks in them. Still, this raw information isn't enough for several reasons. Firstly, <span class="in">`lat`</span> and <span class="in">`lot`</span> are coordinates in E7 format. With a quick research on the internet, I learned that they simply need to be divided by 10000000. Also, <span class="in">`date`</span> contains day, month, year, hour, minute, second and time zone (which is in GMT+0 format) information all in the same column. They need to be handled. Let's start with the second issue (the one about <span class="in">`date`</span>):</span>
 <span id="cb24-186"><a href="#cb24-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-187"><a href="#cb24-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-188"><a href="#cb24-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-189"><a href="#cb24-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-190"><a href="#cb24-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-191"><a href="#cb24-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="co">#re-name the only column:</span></span>
-<span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(date) <span class="ot">&lt;-</span> <span class="st">"Date"</span></span>
-<span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(date)</span>
+<span id="cb24-188"><a href="#cb24-188" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-189"><a href="#cb24-189" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-190"><a href="#cb24-190" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-191"><a href="#cb24-191" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="in">#re-name the only column:</span></span>
+<span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a><span class="in">names(date) &lt;- "Date"</span></span>
+<span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a><span class="in">head(date)</span></span>
 <span id="cb24-195"><a href="#cb24-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-196"><a href="#cb24-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-197"><a href="#cb24-197" aria-hidden="true" tabindex="-1"></a>As can be seen above, there are two separators: One is "T" separating day and time info. The other is "." separating time and time zone info. Follow the notes in the code to grasp the process:</span>
 <span id="cb24-198"><a href="#cb24-198" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-199"><a href="#cb24-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-200"><a href="#cb24-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-201"><a href="#cb24-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-202"><a href="#cb24-202" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-203"><a href="#cb24-203" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-204"><a href="#cb24-204" aria-hidden="true" tabindex="-1"></a><span class="co">#divide the day and hour info from the time zone info, then drop the time zone:</span></span>
-<span id="cb24-205"><a href="#cb24-205" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span></span>
-<span id="cb24-206"><a href="#cb24-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb24-207"><a href="#cb24-207" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> date,</span>
-<span id="cb24-208"><a href="#cb24-208" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> Date,</span>
-<span id="cb24-209"><a href="#cb24-209" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"zone"</span>),</span>
-<span id="cb24-210"><a href="#cb24-210" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span></span>
-<span id="cb24-211"><a href="#cb24-211" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-212"><a href="#cb24-212" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span> date[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>)]</span>
+<span id="cb24-200"><a href="#cb24-200" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-201"><a href="#cb24-201" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-202"><a href="#cb24-202" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-203"><a href="#cb24-203" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-204"><a href="#cb24-204" aria-hidden="true" tabindex="-1"></a><span class="in">#divide the day and hour info from the time zone info, then drop the time zone:</span></span>
+<span id="cb24-205"><a href="#cb24-205" aria-hidden="true" tabindex="-1"></a><span class="in">date &lt;-</span></span>
+<span id="cb24-206"><a href="#cb24-206" aria-hidden="true" tabindex="-1"></a><span class="in">  separate(</span></span>
+<span id="cb24-207"><a href="#cb24-207" aria-hidden="true" tabindex="-1"></a><span class="in">    data = date,</span></span>
+<span id="cb24-208"><a href="#cb24-208" aria-hidden="true" tabindex="-1"></a><span class="in">    col = Date,</span></span>
+<span id="cb24-209"><a href="#cb24-209" aria-hidden="true" tabindex="-1"></a><span class="in">    into = c("Date", "zone"),</span></span>
+<span id="cb24-210"><a href="#cb24-210" aria-hidden="true" tabindex="-1"></a><span class="in">    sep = "\\."</span></span>
+<span id="cb24-211"><a href="#cb24-211" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb24-212"><a href="#cb24-212" aria-hidden="true" tabindex="-1"></a><span class="in">date &lt;- date[-c(2)]</span></span>
 <span id="cb24-213"><a href="#cb24-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-214"><a href="#cb24-214" aria-hidden="true" tabindex="-1"></a><span class="co">#Now, transform the time in local time zone which is GMT+3:</span></span>
-<span id="cb24-215"><a href="#cb24-215" aria-hidden="true" tabindex="-1"></a>date<span class="sc">$</span>Date<span class="ot">&lt;-</span><span class="fu">as.POSIXct</span>(date<span class="sc">$</span>Date, <span class="at">format=</span><span class="st">"%Y-%m-%dT%H:%M:%S"</span>, <span class="at">tz=</span><span class="fu">Sys.timezone</span>())<span class="sc">+</span> <span class="fu">hours</span>(<span class="dv">3</span>)</span>
+<span id="cb24-214"><a href="#cb24-214" aria-hidden="true" tabindex="-1"></a><span class="in">#Now, transform the time in local time zone which is GMT+3:</span></span>
+<span id="cb24-215"><a href="#cb24-215" aria-hidden="true" tabindex="-1"></a><span class="in">date$Date&lt;-as.POSIXct(date$Date, format="%Y-%m-%dT%H:%M:%S", tz=Sys.timezone())+ hours(3)</span></span>
 <span id="cb24-216"><a href="#cb24-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-217"><a href="#cb24-217" aria-hidden="true" tabindex="-1"></a><span class="co">#divide the day and hour info:</span></span>
-<span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a>date <span class="ot">&lt;-</span></span>
-<span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
-<span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> date,</span>
-<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> Date,</span>
-<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"Day"</span>, <span class="st">"Hour"</span>),</span>
-<span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" "</span></span>
-<span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a><span class="co">#see the new format:</span></span>
-<span id="cb24-226"><a href="#cb24-226" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(date)</span>
+<span id="cb24-217"><a href="#cb24-217" aria-hidden="true" tabindex="-1"></a><span class="in">#divide the day and hour info:</span></span>
+<span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a><span class="in">date &lt;-</span></span>
+<span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a><span class="in">  separate(</span></span>
+<span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a><span class="in">    data = date,</span></span>
+<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a><span class="in">    col = Date,</span></span>
+<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a><span class="in">    into = c("Day", "Hour"),</span></span>
+<span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a><span class="in">    sep = " "</span></span>
+<span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a><span class="in">#see the new format:</span></span>
+<span id="cb24-226"><a href="#cb24-226" aria-hidden="true" tabindex="-1"></a><span class="in">head(date)</span></span>
 <span id="cb24-227"><a href="#cb24-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-228"><a href="#cb24-228" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a>Nicely done! Now gather all the information that we need into a dataframe. Again follow along the notes in the code:</span>
 <span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span></span>
-<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(<span class="fu">data.frame</span>(</span>
-<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> <span class="fu">unlist</span>(lat, <span class="at">use.names =</span> <span class="cn">FALSE</span>) <span class="sc">/</span> <span class="dv">10000000</span>, <span class="co">#divide lat and lon by 10000000 to get rid of the E7 format</span></span>
-<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon =</span> <span class="fu">unlist</span>(lon, <span class="at">use.names =</span> <span class="cn">FALSE</span>) <span class="sc">/</span> <span class="dv">10000000</span>, </span>
-<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a>    <span class="at">address =</span> <span class="fu">unlist</span>(address, <span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a>    date <span class="co"># we processed this before</span></span>
-<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a><span class="in">coords &lt;-</span></span>
+<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(data.frame(</span></span>
+<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a><span class="in">    lat = unlist(lat, use.names = FALSE) / 10000000, #divide lat and lon by 10000000 to get rid of the E7 format</span></span>
+<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a><span class="in">    lon = unlist(lon, use.names = FALSE) / 10000000, </span></span>
+<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a><span class="in">    address = unlist(address, use.names = FALSE),</span></span>
+<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a><span class="in">    date # we processed this before</span></span>
+<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a><span class="in">  ))</span></span>
 <span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a>So far, we have worked to prepare for the data visualization process. Our data is ready with the name <span class="in">`coords`</span>. Let's continue with the visualization.</span>
@@ -1146,45 +1273,45 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a>At this point, we will visualize the locations I visited in November of 2022 on a world map. You can't be as disappointed as me when you see that I live a life between home and work. Yet, the point here is to see the process of visualization. We owe this beautiful project to the <span class="co">[</span><span class="ot">R package leaflet</span><span class="co">](https://rstudio.github.io/leaflet/)</span>. It is actually <span class="co">[</span><span class="ot">a javascript library</span><span class="co">](https://leafletjs.com/index.html)</span>, all its arguments are deployed into R environment too. Therefore, we can work with it. If you are still with me, I mhighly recommend you to read the documentation of the package <span class="in">`leaflet`</span>. Then, follow along the notes in the code and try to understand it if you are not familiar with it.</span>
 <span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(coords) <span class="ot">&lt;-</span> <span class="er">~</span> lon <span class="sc">+</span> lat</span>
-<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(coords,</span>
+<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a><span class="in">coordinates(coords) &lt;- ~ lon + lat</span></span>
+<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a><span class="in">leaflet(coords,</span></span>
 <span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a><span class="co"># formating the outer of the map:</span></span>
-<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="st">"800px"</span>,</span>
-<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="st">"400px"</span>, </span>
-<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a>        <span class="at">padding =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a><span class="in"># formating the outer of the map:</span></span>
+<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a><span class="in">        width = "800px",</span></span>
+<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a><span class="in">        height = "400px", </span></span>
+<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a><span class="in">        padding = 10) %&gt;% </span></span>
+<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a><span class="in">  addTiles() %&gt;%</span></span>
 <span id="cb24-264"><a href="#cb24-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a><span class="co">#formating the markers on the map:</span></span>
-<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
-<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"tomato"</span>, <span class="co">#my favorite colour</span></span>
-<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a>    <span class="at">fillOpacity =</span> <span class="dv">1</span>,</span>
-<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">radius =</span> <span class="dv">7</span>,</span>
-<span id="cb24-270"><a href="#cb24-270" aria-hidden="true" tabindex="-1"></a>    <span class="at">stroke =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb24-271"><a href="#cb24-271" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb24-272"><a href="#cb24-272" aria-hidden="true" tabindex="-1"></a><span class="co">#address pops up when you click on a marker:</span></span>
-<span id="cb24-273"><a href="#cb24-273" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> coords<span class="sc">$</span>address,</span>
+<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a><span class="in">#formating the markers on the map:</span></span>
+<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a><span class="in">  addCircleMarkers(</span></span>
+<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a><span class="in">    color = "tomato", #my favorite colour</span></span>
+<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a><span class="in">    fillOpacity = 1,</span></span>
+<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a><span class="in">    radius = 7,</span></span>
+<span id="cb24-270"><a href="#cb24-270" aria-hidden="true" tabindex="-1"></a><span class="in">    stroke = FALSE,</span></span>
+<span id="cb24-271"><a href="#cb24-271" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb24-272"><a href="#cb24-272" aria-hidden="true" tabindex="-1"></a><span class="in">#address pops up when you click on a marker:</span></span>
+<span id="cb24-273"><a href="#cb24-273" aria-hidden="true" tabindex="-1"></a><span class="in">    popup = coords$address,</span></span>
 <span id="cb24-274"><a href="#cb24-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-275"><a href="#cb24-275" aria-hidden="true" tabindex="-1"></a><span class="co">#the date and hour shows up with a fancy personal note when you hover on a marker:</span></span>
-<span id="cb24-276"><a href="#cb24-276" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span>  <span class="fu">paste0</span>(<span class="st">"I have been around here on "</span>, coords<span class="sc">$</span>Day, <span class="st">" at around "</span>, coords<span class="sc">$</span>Hour),</span>
+<span id="cb24-275"><a href="#cb24-275" aria-hidden="true" tabindex="-1"></a><span class="in">#the date and hour shows up with a fancy personal note when you hover on a marker:</span></span>
+<span id="cb24-276"><a href="#cb24-276" aria-hidden="true" tabindex="-1"></a><span class="in">    label =  paste0("I have been around here on ", coords$Day, " at around ", coords$Hour),</span></span>
 <span id="cb24-277"><a href="#cb24-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-278"><a href="#cb24-278" aria-hidden="true" tabindex="-1"></a><span class="co">#formating the label that shows up when you hover:</span></span>
-<span id="cb24-279"><a href="#cb24-279" aria-hidden="true" tabindex="-1"></a>    <span class="at">labelOptions =</span> <span class="fu">labelOptions</span>(</span>
-<span id="cb24-280"><a href="#cb24-280" aria-hidden="true" tabindex="-1"></a>      <span class="at">noHide =</span> F,</span>
-<span id="cb24-281"><a href="#cb24-281" aria-hidden="true" tabindex="-1"></a>      <span class="at">direction =</span> <span class="st">"top"</span>,</span>
-<span id="cb24-282"><a href="#cb24-282" aria-hidden="true" tabindex="-1"></a>      <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb24-283"><a href="#cb24-283" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color"</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb24-284"><a href="#cb24-284" aria-hidden="true" tabindex="-1"></a>        <span class="st">"font-family"</span> <span class="ot">=</span> <span class="st">"calibri"</span>, <span class="co">#I love calibri</span></span>
-<span id="cb24-285"><a href="#cb24-285" aria-hidden="true" tabindex="-1"></a>        <span class="st">"box-shadow"</span> <span class="ot">=</span> <span class="st">"3px 3px rgba(0,0,0,0.25)"</span>,</span>
-<span id="cb24-286"><a href="#cb24-286" aria-hidden="true" tabindex="-1"></a>        <span class="st">"font-size"</span> <span class="ot">=</span> <span class="st">"12px"</span>,</span>
-<span id="cb24-287"><a href="#cb24-287" aria-hidden="true" tabindex="-1"></a>        <span class="st">"border-color"</span> <span class="ot">=</span> <span class="st">"rgba(0,0,0,0.5)"</span></span>
-<span id="cb24-288"><a href="#cb24-288" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb24-289"><a href="#cb24-289" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb24-290"><a href="#cb24-290" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-278"><a href="#cb24-278" aria-hidden="true" tabindex="-1"></a><span class="in">#formating the label that shows up when you hover:</span></span>
+<span id="cb24-279"><a href="#cb24-279" aria-hidden="true" tabindex="-1"></a><span class="in">    labelOptions = labelOptions(</span></span>
+<span id="cb24-280"><a href="#cb24-280" aria-hidden="true" tabindex="-1"></a><span class="in">      noHide = F,</span></span>
+<span id="cb24-281"><a href="#cb24-281" aria-hidden="true" tabindex="-1"></a><span class="in">      direction = "top",</span></span>
+<span id="cb24-282"><a href="#cb24-282" aria-hidden="true" tabindex="-1"></a><span class="in">      style = list(</span></span>
+<span id="cb24-283"><a href="#cb24-283" aria-hidden="true" tabindex="-1"></a><span class="in">        "color" = "black",</span></span>
+<span id="cb24-284"><a href="#cb24-284" aria-hidden="true" tabindex="-1"></a><span class="in">        "font-family" = "calibri", #I love calibri</span></span>
+<span id="cb24-285"><a href="#cb24-285" aria-hidden="true" tabindex="-1"></a><span class="in">        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",</span></span>
+<span id="cb24-286"><a href="#cb24-286" aria-hidden="true" tabindex="-1"></a><span class="in">        "font-size" = "12px",</span></span>
+<span id="cb24-287"><a href="#cb24-287" aria-hidden="true" tabindex="-1"></a><span class="in">        "border-color" = "rgba(0,0,0,0.5)"</span></span>
+<span id="cb24-288"><a href="#cb24-288" aria-hidden="true" tabindex="-1"></a><span class="in">      )</span></span>
+<span id="cb24-289"><a href="#cb24-289" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb24-290"><a href="#cb24-290" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
 <span id="cb24-291"><a href="#cb24-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-292"><a href="#cb24-292" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-293"><a href="#cb24-293" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
@@ -1210,14 +1337,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-313"><a href="#cb24-313" aria-hidden="true" tabindex="-1"></a>This series continues with the visualization of my Google Fit data. We will delve into my exercise habbits.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">© Ali Emre Karagül</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
-    <div class="nav-footer-right">📈❤️☕</div>
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
   </div>
 </footer>
-
 
 
 </body></html>

@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
-
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2023-10-23">
 <meta name="description" content="At the core of Automated Essay Scoring (AES) is natural language processing (NLP) and machine learning. These systems are designed to analyze the text based on a set of predefined criteria, which may include factors such as grammar, sentence structure, vocabulary, coherence, and argumentative quality. The algorithms look for patterns and features in the text, such as the presence of thesis statements, use of evidence, and logical progression of ideas. This data is then used to generate a score that reflects the essay’s overall quality. In this blog post, we will explore the basics of NLP and AES with a prominent dataset: Automated Student Assessment Prize (ASAP) dataset sponsored by Hewlett.">
-
 <title>- Automated Essay Scoring (AES) with R</title>
 <style>
 code{white-space: pre-wrap;}
@@ -25,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,14 +73,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,22 +94,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -119,28 +116,20 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
-</script> 
-  
-
-<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../images/logo with title.svg" alt="" class="navbar-logo">
-    </a>
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title"></span>
     </a>
@@ -151,87 +140,83 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-terminal-fill" role="img">
 </i> 
  <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
-        <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">
+<li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://itp-calculator.com/" rel="" target="">
+    <a class="dropdown-item" href="https://itp-calculator.com/">
  <span class="dropdown-text">ITP Score Calculator</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/" rel="" target="">
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">
  <span class="dropdown-text">Ekşi KazaR</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-star-fill" role="img">
 </i> 
  <span class="menu-text">Favs</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
-        <li>
-    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
  <span class="dropdown-text">R cheatsheets</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://r4ds.hadley.nz/" rel="" target="">
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
  <span class="dropdown-text">R 4 D S</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/" rel="" target="">
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
  <span class="dropdown-text">Generate IRT Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://books.google.com/ngrams/" rel="" target="">
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html" rel="" target="">
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
  <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html" rel="" target="">
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
  <span class="dropdown-text">Style Guide (Google)</span></a>
   </li>  
     </ul>
-  </li>
+</li>
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../about-me.html" rel="" target=""><i class="bi bi-info-square-fill" role="img">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
 </i> 
- <span class="menu-text"> </span></a>
+<span class="menu-text"> </span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/aliemrekaragul" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <div class="quarto-title-block"><div><h1 class="title">Automated Essay Scoring (AES) with R</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
@@ -253,14 +238,14 @@ cookieconsent.run({
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      <p class="author">Ali Emre Karagül <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
     </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
           <p class="affiliation">
               TOBB ETU- University of Economics &amp; Technology
             </p>
         </div>
-      </div>
+    </div>
 
   <div class="quarto-title-meta">
 
@@ -280,84 +265,71 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing">1. Preprocessing</a></li>
   <li><a href="#feature-extraction" id="toc-feature-extraction" class="nav-link" data-scroll-target="#feature-extraction">2. Feature Extraction</a></li>
-  <li><a href="#linear-regression-model-lr" id="toc-linear-regression-model-lr" class="nav-link" data-scroll-target="#linear-regression-model-lr">3. Linear Regression Model (LR)</a>
+  <li>
+<a href="#linear-regression-model-lr" id="toc-linear-regression-model-lr" class="nav-link" data-scroll-target="#linear-regression-model-lr">3. Linear Regression Model (LR)</a>
   <ul>
-  <li><a href="#what-is-linear-regression" id="toc-what-is-linear-regression" class="nav-link" data-scroll-target="#what-is-linear-regression">What is Linear Regression?</a></li>
+<li><a href="#what-is-linear-regression" id="toc-what-is-linear-regression" class="nav-link" data-scroll-target="#what-is-linear-regression">What is Linear Regression?</a></li>
   <li><a href="#performance-of-the-model-1" id="toc-performance-of-the-model-1" class="nav-link" data-scroll-target="#performance-of-the-model-1">Performance of the Model 1</a></li>
   <li><a href="#comparison-of-model-1-and-model-2" id="toc-comparison-of-model-1-and-model-2" class="nav-link" data-scroll-target="#comparison-of-model-1-and-model-2">Comparison of Model 1 and Model 2</a></li>
   <li><a href="#evaluation-of-model-2-with-the-test-dataset" id="toc-evaluation-of-model-2-with-the-test-dataset" class="nav-link" data-scroll-target="#evaluation-of-model-2-with-the-test-dataset">Evaluation of Model 2 with the Test Dataset</a></li>
   <li><a href="#predictions-of-the-test-dataset" id="toc-predictions-of-the-test-dataset" class="nav-link" data-scroll-target="#predictions-of-the-test-dataset">Predictions of the Test Dataset</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In the realm of education and standardized testing, technological advancements have brought forth a significant transformation. Among the noteworthy innovations in this field is the adoption of Automated Essay Scoring (AES), an approach that leverages the capabilities of natural language processing (NLP) and machine learning. AES holds the potential to redefine the essay evaluation and grading process, offering efficiency, consistency, and accessibility in a way previously unattainable.</p>
 <p>At its essence, AES relies on sophisticated algorithms to examine written text, subjecting it to a predefined set of criteria. These criteria encompass various aspects, including grammar, sentence structure, vocabulary, coherence, and the quality of argumentation. In this regard, AES algorithms function akin to meticulous digital assessors, diligently seeking out patterns and features within the text. They assess elements such as the presence of persuasive thesis statements, the adept use of supporting evidence, and the logical flow of ideas within the essay. The result of this is a numerical score that reflects the overall quality of the essay in question.</p>
 <p>Today we will develop a linear regression model to predict essay scores using the famous ASAP dataset. There are eight different essay types in this dataset to explore. Here we will use the essay set 2. Before you continue, please go and read the description and the details <a href="https://www.kaggle.com/competitions/asap-aes/data">on Kaggle.</a> As we will use only one essay set, I have preapared the data as a separate csv file and if you are already familiar with the ASAP data (or you have taken a look at the Kaggle page), please download the data for our use case from <a href="https://docs.google.com/spreadsheets/d/1xi-k1cJGADOgtp85sfJ4ZBr1P-YREhx_/edit?usp=sharing&amp;ouid=109837621769671436242&amp;rtpof=true&amp;sd=true">here</a>. The packages and some of their functions that we will be using in this topic are:</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown">"rmarkdown"</a></span><span class="op">)</span> </span>
+<span><span class="co"># paged_table() </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://readxl.tidyverse.org">"readxl"</a></span><span class="op">)</span> </span>
+<span><span class="co"># read_excel()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://github.com/trinker/textstem">"textstem"</a></span><span class="op">)</span> </span>
+<span><span class="co"># lemmatize_strings()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/quanteda/stopwords">"stopwords"</a></span><span class="op">)</span> </span>
+<span><span class="co"># stopwords()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://stringr.tidyverse.org">"stringr"</a></span><span class="op">)</span>   </span>
+<span><span class="co"># str_squish()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tm.r-forge.r-project.org/">"tm"</a></span><span class="op">)</span>        </span>
+<span><span class="co"># remove_words()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://quanteda.io">"quanteda"</a></span><span class="op">)</span>  </span>
+<span><span class="co"># nsentence() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="image.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A robot drawn by Dall-e</figcaption>
-</figure>
+<figure class="figure"><p><img src="image.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<figcaption>A robot drawn by Dall-e</figcaption></figure>
 </div>
 </div>
-<div class="cell quarto-layout-cell" data-code_folding="false" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-cell" data-code_folding="false" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Libraries</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="cb1" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rmarkdown"</span>) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># paged_table() </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>) </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read_excel()</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>) </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"textstem"</span>) </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># lemmatize_strings()</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"stopwords"</span>) </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># stopwords()</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"stringr"</span>)   </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># str_squish()</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tm"</span>)        </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># remove_words()</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"quanteda"</span>)  </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># nsentence() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="preprocessing" class="level2">
-<h2 class="anchored" data-anchor-id="preprocessing">1. Preprocessing</h2>
+</section><section id="preprocessing" class="level2"><h2 class="anchored" data-anchor-id="preprocessing">1. Preprocessing</h2>
 <p>Now that you have downloaded the data, move it to your working directory and follow along while reading. Let’s load the data and see the head of them:</p>
 <div class="cell" data-code_folding="false">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb2" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>essay_set_2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"essay_set_2.xlsx"</span>) </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(<span class="fu">head</span>(essay_set_2, <span class="dv">2</span>)) <span class="co"># paged_table() function is for a beautified table view on this page. You don't need to use it on your own trial.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">essay_set_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"essay_set_2.xlsx"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html">paged_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">essay_set_2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="co"># paged_table() function is for a beautified table view on this page. You don't need to use it on your own trial.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["essay_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["essay_set"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["essay"],"name":[3],"type":["chr"],"align":["left"]},{"label":["rater1_domain1"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["rater2_domain1"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["domain1_score"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["rater1_domain2"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["rater2_domain2"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["domain2_score"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"2978","2":"2","3":"Certain materials being removed from libraries such as books, music and magazines, shouldn't be removed from the libraries. It gives people a chance to understand how the real world @CAPS2.     Having certain materials such as books and music definitly should not be removed, because most books and music can show most people how bad the statement in the book @CAPS2 or how bad the lyrics are in a song, and help that person to avoid that type of thing that the book or song @CAPS2 saying to the reader or listener. People should give every type of music at least a try and not always doubt what they hear about what people say about that type of music. I always hear about people saying how bad the band @PERSON1 A.M. @CAPS2, just because in the lyrics it talks about drugs and how much cursing each song has. Really the band @CAPS2 talking about one mans life and how he turns his life from being a drug addict to having the best life someone could ever live. People always doubted him and never gave his music a chance. Another example would be @PERSON1's book, '@CAPS1 @CAPS2 @CAPS3 @CAPS4' for it talks about drug addicts, homeless people, people who have been born with disfigured arms or even someone who lost there legs, and telling how beautiful each and everyone of them really are. His book taught me a few things and made me think different about people. It doesn't matter how they look or how they talk, no matter what, that person @CAPS2 beautiful.     As far as movies and magazines has gone within the last few years, I think that the also shouldn't be taken from libraries. I think @CAPS1 for the same reason of how I feel about the books and music. Of course we see previews of movies and think that they @MONTH1 not be good, but libraries shouldn't keep leave them out. Movies @CAPS2 a great way to learn how to treat others and how to act around other people when you don't know how to act. If you act differently around people that you've never been around before, then you could feel embarassed or maybe even get @CAPS4. Movies can help people learn about the real world by seeing how to do those type of things as we get older. Same goes with the magazines, they also help people see what not to do or to help them understand the consequences of something that shouldn't be done. Knowing what to do from a magazine could possible save your life or perhaps maybe even someone elses life.     I don't understand why some libraries would want to banned certain materials to help people understand the things that happen in someone elses life and to help them not make the same mistakes as that person once did.","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4"},{"1":"2979","2":"2","3":"Write a persuasive essay to a newspaper reflecting your views on censorship in libraries. Do you believe that certain should be removed i think so be no that yes i think should no person that in chager the book, music, movies, magazines, ect., that be no agure      why do i think if you need that please  think i no thank you please if  i need why do we if know that if i failure the this test i who need to graduate please the children allow to home please yes.          Why do we need to be a prafece person please why do we need to do this why write this assgiment because you mean to be the best teaches ever and ever facebook is my password is @PERSON1  @NUM1 that why i need my myspace is the same thingh but different at same time please know that i need to know i really  i need to my e-mail address is  @EMAIL1 that is my e-mail please work m","4":"1","5":"2","6":"1","7":"1","8":"2","9":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -372,19 +344,17 @@ cookieconsent.run({
 <li><p><strong>essay:</strong> The text of the essay written by a real person.</p></li>
 <li><p>There are also 6 more columns that include <strong>rater1_domain1, rater2_domain1, domain1_score, rater1_domain2, rater2_domain2,</strong> and <strong>domain2_score.</strong></p></li>
 </ul>
-<p>Lets see a sample essay which is randomly selected:<strong><br>
-</strong></p>
+<p>Lets see a sample essay which is randomly selected:<strong><br></strong></p>
 <div class="cell" data-code_folding="false">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>random_essay <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(essay_set_2), <span class="dv">1</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(essay_set_2[random_essay,<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="va">random_essay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">essay_set_2</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html">paged_table</a></span><span class="op">(</span><span class="va">essay_set_2</span><span class="op">[</span><span class="va">random_essay</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["essay"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"A lot of @CAPS3 today are censored because of the content in books, music, movies, and Magazines. I think that it all can be fixed if you have certain sections, @CAPS1 @CAPS2, and my views on the censorship of @CAPS3. Here's my idea to fix the problem.      I understand that books and other material @MONTH1 offend certain people, but it might not offend others. Thats why I think @CAPS3 should have a room for things that might offend certain people. The sign should say what content it has so the people can stay away from the room. There could be seperate rooms for children. It has nothing but children's books, movies, music, and magazines. Its a great idea because your child would'nt be open to the bad content.      This brings me to my next topic. You must be a certain @CAPS1 to enter the 'bad content' room. I dont think the library staff or their parents want a five-year old boy checking out a book that deals with sex, drugs, and alcohol. The library could get in a lot of trouble. The @CAPS1 @CAPS2 could be @NUM1 years of @CAPS1 to enter the room. That seems fair enough. Your old enough to be able to handle the content.      I dont get offended easily, so I can read just about anything. Like I suggested previously in the article, the bad content should be moved to a room so that people dont mistakenly come across it. I like reading about anything and everything, so I would love to read things and spark my attention. Books like that usually deal with bad things. I'm okay with that, but I understand that others are not.      Seperate rooms, @CAPS1 limits, and my views are all good ideas. Maybe a library will come across my article and do what I have said. I think that will be very affective. I hope to start seeing that in the future"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -398,10 +368,10 @@ cookieconsent.run({
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>set <span class="ot">&lt;-</span> essay_set_2 <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(essay, rater1_domain1) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">response =</span> essay, <span class="at">score =</span> rater1_domain1)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>doc_id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"doc"</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(set))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">set</span> <span class="op">&lt;-</span> <span class="va">essay_set_2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">essay</span>, <span class="va">rater1_domain1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>response <span class="op">=</span> <span class="va">essay</span>, score <span class="op">=</span> <span class="va">rater1_domain1</span><span class="op">)</span></span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">doc_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"doc"</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">set</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>When you scrutinize the essays, you will see that there are some <span class="citation" data-cites="words">@words</span> in the text. These are the words that are replaced with private information about the students such as names, places or dates etc. Also, there are some non-alphabetic characters and capital letters. In order to make the essays ready to analysis, we will convert all the text to lowercase and remove the non-alphabetic characters. We will also remove the <a href="https://en.wikipedia.org/wiki/Stop_word">stopwords</a> and lemmatize the text.</p>
@@ -410,13 +380,13 @@ cookieconsent.run({
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"@</span><span class="sc">\\</span><span class="st">w+ *"</span>, <span class="st">""</span>, set<span class="sc">$</span>response) <span class="co">#remove @words</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[^a-zA-Z]"</span>, <span class="st">" "</span>, set<span class="sc">$</span>processedResponse) <span class="co">#remove non-alphabetic characters</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">tolower</span>(set<span class="sc">$</span>processedResponse) <span class="co">#convert to lowercase</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">lemmatize_strings</span>(set<span class="sc">$</span>processedResponse) <span class="co">#lemmatize</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>en_stopwords <span class="ot">&lt;-</span> stopwords<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">"en"</span>, <span class="at">source =</span> <span class="st">"stopwords-iso"</span>) <span class="co">#get stopwords</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">removeWords</span>(set<span class="sc">$</span>processedResponse, <span class="at">words =</span> en_stopwords) <span class="co">#remove stopwords</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">str_squish</span>(set<span class="sc">$</span>processedResponse) <span class="co">#remove extra whitespaces</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"@\\w+ *"</span>, <span class="st">""</span>, <span class="va">set</span><span class="op">$</span><span class="va">response</span><span class="op">)</span> <span class="co">#remove @words</span></span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"[^a-zA-Z]"</span>, <span class="st">" "</span>, <span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span><span class="op">)</span> <span class="co">#remove non-alphabetic characters</span></span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span><span class="op">)</span> <span class="co">#convert to lowercase</span></span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/textstem/man/lemmatize_strings.html">lemmatize_strings</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span><span class="op">)</span> <span class="co">#lemmatize</span></span>
+<span><span class="va">en_stopwords</span> <span class="op">&lt;-</span> <span class="fu">stopwords</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stopwords/man/stopwords.html">stopwords</a></span><span class="op">(</span><span class="st">"en"</span>, source <span class="op">=</span> <span class="st">"stopwords-iso"</span><span class="op">)</span> <span class="co">#get stopwords</span></span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tm/man/removeWords.html">removeWords</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span>, words <span class="op">=</span> <span class="va">en_stopwords</span><span class="op">)</span> <span class="co">#remove stopwords</span></span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span><span class="op">)</span> <span class="co">#remove extra whitespaces</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Here how the new processed text looks like (the one we have seen above):</p>
@@ -425,11 +395,10 @@ cookieconsent.run({
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sample_essay<span class="ot">&lt;-</span><span class="fu">merge</span>(set[random_essay,<span class="dv">4</span>], set[random_essay,<span class="dv">1</span>])</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(sample_essay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sample_essay</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">set</span><span class="op">[</span><span class="va">random_essay</span>,<span class="fl">4</span><span class="op">]</span>, <span class="va">set</span><span class="op">[</span><span class="va">random_essay</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html">paged_table</a></span><span class="op">(</span><span class="va">sample_essay</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["processedResponse"],"name":[1],"type":["chr"],"align":["left"]},{"label":["response"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"lot censor content book music movie magazine view censorship understand book material offend people offend offend people sign content people stay seperate child child book movie music magazine child bad content bring topic enter bad content library staff parent boy check book deal sex drug alcohol library lot trouble enter fair handle content offend easily read article bad content people mistakenly read love read spark attention book deal bad understand seperate limit view library article affective hope start future","2":"A lot of @CAPS3 today are censored because of the content in books, music, movies, and Magazines. I think that it all can be fixed if you have certain sections, @CAPS1 @CAPS2, and my views on the censorship of @CAPS3. Here's my idea to fix the problem.      I understand that books and other material @MONTH1 offend certain people, but it might not offend others. Thats why I think @CAPS3 should have a room for things that might offend certain people. The sign should say what content it has so the people can stay away from the room. There could be seperate rooms for children. It has nothing but children's books, movies, music, and magazines. Its a great idea because your child would'nt be open to the bad content.      This brings me to my next topic. You must be a certain @CAPS1 to enter the 'bad content' room. I dont think the library staff or their parents want a five-year old boy checking out a book that deals with sex, drugs, and alcohol. The library could get in a lot of trouble. The @CAPS1 @CAPS2 could be @NUM1 years of @CAPS1 to enter the room. That seems fair enough. Your old enough to be able to handle the content.      I dont get offended easily, so I can read just about anything. Like I suggested previously in the article, the bad content should be moved to a room so that people dont mistakenly come across it. I like reading about anything and everything, so I would love to read things and spark my attention. Books like that usually deal with bad things. I'm okay with that, but I understand that others are not.      Seperate rooms, @CAPS1 limits, and my views are all good ideas. Maybe a library will come across my article and do what I have said. I think that will be very affective. I hope to start seeing that in the future"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -437,9 +406,7 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-</section>
-<section id="feature-extraction" class="level2">
-<h2 class="anchored" data-anchor-id="feature-extraction">2. Feature Extraction</h2>
+</section><section id="feature-extraction" class="level2"><h2 class="anchored" data-anchor-id="feature-extraction">2. Feature Extraction</h2>
 <p>Feature extraction is a critical component of Automated Essay Scoring (AES), serving as the foundation upon which the system’s evaluation process is built. In AES, feature extraction procedures involve the identification and analysis of various linguistic and structural elements within the essay. These elements may include but are not limited to word frequency, sentence length, syntactic complexity, vocabulary richness, and the presence of specific content-related markers like thesis statements or evidence citations. The goal of feature extraction is to distill the complex nature of written language into a set of quantifiable, machine-readable attributes that can be used by the AES algorithms to assess the quality and coherence of the essay. Through a combination of natural language processing and statistical analysis, feature extraction empowers AES systems to objectively evaluate essays, providing educators and test administrators with consistent, efficient, and data-driven grading outcomes.</p>
 <p>For the sake of simplicity of demonstration, we will extract the following features: <strong>number of sentences</strong>, <strong>number of paragraphs</strong> and <strong>number of contextual words</strong>.</p>
 <div class="cell" data-code_folding="false">
@@ -447,10 +414,10 @@ cookieconsent.run({
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>n_sentence <span class="ot">&lt;-</span> <span class="fu">nsentence</span>(set<span class="sc">$</span>response) </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>n_paragraph <span class="ot">&lt;-</span> <span class="fu">str_count</span>(set<span class="sc">$</span>response, <span class="st">"     "</span>) <span class="sc">+</span> <span class="dv">1</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>n_contextWords <span class="ot">&lt;-</span> <span class="fu">lengths</span>(<span class="fu">strsplit</span>(set<span class="sc">$</span>processedResponse, <span class="st">' '</span>))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">set</span><span class="op">$</span><span class="va">n_sentence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/nsentence.html">nsentence</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">response</span><span class="op">)</span> </span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">n_paragraph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_count.html">str_count</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">response</span>, <span class="st">"     "</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span> </span>
+<span><span class="va">set</span><span class="op">$</span><span class="va">n_contextWords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lengths.html">lengths</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">set</span><span class="op">$</span><span class="va">processedResponse</span>, <span class="st">' '</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">set</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
@@ -471,17 +438,14 @@ cookieconsent.run({
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> set</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(dataset), <span class="fu">nrow</span>(dataset) <span class="sc">*</span> <span class="fl">0.7</span>)  <span class="co"># 70% for training</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> dataset[train_indices, ]</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> dataset[<span class="sc">-</span>train_indices, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">set</span></span>
+<span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.7</span><span class="op">)</span>  <span class="co"># 70% for training</span></span>
+<span><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
+<span><span class="va">test_data</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section>
-<section id="linear-regression-model-lr" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-model-lr">3. Linear Regression Model (LR)</h2>
-<section id="what-is-linear-regression" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-linear-regression">What is Linear Regression?</h3>
+</section><section id="linear-regression-model-lr" class="level2"><h2 class="anchored" data-anchor-id="linear-regression-model-lr">3. Linear Regression Model (LR)</h2>
+<section id="what-is-linear-regression" class="level3"><h3 class="anchored" data-anchor-id="what-is-linear-regression">What is Linear Regression?</h3>
 <p>Linear regression is a statistical model that examines the linear relationship between two (Simple Linear Regression ) or more (Multiple Linear Regression) variables — a dependent variable and independent variable(s). Linear relationship basically means that when one (or more) independent variables increases (or decreases), the dependent variable increases (or decreases) too. Linear regression models are used to show or predict the relationship between two variables or factors. The factor that is being predicted (the factor that the equation solves for) is called the dependent variable. The factors that are used to predict the value of the dependent variable are called the independent variables. The results of a LR model can be evaluated using statistical metrics such as <strong>Mean Squared Error (MSE)</strong>, <strong>Root Mean Squared Error (RMSE)</strong> and <strong>R-squared</strong>.</p>
 <p>In our case, the dependent variable is the <strong>score</strong> and the independent variables are <strong>n_sentence</strong>, <strong>n_paragraph</strong> and <strong>n_contextWords</strong>.</p>
 <div class="cell" data-code_folding="false">
@@ -489,10 +453,10 @@ cookieconsent.run({
 <div class="code-with-filename-file">
 <pre><strong>Linear Model 1</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">"score ~ n_sentence + n_paragraph + n_contextWords"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, <span class="at">data =</span> train_data)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary of the model</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html">as.formula</a></span><span class="op">(</span><span class="st">"score ~ n_sentence + n_paragraph + n_contextWords"</span><span class="op">)</span></span>
+<span><span class="va">model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="va">train_data</span><span class="op">)</span></span>
+<span><span class="co"># Print the summary of the model</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -517,39 +481,36 @@ Multiple R-squared:  0.4701,    Adjusted R-squared:  0.4688
 F-statistic: 371.4 on 3 and 1256 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-</section>
-<section id="performance-of-the-model-1" class="level3">
-<h3 class="anchored" data-anchor-id="performance-of-the-model-1">Performance of the Model 1</h3>
+</section><section id="performance-of-the-model-1" class="level3"><h3 class="anchored" data-anchor-id="performance-of-the-model-1">Performance of the Model 1</h3>
 <p>Let’s investigate the output from the model one by one.</p>
 <ol type="1">
-<li><p><strong>Residuals:</strong> This section provides statistics about the residuals, which are the differences between the observed values and the predicted values by the model.</p>
+<li>
+<p><strong>Residuals:</strong> This section provides statistics about the residuals, which are the differences between the observed values and the predicted values by the model.</p>
 <ul>
 <li><p><strong>Min:</strong> The minimum residual value is -2.51929.</p></li>
 <li><p><strong>1Q:</strong> The first quartile (25th percentile) of the residuals is -0.34048.</p></li>
 <li><p><strong>Median:</strong> The median of the residuals is 0.00576.</p></li>
 <li><p><strong>3Q:</strong> The third quartile (75th percentile) of the residuals is 0.37803.</p></li>
 <li><p><strong>Max:</strong> The maximum residual value is 1.95369.</p></li>
-</ul></li>
+</ul>
+</li>
 <li><p><strong>Coefficients:</strong> This section provides information about the coefficients of the linear regression model. Each row corresponds to a predictor variable (independent variable) in the model.</p></li>
 <li><p><strong>Estimate:</strong> This is the estimated coefficient for each predictor. <strong>Std. Error:</strong> It represents the standard error of the coefficient estimate. <strong>t value:</strong> The t-value is a measure of how many standard errors the coefficient estimate is away from zero. <strong>Pr(&gt;|t|):</strong> This is the p-value associated with the t-value, which tells you whether the coefficient is statistically significant. In our model, we have three predictor variables: n_sentence, n_paragraph, and n_contextWords. The Estimate column represents the estimated coefficients for each of these predictors. The *** symbols indicate that these coefficients are highly statistically significant. In other words, the number of paragraph is not significantly valuable for the model while the number of sentences and the number of contextual words are highly significant.</p></li>
 <li><p><strong>Multiple R-squared:</strong> This is a measure of how well the model fits the data. It tells you the proportion of the variance in the dependent variable that is explained by the independent variables. In our case, R-squared is approximately 0.4737, which means that about 47.37% of the variance in the dependent variable is explained by our predictors.</p></li>
 <li><p><strong>Adjusted R-squared:</strong> This is a version of R-squared that adjusts for the number of predictors in the model. It is a slightly more conservative measure of goodness of fit.</p></li>
 <li><p><strong>F-statistic:</strong> This is a measure of the overall significance of the model. It tests whether at least one of the predictor variables is significantly related to the dependent variable. A high F-statistic and a very low p-value (which is the case here) indicate that the model is significant.</p></li>
 <li><p><strong>p-value:</strong> The p-value associated with the F-statistic. In this case, it’s extremely small, indicating that the overall model is highly significant.</p></li>
-</ol>
-</section>
-<section id="comparison-of-model-1-and-model-2" class="level3">
-<h3 class="anchored" data-anchor-id="comparison-of-model-1-and-model-2">Comparison of Model 1 and Model 2</h3>
+</ol></section><section id="comparison-of-model-1-and-model-2" class="level3"><h3 class="anchored" data-anchor-id="comparison-of-model-1-and-model-2">Comparison of Model 1 and Model 2</h3>
 <p>Let’s build another model without the feature <strong>n_paragraph</strong> and compare the results.</p>
 <div class="cell" data-code_folding="false">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Linear Model 2</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>formula_2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">"score ~ n_sentence + n_contextWords"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula_2, <span class="at">data =</span> train_data)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary of the model</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">formula_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html">as.formula</a></span><span class="op">(</span><span class="st">"score ~ n_sentence + n_contextWords"</span><span class="op">)</span></span>
+<span><span class="va">model_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">formula_2</span>, data <span class="op">=</span> <span class="va">train_data</span><span class="op">)</span></span>
+<span><span class="co"># Print the summary of the model</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -575,25 +536,23 @@ F-statistic: 557.1 on 2 and 1257 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p><strong>Residual standard error:</strong> The residual standard error is very close in both models, indicating that they have similar predictive accuracy. <strong>Multiple R-squared:</strong> The R-squared values are also very close. Model 2 has a slightly lower R-squared, but the difference is minimal. <strong>F-statistic:</strong> Model 2 has a higher F-statistic compared to Model 1, indicating that the predictors collectively have more explanatory power in Model 2.</p>
 <p>In summary, both models are quite similar in terms of their coefficient estimates and predictive accuracy. Model 2 has a slightly higher F-statistic. Personally I agree with the model. The number of paragraphs should not be a predictor while estimating the score. The number of sentences and the number of contextual words are much more important.</p>
-</section>
-<section id="evaluation-of-model-2-with-the-test-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="evaluation-of-model-2-with-the-test-dataset">Evaluation of Model 2 with the Test Dataset</h3>
-<p>As we would like to continue with the second model, we can use the <code>predict()</code> to make predictions on the test data. The <code>predict()</code> function takes the model and the new data set as arguments. It returns a vector of predictions, which we will save in a new column in the test data set to make comparisons in the next stage. Now, let’s use the <code>mean()</code> and <code>sqrt()</code> functions to calculate the MSE and RMSE of the model. We can also use the <code>summary()</code> function to get the R-squared value of the model.</p>
+</section><section id="evaluation-of-model-2-with-the-test-dataset" class="level3"><h3 class="anchored" data-anchor-id="evaluation-of-model-2-with-the-test-dataset">Evaluation of Model 2 with the Test Dataset</h3>
+<p>As we would like to continue with the second model, we can use the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> to make predictions on the test data. The <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function takes the model and the new data set as arguments. It returns a vector of predictions, which we will save in a new column in the test data set to make comparisons in the next stage. Now, let’s use the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> and <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> functions to calculate the MSE and RMSE of the model. We can also use the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function to get the R-squared value of the model.</p>
 <div class="cell" data-code_folding="false">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test data</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_2, <span class="at">newdata =</span> test_data)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">mean</span>((test_data<span class="sc">$</span>score <span class="sc">-</span> predictions)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mse)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>r_squared <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_2)<span class="sc">$</span>r.squared</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing evaluation metrics beautifully :D</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"Mean Squared Error (MSE): "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, mse), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Root Mean Squared Error (RMSE): "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, rmse), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"R-squared (R²): "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, r_squared), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Make predictions on the test data</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model_2</span>, newdata <span class="op">=</span> <span class="va">test_data</span><span class="op">)</span></span>
+<span><span class="co"># Evaluate the model</span></span>
+<span><span class="va">mse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">test_data</span><span class="op">$</span><span class="va">score</span> <span class="op">-</span> <span class="va">predictions</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">rmse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span></span>
+<span><span class="va">r_squared</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span></span>
+<span><span class="co"># Printing evaluation metrics beautifully :D</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Mean Squared Error (MSE): "</span>, <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.2f"</span>, <span class="va">mse</span><span class="op">)</span>, <span class="st">"\n"</span>,</span>
+<span>            <span class="st">"Root Mean Squared Error (RMSE): "</span>, <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.2f"</span>, <span class="va">rmse</span><span class="op">)</span>, <span class="st">"\n"</span>,</span>
+<span>            <span class="st">"R-squared (R²): "</span>, <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.2f"</span>, <span class="va">r_squared</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Mean Squared Error (MSE): 0.30
@@ -605,19 +564,16 @@ R-squared (R²): 0.47</code></pre>
 <li><p><strong>MSE (Mean Squared Error):</strong> MSE is a measure of the average squared difference between the observed (actual) values and the predicted values by the model. It’s a measure of the model’s accuracy, with lower values indicating a better fit.</p></li>
 <li><p><strong>RMSE (Root Mean Squared Error):</strong> RMSE is the square root of the MSE and provides a measure of the average error in the same units as the dependent variable. It’s a commonly used metric to quantify the prediction error of the model.</p></li>
 <li><p><strong>R-squared (R²):</strong> R-squared is a measure of how well the independent variables explain the variability in the dependent variable. It ranges from 0 to 1, with higher values indicating a better fit. In the output, the R-squared is approximately 0.4736732, which means that about 47.37% of the variance in the dependent variable is explained by the independent variables in the model.</p></li>
-</ul>
-</section>
-<section id="predictions-of-the-test-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="predictions-of-the-test-dataset">Predictions of the Test Dataset</h3>
-<p>Let’s take a look at the predictions of the test data. We can use the <code>head()</code> function to print the first 10 predictions.</p>
+</ul></section><section id="predictions-of-the-test-dataset" class="level3"><h3 class="anchored" data-anchor-id="predictions-of-the-test-dataset">Predictions of the Test Dataset</h3>
+<p>Let’s take a look at the predictions of the test data. We can use the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function to print the first 10 predictions.</p>
 <div class="cell" data-code_folding="false">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge predictions to test data:</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>test_data<span class="sc">$</span>predictions <span class="ot">&lt;-</span> <span class="fu">round</span>(predictions)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(test_data[,<span class="fu">c</span>(<span class="st">"score"</span>,<span class="st">"predictions"</span>)], <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#merge predictions to test data:</span></span>
+<span><span class="va">test_data</span><span class="op">$</span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">predictions</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"score"</span>,<span class="st">"predictions"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
@@ -641,9 +597,9 @@ R-squared (R²): 0.47</code></pre>
 <div class="code-with-filename-file">
 <pre><strong></strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18" data-code-fold="false"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the confusion matrix and print it</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> <span class="fu">table</span>(test_data<span class="sc">$</span>predictions, test_data<span class="sc">$</span>score)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>confusion_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create the confusion matrix and print it</span></span>
+<span><span class="va">confusion_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">$</span><span class="va">predictions</span>, <span class="va">test_data</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span>
+<span><span class="va">confusion_matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   
@@ -656,10 +612,7 @@ R-squared (R²): 0.47</code></pre>
 </div>
 </div>
 <p>In this context, the confusion matrix helps us understand the model’s performance in grading essays. It indicates which score points are frequently confused with others, providing insights into where the model might need improvement. For instance, score points 3 and 4 appear to be frequently confused with each other. Yet, I believe that is not a big deal. Confusing a high score such as 6 with a lower score such as 2 would be a catastrophe in AES context, but here we don’t even have one such a case. Besides confusion matrix, one can calculate performance metrics such as accuracy, precision, recall, and F1-score to get a more comprehensive assessment of the model’s grading performance.</p>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Our exploration into AES has shed light on the impressive potential of this technology in revolutionizing the evaluation of written content. Our application of a Linear Regression model, even when considering a limited set of extracted features such as the number of words, sentences, and paragraphs, demonstrated the robustness of this approach. It is evident that by harnessing machine learning algorithms, we can achieve consistent and objective grading, streamlining the assessment process for educators and administrators.</p>
 <p>However, it’s important to note that Linear Regression is just one of the many models available for AES. The field of automated essay scoring continues to evolve, and researchers are exploring a range of models and techniques to enhance accuracy and broaden the scope of assessment. Some alternatives to LR include Support Vector Machines (SVM), Random Forests, Neural Networks, and Natural Language Processing models like Recurrent Neural Networks (RNNs) or Transformers, such as BERT and GPT-3. These models bring their unique strengths and capabilities to the table, offering a diverse array of tools for essay evaluation.</p>
 <p>As AES advances, the synergy of these models with increasingly sophisticated feature extraction procedures promises to further elevate the quality and reliability of automated essay scoring. With this, we look to a future where technology and human expertise collaborate seamlessly to offer more efficient, accurate, and comprehensive assessment in the realm of written expression.</p>
@@ -667,13 +620,9 @@ R-squared (R²): 0.47</code></pre>
 
 <!-- -->
 
-</section>
-
-</main> <!-- /main -->
-<div> 
+</section></main><!-- /main --><div> 
 <hr>
-<!-- Begin Mailchimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
 	
@@ -685,8 +634,7 @@ R-squared (R²): 0.47</code></pre>
 <div class="mc-field-group">
 	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
 </label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
-	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
 </div>
 	<div id="mce-responses" class="clear foot">
 		<div class="response" id="mce-error-response" style="display:none"></div>
@@ -696,14 +644,12 @@ R-squared (R²): 0.47</code></pre>
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-            </div>
+</div>
         </div>
     </div>
 </form>
 </div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-<!--End mc_embed_signup-->
-<hr>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
 </div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -835,10 +781,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -848,8 +811,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -861,7 +833,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -905,6 +1000,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -930,6 +1026,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -988,8 +1110,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Automated Essay Scoring (AES) with R"</span></span>
@@ -1021,27 +1142,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>::: {layout-ncol=2}</span>
 <span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="al">![A robot drawn by Dall-e](image.png)</span>{width=30%}</span>
 <span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Libraries"}</span></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false </span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Requirements"}</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
 <span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rmarkdown"</span>) </span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="co"># paged_table() </span></span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>) </span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="co"># read_excel()</span></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>) </span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"textstem"</span>) </span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="co"># lemmatize_strings()</span></span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"stopwords"</span>) </span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="co"># stopwords()</span></span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"stringr"</span>)   </span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="co"># str_squish()</span></span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tm"</span>)        </span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="co"># remove_words()</span></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"quanteda"</span>)  </span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="co"># nsentence() </span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="in">library("rmarkdown") </span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="in"># paged_table() </span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="in">library("readxl") </span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="in"># read_excel()</span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="in">library("tidyverse") </span></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="in">library("textstem") </span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="in"># lemmatize_strings()</span></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="in">library("stopwords") </span></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="in"># stopwords()</span></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="in">library("stringr")   </span></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="in"># str_squish()</span></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="in">library("tm")        </span></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="in"># remove_words()</span></span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="in">library("quanteda")  </span></span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="in"># nsentence() </span></span>
 <span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a></span>
@@ -1052,13 +1173,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>Now that you have downloaded the data, move it to your working directory and follow along while reading. Let's load the data and see the head of them:</span>
 <span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>essay_set_2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"essay_set_2.xlsx"</span>) </span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(<span class="fu">head</span>(essay_set_2, <span class="dv">2</span>)) <span class="co"># paged_table() function is for a beautified table view on this page. You don't need to use it on your own trial.</span></span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="in">essay_set_2 &lt;- read_excel("essay_set_2.xlsx") </span></span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(head(essay_set_2, 2)) # paged_table() function is for a beautified table view on this page. You don't need to use it on your own trial.</span></span>
 <span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
@@ -1076,56 +1197,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>**</span>
 <span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>random_essay <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(essay_set_2), <span class="dv">1</span>)</span>
-<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(essay_set_2[random_essay,<span class="dv">3</span>])</span>
+<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(1234)</span></span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a><span class="in">random_essay &lt;- sample(1:length(essay_set_2), 1)</span></span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(essay_set_2[random_essay,3])</span></span>
 <span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a>We will use the **essay** and **rater1_domain1** columns for our analysis as we are just doing a research for demonstration purposes (of course, when you are working on a real life research case, there are many things that you have to take into consideration). The **essay** column is the text of the essay written by a real person and the **rater1_domain1** column is the score given to the essay by the first rater. We will rename these columns as **response** and **score** respectively. We will also create a new column called **doc_id** which will be a unique identifier for each essay in our case study.</span>
 <span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a>set <span class="ot">&lt;-</span> essay_set_2 <span class="sc">%&gt;%</span> </span>
-<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(essay, rater1_domain1) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">response =</span> essay, <span class="at">score =</span> rater1_domain1)</span>
-<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>doc_id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"doc"</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(set))</span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a><span class="in">set &lt;- essay_set_2 %&gt;% </span></span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a><span class="in">  select(essay, rater1_domain1) %&gt;% </span></span>
+<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(response = essay, score = rater1_domain1)</span></span>
+<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a><span class="in">set$doc_id &lt;- paste0("doc", 1:nrow(set))</span></span>
 <span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a>When you scrutinize the essays, you will see that there are some @words in the text. These are the words that are replaced with private information about the students such as names, places or dates etc. Also, there are some non-alphabetic characters and capital letters. In order to make the essays ready to analysis, we will convert all the text to lowercase and remove the non-alphabetic characters. We will also remove the <span class="co">[</span><span class="ot">stopwords</span><span class="co">](https://en.wikipedia.org/wiki/Stop_word)</span> and lemmatize the text.</span>
 <span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"@</span><span class="sc">\\</span><span class="st">w+ *"</span>, <span class="st">""</span>, set<span class="sc">$</span>response) <span class="co">#remove @words</span></span>
-<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[^a-zA-Z]"</span>, <span class="st">" "</span>, set<span class="sc">$</span>processedResponse) <span class="co">#remove non-alphabetic characters</span></span>
-<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">tolower</span>(set<span class="sc">$</span>processedResponse) <span class="co">#convert to lowercase</span></span>
-<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">lemmatize_strings</span>(set<span class="sc">$</span>processedResponse) <span class="co">#lemmatize</span></span>
-<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a>en_stopwords <span class="ot">&lt;-</span> stopwords<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">"en"</span>, <span class="at">source =</span> <span class="st">"stopwords-iso"</span>) <span class="co">#get stopwords</span></span>
-<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">removeWords</span>(set<span class="sc">$</span>processedResponse, <span class="at">words =</span> en_stopwords) <span class="co">#remove stopwords</span></span>
-<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>processedResponse <span class="ot">&lt;-</span> <span class="fu">str_squish</span>(set<span class="sc">$</span>processedResponse) <span class="co">#remove extra whitespaces</span></span>
+<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- gsub("@\\w+ *", "", set$response) #remove @words</span></span>
+<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- gsub("[^a-zA-Z]", " ", set$processedResponse) #remove non-alphabetic characters</span></span>
+<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- tolower(set$processedResponse) #convert to lowercase</span></span>
+<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- lemmatize_strings(set$processedResponse) #lemmatize</span></span>
+<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a><span class="in">en_stopwords &lt;- stopwords::stopwords("en", source = "stopwords-iso") #get stopwords</span></span>
+<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- removeWords(set$processedResponse, words = en_stopwords) #remove stopwords</span></span>
+<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- str_squish(set$processedResponse) #remove extra whitespaces</span></span>
 <span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a>Here how the new processed text looks like (the one we have seen above):</span>
 <span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a>sample_essay<span class="ot">&lt;-</span><span class="fu">merge</span>(set[random_essay,<span class="dv">4</span>], set[random_essay,<span class="dv">1</span>])</span>
-<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(sample_essay)</span>
+<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a><span class="in">sample_essay&lt;-merge(set[random_essay,4], set[random_essay,1])</span></span>
+<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(sample_essay)</span></span>
 <span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Feature Extraction</span></span>
@@ -1135,14 +1256,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a>For the sake of simplicity of demonstration, we will extract the following features: **number of sentences**, **number of paragraphs** and **number of contextual words**.</span>
 <span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>n_sentence <span class="ot">&lt;-</span> <span class="fu">nsentence</span>(set<span class="sc">$</span>response) </span>
-<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>n_paragraph <span class="ot">&lt;-</span> <span class="fu">str_count</span>(set<span class="sc">$</span>response, <span class="st">"     "</span>) <span class="sc">+</span> <span class="dv">1</span> </span>
-<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>set<span class="sc">$</span>n_contextWords <span class="ot">&lt;-</span> <span class="fu">lengths</span>(<span class="fu">strsplit</span>(set<span class="sc">$</span>processedResponse, <span class="st">' '</span>))</span>
-<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(set)</span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_sentence &lt;- nsentence(set$response) </span></span>
+<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_paragraph &lt;- str_count(set$response, "     ") + 1 </span></span>
+<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_contextWords &lt;- lengths(strsplit(set$processedResponse, ' '))</span></span>
+<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a><span class="in">head(set)</span></span>
 <span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a>As stated before, there might be many other features that can be extracted from the essays. We will continue our study with these 3 features even if they are not enough for a real life research.</span>
@@ -1150,14 +1271,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a>Before we start building a machine learning model, we need to divide our dataset as training and test data.</span>
 <span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> set</span>
-<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(dataset), <span class="fu">nrow</span>(dataset) <span class="sc">*</span> <span class="fl">0.7</span>)  <span class="co"># 70% for training</span></span>
-<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> dataset[train_indices, ]</span>
-<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> dataset[<span class="sc">-</span>train_indices, ]</span>
+<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a><span class="in">dataset &lt;- set</span></span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="in">train_indices &lt;- sample(nrow(dataset), nrow(dataset) * 0.7)  # 70% for training</span></span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a><span class="in">train_data &lt;- dataset[train_indices, ]</span></span>
+<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a><span class="in">test_data &lt;- dataset[-train_indices, ]</span></span>
 <span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Linear Regression Model (LR)</span></span>
@@ -1169,14 +1290,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a>In our case, the dependent variable is the **score** and the independent variables are **n_sentence**, **n_paragraph** and **n_contextWords**.</span>
 <span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Linear Model 1"}</span></span>
-<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">"score ~ n_sentence + n_paragraph + n_contextWords"</span>)</span>
-<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, <span class="at">data =</span> train_data)</span>
-<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary of the model</span></span>
-<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span>
+<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a><span class="in">formula &lt;- as.formula("score ~ n_sentence + n_paragraph + n_contextWords")</span></span>
+<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a><span class="in">model_1 &lt;- lm(formula, data = train_data)</span></span>
+<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the summary of the model</span></span>
+<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_1)</span></span>
 <span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### Performance of the Model 1</span></span>
@@ -1212,14 +1333,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a>Let's build another model without the feature **n_paragraph** and compare the results.</span>
 <span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Linear Model 2"}</span></span>
-<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a>formula_2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">"score ~ n_sentence + n_contextWords"</span>)</span>
-<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula_2, <span class="at">data =</span> train_data)</span>
-<span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary of the model</span></span>
-<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span>
+<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a><span class="in">formula_2 &lt;- as.formula("score ~ n_sentence + n_contextWords")</span></span>
+<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a><span class="in">model_2 &lt;- lm(formula_2, data = train_data)</span></span>
+<span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the summary of the model</span></span>
+<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_2)</span></span>
 <span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-232"><a href="#cb20-232" aria-hidden="true" tabindex="-1"></a>**Residual standard error:** The residual standard error is very close in both models, indicating that they have similar predictive accuracy. **Multiple R-squared:** The R-squared values are also very close. Model 2 has a slightly lower R-squared, but the difference is minimal. **F-statistic:** Model 2 has a higher F-statistic compared to Model 1, indicating that the predictors collectively have more explanatory power in Model 2.</span>
@@ -1231,20 +1352,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-238"><a href="#cb20-238" aria-hidden="true" tabindex="-1"></a>As we would like to continue with the second model, we can use the <span class="in">`predict()`</span> to make predictions on the test data. The <span class="in">`predict()`</span> function takes the model and the new data set as arguments. It returns a vector of predictions, which we will save in a new column in the test data set to make comparisons in the next stage. Now, let's use the <span class="in">`mean()`</span> and <span class="in">`sqrt()`</span> functions to calculate the MSE and RMSE of the model. We can also use the <span class="in">`summary()`</span> function to get the R-squared value of the model.</span>
 <span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test data</span></span>
-<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_2, <span class="at">newdata =</span> test_data)</span>
-<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model</span></span>
-<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">mean</span>((test_data<span class="sc">$</span>score <span class="sc">-</span> predictions)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mse)</span>
-<span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a>r_squared <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_2)<span class="sc">$</span>r.squared</span>
-<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing evaluation metrics beautifully :D</span></span>
-<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"Mean Squared Error (MSE): "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, mse), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Root Mean Squared Error (RMSE): "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, rmse), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a>            <span class="st">"R-squared (R²): "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, r_squared), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a><span class="in"># Make predictions on the test data</span></span>
+<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a><span class="in">predictions &lt;- predict(model_2, newdata = test_data)</span></span>
+<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a><span class="in"># Evaluate the model</span></span>
+<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a><span class="in">mse &lt;- mean((test_data$score - predictions)^2)</span></span>
+<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a><span class="in">rmse &lt;- sqrt(mse)</span></span>
+<span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a><span class="in">r_squared &lt;- summary(model_2)$r.squared</span></span>
+<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a><span class="in"># Printing evaluation metrics beautifully :D</span></span>
+<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a><span class="in">cat(paste0("Mean Squared Error (MSE): ", sprintf("%.2f", mse), "\n",</span></span>
+<span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a><span class="in">            "Root Mean Squared Error (RMSE): ", sprintf("%.2f", rmse), "\n",</span></span>
+<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a><span class="in">            "R-squared (R²): ", sprintf("%.2f", r_squared), "\n"))</span></span>
 <span id="cb20-255"><a href="#cb20-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-257"><a href="#cb20-257" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**MSE (Mean Squared Error):** MSE is a measure of the average squared difference between the observed (actual) values and the predicted values by the model. It's a measure of the model's accuracy, with lower values indicating a better fit.</span>
@@ -1258,25 +1379,25 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-265"><a href="#cb20-265" aria-hidden="true" tabindex="-1"></a>Let's take a look at the predictions of the test data. We can use the <span class="in">`head()`</span> function to print the first 10 predictions.</span>
 <span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="co">#merge predictions to test data:</span></span>
-<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a>test_data<span class="sc">$</span>predictions <span class="ot">&lt;-</span> <span class="fu">round</span>(predictions)</span>
-<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(test_data[,<span class="fu">c</span>(<span class="st">"score"</span>,<span class="st">"predictions"</span>)], <span class="dv">10</span>)</span>
+<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="in">#merge predictions to test data:</span></span>
+<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a><span class="in">test_data$predictions &lt;- round(predictions)</span></span>
+<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a><span class="in">head(test_data[,c("score","predictions")], 10)</span></span>
 <span id="cb20-275"><a href="#cb20-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a>But looking at the raw data would never be enough to get some insights. Let's also print the confusion matrix to get a better overall picture. The **confusion matrix** is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm. The confusion matrix shows the ways in which the model is confused when it makes predictions. It gives us insight not only into the errors being made by a classifier but more importantly the types of errors that are being made.</span>
 <span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the confusion matrix and print it</span></span>
-<span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> <span class="fu">table</span>(test_data<span class="sc">$</span>predictions, test_data<span class="sc">$</span>score)</span>
-<span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a>confusion_matrix</span>
+<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a><span class="in"># Create the confusion matrix and print it</span></span>
+<span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a><span class="in">confusion_matrix &lt;- table(test_data$predictions, test_data$score)</span></span>
+<span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a><span class="in">confusion_matrix</span></span>
 <span id="cb20-287"><a href="#cb20-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-288"><a href="#cb20-288" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-289"><a href="#cb20-289" aria-hidden="true" tabindex="-1"></a>In this context, the confusion matrix helps us understand the model's performance in grading essays. It indicates which score points are frequently confused with others, providing insights into where the model might need improvement. For instance, score points 3 and 4 appear to be frequently confused with each other. Yet, I believe that is not a big deal. Confusing a high score such as 6 with a lower score such as 2 would be a catastrophe in AES context, but here we don't even have one such a case. Besides confusion matrix, one can calculate performance metrics such as accuracy, precision, recall, and F1-score to get a more comprehensive assessment of the model's grading performance.</span>
@@ -1290,14 +1411,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-297"><a href="#cb20-297" aria-hidden="true" tabindex="-1"></a>As AES advances, the synergy of these models with increasingly sophisticated feature extraction procedures promises to further elevate the quality and reliability of automated essay scoring. With this, we look to a future where technology and human expertise collaborate seamlessly to offer more efficient, accurate, and comprehensive assessment in the realm of written expression.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">© Ali Emre Karagül</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
-    <div class="nav-footer-right">📈❤️☕</div>
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
   </div>
 </footer>
-
 
 
 </body></html>

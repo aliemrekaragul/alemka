@@ -1,0 +1,283 @@
+---
+title: "Measurement Invariance"
+description: |
+  Measurement invariance (MI) is essential in psychometrics to ensure that a test measures the same construct across different sub-groups of the population. Therefore, it is also considered as a validity problem. Without MI, comparing group differences could lead to misleading conclusions. Essentially, MI tests whether the relationships between observed items and the latent variables they represent are equivalent across smaller groups (gender, age etc). Achieving MI in a test will help us ensure that any differences in scores are because of true differences in the latent trait, not the measurement bias.
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: TOBB ETU- University of Economics & Technology
+date: 2024-10-15
+categories: [psychometrics, measusrement invariance, Big data, SEM, Data-viz]
+image: "measurement_invariance.png"
+output:
+    self_contained: false
+    code_folding: false
+---
+
+## Introduction
+
+Measurement invariance is critical because if a test is not invariant across groups, differences in test scores might reflect biases in how questions are interpreted. For instance, a math test may appear to show that boys score higher than girls, but this could be because certain items function differently for each group.
+
+There are different levels of MI:
+
+**Configural Invariance:** Tests whether the overall factor structure (i.e., the number and pattern of factors) is the same across groups. It is the smallest restrictive form of invariance. It allows us to conclude that the groups conceptualize the construct in the same way.
+
+**Metric (Weak) Invariance:** Tests whether the factor loadings (the strength of the relationship between each item and the latent factor) are equal across groups. This ensures that the items are equally good indicators of the latent construct in all groups.
+
+**Scalar (Strong) Invariance:** Tests whether item intercepts are equal across groups. Scalar invariance is necessary for comparing latent means between groups.
+
+**Strict Invariance:** Tests whether item residual variances are equal across groups. It’s the strongest form of invariance, implying that the amount of measurement error is consistent across groups.
+
+In the context of R, we can use structural equation modeling (SEM) to assess MI. The `lavaan` package provides a dataset (`HolzingerSwineford1939`) for several SEM analysis including MI. Let's load the `lavaan` and `HolzingerSwineford1939` data along with the `semTools` package for visualization.
+
+::: {layout-ncol="2"}
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename="Requirements"}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: true 
+
+# requirements
+library("lavaan")
+library("semPlot")# For additional tools related to SEM
+library("ggplot2")
+library("semTools")
+```
+:::
+
+## 1. Understand the data
+
+Let's load the data and see the head of them:
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+
+data("HolzingerSwineford1939")
+head(HolzingerSwineford1939)
+
+```
+
+The **Holzinger and Swineford** dataset contains data on students’ cognitive abilities, including variables like **sex**, **age**, and **grade**. It also includes information about the school of students. It includes several cognitive test scores (variables x1 to x9) that measure different abilities, which can be used to examine latent traits. These variables and code for the model is provided in the package's own paper. The dataset measures three latent factors:
+
+-   **Visual** (x1, x2, x3),
+
+-   **Textual** (x4, x5, x6),
+
+-   **Speed** (x7, x8, x9).
+
+## 2. Fit the base model
+
+Let's specify the CFA model.
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+
+HS.model <- ' visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+
+
+```
+
+We fit the model using the entire dataset without considering groups. This step provides a baseline understanding of how well the model fits:
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+
+fit <- lavaan(HS.model, data = HolzingerSwineford1939, 
+              auto.var = TRUE, auto.fix.first = TRUE,
+              auto.cov.lv.x = TRUE)
+summary(fit, fit.measures = TRUE)
+```
+
+-   **Chi-Square Test (85.306, df = 24, p \< 0.001)**: The significant result indicates that the model doesn’t perfectly fit the data, but Chi-square is highly sensitive to sample size.
+
+-   **CFI (0.931)**: This value suggests a reasonably good fit (values above 0.90 are typically considered acceptable).
+
+-   **RMSEA (0.092)**: The RMSEA is below the threshold for a good fit (\<0.10).
+
+-   **SRMR (0.065)**: This is below 0.10.
+
+All latent variables (visual, textual, speed) show significant factor loadings for their respective observed variables (e.g., x1–x3 for visual), indicating that these items effectively measure their intended constructs.
+
+Covariances between latent variables (visual, textual, speed) are significant, indicating meaningful relationships between these cognitive abilities.\
+
+## 3. Measurement Invariance
+
+Now we move on to measurement invariance.
+
+### 3.1. Configural Invariance
+
+The first step is testing **configural invariance**, which checks whether the factor structure (i.e., the number of factors and their loadings) is the same across groups. We’ll use **school** as the grouping variable:
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+fit_configural <- cfa(HS.model, data = HolzingerSwineford1939, group = "school")
+summary(fit_configural, fit.measures = TRUE)
+```
+
+The **configural invariance** model provides a baseline for comparing the factor structure across groups (schools: **Pasteur** and **Grant-White**).
+
+-   **Fit Indices**:
+
+    -   The **CFI** of 0.923 and **TLI** of 0.885 suggest a reasonably good fit but not excellent.
+
+    -   The **RMSEA** of 0.097 is slightly below the recommended 0.10 threshold.
+
+    -   The **SRMR** of 0.068 is within an acceptable range, below 0.10, indicating a good fit.
+
+These results show that the overall factor structure is consistent across the two schools, but there's room for improvement in model fit.
+
+### 3.2. Metric Invariance
+
+Next, we would proceed to test **metric invariance**, where we constrain the factor loadings across groups to assess if the model behaves equivalently in both schools.
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+fit_metric <- cfa(HS.model, data = HolzingerSwineford1939, group = "school", group.equal = "loadings")
+summary(fit_metric, fit.measures = TRUE)
+```
+
+-   **CFI** (0.921) and **TLI** (0.895) are still relatively good, indicating that the constrained model is acceptable.
+
+-   **RMSEA** (0.093) suggests an acceptable fit.
+
+-   **SRMR** (0.072) is still below 0.08, indicating acceptable fit.
+
+The comparison between the configural and metric models shows a slight decline in fit, but the invariance model still seems reasonably supported. This indicates that the factor loadings are equivalent across the two schools, allowing us to meaningfully compare relationships between items and latent factors.
+
+### 3.3. Scalar Invariance
+
+Next, we would proceed with testing **scalar invariance**.
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+fit_scalar <- cfa(HS.model, data = HolzingerSwineford1939, group = "school", group.equal = c("loadings", "intercepts"))
+summary(fit_scalar, fit.measures = TRUE)
+```
+
+The **scalar invariance** model (which adds constraints on intercepts) shows the following:
+
+-   **Fit indices**: The **CFI** has dropped to 0.882 and **TLI** to 0.859, indicating a lower fit compared to the metric model. **RMSEA** increased to 0.107, which exceeds the acceptable threshold (0.10), suggesting a less satisfactory fit.
+
+-   **SRMR** is now 0.082.
+
+Overall, the model fit deteriorates, indicating that the intercepts might not be fully invariant across the two groups.
+
+### 3.4. Strict Invariance
+
+Finally lets test the **strict invariance**.
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+fit_strict <- cfa(HS.model, data = HolzingerSwineford1939, group = "school", group.equal = c("loadings", "intercepts", "residuals"))
+summary(fit_strict, fit.measures = TRUE)
+```
+
+**Fit Statistics:**
+
+-   **Chi-square (181.511, df = 69, p \< 0.001):** Significant, indicating that strict invariance does not hold perfectly, but Chi-square is sensitive to large sample sizes.
+
+-   **CFI (0.873) and TLI (0.867):** Both are below 0.90, indicating a moderate fit. These indices suggest some misfit when imposing strict invariance.
+
+-   **RMSEA (0.104):** Exceeds the desired threshold of 0.10, suggesting that the model fit could be improved.
+
+-   **SRMR (0.088):** Slightly below the 0.10 threshold.
+
+Strict invariance constrains residuals to be equal across groups. Although the fit is not ideal, it is common for strict invariance to show worse fit compared to less restrictive models.
+
+## 4. Evaluation
+
+We can all four models with anova() function:\
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+
+anova(fit_configural, fit_metric, fit_scalar, fit_strict)
+```
+
+1.  **Configural Model**: This is the baseline with good fit (Chisq = 115.85).
+
+2.  **Metric Model**: No significant difference from the configural model (p = 0.224), suggesting factor loadings are invariant across groups.
+
+3.  **Scalar Model**: Significant difference (p \< 0.001), implying that intercepts are not invariant across groups, indicating a potential bias.
+
+4.  **Strict Model**: Marginally significant difference (p = 0.043), suggesting that residual variances also vary, reducing strict invariance.
+
+Overall, the scalar and strict invariance do not hold as strongly as the other two.
+
+Let's investigate all models in a chart and see how the model fit metrics deteriorates after each checkpoint.
+
+```{r eval=TRUE, echo=TRUE, code_folding=TRUE, filename=""}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: true
+fitMeasures_df <- data.frame(
+  Model = c("Configural", "Metric", "Scalar", "Strict"),
+  CFI = c(0.923, 0.921, 0.882, 0.873),
+  RMSEA = c(0.097, 0.093, 0.107, 0.104),
+  SRMR = c(0.068, 0.072, 0.082, 0.088)
+)
+# Plot with thresholds and legends
+ggplot(fitMeasures_df, aes(x = Model)) +
+  geom_point(aes(y = CFI, color = "CFI"), size = 4) +
+  geom_point(aes(y = RMSEA, color = "RMSEA"), size = 4) +
+  geom_point(aes(y = SRMR, color = "SRMR"), size = 4) +
+  geom_line(aes(y = CFI, group = 1, color = "CFI")) +
+  geom_line(aes(y = RMSEA, group = 1, color = "RMSEA")) +
+  geom_line(aes(y = SRMR, group = 1, color = "SRMR")) +
+  
+  # Add threshold lines
+  geom_hline(yintercept = 0.90, linetype = "dashed", color = "blue", size = 0.5) +  # CFI threshold
+  geom_hline(yintercept = 0.10, linetype = "dashed", color = "tomato", size = 0.5) +   # RMSEA & SRMR threshold
+  
+  # Manual legend for threshold lines
+  annotate("text", x = 4.5, y = 0.91, label = "0.90", color = "blue", size = 3.5, hjust = 1) +
+  annotate("text", x = 4.5, y = 0.09, label = "0.10", color = "tomato", size = 3.5, hjust = 1) +
+  
+  labs(y = "Fit Measures", x = "Model Type", color = "Fit Index",
+       title = "Comparison of Fit Measures Across Invariance Models with Thresholds") +
+  theme_minimal()
+
+```
+
+As you see, configural and metric invariance is fulfilled as their CFI levels are above 0.90, and RMSEA & SRMR are below 0.10. Yet, scalar and strict invariance is slightly above the thresholds for RMSEA and SRMR and below for CFI.
+
+These findings suggest some modifications might be a good idea on scalar and strict invariance models. Yet, model modifications are another blog post's issue.
+
+## 5. Conclusion
+
+In this blog post, we explored the concept of measurement invariance and its importance in ensuring that a test measures the same construct across different sub-groups of the population. Using the lavaan package in R, we conducted a series of tests to assess different levels of MI — configural, metric, scalar, and strict invariance — on the Holzinger and Swineford dataset.
+
+## 6. Further Analysis
+
+As scalar and strict invariance is not completely fulfilled, modifications might be usefull on the model for better fit.
+
+We have run an analysis on school variable. Measurement invariance can also be checked using the gender variable.

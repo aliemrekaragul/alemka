@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
-
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2021-11-20">
 <meta name="description" content="Madde Tepki Kuramı temelli madde analizi. Hem çok kategorili hem de iki kategorili maddeler için MTK temelli madde analizi uygulama süreçleri…">
-
 <title>- Item Analysis with Item Response Theory (in Turkish)</title>
 <style>
 code{white-space: pre-wrap;}
@@ -25,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,14 +73,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,22 +94,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -119,25 +116,19 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
-</script> 
-  
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../images/logo with title.svg" alt="" class="navbar-logo">
-    </a>
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title"></span>
     </a>
@@ -148,87 +139,83 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-terminal-fill" role="img">
 </i> 
  <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
-        <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">
+<li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://itp-calculator.com/" rel="" target="">
+    <a class="dropdown-item" href="https://itp-calculator.com/">
  <span class="dropdown-text">ITP Score Calculator</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/" rel="" target="">
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">
  <span class="dropdown-text">Ekşi KazaR</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-star-fill" role="img">
 </i> 
  <span class="menu-text">Favs</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
-        <li>
-    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
  <span class="dropdown-text">R cheatsheets</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://r4ds.hadley.nz/" rel="" target="">
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
  <span class="dropdown-text">R 4 D S</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/" rel="" target="">
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
  <span class="dropdown-text">Generate IRT Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://books.google.com/ngrams/" rel="" target="">
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html" rel="" target="">
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
  <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html" rel="" target="">
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
  <span class="dropdown-text">Style Guide (Google)</span></a>
   </li>  
     </ul>
-  </li>
+</li>
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../about-me.html" rel="" target=""><i class="bi bi-info-square-fill" role="img">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
 </i> 
- <span class="menu-text"> </span></a>
+<span class="menu-text"> </span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/aliemrekaragul" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <div class="quarto-title-block"><div><h1 class="title">Item Analysis with Item Response Theory (in Turkish)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                   <div>
@@ -248,14 +235,14 @@ cookieconsent.run({
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      <p class="author">Ali Emre Karagül <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
     </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
           <p class="affiliation">
               TOBB ETU- University of Economics &amp; Technology
             </p>
         </div>
-      </div>
+    </div>
 
   <div class="quarto-title-meta">
 
@@ -275,42 +262,40 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">GİRİŞ</a>
+<li>
+<a href="#giri%C5%9F" id="toc-giriş" class="nav-link active" data-scroll-target="#giri%C5%9F">GİRİŞ</a>
   <ul>
-  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><strong>Preprocessing</strong></a></li>
-  </ul></li>
-  <li><a href="#çok-boyutlu-maddelere-yönelik-aşamalar" id="toc-çok-boyutlu-maddelere-yönelik-aşamalar" class="nav-link" data-scroll-target="#çok-boyutlu-maddelere-yönelik-aşamalar"><strong>1. Çok Boyutlu Maddelere Yönelik Aşamalar</strong></a>
-  <ul>
-  <li><a href="#a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi" id="toc-a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi" class="nav-link" data-scroll-target="#a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi"><strong>1.a. Varsayımların kontrolü ve uygun MTK modelinin belirlenmesi</strong></a></li>
-  <li><a href="#b.-madde-parametreleri" id="toc-b.-madde-parametreleri" class="nav-link" data-scroll-target="#b.-madde-parametreleri">1.b. Madde parametreleri</a></li>
-  <li><a href="#c.-örnek-madde-karakteristik-eğrileri" id="toc-c.-örnek-madde-karakteristik-eğrileri" class="nav-link" data-scroll-target="#c.-örnek-madde-karakteristik-eğrileri">1.c. Örnek Madde Karakteristik Eğrileri</a></li>
-  <li><a href="#d.-test-bilgi-fonksiyonu" id="toc-d.-test-bilgi-fonksiyonu" class="nav-link" data-scroll-target="#d.-test-bilgi-fonksiyonu">1.d. Test Bilgi Fonksiyonu</a></li>
-  <li><a href="#e.-yetenek-puanları" id="toc-e.-yetenek-puanları" class="nav-link" data-scroll-target="#e.-yetenek-puanları">1.e. Yetenek Puanları</a></li>
-  </ul></li>
-  <li><a href="#iki-kategorili-maddelere-yönelik-aşamalar" id="toc-iki-kategorili-maddelere-yönelik-aşamalar" class="nav-link" data-scroll-target="#iki-kategorili-maddelere-yönelik-aşamalar"><strong>2. İki Kategorili Maddelere Yönelik Aşamalar</strong></a>
-  <ul>
-  <li><a href="#a.-varsayımların-kontrolü-ve-uygun-mtk-modeli" id="toc-a.-varsayımların-kontrolü-ve-uygun-mtk-modeli" class="nav-link" data-scroll-target="#a.-varsayımların-kontrolü-ve-uygun-mtk-modeli"><strong>2.a. Varsayımların Kontrolü ve Uygun MTK Modeli</strong></a></li>
-  <li><a href="#b.-madde-parametreleri-1" id="toc-b.-madde-parametreleri-1" class="nav-link" data-scroll-target="#b.-madde-parametreleri-1"><strong>2.b. Madde Parametreleri</strong></a></li>
-  <li><a href="#c.-örnek-madde-karakteristik-eğrileri-1" id="toc-c.-örnek-madde-karakteristik-eğrileri-1" class="nav-link" data-scroll-target="#c.-örnek-madde-karakteristik-eğrileri-1"><strong>2.c.&nbsp; Örnek Madde Karakteristik Eğrileri</strong></a></li>
-  <li><a href="#d.-test-bilgi-fonksiyonu-1" id="toc-d.-test-bilgi-fonksiyonu-1" class="nav-link" data-scroll-target="#d.-test-bilgi-fonksiyonu-1"><strong>2.d. Test Bilgi Fonksiyonu</strong></a></li>
-  <li><a href="#e.-yetenek-puanları-1" id="toc-e.-yetenek-puanları-1" class="nav-link" data-scroll-target="#e.-yetenek-puanları-1"><strong>2.e. Yetenek Puanları</strong></a></li>
-  </ul></li>
-  <li><a href="#sonuç" id="toc-sonuç" class="nav-link" data-scroll-target="#sonuç">SONUÇ</a></li>
+<li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><strong>Preprocessing</strong></a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#%C3%A7ok-boyutlu-maddelere-y%C3%B6nelik-a%C5%9Famalar" id="toc-çok-boyutlu-maddelere-yönelik-aşamalar" class="nav-link" data-scroll-target="#%C3%A7ok-boyutlu-maddelere-y%C3%B6nelik-a%C5%9Famalar"><strong>1. Çok Boyutlu Maddelere Yönelik Aşamalar</strong></a>
+  <ul>
+<li><a href="#a.-varsay%C4%B1mlar%C4%B1n-kontrol%C3%BC-ve-uygun-mtk-modelinin-belirlenmesi" id="toc-a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi" class="nav-link" data-scroll-target="#a.-varsay%C4%B1mlar%C4%B1n-kontrol%C3%BC-ve-uygun-mtk-modelinin-belirlenmesi"><strong>1.a. Varsayımların kontrolü ve uygun MTK modelinin belirlenmesi</strong></a></li>
+  <li><a href="#b.-madde-parametreleri" id="toc-b.-madde-parametreleri" class="nav-link" data-scroll-target="#b.-madde-parametreleri">1.b. Madde parametreleri</a></li>
+  <li><a href="#c.-%C3%B6rnek-madde-karakteristik-e%C4%9Frileri" id="toc-c.-örnek-madde-karakteristik-eğrileri" class="nav-link" data-scroll-target="#c.-%C3%B6rnek-madde-karakteristik-e%C4%9Frileri">1.c. Örnek Madde Karakteristik Eğrileri</a></li>
+  <li><a href="#d.-test-bilgi-fonksiyonu" id="toc-d.-test-bilgi-fonksiyonu" class="nav-link" data-scroll-target="#d.-test-bilgi-fonksiyonu">1.d. Test Bilgi Fonksiyonu</a></li>
+  <li><a href="#e.-yetenek-puanlar%C4%B1" id="toc-e.-yetenek-puanları" class="nav-link" data-scroll-target="#e.-yetenek-puanlar%C4%B1">1.e. Yetenek Puanları</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#iki-kategorili-maddelere-y%C3%B6nelik-a%C5%9Famalar" id="toc-iki-kategorili-maddelere-yönelik-aşamalar" class="nav-link" data-scroll-target="#iki-kategorili-maddelere-y%C3%B6nelik-a%C5%9Famalar"><strong>2. İki Kategorili Maddelere Yönelik Aşamalar</strong></a>
+  <ul>
+<li><a href="#a.-varsay%C4%B1mlar%C4%B1n-kontrol%C3%BC-ve-uygun-mtk-modeli" id="toc-a.-varsayımların-kontrolü-ve-uygun-mtk-modeli" class="nav-link" data-scroll-target="#a.-varsay%C4%B1mlar%C4%B1n-kontrol%C3%BC-ve-uygun-mtk-modeli"><strong>2.a. Varsayımların Kontrolü ve Uygun MTK Modeli</strong></a></li>
+  <li><a href="#b.-madde-parametreleri-1" id="toc-b.-madde-parametreleri-1" class="nav-link" data-scroll-target="#b.-madde-parametreleri-1"><strong>2.b. Madde Parametreleri</strong></a></li>
+  <li><a href="#c.-%C3%B6rnek-madde-karakteristik-e%C4%9Frileri-1" id="toc-c.-örnek-madde-karakteristik-eğrileri-1" class="nav-link" data-scroll-target="#c.-%C3%B6rnek-madde-karakteristik-e%C4%9Frileri-1"><strong>2.c.&nbsp; Örnek Madde Karakteristik Eğrileri</strong></a></li>
+  <li><a href="#d.-test-bilgi-fonksiyonu-1" id="toc-d.-test-bilgi-fonksiyonu-1" class="nav-link" data-scroll-target="#d.-test-bilgi-fonksiyonu-1"><strong>2.d. Test Bilgi Fonksiyonu</strong></a></li>
+  <li><a href="#e.-yetenek-puanlar%C4%B1-1" id="toc-e.-yetenek-puanları-1" class="nav-link" data-scroll-target="#e.-yetenek-puanlar%C4%B1-1"><strong>2.e. Yetenek Puanları</strong></a></li>
+  </ul>
+</li>
+  <li><a href="#sonu%C3%A7" id="toc-sonuç" class="nav-link" data-scroll-target="#sonu%C3%A7">SONUÇ</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="giriş" class="level2">
-<h2 class="anchored" data-anchor-id="giriş">GİRİŞ</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="giriş" class="level2"><h2 class="anchored" data-anchor-id="giriş">GİRİŞ</h2>
 <p>Bu çalışmada çok kategorili puanlanan maddelerden elde edilen bir veri seti kullanılmıştır. Çalışmanın ilk kısmında çok kategorili maddelere yönelik MTK analizleri yürütülmüştür. Daha sonra aynı veri seti iki kategorili verilere dönüştürülmüştür. Yine MTK süreçleri bu sefer de iki kategorili maddeler için yürütülmüştür. İzlenen adımlar şu şekildedir:</p>
 <p><strong>1. Çoklu puanlanan maddelere yönelik olarak;</strong></p>
 <ul>
@@ -328,19 +313,18 @@ cookieconsent.run({
 <li>Test bilgi fonksiyonunu nasıldır?</li>
 <li>Birey yetenek puanlarının dağılımı nasıldır?</li>
 </ul>
-<section id="preprocessing" class="level3">
-<h3 class="anchored" data-anchor-id="preprocessing"><strong>Preprocessing</strong></h3>
+<section id="preprocessing" class="level3"><h3 class="anchored" data-anchor-id="preprocessing"><strong>Preprocessing</strong></h3>
 <p>Kullanılan paketleri listeleyelim:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sirt)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ltm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://optimizer.r-forge.r-project.org/GPArotation_www/">GPArotation</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexanderrobitzsch/sirt">sirt</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drizopoulos/ltm">ltm</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tabi ki işe öncelikle verinin working directory’den yüklenmesi ve ön düzenleme süreçleri ile başladık:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data1<span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"sampledata.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data1) <span class="co">#yapısını incelemek için.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv2</a></span><span class="op">(</span><span class="st">"sampledata.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span> <span class="co">#yapısını incelemek için.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   531 obs. of  25 variables:
  $ SIRA    : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -372,45 +356,44 @@ cookieconsent.run({
 </div>
 <p>Veri setinde ilk sütunun sıra sayıları olduğunu görünce aman tanrım dedik ve sildik.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data1<span class="ot">&lt;-</span>data1[,<span class="sc">-</span><span class="dv">1</span>] <span class="co"># fazla kalabalığa gerek yok, aynı isimle devam.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data1</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co"># fazla kalabalığa gerek yok, aynı isimle devam.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Kayıp veri olup olmadığını anlamak için:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data1[data1 <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data1</span><span class="op">[</span><span class="va">data1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 44</code></pre>
 </div>
 </div>
 <p>Neredeyse %8 oranında missing value var. Too much! Alayını atıyoruz. Artık adını da değiştirelim.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data2<span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data2</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Madem ki öylesine bir veri seti ile öylesine bir analiz yapıyoruz ve practical kaygılarımız yok, veri setimizi büyütelim. 1000 kişi olsun:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">16611106</span>)  <span class="co"># olur da sen de denemek istersen diye aynı veri setini üretmemizi sağlar.</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data3 <span class="ot">&lt;-</span> data2[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">495</span>, <span class="dv">1000</span>, <span class="at">replace =</span> T), ] <span class="co">#adını da değiştirelim </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">16611106</span><span class="op">)</span>  <span class="co"># olur da sen de denemek istersen diye aynı veri setini üretmemizi sağlar.</span></span>
+<span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="va">data2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">495</span>, <span class="fl">1000</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, <span class="op">]</span> <span class="co">#adını da değiştirelim </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Son olarak, veri setinde işimize yaramayacak bir sürü demografik detay var. Atıyoruz:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(data3)<span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#önce adlarını silelim.</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>data4<span class="ot">&lt;-</span> data3[,<span class="dv">5</span><span class="sc">:</span><span class="dv">24</span>]  <span class="co">#5. sütundan sonrası çöp  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">data3</span><span class="op">)</span><span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">#önce adlarını silelim.</span></span>
+<span></span>
+<span><span class="va">data4</span><span class="op">&lt;-</span> <span class="va">data3</span><span class="op">[</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">24</span><span class="op">]</span>  <span class="co">#5. sütundan sonrası çöp  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Çalışmanın birinci araştırma sorusu kapsamında “data4” adlı veri seti kullanılmıştır. Bu veri seti 1000 gözlemden ve 20 değişkenden oluşmaktadır. Değişkenler, 1 ile 5 arasında bir tam sayı değeri almaktadır. Çalışmanın ikinci araştırma sorusu kapsamında ise her bir madde kendi madde ortalamasından kesilerek iki kategorili veriye dönüştürülmüştür. Bu aşamalar ilgili başlık altında raporlaştırılmıştır. Ön düzenlemelerin ardından araştırma sorularına cevap aramak için ileri analizlere devam edilmiştir.</p>
-</section>
-</section>
-<section id="çok-boyutlu-maddelere-yönelik-aşamalar" class="level2">
-<h2 class="anchored" data-anchor-id="çok-boyutlu-maddelere-yönelik-aşamalar"><strong>1. Çok Boyutlu Maddelere Yönelik Aşamalar</strong></h2>
+</section></section><section id="çok-boyutlu-maddelere-yönelik-aşamalar" class="level2"><h2 class="anchored" data-anchor-id="çok-boyutlu-maddelere-yönelik-aşamalar"><strong>1. Çok Boyutlu Maddelere Yönelik Aşamalar</strong></h2>
 <p>Çalışmanın ilk araştırma sorusu kapsamında, yapılan analizler çok kategorili puanlanan maddeler üzerinden yürütülmüştür.</p>
-<section id="a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi" class="level3">
-<h3 class="anchored" data-anchor-id="a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi"><strong>1.a. Varsayımların kontrolü ve uygun MTK modelinin belirlenmesi</strong></h3>
+<section id="a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi" class="level3"><h3 class="anchored" data-anchor-id="a.-varsayımların-kontrolü-ve-uygun-mtk-modelinin-belirlenmesi"><strong>1.a. Varsayımların kontrolü ve uygun MTK modelinin belirlenmesi</strong></h3>
 <p>Çok kategorili puanlanan maddelerden oluşan ölçeğin Madde Tepki Kuramı çerçevesinde incelenmesi sürecinde öncelikle uygun MTK modelinin belirlenebilmesi için varsayım kontrolleri yapılmıştır. Bu bağlamda, tek boyutluluk ve yerel bağımsızlık varsayımları ile model-veri uyumu kontrol edilmiştir. Tek boyutluluk varsayımı kontrolü için paralel analiz, yamaç birikinti grafiği ve faktör analizi kullanılmıştır. Bu aşamada kullanılan paketler: <em>Psych</em> ve <em>GPArotation.</em></p>
 <p>Paralel Analizden elde edilen yamaç birikinti grafiği şöyledir:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.parallel</span>(data4, <span class="at">n.obs =</span> <span class="dv">1000</span>, <span class="at">cor =</span> <span class="st">"poly"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html">fa.parallel</a></span><span class="op">(</span><span class="va">data4</span>, n.obs <span class="op">=</span> <span class="fl">1000</span>, cor <span class="op">=</span> <span class="st">"poly"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Parallel analysis suggests that the number of factors =  5  and the number of components =  2 </code></pre>
@@ -418,13 +401,13 @@ cookieconsent.run({
 </div>
 <p>Yamaç birikinti grafiği iki bileşenli bir yapıyı göstermektedir.&nbsp; Son olarak faktör analizi yardımı ile hem tek hem de iki bileşenli modeller oluşturulmuştur:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fa_model1 <span class="ot">&lt;-</span> <span class="fu">fa.poly</span>(data4)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fa_model2 <span class="ot">&lt;-</span> <span class="fu">fa</span>(data4, <span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">cor=</span><span class="st">"poly"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fa_model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/deprecated.html">fa.poly</a></span><span class="op">(</span><span class="va">data4</span><span class="op">)</span></span>
+<span><span class="va">fa_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">data4</span>, nfactors <span class="op">=</span> <span class="fl">2</span>, cor<span class="op">=</span><span class="st">"poly"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Bu iki modelin burada çıktılarını alsak baya uzun oluyor. Ama özetle; ben beğendiğim ve devam analizi için seçtiğim 2 faktörlü model ile devam ediyorum. Bu modelin çıktıları incelendiğinde, 1-12 numaralı maddelerin bir boyutta, 13-20 numaralı maddelerin ise diğer bir boyutta yüklendiği görülmektedir. Bu nedenle veri seti aşağıdaki adımlar izlenerek ikiye bölünmüş ve ileri analizler her iki faktör için de ayrı ayrı yürütülmüştür.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data4a<span class="ot">&lt;-</span>data4[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>data4b<span class="ot">&lt;-</span>data4[<span class="dv">13</span><span class="sc">:</span><span class="dv">20</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data4a</span><span class="op">&lt;-</span><span class="va">data4</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span>
+<span><span class="va">data4b</span><span class="op">&lt;-</span><span class="va">data4</span><span class="op">[</span><span class="fl">13</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yerel bağımsızlık varsayımının kontrolü için Yen’in Q analizi (Yen, 1984) her iki bileşen için de uygulanmıştır. Bu süreçte sirt paketinden (Robitzsch, 2020) yararlanılmış ve aşağıdaki adımlar izlenmiştir. &nbsp;</p>
 <pre><code>Mod1 &lt;- TAM::tam.mml( resp=data4a )
@@ -436,11 +419,11 @@ Mod2.q3 &lt;- sirt::Q3( dat=data4b, theta=Mod2.wle$theta, b=Mod2$item_irt[[3]] )
 <p>Bu üstteki kodun çıktısı çooook uzun. Buraya koymuyorum. Tabi biz veriyi bootstrap ile çoğalttığımız için bu varsayım karşılanmadı ama gerçek veri ile çalışsaydık bu varsayımın karşılanmaması durumunda çöp olacaktı analiz. Yani örneklem yetersiz, daha çok örneklem lazım diyecektik. Ya da modeli veya madde sayılarını inceleyecektik vs.&nbsp;vs.</p>
 <p>Birinci araştırma sorusunun son aşamasında ise model veri uyumunun incelenmesi ve en uygun modelin seçilmesi yer almaktadır. Model-veri uyumu incelemesi ltm paketi (Rizopoulos, 2006) yardımı ile her iki bileşen için de ayrı ayrı GRM modeli ile yürütülmüştür. Her iki bileşende de model-1, ayırt edicilik düzeylerinin her madde için farklılaştığı modeli betimlemektedir. Model-2 ise ayırt edicilik düzeylerinin her madde için eşit tutulduğu modeldir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model1_d4a<span class="ot">&lt;-</span> <span class="fu">grm</span>(data4a)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model2_d4a<span class="ot">&lt;-</span> <span class="fu">grm</span>(data4a, <span class="at">constrained =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>model1_d4b<span class="ot">&lt;-</span> <span class="fu">grm</span>(data4b)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>model2_d4b<span class="ot">&lt;-</span> <span class="fu">grm</span>(data4b, <span class="at">constrained =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2_d4a, model1_d4a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1_d4a</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/grm.html">grm</a></span><span class="op">(</span><span class="va">data4a</span><span class="op">)</span></span>
+<span><span class="va">model2_d4a</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/grm.html">grm</a></span><span class="op">(</span><span class="va">data4a</span>, constrained <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">model1_d4b</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/grm.html">grm</a></span><span class="op">(</span><span class="va">data4b</span><span class="op">)</span></span>
+<span><span class="va">model2_d4b</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/grm.html">grm</a></span><span class="op">(</span><span class="va">data4b</span>, constrained <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model2_d4a</span>, <span class="va">model1_d4a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -448,7 +431,7 @@ Mod2.q3 &lt;- sirt::Q3( dat=data4b, theta=Mod2.wle$theta, b=Mod2$item_irt[[3]] )
 model2_d4a 31785.45 32025.93 -15843.72                  
 model1_d4a 31660.51 31954.98 -15770.26 146.94 11  &lt;0.001</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2_d4b, model1_d4b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model2_d4b</span>, <span class="va">model1_d4b</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -458,12 +441,10 @@ model1_d4b 21664.77 21861.08 -10792.38 91.81  7  &lt;0.001</code></pre>
 </div>
 </div>
 <p>Modeller arasında manidar farklılık anlamına gelen p değerlerine (&lt;.05) sahip olmasının yanı sıra, Akaike ve Bayesian bilgi kriter değerleri en düşük olan modellerin her iki bileşen için de model-1 olduğu görülmektedir. Bu nedenle model-1 ile daha iyi bir model-veri uyumu sağlanmaktadır. Devam analizleri her iki bileşen için de model-1 ile yürütülmüştür.</p>
-</section>
-<section id="b.-madde-parametreleri" class="level3">
-<h3 class="anchored" data-anchor-id="b.-madde-parametreleri">1.b. Madde parametreleri</h3>
+</section><section id="b.-madde-parametreleri" class="level3"><h3 class="anchored" data-anchor-id="b.-madde-parametreleri">1.b. Madde parametreleri</h3>
 <p>Model-veri uyumu sınandıktan ve en uygun model belirlendikten sonra, madde parametrelerinin incelenmesi aşamasına geçilmiştir. Model-1 üzerinden aşağıdaki kod satırları kullanılarak elde edilen madde parametreleri görülebilir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1_d4a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">model1_d4a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Extrmt1 Extrmt2 Extrmt3 Extrmt4 Dscrmn
 L1   -1.259  -0.119   0.576   1.625  2.361
@@ -479,7 +460,7 @@ L10  -1.222  -0.295   0.476   1.473  1.815
 L11  -1.218  -0.457   0.345   1.320  2.123
 L12  -1.096  -0.249   0.737   1.819  1.661</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1_d4b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">model1_d4b</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Extrmt1 Extrmt2 Extrmt3 Extrmt4 Dscrmn
 L13  -0.665   0.150   0.830   1.786  2.353
@@ -493,161 +474,167 @@ L20  -1.262  -0.351   0.505   1.277  2.007</code></pre>
 </div>
 </div>
 <p>Tablo 4 incelendiğinde, her madde için eşik parametrelerinin beklendik bir şekilde birinciden dördüncüye doğru arttığı görülmektedir. Bazı maddelerin birinci eşik parametresinin -1’den daha büyük bir değerle başladığı dikkat çekmektedir. Örneğin ikinci bileşene ait ilk madde olan 13. Maddenin ilk kategorisini seçen bir bireyin yetenek seviyesi %50 ihtimalle -.66’dan daha düşüktür.&nbsp;</p>
-</section>
-<section id="c.-örnek-madde-karakteristik-eğrileri" class="level3">
-<h3 class="anchored" data-anchor-id="c.-örnek-madde-karakteristik-eğrileri">1.c. Örnek Madde Karakteristik Eğrileri</h3>
-<p>Çalışmanın bu aşamasında madde karakteristik eğrisi ideal ve sorunlu olan birer madde incelenmiş ve yorumlanmıştır. Bu nedenle, öncelikle birinci bileşeni oluşturan tüm maddelerin madde karakteristik eğrileri <code>plot()</code> fonksiyonu ile oluşturulmuştur. İdeal bir madde karakteristik eğrisine sahip olduğu düşünülen sekizinci madde ve kısmi sorunlu olduğu düşünülen ikinci maddenin madde karakteristik eğrileri aşağıdaki kod satırları yürütülerek oluşturulmuştur.</p>
+</section><section id="c.-örnek-madde-karakteristik-eğrileri" class="level3"><h3 class="anchored" data-anchor-id="c.-örnek-madde-karakteristik-eğrileri">1.c. Örnek Madde Karakteristik Eğrileri</h3>
+<p>Çalışmanın bu aşamasında madde karakteristik eğrisi ideal ve sorunlu olan birer madde incelenmiş ve yorumlanmıştır. Bu nedenle, öncelikle birinci bileşeni oluşturan tüm maddelerin madde karakteristik eğrileri <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> fonksiyonu ile oluşturulmuştur. İdeal bir madde karakteristik eğrisine sahip olduğu düşünülen sekizinci madde ve kısmi sorunlu olduğu düşünülen ikinci maddenin madde karakteristik eğrileri aşağıdaki kod satırları yürütülerek oluşturulmuştur.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4a, <span class="at">type=</span><span class="st">"ICC"</span>,<span class="at">item=</span><span class="dv">6</span>, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ- Madde: 6"</span>, <span class="at">ylab =</span> <span class="st">"OLASILIK"</span> , <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4a</span>, type<span class="op">=</span><span class="st">"ICC"</span>,item<span class="op">=</span><span class="fl">6</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ- Madde: 6"</span>, ylab <span class="op">=</span> <span class="st">"OLASILIK"</span> , lwd<span class="op">=</span> <span class="fl">2</span>, col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4a, <span class="at">type=</span><span class="st">"ICC"</span>,<span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"OLASILIK"</span> , <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ- Madde: 2"</span>, <span class="at">items =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4a</span>, type<span class="op">=</span><span class="st">"ICC"</span>,xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"OLASILIK"</span> , lwd<span class="op">=</span> <span class="fl">2</span>, col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ- Madde: 2"</span>, items <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Görülen ilk grafik diğer maddelere göre daha ideal dağılım gösteren bir maddeye aittir. Bu maddenin eğrileri tüm yetenek düzeylerini kapsayacak şekilde sivrilip dağılmaktadır. Örneğin, sıfır yetenek düzeyinde bir bireyin üçüncü kategoride yer alma olasılığı en yüksek düzeydedir. Benzer şekillerde diğer kategorilerin de yüksek olasılık ile temsil ettikleri yetenek düzeyleri belirgin bir şekilde görülmektedir. Bu durumda bu maddenin ayırt edicilik düzeyinin yüksek olması beklenir. Madde parametreleri çıktısında da görüleceği üzere, bu maddeye ait ayırt edicilik parametresi birinci bileşenin en yüksek ayırt edicilik düzeyidir.</p>
 <p>İkinci grafik ise kısmen problemli olduğu düşünülen bir grafiktir. Bu grafiğin daha iyi yorumlanabilmesi için, eksenlerinde yer alan değerler axis() fonksiyonu ile daha detaylı hale getirilmiştir. Ayrıca abline() fonksiyonu ile 0.6 yetenek düzeyine dikey bir çizgi eklenmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4a, <span class="at">type=</span><span class="st">"ICC"</span>,</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex.main =</span> <span class="dv">1</span>, </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"OLASILIK"</span> , </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">col.main=</span> <span class="st">"red"</span>, </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">font.axis=</span> <span class="dv">3</span>, </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">font.lab=</span><span class="dv">2</span>, </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ- Madde: 2"</span>, </span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">items =</span> <span class="dv">2</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> .<span class="dv">1</span>))</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">by =</span> .<span class="dv">1</span>))</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>.<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4a</span>, type<span class="op">=</span><span class="st">"ICC"</span>,</span>
+<span>     xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, </span>
+<span>     cex.main <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>     ylab <span class="op">=</span> <span class="st">"OLASILIK"</span> , </span>
+<span>     lwd<span class="op">=</span> <span class="fl">2</span>, col.main<span class="op">=</span> <span class="st">"red"</span>, </span>
+<span>     font.axis<span class="op">=</span> <span class="fl">3</span>, </span>
+<span>     font.lab<span class="op">=</span><span class="fl">2</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ- Madde: 2"</span>, </span>
+<span>     items <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fl">.6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Maddenin eğrileri incelendiğinde, 0.6 yetenek düzeyinde bir bireyin ikinci, üçüncü ve dördüncü kategorileri seçme olasılıklarının birbirlerine çok yakın olduğu görülmektedir. Bu durum, maddenin ayırt ediciliğini olumsuz olarak etkilemektedir. Daha önceki çıktılardan bilindiği üzere bu maddeye ait ayırt edicilik parametresi birinci bileşenin en düşük ayırt edicilik düzeyidir. Ayrıca, bu maddenin üçüncü kategorisinin sivrilmediği de dikkat çekmektedir. Bu durumda bu maddenin üçüncü kategorisinin çıkarılarak dört kategorili bir maddeye dönüştürülmesi düşünülebilir. Bir başka seçenek ise bu maddenin ölçekten çıkarılması ve analizlerin yeniden yapılması olabilir.&nbsp;</p>
-</section>
-<section id="d.-test-bilgi-fonksiyonu" class="level3">
-<h3 class="anchored" data-anchor-id="d.-test-bilgi-fonksiyonu">1.d. Test Bilgi Fonksiyonu</h3>
+</section><section id="d.-test-bilgi-fonksiyonu" class="level3"><h3 class="anchored" data-anchor-id="d.-test-bilgi-fonksiyonu">1.d. Test Bilgi Fonksiyonu</h3>
 <p>Her iki bileşen için de test bilgi fonksiyonları aşağıdaki kod satırları kullanılarak elde edilmiştir:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4a, <span class="at">type=</span><span class="st">"IIC"</span>, <span class="at">items =</span> <span class="dv">0</span>, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4a</span>, type<span class="op">=</span><span class="st">"IIC"</span>, items <span class="op">=</span> <span class="fl">0</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, ylab <span class="op">=</span> <span class="st">"BİLGİ"</span> , lwd<span class="op">=</span> <span class="fl">2</span>, col.main<span class="op">=</span> <span class="st">"red"</span>, col<span class="op">=</span><span class="st">"blue"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4b, <span class="at">type=</span><span class="st">"IIC"</span>, <span class="at">items =</span> <span class="dv">0</span>, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4b</span>, type<span class="op">=</span><span class="st">"IIC"</span>, items <span class="op">=</span> <span class="fl">0</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, ylab <span class="op">=</span> <span class="st">"BİLGİ"</span> , lwd<span class="op">=</span> <span class="fl">2</span>, col.main<span class="op">=</span> <span class="st">"red"</span>, col<span class="op">=</span><span class="st">"blue"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Test bilgi fonksiyonlarının 0 yetenek düzeyinde en yüksek seviyede olduğu, -/+ 2 yetenek düzeylerinde sert bir şekilde düşmeye başladığı ve -/+ 4 yetenek düzeylerinde en düşük seviyesinde olduğu görülmektedir. Bu durumda her iki bileşenin de en çok 0 yetenek düzeyinde bilgi sağladığı ve -2 ile +2 aralığında yüksek düzeyde bilgi sağladığı söylenebilir. Ancak bu aralığın ötesinde sağlanan bilginin hızla azaldığı düşünülebilir.&nbsp;</p>
 <p>Çalışmanın bu aşamasında madde bilgi eğrileri de aşağıdaki kod satırları kullanılarak elde edilmiştir:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4a, <span class="at">type=</span><span class="st">"IIC"</span>,<span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"1. BİLEŞEN MADDE BİLGİ  EĞRİLERİ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4a</span>, type<span class="op">=</span><span class="st">"IIC"</span>,xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"BİLGİ"</span> , col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"1. BİLEŞEN MADDE BİLGİ  EĞRİLERİ"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1_d4b, <span class="at">type=</span><span class="st">"IIC"</span>,<span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"2. BİLEŞEN MADDE BİLGİ  EĞRİLERİ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1_d4b</span>, type<span class="op">=</span><span class="st">"IIC"</span>,xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"BİLGİ"</span> , col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"2. BİLEŞEN MADDE BİLGİ  EĞRİLERİ"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Bunlar incelendiğinde ise her iki bileşen için de maddelerin ölçülen özelliği geniş bir yetenek puanı ölçeğinde ölçtüğü görülmektedir. Birinci bileşen içerisinde en düşük bilgi sağlayan maddenin ikinci madde olduğu dikkat çekmektedir. Yine bilgi eğrisi en yüksek maddenin birinci bileşen için sekizinci madde olduğu da görülmektedir.&nbsp; Bunlar, bir önceki bölümde kısmi problemli ve ideal dağılımlı olarak incelenen maddelerdir. Eğer ikinci bileşen için birer madde seçilecek olsaydı, o bileşene ait altı ve üç numaralı maddeler sırasıyla kısmi problemli ve ideal maddelere örnek olarak seçilebilirdi.&nbsp;</p>
-</section>
-<section id="e.-yetenek-puanları" class="level3">
-<h3 class="anchored" data-anchor-id="e.-yetenek-puanları">1.e. Yetenek Puanları</h3>
+</section><section id="e.-yetenek-puanları" class="level3"><h3 class="anchored" data-anchor-id="e.-yetenek-puanları">1.e. Yetenek Puanları</h3>
 <p>Çok kategorili puanlanan maddelere yönelik olarak yürütülen analizlerin son aşamasında bireylere ait yetenek puanları hesaplanmış ve bunların dağılımı incelenmiştir. Analizlerin bu aşamasında şu kod satırları kullanılarak birinci ve ikinci bileşen için yetenek puanları ayrı ayrı hesaplanmıştır.&nbsp;</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-1</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>score_d4a<span class="ot">&lt;-</span> <span class="fu">factor.scores</span>(model1_d4a)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>oruntu_d4a<span class="ot">&lt;-</span> score_d4a[[<span class="dv">1</span>]]</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>oruntu_d4a<span class="sc">$</span>toplam<span class="ot">&lt;-</span> <span class="fu">rowSums</span>((oruntu_d4a[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]))</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>score_d4a<span class="ot">&lt;-</span> <span class="fu">factor.scores</span>(model1_d4a)</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>oruntu_d4a<span class="ot">&lt;-</span> score_d4a[[<span class="dv">1</span>]]</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>oruntu_d4a<span class="sc">$</span>toplam<span class="ot">&lt;-</span> <span class="fu">rowSums</span>((oruntu_d4a[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]))</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>theta_d4a <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">419</span>){ </span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> (<span class="fu">sum</span> (oruntu_d4a[i, <span class="dv">1</span><span class="sc">:</span> <span class="dv">12</span>] <span class="sc">==</span> data4a[j, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>])<span class="sc">==</span><span class="dv">12</span>)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>              theta_d4a[j] <span class="ot">&lt;-</span> oruntu_d4a[i, <span class="dv">15</span>]      }}</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>data4a<span class="sc">$</span>theta<span class="ot">&lt;-</span>theta_d4a</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>data4a<span class="sc">$</span>toplam<span class="ot">&lt;-</span><span class="fu">rowSums</span>(data4a[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>])</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-2</span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>score_d4b<span class="ot">&lt;-</span> <span class="fu">factor.scores</span>(model1_d4b)</span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>oruntu_d4b<span class="ot">&lt;-</span> score_d4b[[<span class="dv">1</span>]]</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>oruntu_d4b<span class="sc">$</span>toplam<span class="ot">&lt;-</span> <span class="fu">rowSums</span>((oruntu_d4b[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]))</span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>theta_d4b <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">404</span>){</span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">sum</span> (oruntu_d4b[i, <span class="dv">1</span><span class="sc">:</span> <span class="dv">8</span>] <span class="sc">==</span> data4b[j, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])<span class="sc">==</span><span class="dv">8</span>)</span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>             theta_d4b[j] <span class="ot">&lt;-</span> oruntu_d4b[i, <span class="dv">11</span>] }}</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>data4b<span class="sc">$</span>theta<span class="ot">&lt;-</span>theta_d4b</span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>data4b<span class="sc">$</span>toplam<span class="ot">&lt;-</span><span class="fu">rowSums</span>(data4b[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#BİLEŞEN-1</span></span>
+<span><span class="va">score_d4a</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/factor.scores.html">factor.scores</a></span><span class="op">(</span><span class="va">model1_d4a</span><span class="op">)</span></span>
+<span><span class="va">oruntu_d4a</span><span class="op">&lt;-</span> <span class="va">score_d4a</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">oruntu_d4a</span><span class="op">$</span><span class="va">toplam</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="op">(</span><span class="va">oruntu_d4a</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">score_d4a</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/factor.scores.html">factor.scores</a></span><span class="op">(</span><span class="va">model1_d4a</span><span class="op">)</span></span>
+<span><span class="va">oruntu_d4a</span><span class="op">&lt;-</span> <span class="va">score_d4a</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">oruntu_d4a</span><span class="op">$</span><span class="va">toplam</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="op">(</span><span class="va">oruntu_d4a</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">theta_d4a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">419</span><span class="op">)</span><span class="op">{</span> </span>
+<span> <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span><span class="op">{</span></span>
+<span>         <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span> <span class="op">(</span><span class="va">oruntu_d4a</span><span class="op">[</span><span class="va">i</span>, <span class="fl">1</span><span class="op">:</span> <span class="fl">12</span><span class="op">]</span> <span class="op">==</span> <span class="va">data4a</span><span class="op">[</span><span class="va">j</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span><span class="op">==</span><span class="fl">12</span><span class="op">)</span></span>
+<span>              <span class="va">theta_d4a</span><span class="op">[</span><span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">oruntu_d4a</span><span class="op">[</span><span class="va">i</span>, <span class="fl">15</span><span class="op">]</span>      <span class="op">}</span><span class="op">}</span></span>
+<span><span class="va">data4a</span><span class="op">$</span><span class="va">theta</span><span class="op">&lt;-</span><span class="va">theta_d4a</span></span>
+<span><span class="va">data4a</span><span class="op">$</span><span class="va">toplam</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">data4a</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="co">#BİLEŞEN-2</span></span>
+<span><span class="va">score_d4b</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/factor.scores.html">factor.scores</a></span><span class="op">(</span><span class="va">model1_d4b</span><span class="op">)</span></span>
+<span><span class="va">oruntu_d4b</span><span class="op">&lt;-</span> <span class="va">score_d4b</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">oruntu_d4b</span><span class="op">$</span><span class="va">toplam</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="op">(</span><span class="va">oruntu_d4b</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">theta_d4b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">404</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span> <span class="op">(</span><span class="va">oruntu_d4b</span><span class="op">[</span><span class="va">i</span>, <span class="fl">1</span><span class="op">:</span> <span class="fl">8</span><span class="op">]</span> <span class="op">==</span> <span class="va">data4b</span><span class="op">[</span><span class="va">j</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span><span class="op">==</span><span class="fl">8</span><span class="op">)</span></span>
+<span>             <span class="va">theta_d4b</span><span class="op">[</span><span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">oruntu_d4b</span><span class="op">[</span><span class="va">i</span>, <span class="fl">11</span><span class="op">]</span> <span class="op">}</span><span class="op">}</span></span>
+<span><span class="va">data4b</span><span class="op">$</span><span class="va">theta</span><span class="op">&lt;-</span><span class="va">theta_d4b</span></span>
+<span><span class="va">data4b</span><span class="op">$</span><span class="va">toplam</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">data4b</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Bunun ardından <code>describe()</code> fonksiyonu ile birey yetenek puanlarının betimsel istatikleri elde edilmiştir. Ayrıca <code>hist()</code> fonksiyonu ile histogram grafikleri oluşturulmuştur. Şu kod satırları kullanılmıştır.&nbsp;</p>
+<p>Bunun ardından <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> fonksiyonu ile birey yetenek puanlarının betimsel istatikleri elde edilmiştir. Ayrıca <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> fonksiyonu ile histogram grafikleri oluşturulmuştur. Şu kod satırları kullanılmıştır.&nbsp;</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-1</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data4a<span class="sc">$</span>theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#BİLEŞEN-1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">data4a</span><span class="op">$</span><span class="va">theta</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>   vars    n mean   sd median trimmed  mad  min  max range skew kurtosis   se
 X1    1 1000 0.05 0.93   0.02    0.05 0.92 -2.3 2.59  4.88 0.03     -0.2 0.03</code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data4a<span class="sc">$</span>theta, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FREKANS"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"1. BİLEŞEN BİREY YETENEK PUANLARI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">data4a</span><span class="op">$</span><span class="va">theta</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"FREKANS"</span> , col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"1. BİLEŞEN BİREY YETENEK PUANLARI"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-2</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data4b<span class="sc">$</span>theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#BİLEŞEN-2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">data4b</span><span class="op">$</span><span class="va">theta</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>   vars    n  mean   sd median trimmed  mad   min max range  skew kurtosis   se
 X1    1 1000 -0.01 0.92   0.05       0 0.89 -2.19 2.5  4.69 -0.04    -0.14 0.03</code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data4b<span class="sc">$</span>theta, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FREKANS"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"2. BİLEŞEN BİREY YETENEK PUANLARI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid" width="672"></p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">data4b</span><span class="op">$</span><span class="va">theta</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"FREKANS"</span> , col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"2. BİLEŞEN BİREY YETENEK PUANLARI"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Her iki bileşene ait betimsel istatikler ve histogram grafikleri incelendiğinde, ortalamalarının sıfıra, standart sapmalarının da bire çok yakın olduğu görülmektedir. Bu durum her iki bileşenden elde edilen verinin de normal dağılım sergilediğini göstermektedir.</p>
-</section>
-</section>
-<section id="iki-kategorili-maddelere-yönelik-aşamalar" class="level2">
-<h2 class="anchored" data-anchor-id="iki-kategorili-maddelere-yönelik-aşamalar"><strong>2. İki Kategorili Maddelere Yönelik Aşamalar</strong></h2>
+</section></section><section id="iki-kategorili-maddelere-yönelik-aşamalar" class="level2"><h2 class="anchored" data-anchor-id="iki-kategorili-maddelere-yönelik-aşamalar"><strong>2. İki Kategorili Maddelere Yönelik Aşamalar</strong></h2>
 <p>Çalışmanın ikinci araştırma sorusu kapsamında, çok kategorili maddelerden oluşan veri setinin iki kategoriye dönüştürülmesi gerekmektedir. Çok kategorili puanlanan maddelerin iki kategorili olarak kodlanmasında izlenen adımlar şunlardır:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>data5<span class="ot">&lt;-</span> data4</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(data5[i,j] <span class="sc">&lt;=</span> <span class="fu">mean</span>(data5[,j])) {data5[i,j] <span class="ot">&lt;-</span> <span class="dv">0</span>} </span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> data5[i,j] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a> }</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data5</span><span class="op">&lt;-</span> <span class="va">data4</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>   <span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">data5</span><span class="op">[</span><span class="va">i</span>,<span class="va">j</span><span class="op">]</span> <span class="op">&lt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">data5</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span><span class="va">data5</span><span class="op">[</span><span class="va">i</span>,<span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">}</span> </span>
+<span><span class="kw">else</span> <span class="va">data5</span><span class="op">[</span><span class="va">i</span>,<span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span> <span class="op">}</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="a.-varsayımların-kontrolü-ve-uygun-mtk-modeli" class="level3">
-<h3 class="anchored" data-anchor-id="a.-varsayımların-kontrolü-ve-uygun-mtk-modeli"><strong>2.a. Varsayımların Kontrolü ve Uygun MTK Modeli</strong></h3>
+<section id="a.-varsayımların-kontrolü-ve-uygun-mtk-modeli" class="level3"><h3 class="anchored" data-anchor-id="a.-varsayımların-kontrolü-ve-uygun-mtk-modeli"><strong>2.a. Varsayımların Kontrolü ve Uygun MTK Modeli</strong></h3>
 <p>İki kategorili puanlanan maddelerden oluşan ölçeğin Madde Tepki Kuramı çerçevesinde incelenmesi sürecinde öncelikle uygun MTK modelinin belirlenebilmesi için varsayım kontrolleri yapılmıştır. Bu bağlamda, tek boyutluluk ve yerel bağımsızlık varsayımları ile model-veri uyumu kontrol edilmiştir. Tek boyutluluk varsayımı kontrolü için paralel analiz, yamaç birikinti grafiği ve faktör analizi kullanılmıştır. Bu amaçla, Psych paketinden (Revelle, 2020) faydalanılmıştır.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.parallel</span>(data5, <span class="at">main =</span> <span class="st">"PARALEL ANALİZ SAÇILIM GRAFİĞİ"</span>, <span class="at">ylabel =</span> <span class="st">"Temel Bileşenler ve Faktör Analizi Özdeğerleri"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html">fa.parallel</a></span><span class="op">(</span><span class="va">data5</span>, main <span class="op">=</span> <span class="st">"PARALEL ANALİZ SAÇILIM GRAFİĞİ"</span>, ylabel <span class="op">=</span> <span class="st">"Temel Bileşenler ve Faktör Analizi Özdeğerleri"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Parallel analysis suggests that the number of factors =  4  and the number of components =  2 </code></pre>
@@ -655,25 +642,23 @@ X1    1 1000 -0.01 0.92   0.05       0 0.89 -2.19 2.5  4.69 -0.04    -0.14 0.03<
 </div>
 <p>Paralel analiz ve yamaç birikinti grafiği iki bileşenli bir yapıyı göstermektedir.&nbsp; Bu nedenle hem iki hem de tek bileşenli modeller oluşturulmuştur. Aşağıda izlenen adımlar sonrası elde edilen modeller ait faktör yükleri görülebilir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">fa</span>(data5, <span class="at">cor =</span> <span class="st">"tet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">fa</span>(data5, <span class="at">cor =</span> <span class="st">"tet"</span>, <span class="at">nfactors =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">data5</span>, cor <span class="op">=</span> <span class="st">"tet"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">data5</span>, cor <span class="op">=</span> <span class="st">"tet"</span>, nfactors <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Faktör yüklerinin her madde için her iki modelde de .60’nın üzerinde olduğu görülmektedir. Tek bileşenli yapının açıkladığı varyansın ise %61 olduğu anlaşılmaktadır. Bunun yanı sıra, iki bileşenli yapının birinci bileşenin %40, ikinci bileşenin %28 olmak üzere toplamda %68 oranında açıklanan varyansa sahip olduğu görülmektedir. Açıklanan varyans açısından modeller arasındaki farkın çok büyük olmadığı düşünüldüğünden, ileri analizlere tek bileşenli model ile devam edilmesine karar verilmiştir.&nbsp;&nbsp;</p>
 <p>Yerel bağımsızlık varsayımının kontrolü için Yen’in Q analizi (Yen, 1984)&nbsp; uygulanmıştır. Bu süreçte sirt paketinden (Robitzsch, 2020) yararlanılmış ve aşağıdaki adımlar izlenmiştir.&nbsp;</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">rasch.mml2</span>(data5)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>model.wle <span class="ot">&lt;-</span><span class="fu">wle.rasch</span>( <span class="at">dat=</span>data5, <span class="at">b=</span>model<span class="sc">$</span>item<span class="sc">$</span>b )</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>yenq3 <span class="ot">&lt;-</span><span class="fu">Q3</span>( <span class="at">dat=</span>data5, <span class="at">theta=</span>model.wle<span class="sc">$</span>theta, <span class="at">b=</span>model<span class="sc">$</span>item<span class="sc">$</span>b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sirt/man/rasch.mml.html">rasch.mml2</a></span><span class="op">(</span><span class="va">data5</span><span class="op">)</span></span>
+<span><span class="va">model.wle</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/sirt/man/wle.rasch.html">wle.rasch</a></span><span class="op">(</span> dat<span class="op">=</span><span class="va">data5</span>, b<span class="op">=</span><span class="va">model</span><span class="op">$</span><span class="va">item</span><span class="op">$</span><span class="va">b</span> <span class="op">)</span></span>
+<span><span class="va">yenq3</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/sirt/man/Q3.html">Q3</a></span><span class="op">(</span> dat<span class="op">=</span><span class="va">data5</span>, theta<span class="op">=</span><span class="va">model.wle</span><span class="op">$</span><span class="va">theta</span>, b<span class="op">=</span><span class="va">model</span><span class="op">$</span><span class="va">item</span><span class="op">$</span><span class="va">b</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Yerel bağımsızlık varsayımının karşılandığı görülmektedir. Bu nedenle model-veri uyumu incleme aşamasına geçilmiştir. Bu aşamada ltm paketinden (Rizopoulos, 2006) faydalanılmıştır. Aşağıdaki kod satırları kullanılarak elde edilen Benzerlik oranı tabloları görülebilir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">rasch</span>(data5)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">ltm</span>(data5 <span class="sc">~</span> z1)  </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">tpm</span>(data5)</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1, model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/rasch.html">rasch</a></span><span class="op">(</span><span class="va">data5</span><span class="op">)</span></span>
+<span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/ltm.html">ltm</a></span><span class="op">(</span><span class="va">data5</span> <span class="op">~</span> <span class="va">z1</span><span class="op">)</span>  </span>
+<span><span class="va">model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/tpm.html">tpm</a></span><span class="op">(</span><span class="va">data5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -681,7 +666,7 @@ X1    1 1000 -0.01 0.92   0.05       0 0.89 -2.19 2.5  4.69 -0.04    -0.14 0.03<
 model1 15975.79 16078.85 -7966.89                  
 model2 15913.21 16109.52 -7916.61 100.58 19  &lt;0.001</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1, model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">model3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -689,7 +674,7 @@ model2 15913.21 16109.52 -7916.61 100.58 19  &lt;0.001</code></pre>
 model1 15975.79 16078.85 -7966.89                  
 model3 15914.14 16208.61 -7897.07 139.64 39  &lt;0.001</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2, model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model2</span>, <span class="va">model3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Likelihood Ratio Table
@@ -699,12 +684,10 @@ model3 15914.14 16208.61 -7897.07 39.07 20   0.007</code></pre>
 </div>
 </div>
 <p>Akaike ve Bayesian bilgi kriterleri incelendiğinde, üç model arasında ikinci modelin manidar farkla en uygun model olduğu görülmektedir. Bu nedenle, devam analizleri iki parametreli model ile yürütülmüştür.</p>
-</section>
-<section id="b.-madde-parametreleri-1" class="level3">
-<h3 class="anchored" data-anchor-id="b.-madde-parametreleri-1"><strong>2.b. Madde Parametreleri</strong></h3>
-<p>Model-veri uyumu sınandıktan ve en uygun model belirlendikten sonra, madde parametrelerinin incelenmesi aşamasına geçilmiştir. Model-2 üzerinden <code>coef()</code> fonksiyonu kullanılarak elde edilen madde parametreleri aşağıdadır.</p>
+</section><section id="b.-madde-parametreleri-1" class="level3"><h3 class="anchored" data-anchor-id="b.-madde-parametreleri-1"><strong>2.b. Madde Parametreleri</strong></h3>
+<p>Model-veri uyumu sınandıktan ve en uygun model belirlendikten sonra, madde parametrelerinin incelenmesi aşamasına geçilmiştir. Model-2 üzerinden <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> fonksiyonu kullanılarak elde edilen madde parametreleri aşağıdadır.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Dffclt   Dscrmn
 L1  -0.8112296 2.832181
@@ -730,91 +713,90 @@ L20 -0.8162163 2.864486</code></pre>
 </div>
 </div>
 <p>Çıktılar incelendiğinde, güçlük parametresi en yüksek olan maddenin 13. madde olduğu göze çarpmaktadır. Yetenek düzeyi -.63’ten daha yüksek olan bireyler bu maddeyi %50’den daha yüksek bir ihtimalle doğru cevaplayacaklardır.</p>
-</section>
-<section id="c.-örnek-madde-karakteristik-eğrileri-1" class="level3">
-<h3 class="anchored" data-anchor-id="c.-örnek-madde-karakteristik-eğrileri-1"><strong>2.c.&nbsp; Örnek Madde Karakteristik Eğrileri</strong></h3>
-<p>Çalışmanın bu aşamasında, iki kategorili puanlanan maddelerin analizinde madde karakteristik eğrisi ideal ve sorunlu olan birer madde incelenmiş ve yorumlanmıştır. Bu nedenle, öncelikle birinci bileşeni oluşturan tüm maddelerin madde bilgi eğrileri <code>plot()</code> fonksiyonu ile oluşturulmuş, aşağıdaki kod satırları kullanılmıştır:</p>
+</section><section id="c.-örnek-madde-karakteristik-eğrileri-1" class="level3"><h3 class="anchored" data-anchor-id="c.-örnek-madde-karakteristik-eğrileri-1"><strong>2.c.&nbsp; Örnek Madde Karakteristik Eğrileri</strong></h3>
+<p>Çalışmanın bu aşamasında, iki kategorili puanlanan maddelerin analizinde madde karakteristik eğrisi ideal ve sorunlu olan birer madde incelenmiş ve yorumlanmıştır. Bu nedenle, öncelikle birinci bileşeni oluşturan tüm maddelerin madde bilgi eğrileri <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> fonksiyonu ile oluşturulmuş, aşağıdaki kod satırları kullanılmıştır:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"IIC"</span>,<span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"MADDE BİLGİ  EĞRİLERİ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model2</span>, type<span class="op">=</span><span class="st">"IIC"</span>,xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"BİLGİ"</span> , col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"MADDE BİLGİ  EĞRİLERİ"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Madde bilgi eğrileri incelendiğinde, en çok bilgiyi dördüncü maddenin sağladığı görülmektedir. En düşük bilgi sağlayan maddelerden birisinin ise 12. madde olduğu görülmektedir. Bu nedenle madde karakteristik eğrilerinin incelenmesi sürecinde örnek olarak bu iki madde tercih edilmiştir. Bu maddelere ait karakteristik eğrileri aşağıdaki kod satırları ile elde edilmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"ICC"</span>, <span class="at">items =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">12</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"madde-4"</span>, <span class="st">"madde-12"</span>), <span class="at">legend =</span> T, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ"</span>, <span class="at">ylab =</span> <span class="st">"OLASILIK"</span> , <span class="at">lwd=</span> <span class="dv">2</span>)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="sc">-</span>.<span class="dv">81</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">pch=</span> <span class="dv">3</span>)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span>.<span class="dv">81</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">2</span>, <span class="at">labels =</span> <span class="st">"b par.: -0.81"</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="sc">-</span>.<span class="dv">85</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">col=</span> <span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">5</span>)</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span>.<span class="dv">85</span>, .<span class="dv">5</span>, <span class="at">lwd=</span> <span class="dv">3</span>, <span class="at">labels =</span> <span class="st">"b par.: -0.85"</span>, <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col=</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model2</span>, type<span class="op">=</span><span class="st">"ICC"</span>, items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">12</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"madde-4"</span>, <span class="st">"madde-12"</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">T</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"MADDE KARAKTERİSTİK EĞRİSİ"</span>, ylab <span class="op">=</span> <span class="st">"OLASILIK"</span> , lwd<span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.81</span>, <span class="fl">.5</span>, lwd<span class="op">=</span> <span class="fl">3</span>, pch<span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.81</span>, <span class="fl">.5</span>, lwd<span class="op">=</span> <span class="fl">2</span>, labels <span class="op">=</span> <span class="st">"b par.: -0.81"</span>, pos <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.85</span>, <span class="fl">.5</span>, lwd<span class="op">=</span> <span class="fl">3</span>, col<span class="op">=</span> <span class="st">"red"</span>, pch<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.85</span>, <span class="fl">.5</span>, lwd<span class="op">=</span> <span class="fl">3</span>, labels <span class="op">=</span> <span class="st">"b par.: -0.85"</span>, pos <span class="op">=</span> <span class="fl">2</span>, col<span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Dört ve 12 numaralı maddelerin güçlük parametreleri birbirlerine oldukça yakındır. Ancak dördüncü madde diğerine göre daha dik bir karakteristik eğrisine sahiptir. Bu durum iki maddenin ayırt edicilik parametrelerindeki farklılıktan kaynaklanmaktadır. Dördüncü madde yüksek bir ayırt edicilik parametresi ile ideal bir madde gibi görünürken, 12. madde düşük bir ayırt edicilik parametresi ile kısmi problemli bir madde görüntüsü sergilemektedir. Yine de 12 numaralı maddenin parametre değerlerinin kabul edilebilir olduğu da vurgulanmalıdır.&nbsp;</p>
-</section>
-<section id="d.-test-bilgi-fonksiyonu-1" class="level3">
-<h3 class="anchored" data-anchor-id="d.-test-bilgi-fonksiyonu-1"><strong>2.d. Test Bilgi Fonksiyonu</strong></h3>
-<p>İki kategorili puanlanan maddelere yönelik test bilgi fonksiyonunu elde etmek için aşağıdaki kod satırları kullanılmıştır. <code>locator()</code> fonksiyonu aracılığı ile test bilgi fonksiyonunun tepe noktası tespit edilmiş ve ardından <code>abline()</code> fonksiyonu ile tepe noktasının koordinat çizgileri grafiğe eklenmiştir.</p>
+</section><section id="d.-test-bilgi-fonksiyonu-1" class="level3"><h3 class="anchored" data-anchor-id="d.-test-bilgi-fonksiyonu-1"><strong>2.d. Test Bilgi Fonksiyonu</strong></h3>
+<p>İki kategorili puanlanan maddelere yönelik test bilgi fonksiyonunu elde etmek için aşağıdaki kod satırları kullanılmıştır. <code><a href="https://rdrr.io/r/graphics/locator.html">locator()</a></code> fonksiyonu aracılığı ile test bilgi fonksiyonunun tepe noktası tespit edilmiş ve ardından <code><a href="https://rdrr.io/r/graphics/abline.html">abline()</a></code> fonksiyonu ile tepe noktasının koordinat çizgileri grafiğe eklenmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model2, <span class="at">type=</span><span class="st">"IIC"</span>, <span class="at">items =</span> <span class="dv">0</span>, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">main =</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, <span class="at">ylab =</span> <span class="st">"BİLGİ"</span> , <span class="at">lwd=</span> <span class="dv">2</span>,<span class="at">col.main=</span><span class="st">"red"</span>,<span class="at">col=</span><span class="st">"blue"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span><span class="dv">5</span>))</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">by =</span> .<span class="dv">1</span>))</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">27.74</span>, <span class="at">v=</span><span class="sc">-</span>.<span class="dv">8451</span>, <span class="at">lty=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model2</span>, type<span class="op">=</span><span class="st">"IIC"</span>, items <span class="op">=</span> <span class="fl">0</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"TEST   BİLGİ   FONKSİYONU"</span>, ylab <span class="op">=</span> <span class="st">"BİLGİ"</span> , lwd<span class="op">=</span> <span class="fl">2</span>,col.main<span class="op">=</span><span class="st">"red"</span>,col<span class="op">=</span><span class="st">"blue"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, by <span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">27.74</span>, v<span class="op">=</span><span class="op">-</span><span class="fl">.8451</span>, lty<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Test bilgi fonksiyonunun -0.84 yetenek düzeyinde en yüksek seviyede olduğu, -1.5 ile 0 yetenek düzeylerinde sert bir şekilde düşmeye başladığı ve -2.8 ve 1.1 yetenek düzeylerinde en düşük seviyesinde olduğu görülmektedir. Bu durumda en yüksek bilginin bu ölçekte -.8 yetenek düzeylerinde sağlandığı söylenebilir.&nbsp;</p>
 <p>Bu durumda her iki bileşenin de en çok 0 yetenek düzeyinde bilgi sağladığı ve -2 ile +2 aralığında yüksek düzeyde bilgi sağladığı söylenebilir. Ancak bu aralığın ötesinde sağlanan bilginin hızla azaldığı düşünülebilir.</p>
-</section>
-<section id="e.-yetenek-puanları-1" class="level3">
-<h3 class="anchored" data-anchor-id="e.-yetenek-puanları-1"><strong>2.e. Yetenek Puanları</strong></h3>
+</section><section id="e.-yetenek-puanları-1" class="level3"><h3 class="anchored" data-anchor-id="e.-yetenek-puanları-1"><strong>2.e. Yetenek Puanları</strong></h3>
 <p>İki kategorili puanlanan maddelere yönelik olarak yürütülen analizlerin son aşamasında bireylere ait yetenek puanları hesaplanmış ve bunların dağılımı incelenmiştir. Şu kod satırları ile hesaplanan yetenek puanları veri setine eklenmiştir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>score_d5<span class="ot">&lt;-</span> <span class="fu">factor.scores.ltm</span>(model2)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>oruntu_d5 <span class="ot">&lt;-</span> score_d5[[<span class="dv">1</span>]]</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>oruntu_d5<span class="sc">$</span>toplam <span class="ot">&lt;-</span> <span class="fu">rowSums</span>((oruntu_d5[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]))</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>theta_d5 <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">454</span>){</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>     <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> (<span class="fu">sum</span> (oruntu_d5[i, <span class="dv">1</span><span class="sc">:</span> <span class="dv">20</span>] <span class="sc">==</span> data5[j, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])<span class="sc">==</span><span class="dv">20</span>)</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>             theta_d5[j] <span class="ot">&lt;-</span> oruntu_d5[i, <span class="dv">23</span>] }}</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>data5<span class="sc">$</span>theta<span class="ot">&lt;-</span>theta_d5</span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>data5<span class="sc">$</span>toplam<span class="ot">&lt;-</span><span class="fu">rowSums</span>(data5[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score_d5</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ltm/man/factor.scores.html">factor.scores.ltm</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span></span>
+<span><span class="va">oruntu_d5</span> <span class="op">&lt;-</span> <span class="va">score_d5</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">oruntu_d5</span><span class="op">$</span><span class="va">toplam</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="op">(</span><span class="va">oruntu_d5</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">theta_d5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">454</span><span class="op">)</span><span class="op">{</span></span>
+<span>     <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span><span class="op">{</span></span>
+<span>         <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span> <span class="op">(</span><span class="va">oruntu_d5</span><span class="op">[</span><span class="va">i</span>, <span class="fl">1</span><span class="op">:</span> <span class="fl">20</span><span class="op">]</span> <span class="op">==</span> <span class="va">data5</span><span class="op">[</span><span class="va">j</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span><span class="op">==</span><span class="fl">20</span><span class="op">)</span></span>
+<span>             <span class="va">theta_d5</span><span class="op">[</span><span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">oruntu_d5</span><span class="op">[</span><span class="va">i</span>, <span class="fl">23</span><span class="op">]</span> <span class="op">}</span><span class="op">}</span></span>
+<span><span class="va">data5</span><span class="op">$</span><span class="va">theta</span><span class="op">&lt;-</span><span class="va">theta_d5</span></span>
+<span><span class="va">data5</span><span class="op">$</span><span class="va">toplam</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">data5</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Bunun ardından <code>describe()</code> fonksiyonu ile birey yetenek puanlarının betimsel istatikleri elde edilmiştir. Ayrıca hist() fonksiyonu ile histogram grafikleri oluşturulmuştur. Bu süreçlerde kullanılan kod satırları şunlardır:</p>
+<p>Bunun ardından <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> fonksiyonu ile birey yetenek puanlarının betimsel istatikleri elde edilmiştir. Ayrıca hist() fonksiyonu ile histogram grafikleri oluşturulmuştur. Bu süreçlerde kullanılan kod satırları şunlardır:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BİLEŞEN-1</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data5<span class="sc">$</span>theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#BİLEŞEN-1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">data5</span><span class="op">$</span><span class="va">theta</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   vars    n  mean   sd median trimmed  mad   min  max range  skew kurtosis
 X1    1 1000 -0.03 0.81   0.05    0.04 1.24 -2.17 0.89  3.06 -0.45     -0.8
      se
 X1 0.03</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(data5<span class="sc">$</span>theta, <span class="at">xlab=</span> <span class="st">"YETENEK"</span>, <span class="at">cex.main =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FREKANS"</span> , <span class="at">col.main=</span> <span class="st">"red"</span>, <span class="at">font.axis=</span> <span class="dv">3</span>, <span class="at">font.lab=</span><span class="dv">2</span>, <span class="at">main =</span> <span class="st">"BİREY YETENEK PUANLARI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">data5</span><span class="op">$</span><span class="va">theta</span>, xlab<span class="op">=</span> <span class="st">"YETENEK"</span>, cex.main <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"FREKANS"</span> , col.main<span class="op">=</span> <span class="st">"red"</span>, font.axis<span class="op">=</span> <span class="fl">3</span>, font.lab<span class="op">=</span><span class="fl">2</span>, main <span class="op">=</span> <span class="st">"BİREY YETENEK PUANLARI"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>İncelenen iki kategorili puanlanan veriye ait betimsel istatikleri incelendiğinde, ortalamanın -.03, standart sapmanın da .81 olduğu görülmektedir. Bu durum verinin normal dağıldığı şeklinde yorumlanabilir, ancak histogram grafiği incelendiğinde yetenek puanlarının -2 ile 1 arasında dağılım gösterdiği ve 1 yetenek puanında bir yığılma olduğu görülmektedir. Bu durum, verilerin çok kategorili puanlanan maddelerden ortalamaları doğrultusunda iki kategorili puanlanan maddelere çevrilmesiyle ilişkisi olduğu düşünülmektedir.</p>
-</section>
-</section>
-<section id="sonuç" class="level2">
-<h2 class="anchored" data-anchor-id="sonuç">SONUÇ</h2>
+</section></section><section id="sonuç" class="level2"><h2 class="anchored" data-anchor-id="sonuç">SONUÇ</h2>
 <p>Bu çalışma simüle edilmiş veri ile yürütülmüştür. Çıktılarında bu nedenle temel problemler görülebilmektedir. Yine de aşama aşama MTK ile madde analizinin R ile nasıl yapılacağına dair bana güzel bir referans olmaktadır. Bu çalışma, bir ders raporu olarak hazırlanmıştır.</p>
 
 
 <!-- -->
 
-</section>
-
-</main> <!-- /main -->
-<div> 
+</section></main><!-- /main --><div> 
 <hr>
-<!-- Begin Mailchimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
 	
@@ -826,8 +808,7 @@ X1 0.03</code></pre>
 <div class="mc-field-group">
 	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
 </label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
-	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
 </div>
 	<div id="mce-responses" class="clear foot">
 		<div class="response" id="mce-error-response" style="display:none"></div>
@@ -837,14 +818,12 @@ X1 0.03</code></pre>
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-            </div>
+</div>
         </div>
     </div>
 </form>
 </div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-<!--End mc_embed_signup-->
-<hr>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
 </div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -976,10 +955,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -989,8 +985,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1002,7 +1007,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1046,6 +1174,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1071,6 +1200,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1129,8 +1284,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb58" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Item Analysis with Item Response Theory (in Turkish)"</span></span>
@@ -1295,7 +1449,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb58-181"><a href="#cb58-181" aria-hidden="true" tabindex="-1"></a>Yerel bağımsızlık varsayımının kontrolü için Yen'in Q analizi (Yen, 1984) her iki bileşen için de uygulanmıştır. Bu süreçte sirt paketinden (Robitzsch, 2020) yararlanılmış ve aşağıdaki adımlar izlenmiştir. &nbsp;</span>
 <span id="cb58-182"><a href="#cb58-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-183"><a href="#cb58-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb58-184"><a href="#cb58-184" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-184"><a href="#cb58-184" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = TRUE)</span></span>
 <span id="cb58-185"><a href="#cb58-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb58-186"><a href="#cb58-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-187"><a href="#cb58-187" aria-hidden="true" tabindex="-1"></a><span class="in">    Mod1 &lt;- TAM::tam.mml( resp=data4a )</span></span>
@@ -1649,14 +1803,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">© Ali Emre Karagül</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
-    <div class="nav-footer-right">📈❤️☕</div>
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
   </div>
 </footer>
-
 
 
 </body></html>

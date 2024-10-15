@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
-
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2023-04-03">
 <meta name="description" content="This blog post explains the importance of examining item difficulty and discrimination in the development and validation of psychological measures and provides a step-by-step guide on how to calculate item difficulty and discrimination in R using an example dataset.">
-
 <title>- Item difficulty &amp; discrimination: Exploring the psychometric properties using R</title>
 <style>
 code{white-space: pre-wrap;}
@@ -25,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +56,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,14 +73,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,22 +94,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -119,25 +116,19 @@ cookieconsent.run({
   "notice_banner_reject_button_hide":false,
   "preferences_center_close_button_hide":false,
   "website_name":""
+  ,
+"language":"en"
   });
 });
-</script> 
-  
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../images/logo with title.svg" alt="" class="navbar-logo">
-    </a>
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title"></span>
     </a>
@@ -148,87 +139,83 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-terminal-fill" role="img">
 </i> 
  <span class="menu-text">Apps</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">    
-        <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apps">
+<li>
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/testanalyze-R/">
  <span class="dropdown-text">Test Analyze-R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://itp-calculator.com/" rel="" target="">
+    <a class="dropdown-item" href="https://itp-calculator.com/">
  <span class="dropdown-text">ITP Score Calculator</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/" rel="" target="">
+    <a class="dropdown-item" href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">
  <span class="dropdown-text">Ekşi KazaR</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-star-fill" role="img">
 </i> 
  <span class="menu-text">Favs</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">    
-        <li>
-    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets" rel="" target="">
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
  <span class="dropdown-text">R cheatsheets</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://r4ds.hadley.nz/" rel="" target="">
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
  <span class="dropdown-text">R 4 D S</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/" rel="" target="">
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
  <span class="dropdown-text">Generate IRT Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://books.google.com/ngrams/" rel="" target="">
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html" rel="" target="">
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
  <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html" rel="" target="">
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
  <span class="dropdown-text">Style Guide (Google)</span></a>
   </li>  
     </ul>
-  </li>
+</li>
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../about-me.html" rel="" target=""><i class="bi bi-info-square-fill" role="img">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
 </i> 
- <span class="menu-text"> </span></a>
+<span class="menu-text"> </span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/aliemrekaragul" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <div class="quarto-title-block"><div><h1 class="title">Item difficulty &amp; discrimination: Exploring the psychometric properties using R</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
@@ -250,14 +237,14 @@ cookieconsent.run({
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      <p class="author">Ali Emre Karagül <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
     </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
           <p class="affiliation">
               TOBB ETU- University of Economics &amp; Technology
             </p>
         </div>
-      </div>
+    </div>
 
   <div class="quarto-title-meta">
 
@@ -277,49 +264,41 @@ cookieconsent.run({
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#item-difficulty" id="toc-item-difficulty" class="nav-link" data-scroll-target="#item-difficulty">Item Difficulty</a></li>
-  <li><a href="#item-discrimination" id="toc-item-discrimination" class="nav-link" data-scroll-target="#item-discrimination">Item Discrimination</a>
+  <li>
+<a href="#item-discrimination" id="toc-item-discrimination" class="nav-link" data-scroll-target="#item-discrimination">Item Discrimination</a>
   <ul>
-  <li><a href="#correlation-between-item-and-total-score-with-the-item" id="toc-correlation-between-item-and-total-score-with-the-item" class="nav-link" data-scroll-target="#correlation-between-item-and-total-score-with-the-item">1. Correlation between item and total score with the item</a></li>
+<li><a href="#correlation-between-item-and-total-score-with-the-item" id="toc-correlation-between-item-and-total-score-with-the-item" class="nav-link" data-scroll-target="#correlation-between-item-and-total-score-with-the-item">1. Correlation between item and total score with the item</a></li>
   <li><a href="#correlation-between-item-and-total-score-without-the-item" id="toc-correlation-between-item-and-total-score-without-the-item" class="nav-link" data-scroll-target="#correlation-between-item-and-total-score-without-the-item">2. Correlation between item and total score without the item</a></li>
   <li><a href="#upper-lower-groups-index" id="toc-upper-lower-groups-index" class="nav-link" data-scroll-target="#upper-lower-groups-index">3. Upper-lower groups index</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#a-package-of-personal-preferrance" id="toc-a-package-of-personal-preferrance" class="nav-link" data-scroll-target="#a-package-of-personal-preferrance">A Package of Personal Preferrance</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  </ul>
-</nav>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Developing and validating psychological measures requires examining their psychometric properties, including their reliability and validity. One aspect of a measure’s validity is its item difficulty, which refers to how easy or difficult each individual item is for respondents to answer correctly. Another important aspect is item discrimination, which measures the extent to which each item distinguishes between participants who have high or low levels of the construct being measured.</p>
 <p>Understanding item difficulty and item discrimination is crucial for several reasons. First, items that are too easy or too difficult can limit the variability of responses, making it harder to discriminate between participants who have different levels of the construct being measured. Second, items with low discrimination may not effectively differentiate between participants with different levels of the construct, leading to decreased validity.</p>
 <p>In this blog post, we’ll explore how to calculate item difficulty and item discrimination in R using <a href="https://drive.google.com/file/d/1Roi2GScsgL_p1j3n0wgO5R8M9LdNlrkZ/view?usp=sharing">an example dataset</a>. We’ll explain what each of these psychometric properties are, why they’re important, and how to interpret the results. We’ll also discuss some limitations and considerations when examining these properties. So let’s get started!</p>
 <p>The dataset is generated via <a href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">this web application</a> based on Item Response Theory 2-Parameter Logistic Model. The dataset consists of randomly generated 40 items with a sample size of 500. The a-parameters of the items vary between 0.8 and 1.3 while b-parameters vary between -3 and 3. The c and d parameters are fixed to 0 and 1 respectively for all items.</p>
 <p>Here are the package(s) we use in this post:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multilevel)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ShinyItemAnalysis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.r-project.org">multilevel</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.ShinyItemAnalysis.org">ShinyItemAnalysis</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="item-difficulty" class="level2">
-<h2 class="anchored" data-anchor-id="item-difficulty">Item Difficulty</h2>
+</section><section id="item-difficulty" class="level2"><h2 class="anchored" data-anchor-id="item-difficulty">Item Difficulty</h2>
 <p>Item difficulty is a psychometric property that measures how easy or difficult an item is for respondents to answer correctly. Examining item difficulty is important because it can help identify items that are too easy or too difficult, which can limit the variability of responses and make it harder to discriminate between participants who have different levels of the construct being measured.</p>
-<p>The proportion of correct responses for each item is calculated and reported as the item difficulty value. This calculation can be done manually using spreadsheet software or programmatically using statistical software such as R or SPSS. R has many packages and functions out there that we can use to calculate item difficulties. Yet we will calculate them simply with <code>colMeans()</code> function.</p>
+<p>The proportion of correct responses for each item is calculated and reported as the item difficulty value. This calculation can be done manually using spreadsheet software or programmatically using statistical software such as R or SPSS. R has many packages and functions out there that we can use to calculate item difficulties. Yet we will calculate them simply with <code><a href="https://rdrr.io/r/base/colSums.html">colMeans()</a></code> function.</p>
 <p>Let’s start by introducing the dataset to R environment.</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_data<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"data for post about item difficulty and discrimination.csv"</span>,<span class="at">sep=</span><span class="st">";"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data for post about item difficulty and discrimination.csv"</span>,sep<span class="op">=</span><span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 i11 i12 i13 i14 i15 i16 i17 i18 i19 i20 i21
 1  0  1  1  1  0  0  1  0  0   1   1   0   1   1   1   1   0   0   0   0   0
@@ -339,9 +318,9 @@ cookieconsent.run({
 </div>
 <p>Now let’s get the item difficulties:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate item difficulty</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>item_difficulty <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(my_data)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>item_difficulty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calculate item difficulty</span></span>
+<span><span class="va">item_difficulty</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span><span class="va">item_difficulty</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   i1    i2    i3    i4    i5    i6    i7    i8    i9   i10   i11   i12   i13 
 0.212 0.918 0.910 0.782 0.112 0.394 0.742 0.400 0.862 0.870 0.774 0.386 0.882 
@@ -355,28 +334,25 @@ cookieconsent.run({
 </div>
 <p>Interpreting the results of item difficulty is straightforward. Items with higher difficulty values indicate that they were easier for participants to answer correctly, while items with lower difficulty values were more difficult. In our example dataset, the output shows that item 40 had the highest difficulty value of 0.952, meaning that 95.2% of participants answered this item correctly. Item 30, on the other hand, had the lowest difficulty value of 0.044, meaning that only 4.4% of participants answered this item correctly.</p>
 <p>It’s important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as <strong>“easy” if the index is 0.85 or above; “moderate” if it is between 0.41 and 0.84; and “hard” if it is 0.40 or below</strong>. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.</p>
-</section>
-<section id="item-discrimination" class="level2">
-<h2 class="anchored" data-anchor-id="item-discrimination">Item Discrimination</h2>
+</section><section id="item-discrimination" class="level2"><h2 class="anchored" data-anchor-id="item-discrimination">Item Discrimination</h2>
 <p>Item discrimination is another important psychometric property that measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured. It indicates how well an item distinguishes between participants with different levels of the construct.</p>
 <p>It’s important to note that (just like item difficulties) each construct should be evaluated within its own concept while interpreting item discriminations. Yet, for achievement tests, a generic classification might be defined as <strong>“good” if the index is above 0.30; “fair” if it is between 0.10 and 0.30; and “poor” if it is below</strong> <strong>0.10.</strong></p>
 <p>To obtain a value for item discrimination, there are several statistical approaches that we can utilize. Here we will discuss (1) correlation between item and total score with the item, (2) correlation between item and total score without the item, and (3) upper-lower groups index.</p>
-<section id="correlation-between-item-and-total-score-with-the-item" class="level3">
-<h3 class="anchored" data-anchor-id="correlation-between-item-and-total-score-with-the-item">1. Correlation between item and total score with the item</h3>
+<section id="correlation-between-item-and-total-score-with-the-item" class="level3"><h3 class="anchored" data-anchor-id="correlation-between-item-and-total-score-with-the-item">1. Correlation between item and total score with the item</h3>
 <p>This approach is based on calculating the point-biserial correlation coefficient (rpb) between each item and the total score of the measure. The total score is calculated by summing the scores of all items. The rpb ranges from -1 to 1, with values closer to 1 indicating higher discrimination.</p>
 <p>Let’s first calculate the total score for each participant in our example dataset. Then, use a for loop to calculate rpb coefficients for each item:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#get the total score for each participant</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>total_score <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(my_data)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#There are 40 items in the test:</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>item_discrimination1 <span class="ot">&lt;-</span> <span class="dv">40</span>  </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate rpb for each item:</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>){        </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  item_discrimination1[i] <span class="ot">&lt;-</span> <span class="fu">cor</span>(total_score, my_data[,i])  </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(item_discrimination1,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#get the total score for each participant</span></span>
+<span><span class="va">total_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#There are 40 items in the test:</span></span>
+<span><span class="va">item_discrimination1</span> <span class="op">&lt;-</span> <span class="fl">40</span>  </span>
+<span></span>
+<span><span class="co">#calculate rpb for each item:</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">40</span><span class="op">)</span><span class="op">{</span>        </span>
+<span>  <span class="va">item_discrimination1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">total_score</span>, <span class="va">my_data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span>  </span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">item_discrimination1</span>,<span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.3984 0.2162 0.2308 0.4485 0.3019 0.4847 0.4148 0.4548 0.2796 0.3335
 [11] 0.4498 0.5138 0.2735 0.4336 0.4423 0.1956 0.4288 0.4133 0.3297 0.4214
@@ -384,14 +360,12 @@ cookieconsent.run({
 [31] 0.1783 0.3536 0.4094 0.2837 0.3893 0.3888 0.3962 0.5025 0.2866 0.1906</code></pre>
 </div>
 </div>
-</section>
-<section id="correlation-between-item-and-total-score-without-the-item" class="level3">
-<h3 class="anchored" data-anchor-id="correlation-between-item-and-total-score-without-the-item">2. Correlation between item and total score without the item</h3>
+</section><section id="correlation-between-item-and-total-score-without-the-item" class="level3"><h3 class="anchored" data-anchor-id="correlation-between-item-and-total-score-without-the-item">2. Correlation between item and total score without the item</h3>
 <p>This approach is very similar to the first one. The only difference is that when we calculate the correlation between an item and the total score, we do not include the item. This type of an approach will result in slightly reduced index values when compared to the first approach. Therefore, it is usually a more-preferred approach by test developers (we would love to stay in the safe-zone).</p>
 <p>The package <code>multilevel</code> has a specific function for this index. The <code>item.total()</code> function takes only the dataset as input and provides us with a dataframe with four columns: item name, discrimination index, a reliability index without the item and the sample size. Yet, we only need the discrimination index. Here how we get it:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>item_discrimination2<span class="ot">&lt;-</span>multilevel<span class="sc">::</span><span class="fu">item.total</span>(my_data)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>item_discrimination2<span class="sc">$</span>Item.Total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">item_discrimination2</span><span class="op">&lt;-</span><span class="fu">multilevel</span><span class="fu">::</span><span class="fu">item.total</span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span><span class="va">item_discrimination2</span><span class="op">$</span><span class="va">Item.Total</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.3365024 0.1703597 0.1832279 0.3887597 0.2511883 0.4160659 0.3493047
  [8] 0.3837360 0.2232991 0.2803945 0.3892913 0.4477891 0.2207879 0.3648121
@@ -401,15 +375,13 @@ cookieconsent.run({
 [36] 0.3277659 0.3428951 0.4342855 0.2447900 0.1546114</code></pre>
 </div>
 </div>
-</section>
-<section id="upper-lower-groups-index" class="level3">
-<h3 class="anchored" data-anchor-id="upper-lower-groups-index">3. Upper-lower groups index</h3>
+</section><section id="upper-lower-groups-index" class="level3"><h3 class="anchored" data-anchor-id="upper-lower-groups-index">3. Upper-lower groups index</h3>
 <p>Personally, I feel that this approach is the most meaningfully-related approach in terms of “discrimination”. That’s because while calculating it, we divide the whole group into sub-groups (usually three groups) according to their total scores. Then, we calculate the discrimination index for an item by comparing these groups’ responses to that item. This definition feels more like a discrimination index to my illiterate ears.</p>
 <p>In R environment, <code>ShinyItemAnalysis</code> package has a specific function for this index. The <code>gDiscrim()</code> function has several arguements such as <code>Data</code>(the data set), <code>k</code> (the number of sub groups and 3 is default), <code>l</code> and <code>u</code> (numeric values to define the lower and upper groups and the defaults are 1 and 3 consecutively). There are other arguments that should be checked on the manual before using the function.</p>
 <p>We simply use the function as:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>item_discrimination3<span class="ot">&lt;-</span>ShinyItemAnalysis<span class="sc">::</span><span class="fu">gDiscrim</span>(my_data)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>item_discrimination3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">item_discrimination3</span><span class="op">&lt;-</span><span class="fu">ShinyItemAnalysis</span><span class="fu">::</span><span class="fu">gDiscrim</span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span><span class="va">item_discrimination3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        i1         i2         i3         i4         i5         i6         i7 
 0.35177700 0.11253051 0.12801251 0.42537370 0.20042709 0.57908786 0.40470561 
@@ -427,18 +399,15 @@ cookieconsent.run({
 </div>
 <p>Note that if you change the number of subgroups, you should be careful while interpreting the results.</p>
 <p>No matter what statistical approach you use to estimate discrimination indexes, it’s also important to note that item discrimination can be influenced by factors such as the sample size, the range of scores, and the homogeneity of the sample. Therefore, it’s recommended to examine item discrimination in conjunction with other psychometric properties such as item difficulty and reliability.</p>
-</section>
-</section>
-<section id="a-package-of-personal-preferrance" class="level2">
-<h2 class="anchored" data-anchor-id="a-package-of-personal-preferrance">A Package of Personal Preferrance</h2>
+</section></section><section id="a-package-of-personal-preferrance" class="level2"><h2 class="anchored" data-anchor-id="a-package-of-personal-preferrance">A Package of Personal Preferrance</h2>
 <p>While we can calculate both difficulty and discrimination indexes manually or by using different functions from different packages, my totally-subjective opinion is that <code>ItemAnalysis()</code> function from the <code>ShinyItemAnalysis</code> package gives a well-groomed output for many item statistics. The following code snippet simply provides us with many indexes including difficulty and three types of discrimination indexes:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#round is for rounding the values in the results.</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>item_stats<span class="ot">&lt;-</span><span class="fu">round</span>(ShinyItemAnalysis<span class="sc">::</span><span class="fu">ItemAnalysis</span>(my_data),<span class="dv">2</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#to see all the output in a table:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(item_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#round is for rounding the values in the results.</span></span>
+<span><span class="va">item_stats</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu">ShinyItemAnalysis</span><span class="fu">::</span><span class="fu">ItemAnalysis</span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#to see all the output in a table:</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">item_stats</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 2%">
 <col style="width: 6%">
@@ -461,8 +430,7 @@ cookieconsent.run({
 <col style="width: 5%">
 <col style="width: 4%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: right;">Difficulty</th>
 <th style="text-align: right;">Mean</th>
@@ -483,8 +451,7 @@ cookieconsent.run({
 <th style="text-align: right;">Index.val</th>
 <th style="text-align: right;">Perc.miss</th>
 <th style="text-align: right;">Perc.nr</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">i1</td>
@@ -1372,15 +1339,16 @@ cookieconsent.run({
 </div>
 <p>The same package also provides us with a nice visualization function (<code>DDplot</code>) for item difficulty and discrimination of any approach stated above. It takes <code>discrim</code> argument that can be defined as <code>RIT</code> (the first approach), <code>RIR</code> (the second approach above) or <code>ULI</code> (the third approach). Also, you can define a threshold value to draw a line on the plot via the <code>thr</code> argument. Here is a sample usage for our case:</p>
 <div class="cell" data-code_folding="false">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DDplot</span>(my_data, <span class="at">discrim =</span> <span class="st">'ULI'</span>, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">l =</span> <span class="dv">1</span>, <span class="at">u =</span> <span class="dv">3</span>, <span class="at">thr=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">DDplot</span><span class="op">(</span><span class="va">my_data</span>, discrim <span class="op">=</span> <span class="st">'ULI'</span>, k <span class="op">=</span> <span class="fl">3</span>, l <span class="op">=</span> <span class="fl">1</span>, u <span class="op">=</span> <span class="fl">3</span>, thr<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 40 is the easiest one. What a weirdo… :D</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Examining item difficulty and item discrimination are important aspects of evaluating the psychometric properties of a measure. Item difficulty measures how easy or difficult each individual item is for respondents to answer correctly, while item discrimination measures the extent to which each item differentiates between participants who have high or low levels of the construct being measured.</p>
 <p>In this blog post, we explored how to calculate item difficulty and item discrimination in R using an example dataset. We explained what each of these psychometric properties are, why they’re important, and how to interpret the results. We also discussed some limitations and considerations when examining these properties.</p>
 <p>Overall, understanding and evaluating the psychometric properties of a measure can help ensure its reliability and validity, and inform decisions about item selection and revision.</p>
@@ -1388,13 +1356,9 @@ cookieconsent.run({
 
 <!-- -->
 
-</section>
-
-</main> <!-- /main -->
-<div> 
+</section></main><!-- /main --><div> 
 <hr>
-<!-- Begin Mailchimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
 	
@@ -1406,8 +1370,7 @@ cookieconsent.run({
 <div class="mc-field-group">
 	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
 </label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
-	<span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
 </div>
 	<div id="mce-responses" class="clear foot">
 		<div class="response" id="mce-error-response" style="display:none"></div>
@@ -1417,14 +1380,12 @@ cookieconsent.run({
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-            </div>
+</div>
         </div>
     </div>
 </form>
 </div>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-<!--End mc_embed_signup-->
-<hr>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
 </div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1556,10 +1517,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1569,8 +1547,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1582,7 +1569,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1626,6 +1736,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1651,6 +1762,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1709,8 +1846,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Item difficulty &amp; discrimination: Exploring the psychometric properties using R"</span></span>
@@ -1743,12 +1879,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>Here are the package(s) we use in this post:</span>
 <span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multilevel)</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ShinyItemAnalysis)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="in">library(multilevel)</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="in">library(ShinyItemAnalysis)</span></span>
 <span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Item Difficulty</span></span>
@@ -1760,26 +1896,26 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>Let's start by introducing the dataset to R environment.</span>
 <span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>my_data<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"data for post about item difficulty and discrimination.csv"</span>,<span class="at">sep=</span><span class="st">";"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_data) </span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="in">my_data&lt;-read.csv("data for post about item difficulty and discrimination.csv",sep=";", header = TRUE)</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="in">head(my_data) </span></span>
 <span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>Now let's get the item difficulties:</span>
 <span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate item difficulty</span></span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>item_difficulty <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(my_data)</span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>item_difficulty</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="in"># Calculate item difficulty</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="in">item_difficulty &lt;- colMeans(my_data)</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a><span class="in">item_difficulty</span></span>
 <span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>Interpreting the results of item difficulty is straightforward. Items with higher difficulty values indicate that they were easier for participants to answer correctly, while items with lower difficulty values were more difficult. In our example dataset, the output shows that item 40 had the highest difficulty value of 0.952, meaning that 95.2% of participants answered this item correctly. Item 30, on the other hand, had the lowest difficulty value of 0.044, meaning that only 4.4% of participants answered this item correctly.</span>
@@ -1801,21 +1937,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>Let's first calculate the total score for each participant in our example dataset. Then, use a for loop to calculate rpb coefficients for each item:</span>
 <span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a><span class="co">#get the total score for each participant</span></span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>total_score <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(my_data)</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a><span class="in">#get the total score for each participant</span></span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a><span class="in">total_score &lt;- rowSums(my_data)</span></span>
 <span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="co">#There are 40 items in the test:</span></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>item_discrimination1 <span class="ot">&lt;-</span> <span class="dv">40</span>  </span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="in">#There are 40 items in the test:</span></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="in">item_discrimination1 &lt;- 40  </span></span>
 <span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate rpb for each item:</span></span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>){        </span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>  item_discrimination1[i] <span class="ot">&lt;-</span> <span class="fu">cor</span>(total_score, my_data[,i])  </span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(item_discrimination1,<span class="dv">4</span>)</span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="in">#calculate rpb for each item:</span></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a><span class="in">for(i in 1:40){        </span></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a><span class="in">  item_discrimination1[i] &lt;- cor(total_score, my_data[,i])  </span></span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a><span class="in">round(item_discrimination1,4)</span></span>
 <span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Correlation between item and total score without the item</span></span>
@@ -1825,13 +1961,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>The package <span class="in">`multilevel`</span> has a specific function for this index. The <span class="in">`item.total()`</span> function takes only the dataset as input and provides us with a dataframe with four columns: item name, discrimination index, a reliability index without the item and the sample size. Yet, we only need the discrimination index. Here how we get it:</span>
 <span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>item_discrimination2<span class="ot">&lt;-</span>multilevel<span class="sc">::</span><span class="fu">item.total</span>(my_data)</span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>item_discrimination2<span class="sc">$</span>Item.Total</span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="in">item_discrimination2&lt;-multilevel::item.total(my_data)</span></span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a><span class="in">item_discrimination2$Item.Total</span></span>
 <span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a></span>
@@ -1844,14 +1980,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>We simply use the function as:</span>
 <span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>item_discrimination3<span class="ot">&lt;-</span>ShinyItemAnalysis<span class="sc">::</span><span class="fu">gDiscrim</span>(my_data)</span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>item_discrimination3</span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a><span class="in">item_discrimination3&lt;-ShinyItemAnalysis::gDiscrim(my_data)</span></span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="in">item_discrimination3</span></span>
 <span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>Note that if you change the number of subgroups, you should be careful while interpreting the results.</span>
@@ -1863,26 +1999,26 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a>While we can calculate both difficulty and discrimination indexes manually or by using different functions from different packages, my totally-subjective opinion is that <span class="in">`ItemAnalysis()`</span> function from the <span class="in">`ShinyItemAnalysis`</span> package gives a well-groomed output for many item statistics. The following code snippet simply provides us with many indexes including difficulty and three types of discrimination indexes:</span>
 <span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a><span class="co">#round is for rounding the values in the results.</span></span>
-<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>item_stats<span class="ot">&lt;-</span><span class="fu">round</span>(ShinyItemAnalysis<span class="sc">::</span><span class="fu">ItemAnalysis</span>(my_data),<span class="dv">2</span>)</span>
-<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a><span class="co">#to see all the output in a table:</span></span>
-<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(item_stats)</span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a><span class="in">#round is for rounding the values in the results.</span></span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a><span class="in">item_stats&lt;-round(ShinyItemAnalysis::ItemAnalysis(my_data),2)</span></span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a><span class="in">#to see all the output in a table:</span></span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::kable(item_stats)</span></span>
 <span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>The same package also provides us with a nice visualization function (<span class="in">`DDplot`</span>) for item difficulty and discrimination of any approach stated above. It takes <span class="in">`discrim`</span> argument that can be defined as <span class="in">`RIT`</span> (the first approach), <span class="in">`RIR`</span> (the second approach above) or <span class="in">`ULI`</span> (the third approach). Also, you can define a threshold value to draw a line on the plot via the <span class="in">`thr`</span> argument. Here is a sample usage for our case:</span>
 <span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE}</span></span>
-<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
 <span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a><span class="fu">DDplot</span>(my_data, <span class="at">discrim =</span> <span class="st">'ULI'</span>, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">l =</span> <span class="dv">1</span>, <span class="at">u =</span> <span class="dv">3</span>, <span class="at">thr=</span><span class="fl">0.1</span>)</span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a><span class="in">DDplot(my_data, discrim = 'ULI', k = 3, l = 1, u = 3, thr=0.1)</span></span>
 <span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>It can be seen that items 30, 31 and 40 from our simulated dataset are below our 0.1 threshold value in terms of discrimination. Interestingly, items 30 and 31 are the most difficult items while item 40 is the easiest one. What a weirdo... :D</span>
@@ -1896,14 +2032,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a>Overall, understanding and evaluating the psychometric properties of a measure can help ensure its reliability and validity, and inform decisions about item selection and revision.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">© Ali Emre Karagül</div>   
-    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
-    <div class="nav-footer-right">📈❤️☕</div>
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
   </div>
 </footer>
-
 
 
 </body></html>
