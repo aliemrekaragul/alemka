@@ -289,6 +289,11 @@ cookieconsent.run({
 <p>In the realm of education and standardized testing, technological advancements have brought forth a significant transformation. Among the noteworthy innovations in this field is the adoption of Automated Essay Scoring (AES), an approach that leverages the capabilities of natural language processing (NLP) and machine learning. AES holds the potential to redefine the essay evaluation and grading process, offering efficiency, consistency, and accessibility in a way previously unattainable.</p>
 <p>At its essence, AES relies on sophisticated algorithms to examine written text, subjecting it to a predefined set of criteria. These criteria encompass various aspects, including grammar, sentence structure, vocabulary, coherence, and the quality of argumentation. In this regard, AES algorithms function akin to meticulous digital assessors, diligently seeking out patterns and features within the text. They assess elements such as the presence of persuasive thesis statements, the adept use of supporting evidence, and the logical flow of ideas within the essay. The result of this is a numerical score that reflects the overall quality of the essay in question.</p>
 <p>Today we will develop a linear regression model to predict essay scores using the famous ASAP dataset. There are eight different essay types in this dataset to explore. Here we will use the essay set 2. Before you continue, please go and read the description and the details <a href="https://www.kaggle.com/competitions/asap-aes/data">on Kaggle.</a> As we will use only one essay set, I have preapared the data as a separate csv file and if you are already familiar with the ASAP data (or you have taken a look at the Kaggle page), please download the data for our use case from <a href="https://docs.google.com/spreadsheets/d/1xi-k1cJGADOgtp85sfJ4ZBr1P-YREhx_/edit?usp=sharing&amp;ouid=109837621769671436242&amp;rtpof=true&amp;sd=true">here</a>. The packages and some of their functions that we will be using in this topic are:</p>
+<div class="cell" data-code_folding="false">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Requirements</strong></pre>
+</div>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown">"rmarkdown"</a></span><span class="op">)</span> </span>
 <span><span class="co"># paged_table() </span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://readxl.tidyverse.org">"readxl"</a></span><span class="op">)</span> </span>
@@ -304,19 +309,6 @@ cookieconsent.run({
 <span><span class="co"># remove_words()</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://quanteda.io">"quanteda"</a></span><span class="op">)</span>  </span>
 <span><span class="co"># nsentence() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="image.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<figcaption>A robot drawn by Dall-e</figcaption></figure>
-</div>
-</div>
-<div class="cell quarto-layout-cell" data-code_folding="false" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="code-with-filename">
-
-</div>
-</div>
 </div>
 </div>
 </section><section id="preprocessing" class="level2"><h2 class="anchored" data-anchor-id="preprocessing">1. Preprocessing</h2>
@@ -1138,274 +1130,270 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>Today we will develop a linear regression model to predict essay scores using the famous ASAP dataset. There are eight different essay types in this dataset to explore. Here we will use the essay set 2. Before you continue, please go and read the description and the details <span class="co">[</span><span class="ot">on Kaggle.</span><span class="co">](https://www.kaggle.com/competitions/asap-aes/data)</span> As we will use only one essay set, I have preapared the data as a separate csv file and if you are already familiar with the ASAP data (or you have taken a look at the Kaggle page), please download the data for our use case from <span class="co">[</span><span class="ot">here</span><span class="co">](https://docs.google.com/spreadsheets/d/1xi-k1cJGADOgtp85sfJ4ZBr1P-YREhx_/edit?usp=sharing&amp;ouid=109837621769671436242&amp;rtpof=true&amp;sd=true)</span>. The packages and some of their functions that we will be using in this topic are:</span>
 <span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>&lt;div&gt;</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Requirements"}</span></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="in">library("rmarkdown") </span></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="in"># paged_table() </span></span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="in">library("readxl") </span></span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="in"># read_excel()</span></span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="in">library("tidyverse") </span></span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="in">library("textstem") </span></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="in"># lemmatize_strings()</span></span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="in">library("stopwords") </span></span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="in"># stopwords()</span></span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="in">library("stringr")   </span></span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="in"># str_squish()</span></span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="in">library("tm")        </span></span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="in"># remove_words()</span></span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="in">library("quanteda")  </span></span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="in"># nsentence() </span></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Requirements"}</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="in">library("rmarkdown") </span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="in"># paged_table() </span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="in">library("readxl") </span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="in"># read_excel()</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="in">library("tidyverse") </span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="in">library("textstem") </span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="in"># lemmatize_strings()</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="in">library("stopwords") </span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="in"># stopwords()</span></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="in">library("stringr")   </span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="in"># str_squish()</span></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="in">library("tm")        </span></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="in"># remove_words()</span></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="in">library("quanteda")  </span></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="in"># nsentence() </span></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Preprocessing</span></span>
 <span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>&lt;/div&gt;</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>Now that you have downloaded the data, move it to your working directory and follow along while reading. Let's load the data and see the head of them:</span>
 <span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Preprocessing</span></span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>Now that you have downloaded the data, move it to your working directory and follow along while reading. Let's load the data and see the head of them:</span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a><span class="in">essay_set_2 &lt;- read_excel("essay_set_2.xlsx") </span></span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(head(essay_set_2, 2)) # paged_table() function is for a beautified table view on this page. You don't need to use it on your own trial.</span></span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a><span class="in">essay_set_2 &lt;- read_excel("essay_set_2.xlsx") </span></span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(head(essay_set_2, 2)) # paged_table() function is for a beautified table view on this page. You don't need to use it on your own trial.</span></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>The nine columns are:</span>
 <span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**essay_id:** a unique identifier for the record.</span>
 <span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>The nine columns are:</span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**essay_set:** That is set to 2 for all records in this dataset as we are working on essay set 2. We will get rid of this soon.</span>
 <span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**essay_id:** a unique identifier for the record.</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**essay:** The text of the essay written by a real person.</span>
 <span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**essay_set:** That is set to 2 for all records in this dataset as we are working on essay set 2. We will get rid of this soon.</span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>There are also 6 more columns that include **rater1_domain1, rater2_domain1, domain1_score, rater1_domain2, rater2_domain2,** and **domain2_score.**</span>
 <span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**essay:** The text of the essay written by a real person.</span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>There are also 6 more columns that include **rater1_domain1, rater2_domain1, domain1_score, rater1_domain2, rater2_domain2,** and **domain2_score.**</span>
-<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a>Lets see a sample essay which is randomly selected:**\</span>
-<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>**</span>
-<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a>Lets see a sample essay which is randomly selected:**\</span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>**</span>
+<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(1234)</span></span>
+<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a><span class="in">random_essay &lt;- sample(1:length(essay_set_2), 1)</span></span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(essay_set_2[random_essay,3])</span></span>
 <span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(1234)</span></span>
-<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a><span class="in">random_essay &lt;- sample(1:length(essay_set_2), 1)</span></span>
-<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(essay_set_2[random_essay,3])</span></span>
+<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a>We will use the **essay** and **rater1_domain1** columns for our analysis as we are just doing a research for demonstration purposes (of course, when you are working on a real life research case, there are many things that you have to take into consideration). The **essay** column is the text of the essay written by a real person and the **rater1_domain1** column is the score given to the essay by the first rater. We will rename these columns as **response** and **score** respectively. We will also create a new column called **doc_id** which will be a unique identifier for each essay in our case study.</span>
 <span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a>We will use the **essay** and **rater1_domain1** columns for our analysis as we are just doing a research for demonstration purposes (of course, when you are working on a real life research case, there are many things that you have to take into consideration). The **essay** column is the text of the essay written by a real person and the **rater1_domain1** column is the score given to the essay by the first rater. We will rename these columns as **response** and **score** respectively. We will also create a new column called **doc_id** which will be a unique identifier for each essay in our case study.</span>
-<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="in">set &lt;- essay_set_2 %&gt;% </span></span>
-<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a><span class="in">  select(essay, rater1_domain1) %&gt;% </span></span>
-<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(response = essay, score = rater1_domain1)</span></span>
-<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a><span class="in">set$doc_id &lt;- paste0("doc", 1:nrow(set))</span></span>
-<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a>When you scrutinize the essays, you will see that there are some @words in the text. These are the words that are replaced with private information about the students such as names, places or dates etc. Also, there are some non-alphabetic characters and capital letters. In order to make the essays ready to analysis, we will convert all the text to lowercase and remove the non-alphabetic characters. We will also remove the <span class="co">[</span><span class="ot">stopwords</span><span class="co">](https://en.wikipedia.org/wiki/Stop_word)</span> and lemmatize the text.</span>
-<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- gsub("@\\w+ *", "", set$response) #remove @words</span></span>
-<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- gsub("[^a-zA-Z]", " ", set$processedResponse) #remove non-alphabetic characters</span></span>
-<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- tolower(set$processedResponse) #convert to lowercase</span></span>
-<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- lemmatize_strings(set$processedResponse) #lemmatize</span></span>
-<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a><span class="in">en_stopwords &lt;- stopwords::stopwords("en", source = "stopwords-iso") #get stopwords</span></span>
-<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- removeWords(set$processedResponse, words = en_stopwords) #remove stopwords</span></span>
-<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- str_squish(set$processedResponse) #remove extra whitespaces</span></span>
-<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>Here how the new processed text looks like (the one we have seen above):</span>
-<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="in">sample_essay&lt;-merge(set[random_essay,4], set[random_essay,1])</span></span>
-<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(sample_essay)</span></span>
-<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a><span class="in">set &lt;- essay_set_2 %&gt;% </span></span>
+<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a><span class="in">  select(essay, rater1_domain1) %&gt;% </span></span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(response = essay, score = rater1_domain1)</span></span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a><span class="in">set$doc_id &lt;- paste0("doc", 1:nrow(set))</span></span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a>When you scrutinize the essays, you will see that there are some @words in the text. These are the words that are replaced with private information about the students such as names, places or dates etc. Also, there are some non-alphabetic characters and capital letters. In order to make the essays ready to analysis, we will convert all the text to lowercase and remove the non-alphabetic characters. We will also remove the <span class="co">[</span><span class="ot">stopwords</span><span class="co">](https://en.wikipedia.org/wiki/Stop_word)</span> and lemmatize the text.</span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- gsub("@\\w+ *", "", set$response) #remove @words</span></span>
+<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- gsub("[^a-zA-Z]", " ", set$processedResponse) #remove non-alphabetic characters</span></span>
+<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- tolower(set$processedResponse) #convert to lowercase</span></span>
+<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- lemmatize_strings(set$processedResponse) #lemmatize</span></span>
+<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a><span class="in">en_stopwords &lt;- stopwords::stopwords("en", source = "stopwords-iso") #get stopwords</span></span>
+<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- removeWords(set$processedResponse, words = en_stopwords) #remove stopwords</span></span>
+<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a><span class="in">set$processedResponse &lt;- str_squish(set$processedResponse) #remove extra whitespaces</span></span>
+<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a>Here how the new processed text looks like (the one we have seen above):</span>
+<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a><span class="in">sample_essay&lt;-merge(set[random_essay,4], set[random_essay,1])</span></span>
+<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a><span class="in">paged_table(sample_essay)</span></span>
+<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Feature Extraction</span></span>
+<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a>Feature extraction is a critical component of Automated Essay Scoring (AES), serving as the foundation upon which the system's evaluation process is built. In AES, feature extraction procedures involve the identification and analysis of various linguistic and structural elements within the essay. These elements may include but are not limited to word frequency, sentence length, syntactic complexity, vocabulary richness, and the presence of specific content-related markers like thesis statements or evidence citations. The goal of feature extraction is to distill the complex nature of written language into a set of quantifiable, machine-readable attributes that can be used by the AES algorithms to assess the quality and coherence of the essay. Through a combination of natural language processing and statistical analysis, feature extraction empowers AES systems to objectively evaluate essays, providing educators and test administrators with consistent, efficient, and data-driven grading outcomes.</span>
 <span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Feature Extraction</span></span>
+<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a>For the sake of simplicity of demonstration, we will extract the following features: **number of sentences**, **number of paragraphs** and **number of contextual words**.</span>
 <span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a>Feature extraction is a critical component of Automated Essay Scoring (AES), serving as the foundation upon which the system's evaluation process is built. In AES, feature extraction procedures involve the identification and analysis of various linguistic and structural elements within the essay. These elements may include but are not limited to word frequency, sentence length, syntactic complexity, vocabulary richness, and the presence of specific content-related markers like thesis statements or evidence citations. The goal of feature extraction is to distill the complex nature of written language into a set of quantifiable, machine-readable attributes that can be used by the AES algorithms to assess the quality and coherence of the essay. Through a combination of natural language processing and statistical analysis, feature extraction empowers AES systems to objectively evaluate essays, providing educators and test administrators with consistent, efficient, and data-driven grading outcomes.</span>
-<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a>For the sake of simplicity of demonstration, we will extract the following features: **number of sentences**, **number of paragraphs** and **number of contextual words**.</span>
-<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_sentence &lt;- nsentence(set$response) </span></span>
-<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_paragraph &lt;- str_count(set$response, "     ") + 1 </span></span>
-<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_contextWords &lt;- lengths(strsplit(set$processedResponse, ' '))</span></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a><span class="in">head(set)</span></span>
-<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_sentence &lt;- nsentence(set$response) </span></span>
+<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_paragraph &lt;- str_count(set$response, "     ") + 1 </span></span>
+<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a><span class="in">set$n_contextWords &lt;- lengths(strsplit(set$processedResponse, ' '))</span></span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a><span class="in">head(set)</span></span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a>As stated before, there might be many other features that can be extracted from the essays. We will continue our study with these 3 features even if they are not enough for a real life research.</span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a>Before we start building a machine learning model, we need to divide our dataset as training and test data.</span>
 <span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a>As stated before, there might be many other features that can be extracted from the essays. We will continue our study with these 3 features even if they are not enough for a real life research.</span>
-<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a>Before we start building a machine learning model, we need to divide our dataset as training and test data.</span>
-<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a><span class="in">dataset &lt;- set</span></span>
-<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="in">train_indices &lt;- sample(nrow(dataset), nrow(dataset) * 0.7)  # 70% for training</span></span>
-<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="in">train_data &lt;- dataset[train_indices, ]</span></span>
-<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a><span class="in">test_data &lt;- dataset[-train_indices, ]</span></span>
-<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a><span class="in">dataset &lt;- set</span></span>
+<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a><span class="in">train_indices &lt;- sample(nrow(dataset), nrow(dataset) * 0.7)  # 70% for training</span></span>
+<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a><span class="in">train_data &lt;- dataset[train_indices, ]</span></span>
+<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="in">test_data &lt;- dataset[-train_indices, ]</span></span>
+<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Linear Regression Model (LR)</span></span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### What is Linear Regression?</span></span>
 <span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Linear Regression Model (LR)</span></span>
+<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>Linear regression is a statistical model that examines the linear relationship between two (Simple Linear Regression ) or more (Multiple Linear Regression) variables --- a dependent variable and independent variable(s). Linear relationship basically means that when one (or more) independent variables increases (or decreases), the dependent variable increases (or decreases) too. Linear regression models are used to show or predict the relationship between two variables or factors. The factor that is being predicted (the factor that the equation solves for) is called the dependent variable. The factors that are used to predict the value of the dependent variable are called the independent variables. The results of a LR model can be evaluated using statistical metrics such as **Mean Squared Error (MSE)**, **Root Mean Squared Error (RMSE)** and **R-squared**.</span>
 <span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### What is Linear Regression?</span></span>
+<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a>In our case, the dependent variable is the **score** and the independent variables are **n_sentence**, **n_paragraph** and **n_contextWords**.</span>
 <span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a>Linear regression is a statistical model that examines the linear relationship between two (Simple Linear Regression ) or more (Multiple Linear Regression) variables --- a dependent variable and independent variable(s). Linear relationship basically means that when one (or more) independent variables increases (or decreases), the dependent variable increases (or decreases) too. Linear regression models are used to show or predict the relationship between two variables or factors. The factor that is being predicted (the factor that the equation solves for) is called the dependent variable. The factors that are used to predict the value of the dependent variable are called the independent variables. The results of a LR model can be evaluated using statistical metrics such as **Mean Squared Error (MSE)**, **Root Mean Squared Error (RMSE)** and **R-squared**.</span>
-<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a>In our case, the dependent variable is the **score** and the independent variables are **n_sentence**, **n_paragraph** and **n_contextWords**.</span>
-<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Linear Model 1"}</span></span>
-<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="in">formula &lt;- as.formula("score ~ n_sentence + n_paragraph + n_contextWords")</span></span>
-<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="in">model_1 &lt;- lm(formula, data = train_data)</span></span>
-<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the summary of the model</span></span>
-<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_1)</span></span>
-<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Linear Model 1"}</span></span>
+<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a><span class="in">formula &lt;- as.formula("score ~ n_sentence + n_paragraph + n_contextWords")</span></span>
+<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a><span class="in">model_1 &lt;- lm(formula, data = train_data)</span></span>
+<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the summary of the model</span></span>
+<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_1)</span></span>
+<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Performance of the Model 1</span></span>
+<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a>Let's investigate the output from the model one by one.</span>
 <span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Performance of the Model 1</span></span>
+<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Residuals:** This section provides statistics about the residuals, which are the differences between the observed values and the predicted values by the model.</span>
 <span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a>Let's investigate the output from the model one by one.</span>
+<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Min:** The minimum residual value is -2.51929.</span>
 <span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Residuals:** This section provides statistics about the residuals, which are the differences between the observed values and the predicted values by the model.</span>
+<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**1Q:** The first quartile (25th percentile) of the residuals is -0.34048.</span>
 <span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Min:** The minimum residual value is -2.51929.</span>
+<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Median:** The median of the residuals is 0.00576.</span>
 <span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**1Q:** The first quartile (25th percentile) of the residuals is -0.34048.</span>
+<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**3Q:** The third quartile (75th percentile) of the residuals is 0.37803.</span>
 <span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Median:** The median of the residuals is 0.00576.</span>
+<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Max:** The maximum residual value is 1.95369.</span>
 <span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**3Q:** The third quartile (75th percentile) of the residuals is 0.37803.</span>
+<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Coefficients:** This section provides information about the coefficients of the linear regression model. Each row corresponds to a predictor variable (independent variable) in the model.</span>
 <span id="cb20-199"><a href="#cb20-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Max:** The maximum residual value is 1.95369.</span>
+<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Estimate:** This is the estimated coefficient for each predictor. **Std. Error:** It represents the standard error of the coefficient estimate. **t value:** The t-value is a measure of how many standard errors the coefficient estimate is away from zero. **Pr(\&gt;\|t\|):** This is the p-value associated with the t-value, which tells you whether the coefficient is statistically significant. In our model, we have three predictor variables: n_sentence, n_paragraph, and n_contextWords. The Estimate column represents the estimated coefficients for each of these predictors. The <span class="sc">\*\*\*</span> symbols indicate that these coefficients are highly statistically significant. In other words, the number of paragraph is not significantly valuable for the model while the number of sentences and the number of contextual words are highly significant.</span>
 <span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Coefficients:** This section provides information about the coefficients of the linear regression model. Each row corresponds to a predictor variable (independent variable) in the model.</span>
+<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Multiple R-squared:** This is a measure of how well the model fits the data. It tells you the proportion of the variance in the dependent variable that is explained by the independent variables. In our case, R-squared is approximately 0.4737, which means that about 47.37% of the variance in the dependent variable is explained by our predictors.</span>
 <span id="cb20-203"><a href="#cb20-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Estimate:** This is the estimated coefficient for each predictor. **Std. Error:** It represents the standard error of the coefficient estimate. **t value:** The t-value is a measure of how many standard errors the coefficient estimate is away from zero. **Pr(\&gt;\|t\|):** This is the p-value associated with the t-value, which tells you whether the coefficient is statistically significant. In our model, we have three predictor variables: n_sentence, n_paragraph, and n_contextWords. The Estimate column represents the estimated coefficients for each of these predictors. The <span class="sc">\*\*\*</span> symbols indicate that these coefficients are highly statistically significant. In other words, the number of paragraph is not significantly valuable for the model while the number of sentences and the number of contextual words are highly significant.</span>
+<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>**Adjusted R-squared:** This is a version of R-squared that adjusts for the number of predictors in the model. It is a slightly more conservative measure of goodness of fit.</span>
 <span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Multiple R-squared:** This is a measure of how well the model fits the data. It tells you the proportion of the variance in the dependent variable that is explained by the independent variables. In our case, R-squared is approximately 0.4737, which means that about 47.37% of the variance in the dependent variable is explained by our predictors.</span>
+<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>**F-statistic:** This is a measure of the overall significance of the model. It tests whether at least one of the predictor variables is significantly related to the dependent variable. A high F-statistic and a very low p-value (which is the case here) indicate that the model is significant.</span>
 <span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>**Adjusted R-squared:** This is a version of R-squared that adjusts for the number of predictors in the model. It is a slightly more conservative measure of goodness of fit.</span>
+<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>**p-value:** The p-value associated with the F-statistic. In this case, it's extremely small, indicating that the overall model is highly significant.</span>
 <span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>**F-statistic:** This is a measure of the overall significance of the model. It tests whether at least one of the predictor variables is significantly related to the dependent variable. A high F-statistic and a very low p-value (which is the case here) indicate that the model is significant.</span>
+<span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison of Model 1 and Model 2</span></span>
 <span id="cb20-211"><a href="#cb20-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>**p-value:** The p-value associated with the F-statistic. In this case, it's extremely small, indicating that the overall model is highly significant.</span>
+<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a>Let's build another model without the feature **n_paragraph** and compare the results.</span>
 <span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison of Model 1 and Model 2</span></span>
-<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a>Let's build another model without the feature **n_paragraph** and compare the results.</span>
-<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Linear Model 2"}</span></span>
-<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a><span class="in">formula_2 &lt;- as.formula("score ~ n_sentence + n_contextWords")</span></span>
-<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a><span class="in">model_2 &lt;- lm(formula_2, data = train_data)</span></span>
-<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the summary of the model</span></span>
-<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_2)</span></span>
-<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Linear Model 2"}</span></span>
+<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a><span class="in">formula_2 &lt;- as.formula("score ~ n_sentence + n_contextWords")</span></span>
+<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a><span class="in">model_2 &lt;- lm(formula_2, data = train_data)</span></span>
+<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the summary of the model</span></span>
+<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_2)</span></span>
+<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a>**Residual standard error:** The residual standard error is very close in both models, indicating that they have similar predictive accuracy. **Multiple R-squared:** The R-squared values are also very close. Model 2 has a slightly lower R-squared, but the difference is minimal. **F-statistic:** Model 2 has a higher F-statistic compared to Model 1, indicating that the predictors collectively have more explanatory power in Model 2.</span>
+<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a>In summary, both models are quite similar in terms of their coefficient estimates and predictive accuracy. Model 2 has a slightly higher F-statistic. Personally I agree with the model. The number of paragraphs should not be a predictor while estimating the score. The number of sentences and the number of contextual words are much more important.</span>
 <span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a>**Residual standard error:** The residual standard error is very close in both models, indicating that they have similar predictive accuracy. **Multiple R-squared:** The R-squared values are also very close. Model 2 has a slightly lower R-squared, but the difference is minimal. **F-statistic:** Model 2 has a higher F-statistic compared to Model 1, indicating that the predictors collectively have more explanatory power in Model 2.</span>
+<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Evaluation of Model 2 with the Test Dataset</span></span>
 <span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a>In summary, both models are quite similar in terms of their coefficient estimates and predictive accuracy. Model 2 has a slightly higher F-statistic. Personally I agree with the model. The number of paragraphs should not be a predictor while estimating the score. The number of sentences and the number of contextual words are much more important.</span>
+<span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a>As we would like to continue with the second model, we can use the <span class="in">`predict()`</span> to make predictions on the test data. The <span class="in">`predict()`</span> function takes the model and the new data set as arguments. It returns a vector of predictions, which we will save in a new column in the test data set to make comparisons in the next stage. Now, let's use the <span class="in">`mean()`</span> and <span class="in">`sqrt()`</span> functions to calculate the MSE and RMSE of the model. We can also use the <span class="in">`summary()`</span> function to get the R-squared value of the model.</span>
 <span id="cb20-232"><a href="#cb20-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-233"><a href="#cb20-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### Evaluation of Model 2 with the Test Dataset</span></span>
-<span id="cb20-234"><a href="#cb20-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-235"><a href="#cb20-235" aria-hidden="true" tabindex="-1"></a>As we would like to continue with the second model, we can use the <span class="in">`predict()`</span> to make predictions on the test data. The <span class="in">`predict()`</span> function takes the model and the new data set as arguments. It returns a vector of predictions, which we will save in a new column in the test data set to make comparisons in the next stage. Now, let's use the <span class="in">`mean()`</span> and <span class="in">`sqrt()`</span> functions to calculate the MSE and RMSE of the model. We can also use the <span class="in">`summary()`</span> function to get the R-squared value of the model.</span>
-<span id="cb20-236"><a href="#cb20-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-237"><a href="#cb20-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-238"><a href="#cb20-238" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a><span class="in"># Make predictions on the test data</span></span>
-<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a><span class="in">predictions &lt;- predict(model_2, newdata = test_data)</span></span>
-<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a><span class="in"># Evaluate the model</span></span>
-<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a><span class="in">mse &lt;- mean((test_data$score - predictions)^2)</span></span>
-<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a><span class="in">rmse &lt;- sqrt(mse)</span></span>
-<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a><span class="in">r_squared &lt;- summary(model_2)$r.squared</span></span>
-<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a><span class="in"># Printing evaluation metrics beautifully :D</span></span>
-<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a><span class="in">cat(paste0("Mean Squared Error (MSE): ", sprintf("%.2f", mse), "\n",</span></span>
-<span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a><span class="in">            "Root Mean Squared Error (RMSE): ", sprintf("%.2f", rmse), "\n",</span></span>
-<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a><span class="in">            "R-squared (R²): ", sprintf("%.2f", r_squared), "\n"))</span></span>
-<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-233"><a href="#cb20-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-234"><a href="#cb20-234" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-235"><a href="#cb20-235" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-236"><a href="#cb20-236" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-237"><a href="#cb20-237" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-238"><a href="#cb20-238" aria-hidden="true" tabindex="-1"></a><span class="in"># Make predictions on the test data</span></span>
+<span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a><span class="in">predictions &lt;- predict(model_2, newdata = test_data)</span></span>
+<span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a><span class="in"># Evaluate the model</span></span>
+<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a><span class="in">mse &lt;- mean((test_data$score - predictions)^2)</span></span>
+<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a><span class="in">rmse &lt;- sqrt(mse)</span></span>
+<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a><span class="in">r_squared &lt;- summary(model_2)$r.squared</span></span>
+<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a><span class="in"># Printing evaluation metrics beautifully :D</span></span>
+<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a><span class="in">cat(paste0("Mean Squared Error (MSE): ", sprintf("%.2f", mse), "\n",</span></span>
+<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a><span class="in">            "Root Mean Squared Error (RMSE): ", sprintf("%.2f", rmse), "\n",</span></span>
+<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a><span class="in">            "R-squared (R²): ", sprintf("%.2f", r_squared), "\n"))</span></span>
+<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**MSE (Mean Squared Error):** MSE is a measure of the average squared difference between the observed (actual) values and the predicted values by the model. It's a measure of the model's accuracy, with lower values indicating a better fit.</span>
+<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RMSE (Root Mean Squared Error):** RMSE is the square root of the MSE and provides a measure of the average error in the same units as the dependent variable. It's a commonly used metric to quantify the prediction error of the model.</span>
 <span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**MSE (Mean Squared Error):** MSE is a measure of the average squared difference between the observed (actual) values and the predicted values by the model. It's a measure of the model's accuracy, with lower values indicating a better fit.</span>
+<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**R-squared (R²):** R-squared is a measure of how well the independent variables explain the variability in the dependent variable. It ranges from 0 to 1, with higher values indicating a better fit. In the output, the R-squared is approximately 0.4736732, which means that about 47.37% of the variance in the dependent variable is explained by the independent variables in the model.</span>
 <span id="cb20-255"><a href="#cb20-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RMSE (Root Mean Squared Error):** RMSE is the square root of the MSE and provides a measure of the average error in the same units as the dependent variable. It's a commonly used metric to quantify the prediction error of the model.</span>
+<span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictions of the Test Dataset</span></span>
 <span id="cb20-257"><a href="#cb20-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-258"><a href="#cb20-258" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**R-squared (R²):** R-squared is a measure of how well the independent variables explain the variability in the dependent variable. It ranges from 0 to 1, with higher values indicating a better fit. In the output, the R-squared is approximately 0.4736732, which means that about 47.37% of the variance in the dependent variable is explained by the independent variables in the model.</span>
+<span id="cb20-258"><a href="#cb20-258" aria-hidden="true" tabindex="-1"></a>Let's take a look at the predictions of the test data. We can use the <span class="in">`head()`</span> function to print the first 10 predictions.</span>
 <span id="cb20-259"><a href="#cb20-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-260"><a href="#cb20-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictions of the Test Dataset</span></span>
-<span id="cb20-261"><a href="#cb20-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-262"><a href="#cb20-262" aria-hidden="true" tabindex="-1"></a>Let's take a look at the predictions of the test data. We can use the <span class="in">`head()`</span> function to print the first 10 predictions.</span>
-<span id="cb20-263"><a href="#cb20-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-264"><a href="#cb20-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-265"><a href="#cb20-265" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a><span class="in">#merge predictions to test data:</span></span>
-<span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a><span class="in">test_data$predictions &lt;- round(predictions)</span></span>
-<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a><span class="in">head(test_data[,c("score","predictions")], 10)</span></span>
-<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a>But looking at the raw data would never be enough to get some insights. Let's also print the confusion matrix to get a better overall picture. The **confusion matrix** is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm. The confusion matrix shows the ways in which the model is confused when it makes predictions. It gives us insight not only into the errors being made by a classifier but more importantly the types of errors that are being made.</span>
-<span id="cb20-275"><a href="#cb20-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
-<span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
-<span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
-<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
-<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a><span class="in"># Create the confusion matrix and print it</span></span>
-<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a><span class="in">confusion_matrix &lt;- table(test_data$predictions, test_data$score)</span></span>
-<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a><span class="in">confusion_matrix</span></span>
-<span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-260"><a href="#cb20-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-261"><a href="#cb20-261" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-262"><a href="#cb20-262" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-263"><a href="#cb20-263" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-264"><a href="#cb20-264" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-265"><a href="#cb20-265" aria-hidden="true" tabindex="-1"></a><span class="in">#merge predictions to test data:</span></span>
+<span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a><span class="in">test_data$predictions &lt;- round(predictions)</span></span>
+<span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a><span class="in">head(test_data[,c("score","predictions")], 10)</span></span>
+<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a>But looking at the raw data would never be enough to get some insights. Let's also print the confusion matrix to get a better overall picture. The **confusion matrix** is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm. The confusion matrix shows the ways in which the model is confused when it makes predictions. It gives us insight not only into the errors being made by a classifier but more importantly the types of errors that are being made.</span>
+<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename=""}</span></span>
+<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb20-275"><a href="#cb20-275" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a><span class="in"># Create the confusion matrix and print it</span></span>
+<span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a><span class="in">confusion_matrix &lt;- table(test_data$predictions, test_data$score)</span></span>
+<span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a><span class="in">confusion_matrix</span></span>
+<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a>In this context, the confusion matrix helps us understand the model's performance in grading essays. It indicates which score points are frequently confused with others, providing insights into where the model might need improvement. For instance, score points 3 and 4 appear to be frequently confused with each other. Yet, I believe that is not a big deal. Confusing a high score such as 6 with a lower score such as 2 would be a catastrophe in AES context, but here we don't even have one such a case. Besides confusion matrix, one can calculate performance metrics such as accuracy, precision, recall, and F1-score to get a more comprehensive assessment of the model's grading performance.</span>
+<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
 <span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a>In this context, the confusion matrix helps us understand the model's performance in grading essays. It indicates which score points are frequently confused with others, providing insights into where the model might need improvement. For instance, score points 3 and 4 appear to be frequently confused with each other. Yet, I believe that is not a big deal. Confusing a high score such as 6 with a lower score such as 2 would be a catastrophe in AES context, but here we don't even have one such a case. Besides confusion matrix, one can calculate performance metrics such as accuracy, precision, recall, and F1-score to get a more comprehensive assessment of the model's grading performance.</span>
+<span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a>Our exploration into AES has shed light on the impressive potential of this technology in revolutionizing the evaluation of written content. Our application of a Linear Regression model, even when considering a limited set of extracted features such as the number of words, sentences, and paragraphs, demonstrated the robustness of this approach. It is evident that by harnessing machine learning algorithms, we can achieve consistent and objective grading, streamlining the assessment process for educators and administrators.</span>
 <span id="cb20-287"><a href="#cb20-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-288"><a href="#cb20-288" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb20-288"><a href="#cb20-288" aria-hidden="true" tabindex="-1"></a>However, it's important to note that Linear Regression is just one of the many models available for AES. The field of automated essay scoring continues to evolve, and researchers are exploring a range of models and techniques to enhance accuracy and broaden the scope of assessment. Some alternatives to LR include Support Vector Machines (SVM), Random Forests, Neural Networks, and Natural Language Processing models like Recurrent Neural Networks (RNNs) or Transformers, such as BERT and GPT-3. These models bring their unique strengths and capabilities to the table, offering a diverse array of tools for essay evaluation.</span>
 <span id="cb20-289"><a href="#cb20-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-290"><a href="#cb20-290" aria-hidden="true" tabindex="-1"></a>Our exploration into AES has shed light on the impressive potential of this technology in revolutionizing the evaluation of written content. Our application of a Linear Regression model, even when considering a limited set of extracted features such as the number of words, sentences, and paragraphs, demonstrated the robustness of this approach. It is evident that by harnessing machine learning algorithms, we can achieve consistent and objective grading, streamlining the assessment process for educators and administrators.</span>
-<span id="cb20-291"><a href="#cb20-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-292"><a href="#cb20-292" aria-hidden="true" tabindex="-1"></a>However, it's important to note that Linear Regression is just one of the many models available for AES. The field of automated essay scoring continues to evolve, and researchers are exploring a range of models and techniques to enhance accuracy and broaden the scope of assessment. Some alternatives to LR include Support Vector Machines (SVM), Random Forests, Neural Networks, and Natural Language Processing models like Recurrent Neural Networks (RNNs) or Transformers, such as BERT and GPT-3. These models bring their unique strengths and capabilities to the table, offering a diverse array of tools for essay evaluation.</span>
-<span id="cb20-293"><a href="#cb20-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-294"><a href="#cb20-294" aria-hidden="true" tabindex="-1"></a>As AES advances, the synergy of these models with increasingly sophisticated feature extraction procedures promises to further elevate the quality and reliability of automated essay scoring. With this, we look to a future where technology and human expertise collaborate seamlessly to offer more efficient, accurate, and comprehensive assessment in the realm of written expression.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-290"><a href="#cb20-290" aria-hidden="true" tabindex="-1"></a>As AES advances, the synergy of these models with increasingly sophisticated feature extraction procedures promises to further elevate the quality and reliability of automated essay scoring. With this, we look to a future where technology and human expertise collaborate seamlessly to offer more efficient, accurate, and comprehensive assessment in the realm of written expression.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

@@ -24,8 +24,6 @@ At its essence, AES relies on sophisticated algorithms to examine written text, 
 
 Today we will develop a linear regression model to predict essay scores using the famous ASAP dataset. There are eight different essay types in this dataset to explore. Here we will use the essay set 2. Before you continue, please go and read the description and the details [on Kaggle.](https://www.kaggle.com/competitions/asap-aes/data) As we will use only one essay set, I have preapared the data as a separate csv file and if you are already familiar with the ASAP data (or you have taken a look at the Kaggle page), please download the data for our use case from [here](https://docs.google.com/spreadsheets/d/1xi-k1cJGADOgtp85sfJ4ZBr1P-YREhx_/edit?usp=sharing&ouid=109837621769671436242&rtpof=true&sd=true). The packages and some of their functions that we will be using in this topic are:
 
-<div>
-
 ```{r eval=TRUE, echo=TRUE, code_folding=FALSE, filename="Requirements"}
 #| warning: false 
 #| eval: true 
@@ -48,8 +46,6 @@ library("tm")
 library("quanteda")  
 # nsentence() 
 ```
-
-</div>
 
 ## 1. Preprocessing
 
