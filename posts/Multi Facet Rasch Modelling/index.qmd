@@ -1,0 +1,288 @@
+---
+title: "Multi-Facet Rasch Models with R"
+description: |
+  In this post, we’ll explore the Multi-Facet Rasch Model, understand how it works, and demonstrate how to fit this model using R. We'll also visualize the results to better interpret them. 
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: TOBB ETU- University of Economics & Technology
+date: 2024-10-17
+categories: [psychometrics, Rasch, multi-facet, IRT, ]
+image: "image.png"
+output:
+    self_contained: false
+    code_folding: false
+execute:
+  freeze: auto
+---
+
+## Introduction
+
+While a basic Rasch model focuses on item difficulty and person ability, the **Multi-Facet Rasch Model** (MFRM) allows us to incorporate additional factors, or facets, such as:
+
+-   **Person Ability** (e.g., the skill level of test-takers),
+
+-   **Item Difficulty** (e.g., how hard the test items are),
+
+-   **Rater Severity** (e.g., how lenient or strict raters are),
+
+-   **Task or Stimulus Differences** (e.g., variation in tasks given).
+
+MFRM is said to be IRT version of generalizability theory and it is particularly useful when assessments involve subjective judgments, like in essay grading or performance evaluation, where raters' subjectivity can introduce bias.
+
+::: {layout-ncol="2"}
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+#| label: "requirements"
+#| output: false
+
+# Load the libraries
+library(readr)
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+
+library(tidyverse)
+library(TAM)
+library(cowplot)
+```
+:::
+
+## 1. Understand the data
+
+For MFRM analysis, we are going to use a dataset of essay scores scored on an analytical rubric. There are four domains of the rubric: Content, Prompt Adherence, Language, and Narrativity. Let's load the data and see the head of them. You can download the data for your own use from [here](https://drive.google.com/file/d/1cmfJd_h68J5JpBIPX6N-iISgESAVgvlI/view?usp=drive_link).
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+data <- read_csv("MFRM_data.csv", show_col_types = FALSE)
+head(data)
+
+```
+
+Let's see the structure and summary of the data too.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+str(data)
+summary(data)
+```
+
+There are 1800 rows of data. Each domain is scored between 0 and 4. Perfect as zero must exist in the ordinal data for MFRM. The data set consists of scores from three raters on four domains, so we need to account for the three key facets: **person ability** (the essays), **item difficulty** (the domains), and **rater severity** (the three raters).
+
+## 2. Fit the model
+
+Now that we've explored our data set, it's time to fit the Multi-Facet Rasch Model (MFRM). To do this, we'll use the `TAM` package in R, which provides functions for fitting various Rasch models, including MFRM. The `formulaA` provided into the mfr function decides on the model. For PCM, we define interaction between item and step along with the rater facet:
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: TRUE
+#| code-fold: false
+#| output: false
+
+
+facets <- data[, "rater", drop=FALSE]  # define facet (rater)
+pid <- data$essayId  # define person identifier
+resp <- data[, -c(5:6)]  # item response data
+formulaA <- ~item*step + rater   # formula for PCM
+
+
+mod <- TAM::tam.mml.mfr(resp=resp, facets=facets, formulaA=formulaA, pid=data$essayId)
+```
+
+## 3. Model diagnostics
+
+Now that we've fitted our Multi-Facet Rasch Model (MFRM) with PCM, let's take a closer look at the results and explore some diagnostics.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+fit_stats <- TAM::tam.fit(mod)
+print(fit_stats)
+
+```
+
+-   **Infit and Outfit Values:**
+
+    -   **Infit and Outfit near 1:** Indicates that the item fits well with the model.
+
+    -   **Infit/Outfit significantly \>1:** Indicates that the item is *underfitting*, meaning there is more variability in the responses than the model expects (perhaps caused by noise or misfitting responses).
+
+    -   **Infit/Outfit significantly \<1:** Indicates that the item is *overfitting*, meaning the responses are too predictable, and there's less variability than expected by the model (possibly due to redundancy or lack of challenge).
+
+    Let's break down a few examples from the output:
+
+    -   **Content (Con):**
+
+        -   Outfit MNSQ: 2.05, Infit MNSQ: 2.18
+
+        -   These values are well above 1, indicating underfit. The item "Con" might be too noisy or not behaving consistently with the model.
+
+    -   **Prompt Adherence (ProAd):**
+
+        -   Outfit MNSQ: 1.54, Infit MNSQ: 1.63
+
+        -   These values are higher than 1 but still in the acceptable range, meaning there's some noise, but it’s not excessive.
+
+    -   **Language (Lang):**
+
+        -   Outfit MNSQ: 2.26, Infit MNSQ: 2.34
+
+        -   These values suggest significant underfit, similar to "Con", indicating that responses to this domain might be less consistent or more unpredictable than the model expects.
+
+    -   **Steps (step1 to step4):**
+
+        -   Some steps, such as **step1**, have Infit and Outfit values closer to 1 (e.g., Outfit MNSQ: 0.95, Infit MNSQ: 0.94). These are acceptable and suggest that step1 is fitting well.
+
+        -   However, **step2, step3, and step4** show extremely low values, especially for Outfit (e.g., **step3** has an Outfit MNSQ of **0.26**), indicating overfit, meaning these categories are too predictable and might not differentiate well between respondents.
+
+-   **t-statistics and p-values:**
+
+    -   The **t-statistics (Outfit_t, Infit_t)** are standardized fit statistics that test whether the Infit/Outfit values significantly differ from 1. Large positive or negative t-values indicate significant deviation from expected values.
+
+    -   The **p-values (Outfit_p, Infit_p)** show whether these deviations are statistically significant. Nearly all p-values are extremely low (close to 0), suggesting that most of the items are statistically misfitting according to the model.
+
+-   **Rater Severity:**
+
+    -   **Rater1, Rater2, Rater3** all have very low Infit and Outfit values (e.g., **Rater1 Outfit: 0.26**), which suggest that these raters may be overfitting. This could mean that they are scoring in a highly predictable way, possibly being too strict or lenient consistently.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+#| label: "reliability index"
+
+reliability <- mod$EAP.rel
+reliability
+```
+
+The final **WLE Reliability = 0.97** is an excellent reliability score, meaning that the person ability estimates are very consistent. WLE reliability, similar to other reliability coefficients like Cronbach’s alpha, indicates the precision of the estimates:
+
+A **0.97 reliability** means that 97% of the variance in the person ability estimates is due to true differences in ability rather than measurement error.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+
+persons.mod <- TAM::tam.wle(mod)
+ggplot(data.frame(theta = persons.mod$theta), aes(x = theta)) +
+  geom_histogram(binwidth = 0.2, fill = "steelblue", color = "black") +
+  labs(title = "Distribution of Person Ability Estimates", x = "Ability (Theta)", y = "Frequency")
+
+```
+
+Also see the theta distributions in the chart. They do not look nice as this is a study run on simulated data.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+#| label: "threshold parameters"
+
+
+thr <- TAM::tam.threshold(mod)
+thr
+
+```
+
+**Ordered thresholds** are crucial to ensure that the categories are functioning properly. For example, for **Con-rater1**, the thresholds are: -8.36, -4.81, -1.21, and 2.41
+
+These thresholds are in increasing order, which indicates that the rating scale is working as intended for **Con-rater1**—the higher categories represent more difficult levels to achieve.
+
+**Raters 1, 2, and 3 Comparison:**
+
+-   **Rater Differences:** There are noticeable differences between raters in their thresholds. For example:
+
+    -   **Con-rater1** has very negative thresholds, starting at -8.36 for Cat1, while **Con-rater3** starts much higher, with thresholds beginning at -0.50.
+
+    -   This suggests that **Rater1** is much stricter or uses a harsher scale, while **Rater3** is more lenient, with easier transitions between categories. For instance, it is harder for essays to move from a "1" to a "2" under Rater1’s scoring compared to Rater3.
+
+    -   There are some NAs which actually I have no idea about. Peobably these inconsistancies occur due to the simulated data.
+
+## 4. Visualizing the Results
+
+To make the interpretation more intuitive, we can visualize the item difficulty and rater severity using a **dot plot** for the difficulty estimates, which can help us compare how each domain and rater behaves. Here’s how we can generate these plots in R.
+
+```{r}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
+#| label: "Wright Map"
+
+facet_params<-mod[["xsi.facets"]][["parameter"]]
+domain_params<-facet_params[1:4]
+
+f1 <- ggplot(data = persons.mod, aes(x = theta))+
+  geom_dotplot(binwidth = .1, stackdir = "down") + 
+  theme_bw()  +
+  scale_y_continuous(name = "", breaks = NULL) +
+  scale_x_continuous(breaks=seq(-6, 6, .6), limits=c(-6, 6), 
+                     position =  "top") + 
+  theme(axis.title.y = element_blank(), 
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  labs(title = "Persons") + 
+  coord_flip()
+
+f2 <- mod$xsi.facets %>%
+  filter(str_starts(parameter, "rater")) %>%
+  ggplot(aes(x = xsi)) +
+  geom_text(aes(y = 0, label = parameter), nudge_y = 0.05, size = 3) +
+  theme_bw() +
+  scale_y_continuous(name = "", breaks = NULL) +
+  scale_x_continuous(breaks = seq(-6, 6, .5), limits = c(-6, 6), position = "top") + 
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.x = element_blank()) +
+  labs(title = "Raters") + 
+  coord_flip()
+
+f3 <- mod$xsi.facets %>%
+  filter(parameter %in% domain_params) %>%
+  ggplot(aes(x = xsi)) +
+  geom_text(aes(y = 0, label = parameter), nudge_y = 0.05, size = 3) + 
+    theme_bw()  +
+    scale_y_continuous(name = "", breaks = NULL) +
+    scale_x_continuous(breaks=seq(-2, 2, .2), limits=c(-2, 2), 
+                       position =  "top") + 
+    theme(axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank(),
+          axis.title.x= element_blank())+
+    labs(title = "Domain") + 
+    coord_flip()
+
+plot_grid(f1, f2, f3, nrow = 1, rel_widths = c(0.7, .15, .15))
+```
+
+This final chart is developed as an alternative to `wrightmap`. Each facet can be seen easily on it. There are four grids. The first is the person thetas. We have seen this above. The second is the rater facet. The strictness of the raters are very distinctive. Actually the only real data here is rater 2 and the others were simulated using it to be stricter and lenient. So we exactly see what the data is about. The third grid is about the domains/item difficulty. Pompt Adherence is the most difficult domain. Content, Narrative and Language follows it respectively.
+
+## 4. Conclusion
+
+In this post, we explored the **Multi-Facet Rasch Model (MFRM)** using simulated essay scores rated by multiple raters across four different domains: Content, Prompt Adherence, Language, and Narrativity. The model helped us account for the varying levels of item difficulty and the potential differences in rater severity. By fitting the MFRM and examining key model outputs—like **Infit/Outfit statistics** and **thresholds**—we identified areas where raters were either more lenient or more severe, and items that displayed more noise or predictability than expected.
+
+The high **WLE reliability** of 0.97 indicates that the model provides consistent and accurate estimates of person abilities. However, the rater-specific thresholds revealed some important differences in how each rater scored the essays, with certain raters being significantly stricter or more lenient. This highlights the importance of accounting for rater bias in assessments that rely on subjective judgments, such as essay scoring.
+
+Going forward, addressing these rater differences and ensuring well-functioning rating categories can further refine the assessment process. By doing so, we can ensure that the scores are fairer and more representative of true essay quality, free from the influence of individual rater biases. Overall, the MFRM proves to be a valuable tool in maintaining the validity and reliability of assessments involving subjective judgments.

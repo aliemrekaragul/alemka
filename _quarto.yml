@@ -25,9 +25,7 @@ website:
           - text: "Test Analyze-R"
             href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
           - text: "ITP Score Calculator"
-            href: https://itp-calculator.com/   
-          - text: "Ekşi KazaR"
-            href: https://aliemrekaragul.shinyapps.io/eksi-kazaR/  
+            href: https://itp-calculator.com/
       - text: "Favs"
         icon: star-fill
         menu: 
@@ -43,6 +41,8 @@ website:
             href: http://adv-r.had.co.nz/Style.html
           - text: "Style Guide (Google)"
             href: https://google.github.io/styleguide/Rguide.html
+          - text: "AgreeStat 360-Interrater reliability"
+            href: https://agreestat360.com/
   cookie-consent:
     type: implied
     style: simple

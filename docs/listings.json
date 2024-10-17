@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Multi Facet Rasch Modelling/index.html",
       "/posts/Measuerement Invariance/index.html",
       "/posts/Automated Essay Scoring (AES) with R/index.html",
       "/posts/Top 5 Data Sources/index.html",
