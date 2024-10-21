@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Apps</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff6347, #8b0000);
+      z-index: -2;
+    }
+    .pulse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200vw;
+      height: 200vh;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+      animation: pulse 15s infinite;
+      z-index: -1;
+    }
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+    h1 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 36px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .app-list {
+      list-style: none;
+      padding: 0;
+    }
+    .app-item {
+      margin: 20px 0;
+      padding: 25px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .app-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+    .app-title {
+      margin: 0 0 10px 0;
+    }
+    .app-link {
+      text-decoration: none;
+      color: #8b0000;
+      font-size: 24px;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    .app-link:hover {
+      color: #ff6347;
+    }
+    .app-description {
+      color: #333;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .back-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #8b0000;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    .back-button:hover {
+      background-color: #ff6347;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="pulse"></div>
+  <div class="container">
+    <h1>My Apps</h1>
+    <ul class="app-list">
+      <li class="app-item">
+        <h2 class="app-title">
+          <a href="https://aliemrekaragul.shinyapps.io/testanalyze-R/" target="_blank" class="app-link">Test Analyze-R</a>
+        </h2>
+        <p class="app-description">A powerful tool I developed for TOBB ETU DFL for analyzing test results, providing comprehensive statistical insights and visualizations to help item writers make data-driven decisions. What makes it special is that it is customized to work directly with the output from the department's OCR machines.</p>
+      </li>
+      <li class="app-item">
+        <h2 class="app-title">
+          <a href="https://itp-calculator.com/" target="_blank" class="app-link">ITP Score Calculator</a>
+        </h2>
+        <p class="app-description">A practical score predictor for TOBB ETU DFL students' final language proficiency examination. Of course, everybody who is interested in their TOEFL ITP scores can use it.</p>
+      </li>
+      <li class="app-item">
+        <h2 class="app-title">
+          <a href="aes.html" target="_blank" class="app-link">My AES Engine</a>
+        </h2>
+        <p class="app-description">An automated essay grading application. It uses a machine learning model trained with the prominent ASAP dataset.</p>
+      </li>
+    </ul>
+    <a href="#" class="back-button" onclick="handleBack()">Take me back!</a>
+  </div>
+  <script>
+    function handleBack() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = 'https://emrekaragul.com/';
+        }
+    }
+  </script>
+</body>
+</html>

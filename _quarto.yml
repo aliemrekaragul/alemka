@@ -19,13 +19,9 @@ website:
       - icon: linkedin
         href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/        
     left:
-      - text: "Apps"
+      - text: "My Apps"
         icon: terminal-fill
-        menu:
-          - text: "Test Analyze-R"
-            href: https://aliemrekaragul.shinyapps.io/testanalyze-R/  
-          - text: "ITP Score Calculator"
-            href: https://itp-calculator.com/
+        href: "my_apps.html"
       - text: "Favs"
         icon: star-fill
         menu: 
@@ -43,6 +39,8 @@ website:
             href: https://google.github.io/styleguide/Rguide.html
           - text: "AgreeStat 360-Interrater reliability"
             href: https://agreestat360.com/
+          - text: "My AES Engine"
+            href: "aes.html"
   cookie-consent:
     type: implied
     style: simple
