@@ -2,14 +2,14 @@ project:
   type: website
   output-dir: docs
 website:
-  title: "alemka notebook"
+  title: " "
   favicon: images/alemka.svg
   site-url: https://emrekaragul.com/
-  description: "My educational data science blog"
+  description: "My educational data science blog / notebook"
   navbar:
     pinned: true
     logo: "images/logo with title.svg"
-    background: tomato  # now: electric yellow, previously: 196, 223, 170 a soft green
+    background: tomato  #previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
     right:
       - icon: info-square-fill
