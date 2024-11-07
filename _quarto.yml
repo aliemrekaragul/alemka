@@ -18,7 +18,9 @@ website:
       - icon: github
         href: https://github.com/aliemrekaragul
       - icon: linkedin
-        href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/        
+        href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
+      - icon: rss
+        href: index.xml
     left:
       - text: "My Apps"
         icon: terminal-fill
