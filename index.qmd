@@ -5,6 +5,7 @@ listing:
   fields: [image, title, description, date, categories, reading-time]
   sort: "date desc"
   type: grid 
+  feed: true
   grid-columns: 2
   image-height: 250px
   page-size: 100
