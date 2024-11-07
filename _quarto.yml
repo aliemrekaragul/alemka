@@ -2,9 +2,10 @@ project:
   type: website
   output-dir: docs
 website:
-  title: " "
+  title: "alemka notebook"
   favicon: images/alemka.svg
   site-url: https://emrekaragul.com/
+  description: "My educational data science blog"
   navbar:
     pinned: true
     logo: "images/logo with title.svg"
