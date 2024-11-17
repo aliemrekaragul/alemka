@@ -372,7 +372,7 @@ cookieconsent.run({
 </section><section id="data-visualization" class="level2"><h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
 <p><code>plotly</code> is an amazing alternative to <code>ggplot2.</code> Today we will work on this package with our data. Our first chart contains information about the <strong>number of steps I took each day that I ran from May 2021 to November 2022.</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu">plot_ly</span><span class="op">(</span>data<span class="op">=</span><span class="va">data_for_plotting</span>, type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines+markers"</span>,  </span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html">plot_ly</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">data_for_plotting</span>, type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines+markers"</span>,  </span>
 <span>                     y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Step.count</span>, x<span class="op">=</span><span class="op">~</span><span class="va">Date</span><span class="op">)</span></span>
 <span><span class="va">fig</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -394,20 +394,20 @@ cookieconsent.run({
 <span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu">plot_ly</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html">plot_ly</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">add_trace</span><span class="op">(</span>type <span class="op">=</span><span class="st">"bar"</span>,  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span><span class="op">(</span>type <span class="op">=</span><span class="st">"bar"</span>,  </span>
 <span>            y <span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Walking.duration..ms.</span>,</span>
 <span>            x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span>, </span>
 <span>            name<span class="op">=</span><span class="st">"walking duration (ms)"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">add_trace</span> <span class="op">(</span>type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines+markers"</span> , <span class="co">#yaxis="y2",</span></span>
+<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span> <span class="op">(</span>type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines+markers"</span> , <span class="co">#yaxis="y2",</span></span>
 <span>                         y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Running.duration..ms.</span>, </span>
 <span>                         x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span> , </span>
 <span>                         name<span class="op">=</span><span class="st">"running duration (ms)"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">layout</span><span class="op">(</span></span>
 <span>  title<span class="op">=</span><span class="st">"two axis"</span>,</span>
 <span>  yaxis2 <span class="op">=</span> <span class="va">ay</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> title<span class="op">=</span> <span class="st">"Days"</span><span class="op">)</span>,</span>
@@ -430,21 +430,21 @@ cookieconsent.run({
 <span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu">plot_ly</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html">plot_ly</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">add_trace</span><span class="op">(</span>y <span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Move.Minutes.count</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span><span class="op">(</span>y <span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Move.Minutes.count</span>,</span>
 <span>            x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span>, </span>
 <span>            name<span class="op">=</span><span class="st">"movemnt(min.)"</span>, </span>
 <span>            type <span class="op">=</span><span class="st">"bar"</span> <span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">add_trace</span> <span class="op">(</span>y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Distance..m.</span>, </span>
+<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span> <span class="op">(</span>y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Distance..m.</span>, </span>
 <span>                         x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span> , </span>
 <span>                         name<span class="op">=</span><span class="st">"distance(m.)"</span>, yaxis<span class="op">=</span><span class="st">"y2"</span>,</span>
 <span>                         type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines+markers"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">layout</span><span class="op">(</span></span>
 <span>  title<span class="op">=</span><span class="st">"My movement VS distance  &lt;b&gt;in 2022&lt;/b&gt;"</span>,</span>
 <span>  yaxis2 <span class="op">=</span> <span class="va">ay</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> title<span class="op">=</span> <span class="st">"&lt;b&gt;Days&lt;/b&gt;"</span><span class="op">)</span>,</span>
@@ -459,28 +459,28 @@ cookieconsent.run({
 <p>As the final result, you can see that on the first y axis there are the number of minutes (from 0 to 200) when I was in a moving state. On the other side, we have the distance I walked or run in meters (from 0 to 10k). For example; on sixth of Auust in 2022, I walked almost 7k meters in 150 minutes.</p>
 <p>As a final step, let’s see the calories I burnt during that time. Another <code>addtrace</code> would help us draw the line for the calories that I burnt throughout these days:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu">plot_ly</span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fig</span><span class="op">&lt;-</span><span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html">plot_ly</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">add_trace</span><span class="op">(</span>y <span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Step.count</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span><span class="op">(</span>y <span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Step.count</span>,</span>
 <span>            x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span>, </span>
 <span>            name<span class="op">=</span><span class="st">"Steps "</span>, </span>
 <span>            type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">add_trace</span> <span class="op">(</span>y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Distance..m.</span>, </span>
+<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span> <span class="op">(</span>y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Distance..m.</span>, </span>
 <span>                         x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span> , </span>
 <span>                         name<span class="op">=</span><span class="st">"distance"</span>, </span>
 <span>                         type <span class="op">=</span><span class="st">"bar"</span> <span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">add_trace</span> <span class="op">(</span>y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Calories..kcal.</span>, </span>
+<span><span class="va">fig</span><span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html">add_trace</a></span> <span class="op">(</span>y<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Calories..kcal.</span>, </span>
 <span>                         x<span class="op">=</span><span class="va">data_for_plotting</span><span class="op">$</span><span class="va">Date</span> , </span>
 <span>                         name<span class="op">=</span><span class="st">"calories"</span>,</span>
 <span>                         type <span class="op">=</span><span class="st">"scatter"</span>, mode<span class="op">=</span><span class="st">"lines"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span></span>
-<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">fig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">layout</span><span class="op">(</span></span>
 <span>  title<span class="op">=</span><span class="st">" &lt;b&gt;My movement in 2022&lt;/b&gt;"</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> title<span class="op">=</span> <span class="st">"&lt;b&gt;Days&lt;/b&gt;"</span><span class="op">)</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> title<span class="op">=</span> <span class="st">"&lt;b&gt; steps(n)&lt;/b&gt; / &lt;b&gt; distance(m)&lt;/b&gt; / &lt;b&gt; calories(kcal) &lt;/b&gt; "</span><span class="op">)</span></span>
