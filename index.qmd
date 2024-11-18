@@ -6,7 +6,7 @@ listing:
   sort: "date desc"
   type: grid 
   feed: true
-  grid-columns: 2
+  grid-columns: 3
   image-height: 250px
   page-size: 100
   categories: true

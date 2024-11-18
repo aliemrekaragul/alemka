@@ -11,7 +11,7 @@ author:
       - name: TOBB ETU- University of Economics & Technology
 date: 2023-01-06
 categories: [Rvest, Wordcloud, Data-viz, natural language processing]
-image: "image.gif"
+image: "image.png"
 ---
 
 ```{r setup, include=FALSE}

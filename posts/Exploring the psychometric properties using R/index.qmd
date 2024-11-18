@@ -10,7 +10,7 @@ author:
       - name: TOBB ETU- University of Economics & Technology
 date: "03.04.2023"
 categories: [psychometrics, CTT, difficulty, discrimination]
-image: "image.gif"
+image: "image.png"
 output:
     self_contained: false
     code_folding: false

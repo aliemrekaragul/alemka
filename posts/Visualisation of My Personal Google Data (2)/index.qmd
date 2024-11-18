@@ -11,7 +11,7 @@ author:
       - name: TOBB ETU- University of Economics & Technology
 date: 2022-12-11
 categories: [Google Data, Data-viz]
-image: "image.gif"
+image: "image.png"
 ---
 
 ```{r setup, include=FALSE}
