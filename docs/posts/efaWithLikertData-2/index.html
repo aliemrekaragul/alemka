@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Ali Emre Karagül">
+<meta name="dcterms.date" content="2024-11-20">
+<meta name="description" content="This post focuses on multidimensioanl IRT (mIRT) as an exploratory factor analysis method on likert scale data. It is a continuation of the previous post, which was about exploratory factor analysis (EFA) with common factoring using polychoric correlations. The data utilized in the two posts are identical. We also compare factor scores obtained from both mIRT and EFA models.">
+<title>- Multidimensional IRT for Factor Exploration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/alemka.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title"></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../my_apps.html"> <i class="bi bi-terminal-fill" role="img">
+</i> 
+<span class="menu-text">My Apps</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-favs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-star-fill" role="img">
+</i> 
+ <span class="menu-text">Favs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
+ <span class="dropdown-text">R cheatsheets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
+ <span class="dropdown-text">R 4 D S</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
+ <span class="dropdown-text">Generate IRT Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
+ <span class="dropdown-text">Google Ngram Viewer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+ <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+ <span class="dropdown-text">Style Guide (Google)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://agreestat360.com/">
+ <span class="dropdown-text">AgreeStat 360-Interrater reliability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../aes.html">
+ <span class="dropdown-text">My AES Engine</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
+</i> 
+<span class="menu-text"> </span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Multidimensional IRT for Factor Exploration</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+                  <div>
+        <div class="description">
+          <p>This post focuses on multidimensioanl IRT (mIRT) as an exploratory factor analysis method on likert scale data. It is a continuation of the previous post, which was about exploratory factor analysis (EFA) with common factoring using polychoric correlations. The data utilized in the two posts are identical. We also compare factor scores obtained from both mIRT and EFA models.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">psychometrics</div>
+                <div class="quarto-category">Dimension Reduction</div>
+                <div class="quarto-category">Explotary Factor Analysis</div>
+                <div class="quarto-category">IRT</div>
+                <div class="quarto-category">Likert</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              TOBB ETU- University of Economics &amp; Technology
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 20, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#understand-the-data" id="toc-understand-the-data" class="nav-link" data-scroll-target="#understand-the-data">Understand the data</a></li>
+  <li>
+<a href="#multidimensional-irt-model-building" id="toc-multidimensional-irt-model-building" class="nav-link" data-scroll-target="#multidimensional-irt-model-building">Multidimensional IRT Model Building</a>
+  <ul>
+<li><a href="#initial-model" id="toc-initial-model" class="nav-link" data-scroll-target="#initial-model">Initial Model</a></li>
+  <li><a href="#final-model" id="toc-final-model" class="nav-link" data-scroll-target="#final-model">Final Model</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit">Model Fit</a></li>
+  <li>
+<a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a>
+  <ul class="collapse">
+<li><a href="#expected-total-score-plot" id="toc-expected-total-score-plot" class="nav-link" data-scroll-target="#expected-total-score-plot">Expected Total Score Plot</a></li>
+  <li><a href="#item-trace-plots" id="toc-item-trace-plots" class="nav-link" data-scroll-target="#item-trace-plots">Item Trace Plots</a></li>
+  <li><a href="#test-information" id="toc-test-information" class="nav-link" data-scroll-target="#test-information">Test Information</a></li>
+  </ul>
+</li>
+  <li><a href="#selected-items-and-defining-factors" id="toc-selected-items-and-defining-factors" class="nav-link" data-scroll-target="#selected-items-and-defining-factors">Selected Items and Defining Factors</a></li>
+  <li><a href="#factor-scores-of-persons" id="toc-factor-scores-of-persons" class="nav-link" data-scroll-target="#factor-scores-of-persons">Factor scores of persons</a></li>
+  <li><a href="#comparison-with-efa-model" id="toc-comparison-with-efa-model" class="nav-link" data-scroll-target="#comparison-with-efa-model">Comparison with EFA Model</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
+  <ul>
+<li><a href="#comparison-with-the-original-scale" id="toc-comparison-with-the-original-scale" class="nav-link" data-scroll-target="#comparison-with-the-original-scale">Comparison with the Original Scale</a></li>
+  </ul>
+</li>
+  <li><a href="#further-remarks" id="toc-further-remarks" class="nav-link" data-scroll-target="#further-remarks">Further Remarks</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Can we use multidimensional IRT (mIRT) for exploratory factor detection? What is the relation between EFA and mIRT? In fact, EFA is designed to work with continuous observed variables. And, in many cases, researchers use likert type scales to measure psychological constructs. So, that kind of discrete data may not be so suitable for EFA. However, <a href="https://link.springer.com/article/10.1007/BF02294363" title="ON THE RELATIONSHIP BETWEEN ITEM RESPONSE THEORY AND FACTOR ANALYSIS OF DISCRETIZED VARIABLES">Takane &amp; Leeuw (1987)</a> put forward that there is a relationship between IRT and EFA. That’s why the answer to the question is: Yes, IRT can be used for factor detection, both confirmatory and exploratory.</p>
+<p>Today, we will delve into the use of mIRT for exploratory factor analysis. The data we will use is the same as the one used in <a href="https://emrekaragul.com/posts/efaWithLikertData-1/">the previous post</a> called “Exploratory Factor Analysis with Likert Scale Data”. So, you can check the preprocessing section of that post to see how we filtered the data.</p>
+<p>Also, in the previous post, we have a detailed discussion about the number of the factors that can be extracted from this data. That’s why we are going to skip scree plots, K1, and parallel analysis in this post. I suggest seeing the previous post for those issues.</p>
+</section><section id="understand-the-data" class="level2"><h2 class="anchored" data-anchor-id="understand-the-data">Understand the data</h2>
+<p>The following code is also provided in the previous post. It is used to load the data and filter the participants based on their demographics. Let’s just run the same code to get the data ready for the analysis. If you are coming from the previous post, this code is already run. So, you can skip this part.</p>
+<div class="cell" data-code_folding="false">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"data.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_with_demographics</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">engnat</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hand</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&lt;=</span> <span class="fl">30</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">source</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df_with_demographics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">44</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Q21</span>, <span class="op">-</span><span class="va">Q43</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Just to remember how the data is distributed, let’s see the summary and structure of the data. Remember that we have already discarded items 21 and 43 to avoid multicollinearity because they have high correlation with items 8 and 27 consecutively.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span> ,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span> <span class="co"># run summary(df) to see all items.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Q1              Q2             Q3          Q4              Q5       
+ Min.   :0.000   Min.   :0.00   Min.   :0   Min.   :0.000   Min.   :0.000  
+ 1st Qu.:1.000   1st Qu.:2.00   1st Qu.:1   1st Qu.:2.000   1st Qu.:1.000  
+ Median :1.000   Median :5.00   Median :3   Median :4.000   Median :3.000  
+ Mean   :2.023   Mean   :3.76   Mean   :3   Mean   :3.281   Mean   :2.972  
+ 3rd Qu.:3.000   3rd Qu.:5.00   3rd Qu.:5   3rd Qu.:5.000   3rd Qu.:4.000  
+ Max.   :5.000   Max.   :5.00   Max.   :5   Max.   :5.000   Max.   :5.000  </code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   26334 obs. of  42 variables:
+ $ Q1 : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ Q2 : int  4 1 4 1 5 1 5 5 3 5 ...
+ $ Q3 : int  1 4 5 5 1 1 5 1 5 5 ...
+ $ Q4 : int  5 4 1 4 5 5 5 5 5 5 ...
+ $ Q5 : int  2 5 4 5 1 5 5 1 2 4 ...
+ $ Q6 : int  5 4 4 1 5 5 4 5 5 5 ...
+ $ Q7 : int  1 5 5 5 1 3 1 3 1 2 ...
+ $ Q8 : int  5 5 4 2 5 4 1 4 3 4 ...
+ $ Q9 : int  1 4 5 5 1 5 3 1 2 3 ...
+ $ Q10: int  4 2 1 3 5 4 2 3 2 1 ...
+ $ Q11: int  1 1 3 2 1 5 2 3 1 1 ...
+ $ Q12: int  5 4 1 1 5 2 1 4 1 5 ...
+ $ Q13: int  5 4 2 1 1 3 1 1 1 1 ...
+ $ Q14: int  5 2 5 2 5 2 5 2 1 4 ...
+ $ Q15: int  1 4 5 5 1 5 5 3 2 5 ...
+ $ Q16: int  1 2 1 1 5 1 5 1 5 5 ...
+ $ Q17: int  1 5 1 5 1 2 2 1 1 4 ...
+ $ Q18: int  5 2 4 3 1 3 5 5 3 3 ...
+ $ Q19: int  1 2 1 3 1 1 5 1 4 2 ...
+ $ Q20: int  5 3 4 4 5 1 4 5 1 5 ...
+ $ Q22: int  5 4 1 4 5 2 3 4 5 5 ...
+ $ Q23: int  4 2 5 2 1 3 4 3 4 3 ...
+ $ Q24: int  5 4 1 1 5 1 3 5 2 2 ...
+ $ Q25: int  1 5 4 2 1 3 4 1 1 1 ...
+ $ Q26: int  5 2 3 2 5 1 5 1 4 5 ...
+ $ Q27: int  1 4 4 5 1 5 5 1 1 5 ...
+ $ Q28: int  5 4 1 3 5 1 4 4 1 4 ...
+ $ Q29: int  1 1 1 1 1 3 5 1 5 1 ...
+ $ Q30: int  5 1 2 2 5 1 3 5 5 4 ...
+ $ Q31: int  1 5 1 4 1 3 1 1 5 4 ...
+ $ Q32: int  5 4 1 5 5 1 1 5 1 4 ...
+ $ Q33: int  1 5 3 3 1 2 4 1 2 3 ...
+ $ Q34: int  5 5 4 4 5 1 3 1 5 5 ...
+ $ Q35: int  1 4 5 2 1 5 5 1 5 5 ...
+ $ Q36: int  3 2 3 1 5 1 1 4 3 4 ...
+ $ Q37: int  1 1 5 5 1 4 4 1 5 3 ...
+ $ Q38: int  5 4 4 1 5 1 1 3 5 5 ...
+ $ Q39: int  1 2 2 1 1 5 5 1 5 5 ...
+ $ Q40: int  4 3 4 3 5 1 5 2 3 5 ...
+ $ Q41: int  1 4 4 5 1 4 5 1 5 4 ...
+ $ Q42: int  5 1 5 2 5 1 2 4 1 2 ...
+ $ Q44: int  5 3 4 1 5 1 5 5 5 4 ...</code></pre>
+</div>
+</div>
+</section><section id="multidimensional-irt-model-building" class="level2"><h2 class="anchored" data-anchor-id="multidimensional-irt-model-building">Multidimensional IRT Model Building</h2>
+<section id="initial-model" class="level3"><h3 class="anchored" data-anchor-id="initial-model">Initial Model</h3>
+<p>In this post, we are going to build 2-factor model as all the previous analyses suggest that 2-factor model is the best fit for this data. The factors are defined as <em>Masculinity</em> and <em>Femininity</em> by the origibal authors of the scale.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note on Item Selection</p>
+<p>The item selection processes for both mIRT and EFA are described in the literature strictly, although subjectivity within the boundaries of these definitions may still exist. In other words, although most decisions will be the same, there may be some differences among psychometricians in terms of selecting/discarding an item. One psychometrician might select an item while another might not. And, both might have their logical reasons. The reasoning behind selecting/discarding items might depend on both statistics and knowledge of construct that is being assessed. Thus, although I am not an expert in gender roles, I wanted this post to be a personal experiment to check if I can extract the same factors and items as the original authors. So, <strong>I avoided checking the items in the original scale developed by the authors.</strong> See the documentation of the scale for the original items <a href="https://openpsychometrics.org/tests/OSRI/development/" title="documentation">here.</a></p>
+</div>
+</div>
+<p>Let’s build the model with the <code>mirt</code> package.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/philchalmers/mirt">mirt</a></span><span class="op">)</span></span>
+<span><span class="va">model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mirt/man/mirt.html">mirt</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">2</span>, itemtype <span class="op">=</span> <span class="st">'graded'</span>, method <span class="op">=</span> <span class="st">'EM'</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">model_1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+mirt(data = df, model = 2, itemtype = "graded", method = "EM", 
+    verbose = FALSE)
+
+Full-information item factor analysis with 2 factor(s).
+Converged within 1e-04 tolerance after 236 EM iterations.
+mirt version: 1.42 
+M-step optimizer: BFGS 
+EM acceleration: Ramsay 
+Number of rectangular quadrature: 31
+Latent density type: Gaussian 
+
+Log-likelihood = -1590607
+Estimated parameters: 293 
+AIC = 3181800
+BIC = 3184196; SABIC = 3183265
+G2 (1e+10) = 2645146, p = 1
+RMSEA = 0, CFI = NaN, TLI = NaN</code></pre>
+</div>
+</div>
+<p>The `<code><a href="https://rdrr.io/pkg/mirt/man/mirt.html">mirt()</a></code> is a function built in the mirt package to build multidimensional IRT models. It takes a dataframe, number of factors, IRT model, method etc. In our model, we use the prominent Graded Response Model (GRM) that is suitable for Likert scale ordinal data. “EM”, which stands for “Expectation-Maximization”, is the default estimation method and suggested for models with less than 3 factors. The <code>verbose = FALSE</code> argument is used to suppress the output of the function after each iteration cycle.</p>
+<p>With the <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> function of mirt package, we can get the item parameters such as discrimination and difficulty.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">item_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">model_1</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">items</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">item_params</span><span class="op">)</span><span class="op">)</span> <span class="co"># run print(item_params) to see all items.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           a1          a2       d1         d2         d3          d4
+Q1  0.5428696 -0.87427291 7.469361 -0.4101088 -0.9383750 -1.53030916
+Q2 -1.3926877  0.10494528 7.617294  1.9428222  1.4265050  0.99922695
+Q3  0.3767874 -1.84457406 8.098128  1.1101457  0.4213897 -0.18057288
+Q4 -1.2437652 -0.22953251 6.872875  1.8390821  0.9332445  0.06892971
+Q5  0.2059426 -0.98529256 6.896770  1.1428991  0.4112459 -0.30738685
+Q6 -0.3865773  0.04663095 6.864864  2.3255300  1.4584706  0.64351628
+            d5
+Q1 -2.80068782
+Q2  0.08154265
+Q3 -1.33340228
+Q4 -1.21175535
+Q5 -1.40389522
+Q6 -0.52337385</code></pre>
+</div>
+</div>
+<p>In the case of factor analysis with MIRT, discrimination parameters are referred as the slope of the item characteristic surface (ICS). <code>a1</code> is the slope of the item on Factor 1, while <code>a2</code> is the slope of the item on Factor 2. Positive or negative values indicate the direction and strength of the relationship between the item and the respective factor.</p>
+<p><code>d1</code>, <code>d2</code>, <code>d3</code>, <code>d4</code> and <code>d5</code> are the difficulty parameters of the items. They are also called as the threshold parameters. They represent the intercepts of the item for each category in the likert scale. Thresholds should increase monotonically (d1 &gt; d2 &gt; d3 &gt; …) for well-functioning items. Non-monotonic thresholds suggest problems with item performance. To detect these items, we can use the following function. It is expected to print the index of problematic items.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">check_monotonic</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">d_columns</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^d\\d+$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="va">non_monotonic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html">logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">d_columns</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">d_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">non_monotonic</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">d_columns</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">non_monotonic</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">check_monotonic</span><span class="op">(</span><span class="va">item_params</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+</div>
+<p>The output is null, suggesting all the items have monotonic thresholds.</p>
+<p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function provides us with the factor loadings and the communalities (h2) of the variables. The default rotation method is oblimin. Therfore, we provide <code>rotate = "none"</code> in the function. Below the factor loadings, we can see the explained variance by each factor. The first factor explains %17.6 of the variance, while the second factor explains %10.8. Also, the correlation between the factors seems to be zero. Oblique rotations (e.g., oblimin) allow factors to be correlated, providing these estimates directly. As we set the rotation to none, the correlation between the factors is not calculated. Yet, we will get the correlation scores after we apply a rotation.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_1</span>, rotate <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Unrotated factor loadings: 
+
+         F1        F2     h2
+Q1   0.2729 -0.439568 0.2677
+Q2  -0.6326  0.047666 0.4024
+Q3   0.1485 -0.726795 0.5503
+Q4  -0.5865 -0.108245 0.3558
+Q5   0.1041 -0.498283 0.2591
+Q6  -0.2214  0.026708 0.0497
+Q7   0.2366 -0.400577 0.2164
+Q8  -0.4228  0.126203 0.1947
+Q9   0.3049 -0.576922 0.4258
+Q10 -0.2790  0.051659 0.0805
+Q11  0.1865 -0.215908 0.0814
+Q12 -0.5260  0.171620 0.3061
+Q13  0.4317 -0.091842 0.1948
+Q14 -0.5978 -0.035233 0.3586
+Q15  0.0794 -0.610298 0.3788
+Q16 -0.6210  0.050615 0.3882
+Q17  0.1866 -0.542158 0.3288
+Q18 -0.3000 -0.082622 0.0968
+Q19  0.4003 -0.276375 0.2366
+Q20 -0.6201  0.163312 0.4112
+Q22 -0.5505  0.050788 0.3056
+Q23  0.0277 -0.341561 0.1174
+Q24 -0.4089  0.102879 0.1778
+Q25  0.3163 -0.396559 0.2573
+Q26 -0.5752 -0.007970 0.3310
+Q27  0.1348 -0.523084 0.2918
+Q28 -0.5349  0.021320 0.2866
+Q29  0.1100 -0.583130 0.3521
+Q30 -0.5607  0.042580 0.3162
+Q31  0.4048 -0.284227 0.2447
+Q32 -0.3573  0.095665 0.1368
+Q33  0.4155 -0.185081 0.2069
+Q34 -0.5225  0.054848 0.2760
+Q35  0.1540 -0.588756 0.3704
+Q36 -0.5778  0.047455 0.3361
+Q37  0.2797 -0.314347 0.1771
+Q38 -0.6441 -0.015461 0.4151
+Q39  0.1609 -0.744320 0.5799
+Q40 -0.5856 -0.025633 0.3436
+Q41  0.1618 -0.362005 0.1572
+Q42 -0.5156 -0.000675 0.2659
+Q44 -0.6280  0.000000 0.3943
+
+SS loadings:  7.399 4.525 
+Proportion Var:  0.176 0.108 
+
+Factor correlations: 
+
+   F1 F2
+F1  1   
+F2  0  1</code></pre>
+</div>
+</div>
+<p>Before we apply a rotation, we need to check communalities to be over 0.30 just as it is in EFA. Communalities do not change after rotation, so we can discard the items with communalities below 0.30 at this stage. Here is the code to print the communalities below 0.3:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">communalities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">model_1</span><span class="op">@</span><span class="va">Fit</span><span class="op">[[</span><span class="st">"h2"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">low_communalities</span> <span class="op">&lt;-</span> <span class="va">communalities</span><span class="op">[</span><span class="va">communalities</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">0.3</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># print ordered by communality value:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">low_communalities</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">low_communalities</span><span class="op">$</span><span class="va">value</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         value
+Q6  0.04973608
+Q10 0.08049372
+Q11 0.08140447
+Q18 0.09683406
+Q23 0.11743292
+Q32 0.13679041
+Q41 0.15723452
+Q37 0.17705607
+Q24 0.17778655
+Q8  0.19465828
+Q13 0.19482647
+Q33 0.20685832
+Q7  0.21643984
+Q19 0.23662033
+Q31 0.24466433
+Q25 0.25733267
+Q5  0.25913279
+Q42 0.26588832
+Q1  0.26771912
+Q34 0.27603944
+Q28 0.28656914
+Q27 0.29178386</code></pre>
+</div>
+</div>
+</section><section id="final-model" class="level3"><h3 class="anchored" data-anchor-id="final-model">Final Model</h3>
+<p>Items with low communality values can be discarded from the dataset. To do that, run the following code:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">discard_these_items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">low_communalities</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">discard_these_items</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Q1"  "Q5"  "Q6"  "Q7"  "Q8"  "Q10" "Q11" "Q13" "Q18" "Q19" "Q23" "Q24"
+[13] "Q25" "Q27" "Q28" "Q31" "Q32" "Q33" "Q34" "Q37" "Q41" "Q42"</code></pre>
+</div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_final</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">discard_these_items</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, using the <code>df_final</code>, we can build our final solution:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mirt/man/mirt.html">mirt</a></span><span class="op">(</span><span class="va">df_final</span>, <span class="fl">2</span>, itemtype <span class="op">=</span> <span class="st">'graded'</span>, method <span class="op">=</span> <span class="st">'EM'</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">model_2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+mirt(data = df_final, model = 2, itemtype = "graded", method = "EM", 
+    verbose = FALSE)
+
+Full-information item factor analysis with 2 factor(s).
+Converged within 1e-04 tolerance after 184 EM iterations.
+mirt version: 1.42 
+M-step optimizer: BFGS 
+EM acceleration: Ramsay 
+Number of rectangular quadrature: 31
+Latent density type: Gaussian 
+
+Log-likelihood = -752201.4
+Estimated parameters: 139 
+AIC = 1504681
+BIC = 1505818; SABIC = 1505376
+G2 (1e+10) = 968649.2, p = 1
+RMSEA = 0, CFI = NaN, TLI = NaN</code></pre>
+</div>
+</div>
+<p>Let’s see the factor loadings for the final solution. If we need to, we can apply a rotation later on:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_2</span>, rotate <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Unrotated factor loadings: 
+
+        F1      F2    h2
+Q2   0.605  0.0369 0.368
+Q3  -0.148 -0.7520 0.587
+Q4   0.575 -0.1099 0.343
+Q9  -0.297 -0.5812 0.426
+Q12  0.511  0.1587 0.286
+Q14  0.634 -0.0172 0.402
+Q15 -0.078 -0.5531 0.312
+Q16  0.624  0.0593 0.393
+Q17 -0.183 -0.5115 0.295
+Q20  0.596  0.1708 0.385
+Q22  0.541  0.0636 0.297
+Q26  0.593  0.0153 0.351
+Q29 -0.109 -0.6068 0.380
+Q30  0.542  0.0504 0.296
+Q35 -0.145 -0.5846 0.363
+Q36  0.577  0.0392 0.334
+Q38  0.651 -0.0059 0.424
+Q39 -0.159 -0.7813 0.636
+Q40  0.630 -0.0200 0.397
+Q44  0.611  0.0000 0.374
+
+SS loadings:  4.777 2.872 
+Proportion Var:  0.239 0.144 
+
+Factor correlations: 
+
+   F1 F2
+F1  1   
+F2  0  1</code></pre>
+</div>
+</div>
+<p>The factor loadings and communalities of the final solution looks fine. The explained variance by each factor is %23.9 and %14.4, respectively. This suggests an increase in the explained variance by the factors when compared to the initial model. Now, we can apply a rotation to see the correlation of the factors.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_2</span>, rotate <span class="op">=</span> <span class="st">"oblimin"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Rotation:  oblimin 
+
+Rotated factor loadings: 
+
+         F1       F2    h2
+Q2   0.6020 -0.01689 0.368
+Q3   0.0252  0.77249 0.587
+Q4   0.6058  0.13388 0.343
+Q9  -0.1646  0.59058 0.426
+Q12  0.4781 -0.14616 0.286
+Q14  0.6431  0.04007 0.402
+Q15  0.0496  0.56925 0.312
+Q16  0.6158 -0.03944 0.393
+Q17 -0.0663  0.52252 0.295
+Q20  0.5618 -0.15568 0.385
+Q22  0.5310 -0.04682 0.297
+Q26  0.5941  0.00498 0.351
+Q29  0.0308  0.62368 0.380
+Q30  0.5345 -0.03308 0.296
+Q35 -0.0107  0.59951 0.363
+Q36  0.5724 -0.02029 0.334
+Q38  0.6576  0.02896 0.424
+Q39  0.0204  0.80238 0.636
+Q40  0.6397  0.04283 0.397
+Q44  0.6164  0.02147 0.374
+
+Rotated SS loadings:  4.572 3.009 
+
+Factor correlations: 
+
+       F1 F2
+F1  1.000   
+F2 -0.257  1</code></pre>
+</div>
+</div>
+<p>The correlation between the factors is -0.26 after the rotation. This is a good result as it is not too high to suggest a single factor solution, nor too low to suggest a completely independent factor solution.</p>
+</section><section id="model-fit" class="level3"><h3 class="anchored" data-anchor-id="model-fit">Model Fit</h3>
+<p>To see model’s fit indices, we can use <code><a href="https://rdrr.io/pkg/mirt/man/M2.html">M2()</a></code> of mirt:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mirt/man/M2.html">M2</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            M2 df p      RMSEA    RMSEA_5   RMSEA_95      SRMSR      TLI
+stats 5090.389 71 0 0.05181388 0.05061086 0.05302509 0.03886059 0.914146
+            CFI
+stats 0.9445851</code></pre>
+</div>
+</div>
+<p>The model fit indices are suggesting a good model fit. RMSEA and SRMSR values are below 0.08 and TLI and CFI are above 0.90. These values are considered as good fit indices for a model.</p>
+</section><section id="visualization" class="level3"><h3 class="anchored" data-anchor-id="visualization">Visualization</h3>
+<p>The MIRT package provides with 3D plotting options. We can use the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="https://rdrr.io/pkg/mirt/man/itemplot.html">itemplot()</a></code> functions to see the 3D plots of the model. We can also implement rotation to see the rotated model’s plot.</p>
+<section id="expected-total-score-plot" class="level4"><h4 class="anchored" data-anchor-id="expected-total-score-plot">Expected Total Score Plot</h4>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model_2</span>, rotate <span class="op">=</span> <span class="st">"oblimin"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="item-trace-plots" class="level4"><h4 class="anchored" data-anchor-id="item-trace-plots">Item Trace Plots</h4>
+<p>We can also check for item trace plots. Let’s see the first item’s trace plot for final model without rotation and with rotation:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mirt/man/itemplot.html">itemplot</a></span><span class="op">(</span><span class="va">model_2</span>, <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mirt/man/itemplot.html">itemplot</a></span><span class="op">(</span><span class="va">model_2</span>, <span class="fl">1</span>, rotate <span class="op">=</span> <span class="st">"oblimin"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="test-information" class="level4"><h4 class="anchored" data-anchor-id="test-information">Test Information</h4>
+<p>We can also draw a plot to see the test information. Test information is a measure of the precision of the test at different levels of the latent traits. In multidimensional models we need to produce a contour plot.</p>
+<p>We can plot the test information with the following code:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model_2</span>, rotate <span class="op">=</span> <span class="st">"oblimin"</span> ,type<span class="op">=</span><span class="st">"infocontour"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The test is most effective (provides the highest precision) in the central regions where test information is high (contour values like 6 or 7). Meaning the test is most effective for around 0 thetas of both factors. At the edges of the plot, the test is less precise (values like 1 or 2), meaning the test is less effective at distinguishing individuals with very high or very low abilities in those dimensions.</p>
+</section></section><section id="selected-items-and-defining-factors" class="level3"><h3 class="anchored" data-anchor-id="selected-items-and-defining-factors">Selected Items and Defining Factors</h3>
+<p>We are solid that our data has 2 factors, with each variable loading to a single factor. These factors were named as <strong>Femininity</strong> and <strong>Masculinity</strong> in the original scale.</p>
+<p>These are the factors and their variables.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>Femininity</th>
+<th>Masculinity</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Q2 I have thought about dying my hair.</td>
+<td>Q3 I have thrown knives, axes or other sharp things.</td>
+</tr>
+<tr class="even">
+<td>Q4 I give people handmade gifts.</td>
+<td>Q9 I like guns.</td>
+</tr>
+<tr class="odd">
+<td>Q12 I use lotion on my hands.</td>
+<td>Q15 I have thought it would be exciting to be an outlaw.</td>
+</tr>
+<tr class="even">
+<td>Q14 I dance when I am alone.</td>
+<td>Q17 I have considered joining the military.</td>
+</tr>
+<tr class="odd">
+<td>Q16 When I was a child, I put on fake concerts and plays with my friends.</td>
+<td>Q29 I have burned things up with a magnifying glass.</td>
+</tr>
+<tr class="even">
+<td>Q20 I sometimes feel like crying when I get angry.</td>
+<td>Q35 I have taken apart machines just to see how they work.</td>
+</tr>
+<tr class="odd">
+<td>Q22 I save the letters I get.</td>
+<td>Q39 I have set fuels, aerosols or other chemicals on fire, just for fun.</td>
+</tr>
+<tr class="even">
+<td>Q26 I jump up and down in excitement sometimes.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Q30 I think horoscopes are fun.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Q36 I take lots of pictures of my activities.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Q38 I leave nice notes for people now and then.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Q40 I really like dancing.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Q44 I decorate my things (e.g.&nbsp;stickers on laptop).</td>
+<td></td>
+</tr>
+</tbody>
+</table></section><section id="factor-scores-of-persons" class="level3"><h3 class="anchored" data-anchor-id="factor-scores-of-persons">Factor scores of persons</h3>
+<p>Finally, we can extract the factor scores of the persons. These scores can be used in further analyses such as regression, clustering, etc.</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mirt/man/fscores.html">fscores</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span><span class="op">)</span> <span class="co">## run fscores(model_2) to see all scores.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             F1         F2
+[1,]  1.9183653 -2.0882425
+[2,] -0.5932079  0.4430873
+[3,] -0.3261666  0.7950392
+[4,] -1.4358888  0.6969259
+[5,]  3.1571670 -2.2801150
+[6,] -2.3165436  1.3256648</code></pre>
+</div>
+</div>
+<p>As we did in EFA in the previous post, we can use these factor scores in a scree plot with genders of the participants. Let’s see the plot:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">mirt_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mirt/man/fscores.html">fscores</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mirt_scores</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Femininity"</span>, <span class="st">"Masculinity"</span><span class="op">)</span></span>
+<span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">mirt_scores</span><span class="op">)</span></span>
+<span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols</a></span><span class="op">(</span><span class="va">df_with_demographics</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span>, <span class="va">scores</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">gender</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">gender</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>  </span>
+<span></span>
+<span><span class="co"># Plot the filtered data</span></span>
+<span><span class="va">scores</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Femininity</span>, <span class="va">Masculinity</span>, color <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In my opinion this plot’s being parallelogram-like is interesting. The same plot in EFA was more like a rectangle, although both distributions are similar.</p>
+</section><section id="comparison-with-efa-model" class="level3"><h3 class="anchored" data-anchor-id="comparison-with-efa-model">Comparison with EFA Model</h3>
+<p>It is also a good idea to check the correlation between the factor scores obtained from mIRT and EFA.</p>
+<p>Let’s build the EFA model again:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
+<span><span class="va">df_EFA</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>  <span class="op">-</span><span class="va">Q6</span>, <span class="op">-</span><span class="va">Q11</span>, <span class="op">-</span><span class="va">Q10</span>, <span class="op">-</span><span class="va">Q18</span>, <span class="op">-</span><span class="va">Q23</span>, <span class="op">-</span><span class="va">Q32</span>, <span class="op">-</span><span class="va">Q37</span>, <span class="op">-</span><span class="va">Q41</span>, </span>
+<span>  <span class="op">-</span><span class="va">Q24</span>, <span class="op">-</span><span class="va">Q8</span>, <span class="op">-</span><span class="va">Q13</span>, <span class="op">-</span><span class="va">Q33</span>, <span class="op">-</span><span class="va">Q7</span>, <span class="op">-</span><span class="va">Q19</span>, <span class="op">-</span><span class="va">Q31</span>, <span class="op">-</span><span class="va">Q42</span>, </span>
+<span>  <span class="op">-</span><span class="va">Q25</span>, <span class="op">-</span><span class="va">Q34</span>, <span class="op">-</span><span class="va">Q28</span>, <span class="op">-</span><span class="va">Q5</span>, <span class="op">-</span><span class="va">Q1</span>, <span class="op">-</span><span class="va">Q12</span>, <span class="op">-</span><span class="va">Q27</span>, <span class="op">-</span><span class="va">Q30</span>, <span class="op">-</span><span class="va">Q22</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">poly_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/tetrachor.html">polychoric</a></span><span class="op">(</span><span class="va">df_EFA</span><span class="op">)</span><span class="op">$</span><span class="va">rho</span></span>
+<span></span>
+<span><span class="va">two_fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">poly_matrix</span>, nfactors <span class="op">=</span> <span class="fl">2</span>, fm <span class="op">=</span> <span class="st">"pa"</span>, rotate <span class="op">=</span> <span class="st">"oblimin"</span>, cor <span class="op">=</span> <span class="st">"poly"</span>, SMC<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Remember that although the items selected by EFA and IRT are very similar, they are not identical. We can compare the items selected by both methods:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mirt_items</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df_final</span><span class="op">)</span></span>
+<span><span class="va">efa_items</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df_EFA</span><span class="op">)</span></span>
+<span><span class="va">all_items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">mirt_items</span>, <span class="va">efa_items</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  mirt_items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">all_items</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">mirt_items</span>, <span class="va">all_items</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>  efa_items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">all_items</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">efa_items</span>, <span class="va">all_items</span>, <span class="st">""</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mirt_items efa_items
+1          Q2        Q2
+2          Q3        Q3
+3          Q4        Q4
+4          Q9        Q9
+5         Q12          
+6         Q14       Q14
+7         Q15       Q15
+8         Q16       Q16
+9         Q17       Q17
+10        Q20       Q20
+11        Q22          
+12        Q26       Q26
+13        Q29       Q29
+14        Q30          
+15        Q35       Q35
+16        Q36       Q36
+17        Q38       Q38
+18        Q39       Q39
+19        Q40       Q40
+20        Q44       Q44</code></pre>
+</div>
+</div>
+<p>So items 12, 22, and 30 are selected by IRT model but they are not selected by EFA model.</p>
+<p>Now let’s have a look at the correlation between factor scores obtained from mIRT and EFA models:</p>
+<div class="cell" data-code_folding="false">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">efa_scores</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/factor.scores.html">factor.scores</a></span><span class="op">(</span><span class="va">df_EFA</span>, <span class="va">two_fm</span><span class="op">)</span><span class="op">$</span><span class="va">scores</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">efa_scores</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Femininity_efa"</span>, <span class="st">"Masculinity_efa"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mirt_scores</span>, <span class="va">efa_scores</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Femininity_efa Masculinity_efa
+Femininity       0.9741479      -0.3107335
+Masculinity     -0.3301980       0.9873525</code></pre>
+</div>
+</div>
+<p>The participants’ scores obtained from MIRT and EFA models are highly correlated. The correlation between the femininity scores is 0.98, while the correlation between the masculinity scores is 0.99. This suggests that the factor scores obtained from both models are very similar.</p>
+</section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this post, we worked on how to run multidimensional Item Response Theory based exploratory factor analysis on likert scale data. We used the <code>mirt</code> package in R to build the model. We also compared the factor scores obtained from the mIRT model with the factor scores obtained from the EFA model, which was discussed in my previous post. The results suggest that the factor scores from both models are highly correlated. Also, the mIRT model has shown great fit, even better than EFA model. These findings supports the opinion that as EFA is designed to work on continuous data, mIRT is a good alternative for factor detection in likert scale data.</p>
+<section id="comparison-with-the-original-scale" class="level3"><h3 class="anchored" data-anchor-id="comparison-with-the-original-scale">Comparison with the Original Scale</h3>
+<p>Both my EFA and mIRT models have similar items to the original scale. However, the scales are not identical. The original scale contains 10 items for each factor. The difference occurs because of the variation in our approaches in two ways:</p>
+<ol type="1">
+<li><p>I discarded two items because they are highly correlated with other two items, pointing to multicollinearity issues. It wasn’t done on the original scale. This might be because the authors might not have this issue in their original data. This difference probably resulted in the alternation in the item selection processes.</p></li>
+<li><p>The preferred rotation method is different in the original scale. Although this shouldn’t make an effect on item selection for the factors, the participants’ factor scores might slightly alter. I used oblimin rotation while the original authors used varimax. The varimax is usually preferred when factors are independent of each other (no correlation between factors). The aim of varimax rotation is to maximize the variance of the squared loadings. Thus, it creates a simpler structure and encourages each variable to load strongly on one factor and weakly on others. Assuming the factors (Femininity and Masculinity) are independent of each other, the original authors might have used varimax rotation. In my personal opinion, these two factors could be considered as correlated negatively. That’s why I used oblimin rotation. Yet, as I mentioned before, I am not an expert on gender roles. So, I might be wrong in this assumption. In a real case study, I would definitely consult with an expert in the field to decide on the rotation method.</p></li>
+</ol></section></section><section id="further-remarks" class="level2"><h2 class="anchored" data-anchor-id="further-remarks">Further Remarks</h2>
+<ul>
+<li>Running Confirmatory Factor Analysis (CFA) and mIRT for confirmatory factor detection is planned for a future post.</li>
+</ul>
+
+
+<!-- -->
+
+</section></main><!-- /main --><div> 
+<hr>
+<!-- Begin Mailchimp Signup Form --><link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
+	
+</style>
+<div id="mc_embed_signup">
+    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+        <div id="mc_embed_signup_scroll">
+        <h2>You can subscribe to be notified about my new posts</h2>
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+</div>
+	<div id="mce-responses" class="clear foot">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_e72720e0214b2266cab41097e_5cddb1a68e" tabindex="-1" value=""></div>
+        <div class="optionalParent">
+            <div class="clear foot">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+        </div>
+    </div>
+</form>
+</div>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script><!--End mc_embed_signup--><hr>
+</div>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb44" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Multidimensional IRT for Factor Exploration"</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co">  This post focuses on multidimensioanl IRT (mIRT) as an exploratory factor analysis method on likert scale data. It is a continuation of the previous post, which was about exploratory factor analysis (EFA) with common factoring using polychoric correlations. The data utilized in the two posts are identical. We also compare factor scores obtained from both mIRT and EFA models.</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Ali Emre Karagül</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-5820-8643</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co">    email: aliemrekaragul@gmail.com</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: TOBB ETU- University of Economics &amp; Technology</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-11-20</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [psychometrics, Dimension Reduction, Explotary Factor Analysis, IRT, Likert]</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "image.png"</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="co">    self_contained: false</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="co">    code_folding: false</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>Can we use multidimensional IRT (mIRT) for exploratory factor detection? What is the relation between EFA and mIRT? In fact, EFA is designed to work with continuous observed variables. And, in many cases, researchers use likert type scales to measure psychological constructs. So, that kind of discrete data may not be so suitable for EFA. However, <span class="co">[</span><span class="ot">Takane &amp; Leeuw (1987)</span><span class="co">](https://link.springer.com/article/10.1007/BF02294363 "ON THE RELATIONSHIP BETWEEN ITEM RESPONSE THEORY AND FACTOR ANALYSIS OF DISCRETIZED VARIABLES")</span> put forward that there is a relationship between IRT and EFA. That's why the answer to the question is: Yes, IRT can be used for factor detection, both confirmatory and exploratory.</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>Today, we will delve into the use of mIRT for exploratory factor analysis. The data we will use is the same as the one used in <span class="co">[</span><span class="ot">the previous post</span><span class="co">](https://emrekaragul.com/posts/efaWithLikertData-1/)</span> called "Exploratory Factor Analysis with Likert Scale Data". So, you can check the preprocessing section of that post to see how we filtered the data.</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>Also, in the previous post, we have a detailed discussion about the number of the factors that can be extracted from this data. That's why we are going to skip scree plots, K1, and parallel analysis in this post. I suggest seeing the previous post for those issues.</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understand the data</span></span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>The following code is also provided in the previous post. It is used to load the data and filter the participants based on their demographics. Let's just run the same code to get the data ready for the analysis. If you are coming from the previous post, this code is already run. So, you can skip this part.</span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a><span class="in">data &lt;- read.delim("data.csv")</span></span>
+<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a><span class="in">df_with_demographics &lt;- data %&gt;% </span></span>
+<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(engnat == 1) %&gt;% </span></span>
+<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(hand == 1) %&gt;% </span></span>
+<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(age &gt;= 18 &amp; age &lt;= 30) %&gt;% </span></span>
+<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(source == 1)</span></span>
+<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- df_with_demographics %&gt;% select(1:44)</span></span>
+<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- df %&gt;% select(-Q21, -Q43)</span></span>
+<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-47"><a href="#cb44-47" aria-hidden="true" tabindex="-1"></a>Just to remember how the data is distributed, let's see the summary and structure of the data. Remember that we have already discarded items 21 and 43 to avoid multicollinearity because they have high correlation with items 8 and 27 consecutively.</span>
+<span id="cb44-48"><a href="#cb44-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-49"><a href="#cb44-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-50"><a href="#cb44-50" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-51"><a href="#cb44-51" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-52"><a href="#cb44-52" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-53"><a href="#cb44-53" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-54"><a href="#cb44-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-55"><a href="#cb44-55" aria-hidden="true" tabindex="-1"></a><span class="in">summary(df[ ,1:5]) # run summary(df) to see all items.</span></span>
+<span id="cb44-56"><a href="#cb44-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-57"><a href="#cb44-57" aria-hidden="true" tabindex="-1"></a><span class="in">str(df)</span></span>
+<span id="cb44-58"><a href="#cb44-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-59"><a href="#cb44-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-60"><a href="#cb44-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multidimensional IRT Model Building</span></span>
+<span id="cb44-61"><a href="#cb44-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-62"><a href="#cb44-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Initial Model</span></span>
+<span id="cb44-63"><a href="#cb44-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-64"><a href="#cb44-64" aria-hidden="true" tabindex="-1"></a>In this post, we are going to build 2-factor model as all the previous analyses suggest that 2-factor model is the best fit for this data. The factors are defined as *Masculinity* and *Femininity* by the origibal authors of the scale.</span>
+<span id="cb44-65"><a href="#cb44-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-66"><a href="#cb44-66" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb44-67"><a href="#cb44-67" aria-hidden="true" tabindex="-1"></a>Note on Item Selection</span>
+<span id="cb44-68"><a href="#cb44-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-69"><a href="#cb44-69" aria-hidden="true" tabindex="-1"></a>The item selection processes for both mIRT and EFA are described in the literature strictly, although subjectivity within the boundaries of these definitions may still exist. In other words, although most decisions will be the same, there may be some differences among psychometricians in terms of selecting/discarding an item. One psychometrician might select an item while another might not. And, both might have their logical reasons. The reasoning behind selecting/discarding items might depend on both statistics and knowledge of construct that is being assessed. Thus, although I am not an expert in gender roles, I wanted this post to be a personal experiment to check if I can extract the same factors and items as the original authors. So, **I avoided checking the items in the original scale developed by the authors.** See the documentation of the scale for the original items <span class="co">[</span><span class="ot">here.</span><span class="co">](https://openpsychometrics.org/tests/OSRI/development/ "documentation")</span></span>
+<span id="cb44-70"><a href="#cb44-70" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-71"><a href="#cb44-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-72"><a href="#cb44-72" aria-hidden="true" tabindex="-1"></a>Let's build the model with the <span class="in">`mirt`</span> package.</span>
+<span id="cb44-73"><a href="#cb44-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-74"><a href="#cb44-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-75"><a href="#cb44-75" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-76"><a href="#cb44-76" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-77"><a href="#cb44-77" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-78"><a href="#cb44-78" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-79"><a href="#cb44-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-80"><a href="#cb44-80" aria-hidden="true" tabindex="-1"></a><span class="in">library(mirt)</span></span>
+<span id="cb44-81"><a href="#cb44-81" aria-hidden="true" tabindex="-1"></a><span class="in">model_1 &lt;- mirt(df, 2, itemtype = 'graded', method = 'EM', verbose = FALSE)</span></span>
+<span id="cb44-82"><a href="#cb44-82" aria-hidden="true" tabindex="-1"></a><span class="in">model_1</span></span>
+<span id="cb44-83"><a href="#cb44-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-84"><a href="#cb44-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-85"><a href="#cb44-85" aria-hidden="true" tabindex="-1"></a>The <span class="sc">\`</span><span class="in">`mirt()`</span> is a function built in the mirt package to build multidimensional IRT models. It takes a dataframe, number of factors, IRT model, method etc. In our model, we use the prominent Graded Response Model (GRM) that is suitable for Likert scale ordinal data. "EM", which stands for "Expectation-Maximization", is the default estimation method and suggested for models with less than 3 factors. The <span class="in">`verbose = FALSE`</span> argument is used to suppress the output of the function after each iteration cycle.</span>
+<span id="cb44-86"><a href="#cb44-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-87"><a href="#cb44-87" aria-hidden="true" tabindex="-1"></a>With the <span class="in">`coef()`</span> function of mirt package, we can get the item parameters such as discrimination and difficulty.</span>
+<span id="cb44-88"><a href="#cb44-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-89"><a href="#cb44-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-90"><a href="#cb44-90" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-91"><a href="#cb44-91" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-92"><a href="#cb44-92" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-93"><a href="#cb44-93" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-94"><a href="#cb44-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-95"><a href="#cb44-95" aria-hidden="true" tabindex="-1"></a><span class="in">item_params &lt;- coef(model_1, simplify = TRUE)$items</span></span>
+<span id="cb44-96"><a href="#cb44-96" aria-hidden="true" tabindex="-1"></a><span class="in">print(head(item_params)) # run print(item_params) to see all items.</span></span>
+<span id="cb44-97"><a href="#cb44-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-98"><a href="#cb44-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-99"><a href="#cb44-99" aria-hidden="true" tabindex="-1"></a>In the case of factor analysis with MIRT, discrimination parameters are referred as the slope of the item characteristic surface (ICS). <span class="in">`a1`</span> is the slope of the item on Factor 1, while <span class="in">`a2`</span> is the slope of the item on Factor 2. Positive or negative values indicate the direction and strength of the relationship between the item and the respective factor.</span>
+<span id="cb44-100"><a href="#cb44-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-101"><a href="#cb44-101" aria-hidden="true" tabindex="-1"></a><span class="in">`d1`</span>, <span class="in">`d2`</span>, <span class="in">`d3`</span>, <span class="in">`d4`</span> and <span class="in">`d5`</span> are the difficulty parameters of the items. They are also called as the threshold parameters. They represent the intercepts of the item for each category in the likert scale. Thresholds should increase monotonically (d1 <span class="sc">\&gt;</span> d2 <span class="sc">\&gt;</span> d3 <span class="sc">\&gt;</span> ...) for well-functioning items. Non-monotonic thresholds suggest problems with item performance. To detect these items, we can use the following function. It is expected to print the index of problematic items.</span>
+<span id="cb44-102"><a href="#cb44-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-103"><a href="#cb44-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-104"><a href="#cb44-104" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-105"><a href="#cb44-105" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-106"><a href="#cb44-106" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-107"><a href="#cb44-107" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-108"><a href="#cb44-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-109"><a href="#cb44-109" aria-hidden="true" tabindex="-1"></a><span class="in">check_monotonic &lt;- function(data) {</span></span>
+<span id="cb44-110"><a href="#cb44-110" aria-hidden="true" tabindex="-1"></a><span class="in">  d_columns &lt;- data[, grepl("^d\\d+$", names(data))]</span></span>
+<span id="cb44-111"><a href="#cb44-111" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb44-112"><a href="#cb44-112" aria-hidden="true" tabindex="-1"></a><span class="in">  non_monotonic &lt;- logical(nrow(d_columns))</span></span>
+<span id="cb44-113"><a href="#cb44-113" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb44-114"><a href="#cb44-114" aria-hidden="true" tabindex="-1"></a><span class="in">  for (i in seq_len(nrow(d_columns))) {</span></span>
+<span id="cb44-115"><a href="#cb44-115" aria-hidden="true" tabindex="-1"></a><span class="in">    non_monotonic[i] &lt;- any(diff(as.numeric(d_columns[i, ])) &lt; 0)</span></span>
+<span id="cb44-116"><a href="#cb44-116" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb44-117"><a href="#cb44-117" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb44-118"><a href="#cb44-118" aria-hidden="true" tabindex="-1"></a><span class="in">  which(non_monotonic)</span></span>
+<span id="cb44-119"><a href="#cb44-119" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb44-120"><a href="#cb44-120" aria-hidden="true" tabindex="-1"></a><span class="in">check_monotonic(item_params)</span></span>
+<span id="cb44-121"><a href="#cb44-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-122"><a href="#cb44-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-123"><a href="#cb44-123" aria-hidden="true" tabindex="-1"></a>The output is null, suggesting all the items have monotonic thresholds.</span>
+<span id="cb44-124"><a href="#cb44-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-125"><a href="#cb44-125" aria-hidden="true" tabindex="-1"></a>The <span class="in">`summary()`</span> function provides us with the factor loadings and the communalities (h2) of the variables. The default rotation method is oblimin. Therfore, we provide <span class="in">`rotate = "none"`</span> in the function. Below the factor loadings, we can see the explained variance by each factor. The first factor explains %17.6 of the variance, while the second factor explains %10.8. Also, the correlation between the factors seems to be zero. Oblique rotations (e.g., oblimin) allow factors to be correlated, providing these estimates directly. As we set the rotation to none, the correlation between the factors is not calculated. Yet, we will get the correlation scores after we apply a rotation.</span>
+<span id="cb44-126"><a href="#cb44-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-127"><a href="#cb44-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-128"><a href="#cb44-128" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-129"><a href="#cb44-129" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-130"><a href="#cb44-130" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-131"><a href="#cb44-131" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-132"><a href="#cb44-132" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_1, rotate = "none")</span></span>
+<span id="cb44-133"><a href="#cb44-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-134"><a href="#cb44-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-135"><a href="#cb44-135" aria-hidden="true" tabindex="-1"></a>Before we apply a rotation, we need to check communalities to be over 0.30 just as it is in EFA. Communalities do not change after rotation, so we can discard the items with communalities below 0.30 at this stage. Here is the code to print the communalities below 0.3:</span>
+<span id="cb44-136"><a href="#cb44-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-137"><a href="#cb44-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-138"><a href="#cb44-138" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-139"><a href="#cb44-139" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-140"><a href="#cb44-140" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-141"><a href="#cb44-141" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-142"><a href="#cb44-142" aria-hidden="true" tabindex="-1"></a><span class="in">communalities &lt;- data.frame(value = model_1@Fit[["h2"]])</span></span>
+<span id="cb44-143"><a href="#cb44-143" aria-hidden="true" tabindex="-1"></a><span class="in">low_communalities &lt;- communalities[communalities$value &lt; 0.3, , drop = FALSE]</span></span>
+<span id="cb44-144"><a href="#cb44-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-145"><a href="#cb44-145" aria-hidden="true" tabindex="-1"></a><span class="in"># print ordered by communality value:</span></span>
+<span id="cb44-146"><a href="#cb44-146" aria-hidden="true" tabindex="-1"></a><span class="in">print(low_communalities[order(low_communalities$value), , drop = FALSE])</span></span>
+<span id="cb44-147"><a href="#cb44-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-148"><a href="#cb44-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-149"><a href="#cb44-149" aria-hidden="true" tabindex="-1"></a><span class="fu">### Final Model</span></span>
+<span id="cb44-150"><a href="#cb44-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-151"><a href="#cb44-151" aria-hidden="true" tabindex="-1"></a>Items with low communality values can be discarded from the dataset. To do that, run the following code:</span>
+<span id="cb44-152"><a href="#cb44-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-153"><a href="#cb44-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-154"><a href="#cb44-154" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-155"><a href="#cb44-155" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-156"><a href="#cb44-156" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-157"><a href="#cb44-157" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-158"><a href="#cb44-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-159"><a href="#cb44-159" aria-hidden="true" tabindex="-1"></a><span class="in">discard_these_items &lt;- rownames(low_communalities)</span></span>
+<span id="cb44-160"><a href="#cb44-160" aria-hidden="true" tabindex="-1"></a><span class="in">print(discard_these_items)</span></span>
+<span id="cb44-161"><a href="#cb44-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-162"><a href="#cb44-162" aria-hidden="true" tabindex="-1"></a><span class="in">df_final &lt;- df %&gt;% select(-discard_these_items)</span></span>
+<span id="cb44-163"><a href="#cb44-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-164"><a href="#cb44-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-165"><a href="#cb44-165" aria-hidden="true" tabindex="-1"></a>Now, using the <span class="in">`df_final`</span>, we can build our final solution:</span>
+<span id="cb44-166"><a href="#cb44-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-167"><a href="#cb44-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-168"><a href="#cb44-168" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-169"><a href="#cb44-169" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-170"><a href="#cb44-170" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-171"><a href="#cb44-171" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-172"><a href="#cb44-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-173"><a href="#cb44-173" aria-hidden="true" tabindex="-1"></a><span class="in">model_2 &lt;- mirt(df_final, 2, itemtype = 'graded', method = 'EM', verbose = FALSE)</span></span>
+<span id="cb44-174"><a href="#cb44-174" aria-hidden="true" tabindex="-1"></a><span class="in">model_2</span></span>
+<span id="cb44-175"><a href="#cb44-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-176"><a href="#cb44-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-177"><a href="#cb44-177" aria-hidden="true" tabindex="-1"></a>Let's see the factor loadings for the final solution. If we need to, we can apply a rotation later on:</span>
+<span id="cb44-178"><a href="#cb44-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-179"><a href="#cb44-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-180"><a href="#cb44-180" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-181"><a href="#cb44-181" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-182"><a href="#cb44-182" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-183"><a href="#cb44-183" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-184"><a href="#cb44-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-185"><a href="#cb44-185" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_2, rotate = "none")</span></span>
+<span id="cb44-186"><a href="#cb44-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-187"><a href="#cb44-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-188"><a href="#cb44-188" aria-hidden="true" tabindex="-1"></a>The factor loadings and communalities of the final solution looks fine. The explained variance by each factor is %23.9 and %14.4, respectively. This suggests an increase in the explained variance by the factors when compared to the initial model. Now, we can apply a rotation to see the correlation of the factors.</span>
+<span id="cb44-189"><a href="#cb44-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-190"><a href="#cb44-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-191"><a href="#cb44-191" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-192"><a href="#cb44-192" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-193"><a href="#cb44-193" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-194"><a href="#cb44-194" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-195"><a href="#cb44-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-196"><a href="#cb44-196" aria-hidden="true" tabindex="-1"></a><span class="in">summary(model_2, rotate = "oblimin")</span></span>
+<span id="cb44-197"><a href="#cb44-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-198"><a href="#cb44-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-199"><a href="#cb44-199" aria-hidden="true" tabindex="-1"></a>The correlation between the factors is -0.26 after the rotation. This is a good result as it is not too high to suggest a single factor solution, nor too low to suggest a completely independent factor solution.</span>
+<span id="cb44-200"><a href="#cb44-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-201"><a href="#cb44-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Fit</span></span>
+<span id="cb44-202"><a href="#cb44-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-203"><a href="#cb44-203" aria-hidden="true" tabindex="-1"></a>To see model's fit indices, we can use <span class="in">`M2()`</span> of mirt:</span>
+<span id="cb44-204"><a href="#cb44-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-205"><a href="#cb44-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-206"><a href="#cb44-206" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-207"><a href="#cb44-207" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-208"><a href="#cb44-208" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-209"><a href="#cb44-209" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-210"><a href="#cb44-210" aria-hidden="true" tabindex="-1"></a><span class="in">M2(model_2)</span></span>
+<span id="cb44-211"><a href="#cb44-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-212"><a href="#cb44-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-213"><a href="#cb44-213" aria-hidden="true" tabindex="-1"></a>The model fit indices are suggesting a good model fit. RMSEA and SRMSR values are below 0.08 and TLI and CFI are above 0.90. These values are considered as good fit indices for a model.</span>
+<span id="cb44-214"><a href="#cb44-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-215"><a href="#cb44-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb44-216"><a href="#cb44-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-217"><a href="#cb44-217" aria-hidden="true" tabindex="-1"></a>The MIRT package provides with 3D plotting options. We can use the <span class="in">`plot()`</span> and <span class="in">`itemplot()`</span> functions to see the 3D plots of the model. We can also implement rotation to see the rotated model's plot.</span>
+<span id="cb44-218"><a href="#cb44-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-219"><a href="#cb44-219" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Expected Total Score Plot</span></span>
+<span id="cb44-220"><a href="#cb44-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-221"><a href="#cb44-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-222"><a href="#cb44-222" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-223"><a href="#cb44-223" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-224"><a href="#cb44-224" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-225"><a href="#cb44-225" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-226"><a href="#cb44-226" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model_2)</span></span>
+<span id="cb44-227"><a href="#cb44-227" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model_2, rotate = "oblimin")</span></span>
+<span id="cb44-228"><a href="#cb44-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-229"><a href="#cb44-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-230"><a href="#cb44-230" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Item Trace Plots</span></span>
+<span id="cb44-231"><a href="#cb44-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-232"><a href="#cb44-232" aria-hidden="true" tabindex="-1"></a>We can also check for item trace plots. Let's see the first item's trace plot for final model without rotation and with rotation:</span>
+<span id="cb44-233"><a href="#cb44-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-234"><a href="#cb44-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-235"><a href="#cb44-235" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-236"><a href="#cb44-236" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-237"><a href="#cb44-237" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-238"><a href="#cb44-238" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-239"><a href="#cb44-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-240"><a href="#cb44-240" aria-hidden="true" tabindex="-1"></a><span class="in">itemplot(model_2, 1)</span></span>
+<span id="cb44-241"><a href="#cb44-241" aria-hidden="true" tabindex="-1"></a><span class="in">itemplot(model_2, 1, rotate = "oblimin")</span></span>
+<span id="cb44-242"><a href="#cb44-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-243"><a href="#cb44-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-244"><a href="#cb44-244" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Test Information</span></span>
+<span id="cb44-245"><a href="#cb44-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-246"><a href="#cb44-246" aria-hidden="true" tabindex="-1"></a>We can also draw a plot to see the test information. Test information is a measure of the precision of the test at different levels of the latent traits. In multidimensional models we need to produce a contour plot.</span>
+<span id="cb44-247"><a href="#cb44-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-248"><a href="#cb44-248" aria-hidden="true" tabindex="-1"></a>We can plot the test information with the following code:</span>
+<span id="cb44-249"><a href="#cb44-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-250"><a href="#cb44-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-251"><a href="#cb44-251" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-252"><a href="#cb44-252" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-253"><a href="#cb44-253" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-254"><a href="#cb44-254" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-255"><a href="#cb44-255" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model_2, rotate = "oblimin" ,type="infocontour") </span></span>
+<span id="cb44-256"><a href="#cb44-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-257"><a href="#cb44-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-258"><a href="#cb44-258" aria-hidden="true" tabindex="-1"></a>The test is most effective (provides the highest precision) in the central regions where test information is high (contour values like 6 or 7). Meaning the test is most effective for around 0 thetas of both factors. At the edges of the plot, the test is less precise (values like 1 or 2), meaning the test is less effective at distinguishing individuals with very high or very low abilities in those dimensions.</span>
+<span id="cb44-259"><a href="#cb44-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-260"><a href="#cb44-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Selected Items and Defining Factors</span></span>
+<span id="cb44-261"><a href="#cb44-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-262"><a href="#cb44-262" aria-hidden="true" tabindex="-1"></a>We are solid that our data has 2 factors, with each variable loading to a single factor. These factors were named as **Femininity** and **Masculinity** in the original scale.</span>
+<span id="cb44-263"><a href="#cb44-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-264"><a href="#cb44-264" aria-hidden="true" tabindex="-1"></a>These are the factors and their variables.</span>
+<span id="cb44-265"><a href="#cb44-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-266"><a href="#cb44-266" aria-hidden="true" tabindex="-1"></a>| Femininity                                                                | Masculinity                                                              |</span>
+<span id="cb44-267"><a href="#cb44-267" aria-hidden="true" tabindex="-1"></a>|------------------------------------|------------------------------------|</span>
+<span id="cb44-268"><a href="#cb44-268" aria-hidden="true" tabindex="-1"></a>| Q2 I have thought about dying my hair.                                    | Q3 I have thrown knives, axes or other sharp things.                     |</span>
+<span id="cb44-269"><a href="#cb44-269" aria-hidden="true" tabindex="-1"></a>| Q4 I give people handmade gifts.                                          | Q9 I like guns.                                                          |</span>
+<span id="cb44-270"><a href="#cb44-270" aria-hidden="true" tabindex="-1"></a>| Q12 I use lotion on my hands.                                             | Q15 I have thought it would be exciting to be an outlaw.                 |</span>
+<span id="cb44-271"><a href="#cb44-271" aria-hidden="true" tabindex="-1"></a>| Q14 I dance when I am alone.                                              | Q17 I have considered joining the military.                              |</span>
+<span id="cb44-272"><a href="#cb44-272" aria-hidden="true" tabindex="-1"></a>| Q16 When I was a child, I put on fake concerts and plays with my friends. | Q29 I have burned things up with a magnifying glass.                     |</span>
+<span id="cb44-273"><a href="#cb44-273" aria-hidden="true" tabindex="-1"></a>| Q20 I sometimes feel like crying when I get angry.                        | Q35 I have taken apart machines just to see how they work.               |</span>
+<span id="cb44-274"><a href="#cb44-274" aria-hidden="true" tabindex="-1"></a>| Q22 I save the letters I get.                                             | Q39 I have set fuels, aerosols or other chemicals on fire, just for fun. |</span>
+<span id="cb44-275"><a href="#cb44-275" aria-hidden="true" tabindex="-1"></a>| Q26 I jump up and down in excitement sometimes.                           |                                                                          |</span>
+<span id="cb44-276"><a href="#cb44-276" aria-hidden="true" tabindex="-1"></a>| Q30 I think horoscopes are fun.                                           |                                                                          |</span>
+<span id="cb44-277"><a href="#cb44-277" aria-hidden="true" tabindex="-1"></a>| Q36 I take lots of pictures of my activities.                             |                                                                          |</span>
+<span id="cb44-278"><a href="#cb44-278" aria-hidden="true" tabindex="-1"></a>| Q38 I leave nice notes for people now and then.                           |                                                                          |</span>
+<span id="cb44-279"><a href="#cb44-279" aria-hidden="true" tabindex="-1"></a>| Q40 I really like dancing.                                                |                                                                          |</span>
+<span id="cb44-280"><a href="#cb44-280" aria-hidden="true" tabindex="-1"></a>| Q44 I decorate my things (e.g. stickers on laptop).                       |                                                                          |</span>
+<span id="cb44-281"><a href="#cb44-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-282"><a href="#cb44-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Factor scores of persons</span></span>
+<span id="cb44-283"><a href="#cb44-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-284"><a href="#cb44-284" aria-hidden="true" tabindex="-1"></a>Finally, we can extract the factor scores of the persons. These scores can be used in further analyses such as regression, clustering, etc.</span>
+<span id="cb44-285"><a href="#cb44-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-286"><a href="#cb44-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-287"><a href="#cb44-287" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-288"><a href="#cb44-288" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-289"><a href="#cb44-289" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-290"><a href="#cb44-290" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-291"><a href="#cb44-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-292"><a href="#cb44-292" aria-hidden="true" tabindex="-1"></a><span class="in">head(fscores(model_2)) ## run fscores(model_2) to see all scores.</span></span>
+<span id="cb44-293"><a href="#cb44-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-294"><a href="#cb44-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-295"><a href="#cb44-295" aria-hidden="true" tabindex="-1"></a>As we did in EFA in the previous post, we can use these factor scores in a scree plot with genders of the participants. Let's see the plot:</span>
+<span id="cb44-296"><a href="#cb44-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-297"><a href="#cb44-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-298"><a href="#cb44-298" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb44-299"><a href="#cb44-299" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb44-300"><a href="#cb44-300" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb44-301"><a href="#cb44-301" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
+<span id="cb44-302"><a href="#cb44-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-303"><a href="#cb44-303" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb44-304"><a href="#cb44-304" aria-hidden="true" tabindex="-1"></a><span class="in">mirt_scores &lt;- fscores(model_2)</span></span>
+<span id="cb44-305"><a href="#cb44-305" aria-hidden="true" tabindex="-1"></a><span class="in">colnames(mirt_scores) &lt;- c("Femininity", "Masculinity")</span></span>
+<span id="cb44-306"><a href="#cb44-306" aria-hidden="true" tabindex="-1"></a><span class="in">scores &lt;- as_tibble(mirt_scores)</span></span>
+<span id="cb44-307"><a href="#cb44-307" aria-hidden="true" tabindex="-1"></a><span class="in">scores &lt;- bind_cols(df_with_demographics |&gt; select(gender), scores) |&gt;</span></span>
+<span id="cb44-308"><a href="#cb44-308" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(gender %in% c(1, 2)) |&gt;  </span></span>
+<span id="cb44-309"><a href="#cb44-309" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(gender = factor(gender, labels = c("Male", "Female")))  </span></span>
+<span id="cb44-310"><a href="#cb44-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-311"><a href="#cb44-311" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the filtered data</span></span>
+<span id="cb44-312"><a href="#cb44-312" aria-hidden="true" tabindex="-1"></a><span class="in">scores |&gt;</span></span>
+<span id="cb44-313"><a href="#cb44-313" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(Femininity, Masculinity, color = gender)) +</span></span>
+<span id="cb44-314"><a href="#cb44-314" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
+<span id="cb44-315"><a href="#cb44-315" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb44-316"><a href="#cb44-316" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "bottom") +</span></span>
+<span id="cb44-317"><a href="#cb44-317" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(color = "Gender")</span></span>
+<span id="cb44-318"><a href="#cb44-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-319"><a href="#cb44-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-320"><a href="#cb44-320" aria-hidden="true" tabindex="-1"></a>In my opinion this plot's being parallelogram-like is interesting. The same plot in EFA was more like a rectangle, although both distributions are similar.</span>
+<span id="cb44-321"><a href="#cb44-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-322"><a href="#cb44-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison with EFA Model</span></span>
+<span id="cb44-323"><a href="#cb44-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-324"><a href="#cb44-324" aria-hidden="true" tabindex="-1"></a>It is also a good idea to check the correlation between the factor scores obtained from mIRT and EFA.</span>
+<span id="cb44-325"><a href="#cb44-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-326"><a href="#cb44-326" aria-hidden="true" tabindex="-1"></a>Let's build the EFA model again:</span>
+<span id="cb44-327"><a href="#cb44-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-328"><a href="#cb44-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-329"><a href="#cb44-329" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-330"><a href="#cb44-330" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-331"><a href="#cb44-331" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-332"><a href="#cb44-332" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-333"><a href="#cb44-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-334"><a href="#cb44-334" aria-hidden="true" tabindex="-1"></a><span class="in">library(psych)</span></span>
+<span id="cb44-335"><a href="#cb44-335" aria-hidden="true" tabindex="-1"></a><span class="in">df_EFA &lt;- df %&gt;% select(</span></span>
+<span id="cb44-336"><a href="#cb44-336" aria-hidden="true" tabindex="-1"></a><span class="in">  -Q6, -Q11, -Q10, -Q18, -Q23, -Q32, -Q37, -Q41, </span></span>
+<span id="cb44-337"><a href="#cb44-337" aria-hidden="true" tabindex="-1"></a><span class="in">  -Q24, -Q8, -Q13, -Q33, -Q7, -Q19, -Q31, -Q42, </span></span>
+<span id="cb44-338"><a href="#cb44-338" aria-hidden="true" tabindex="-1"></a><span class="in">  -Q25, -Q34, -Q28, -Q5, -Q1, -Q12, -Q27, -Q30, -Q22</span></span>
+<span id="cb44-339"><a href="#cb44-339" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb44-340"><a href="#cb44-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-341"><a href="#cb44-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-342"><a href="#cb44-342" aria-hidden="true" tabindex="-1"></a><span class="in">poly_matrix &lt;- polychoric(df_EFA)$rho</span></span>
+<span id="cb44-343"><a href="#cb44-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-344"><a href="#cb44-344" aria-hidden="true" tabindex="-1"></a><span class="in">two_fm &lt;- fa(poly_matrix, nfactors = 2, fm = "pa", rotate = "oblimin", cor = "poly", SMC=FALSE)</span></span>
+<span id="cb44-345"><a href="#cb44-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-346"><a href="#cb44-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-347"><a href="#cb44-347" aria-hidden="true" tabindex="-1"></a>Remember that although the items selected by EFA and IRT are very similar, they are not identical. We can compare the items selected by both methods:</span>
+<span id="cb44-348"><a href="#cb44-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-349"><a href="#cb44-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-350"><a href="#cb44-350" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-351"><a href="#cb44-351" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-352"><a href="#cb44-352" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-353"><a href="#cb44-353" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-354"><a href="#cb44-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-355"><a href="#cb44-355" aria-hidden="true" tabindex="-1"></a><span class="in">mirt_items&lt;-colnames(df_final)</span></span>
+<span id="cb44-356"><a href="#cb44-356" aria-hidden="true" tabindex="-1"></a><span class="in">efa_items&lt;-colnames(df_EFA)</span></span>
+<span id="cb44-357"><a href="#cb44-357" aria-hidden="true" tabindex="-1"></a><span class="in">all_items &lt;- unique(c(mirt_items, efa_items)) </span></span>
+<span id="cb44-358"><a href="#cb44-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-359"><a href="#cb44-359" aria-hidden="true" tabindex="-1"></a><span class="in">comparison &lt;- data.frame(</span></span>
+<span id="cb44-360"><a href="#cb44-360" aria-hidden="true" tabindex="-1"></a><span class="in">  mirt_items = ifelse(all_items %in% mirt_items, all_items, ""),</span></span>
+<span id="cb44-361"><a href="#cb44-361" aria-hidden="true" tabindex="-1"></a><span class="in">  efa_items = ifelse(all_items %in% efa_items, all_items, "")</span></span>
+<span id="cb44-362"><a href="#cb44-362" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb44-363"><a href="#cb44-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-364"><a href="#cb44-364" aria-hidden="true" tabindex="-1"></a><span class="in">print(comparison)</span></span>
+<span id="cb44-365"><a href="#cb44-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-366"><a href="#cb44-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-367"><a href="#cb44-367" aria-hidden="true" tabindex="-1"></a>So items 12, 22, and 30 are selected by IRT model but they are not selected by EFA model.</span>
+<span id="cb44-368"><a href="#cb44-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-369"><a href="#cb44-369" aria-hidden="true" tabindex="-1"></a>Now let's have a look at the correlation between factor scores obtained from mIRT and EFA models:</span>
+<span id="cb44-370"><a href="#cb44-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-371"><a href="#cb44-371" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb44-372"><a href="#cb44-372" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb44-373"><a href="#cb44-373" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb44-374"><a href="#cb44-374" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb44-375"><a href="#cb44-375" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false</span></span>
+<span id="cb44-376"><a href="#cb44-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-377"><a href="#cb44-377" aria-hidden="true" tabindex="-1"></a><span class="in">efa_scores  &lt;- factor.scores(df_EFA, two_fm)$scores</span></span>
+<span id="cb44-378"><a href="#cb44-378" aria-hidden="true" tabindex="-1"></a><span class="in">colnames(efa_scores) &lt;- c("Femininity_efa", "Masculinity_efa")</span></span>
+<span id="cb44-379"><a href="#cb44-379" aria-hidden="true" tabindex="-1"></a><span class="in">cor(mirt_scores, efa_scores)</span></span>
+<span id="cb44-380"><a href="#cb44-380" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-381"><a href="#cb44-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-382"><a href="#cb44-382" aria-hidden="true" tabindex="-1"></a>The participants' scores obtained from MIRT and EFA models are highly correlated. The correlation between the femininity scores is 0.98, while the correlation between the masculinity scores is 0.99. This suggests that the factor scores obtained from both models are very similar.</span>
+<span id="cb44-383"><a href="#cb44-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-384"><a href="#cb44-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb44-385"><a href="#cb44-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-386"><a href="#cb44-386" aria-hidden="true" tabindex="-1"></a>In this post, we worked on how to run multidimensional Item Response Theory based exploratory factor analysis on likert scale data. We used the <span class="in">`mirt`</span> package in R to build the model. We also compared the factor scores obtained from the mIRT model with the factor scores obtained from the EFA model, which was discussed in my previous post. The results suggest that the factor scores from both models are highly correlated. Also, the mIRT model has shown great fit, even better than EFA model. These findings supports the opinion that as EFA is designed to work on continuous data, mIRT is a good alternative for factor detection in likert scale data.</span>
+<span id="cb44-387"><a href="#cb44-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-388"><a href="#cb44-388" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison with the Original Scale</span></span>
+<span id="cb44-389"><a href="#cb44-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-390"><a href="#cb44-390" aria-hidden="true" tabindex="-1"></a>Both my EFA and mIRT models have similar items to the original scale. However, the scales are not identical. The original scale contains 10 items for each factor. The difference occurs because of the variation in our approaches in two ways:</span>
+<span id="cb44-391"><a href="#cb44-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-392"><a href="#cb44-392" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>I discarded two items because they are highly correlated with other two items, pointing to multicollinearity issues. It wasn't done on the original scale. This might be because the authors might not have this issue in their original data. This difference probably resulted in the alternation in the item selection processes.</span>
+<span id="cb44-393"><a href="#cb44-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-394"><a href="#cb44-394" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>The preferred rotation method is different in the original scale. Although this shouldn't make an effect on item selection for the factors, the participants' factor scores might slightly alter. I used oblimin rotation while the original authors used varimax. The varimax is usually preferred when factors are independent of each other (no correlation between factors). The aim of varimax rotation is to maximize the variance of the squared loadings. Thus, it creates a simpler structure and encourages each variable to load strongly on one factor and weakly on others. Assuming the factors (Femininity and Masculinity) are independent of each other, the original authors might have used varimax rotation. In my personal opinion, these two factors could be considered as correlated negatively. That's why I used oblimin rotation. Yet, as I mentioned before, I am not an expert on gender roles. So, I might be wrong in this assumption. In a real case study, I would definitely consult with an expert in the field to decide on the rotation method.</span>
+<span id="cb44-395"><a href="#cb44-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-396"><a href="#cb44-396" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Remarks</span></span>
+<span id="cb44-397"><a href="#cb44-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-398"><a href="#cb44-398" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Running Confirmatory Factor Analysis (CFA) and mIRT for confirmatory factor detection is planned for a future post.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
