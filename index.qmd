@@ -10,7 +10,7 @@ listing:
   grid-columns: 3
   image-height: 250px
   page-size: 9
-  categories: "cloud"
+  categories: true
   sort-ui: [date]
   filter-ui: true
 page-layout: full

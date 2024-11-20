@@ -1,57 +1,170 @@
 ---
-title: "Ali Emre Karagül"
-image: images/profile.png
+title: ""
 about:
   template: jolla
-  image-width: 7em
-  image-shape: round
-  links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
-    - icon: github
-      text: Github
-      href: https://github.com/aliemrekaragul
-    - icon: mail
-      text: E-mail
-      href: mailto:me@emrekaragul.com
 page-layout: full
 ---
 
-::: grid
-::: {.g-col-12 .g-col-md-6 style="background-color: rgb(255, 253, 208);  border-bottom-left-radius: 25px; border-top-right-radius: 25px;"}
-### GREETINGS!
+<html lang="en">
 
-------------------------------------------------------------------------
+<head>
 
-You are visiting my personal blog, so here is a little bit of information about me and my research interests:
+<meta charset="UTF-8">
 
-I am passionate about learning and exploring new ideas in the fields of Data Science, Psychometrics, Data Analytics, and Educational Assessment.
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-Currently, I work on my PhD in Educational Assessment and Evaluation. My current research interest is on Automated Essay Scoring, which has led me through machine learning and natural language processing.
+<title>About</title>
 
-Always feel free to contact me about any feedback, questions, or maybe just to say "hi".
+```{=html}
+<script src="https://cdn.tailwindcss.com"></script>
+```
+```{=html}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+```
+```{=html}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+```
+```{=html}
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+```
+</head>
+
+<body class="bg-[#FFF4F1] text-[#4A1E11]">
+
+::: {#root .container .mx-auto .px-4 .py-12}
 :::
 
-::: {.g-col-12 .g-col-md-6 style="background-color: rgb(188, 201, 156); border-top-left-radius: 25px; border-bottom-right-radius: 25px;"}
-### EDUCATION
+```{=html}
+<script type="text/babel">
+    const ProgressBar = ({ language, percentage }) => {
+        const colorMap = {
+            'R': 'bg-[#E25822]',
+            'Python': 'bg-[#F27B50]',
+            'TypeScript': 'bg-[#FF6347]',
+            'SQL': 'bg-[#FF4500]',
+            'NoSQL': 'bg-[#FF7F50]',
+            'KQL': 'bg-[#FF6347]',
+            'React.js': 'bg-[#FF8C69]',
+            'Scikit-Learn': 'bg-[#E25822]',
+            'TensorFlow': 'bg-[#F27B50]',
+            'Elastic Search': 'bg-[#FF4500]',
+            'Azure Search Ai': 'bg-[#FF6347]',
+            'Cosmos DB': 'bg-[#FF8C69]',
+            'SPSS Modeler': 'bg-[#E25822]',
+            'Orange': 'bg-[#F27B50]',
+        };
 
-------------------------------------------------------------------------
+        return (
+            <div className="mb-2">
+                <div className="flex justify-between text-sm mb-1">
+                    <span>{language}</span>
+                    <span>{percentage}%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div 
+                        className={`${colorMap[language]} h-2.5 rounded-full`} 
+                        style={{width: `${percentage}%`}}
+                    ></div>
+                </div>
+            </div>
+        );
+    };
 
-**Gazi University**
+    const App = () => {
+        const [showMoreAbout, setShowMoreAbout] = React.useState(false);
 
-Faculty of Education (2022-ongoing) Ph.D. student in the Department of Educational Assessment and Evaluation
+        return (
+            <div className="max-w-4xl mx-auto space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                    {/* Welcome Card */}
+                    <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-bold mb-4">Welcome!</h2>
+                        <p>This space started as my personal notebook. But, in time, it has turned out to be my blog where I share ideas, tutorials, and projects using R to tackle educational challenges.</p>
+                        <p>I'm passionate about combining Data Science, Psychometrics, and Data Analytics with the fascinating field of Educational Assessment.</p>
+                        <p>Always feel free to contact me about any feedback, questions, or maybe just to say “hi”.</p>
+                    </div>
 
-------------------------------------------------------------------------
+                    {/* Content Description Card */}
+                    <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-bold mb-4">What You Will Find Here</h2>
+                        <ul className="list-disc list-inside space-y-2">
+                            <li>R programming for data analysis and visualization</li>
+                            <li>Psychometrics and educational assessment techniques</li>
+                            <li>Machine learning and AI applications in education</li>
+                            <li>Explorations of NLP and LLMs in educational research</li>
+                            <li>Several applications that I developed for fun and learning</li>
+                        </ul>
+                    </div>
+                </div>
 
-**Ankara University**
+                {/* More About Me Button */}
+                {!showMoreAbout && (
+                    <div className="text-center">
+                        <button 
+                            onClick={() => setShowMoreAbout(true)}
+                            className="bg-[#E25822] hover:bg-[#FF4500] text-white font-bold py-2 px-4 rounded-full transition duration-300"
+                        >
+                            More About Me
+                        </button>
+                    </div>
+                )}
 
-Faculty of Educational Sciences (2016-2020) Master's Degree in Assessment and Evaluation in Education
+                {/* More About Me Cards */}
+                {showMoreAbout && (
+                    <div className="space-y-6">
+                        <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
+                            <h3 className="text-xl font-bold mb-3">Educational Background</h3>
+                            <ul className="space-y-2">
+                                <li>
+                                    <strong>Ph.D. Candidate</strong><br />
+                                    Gazi University, Department of Educational Assessment and Evaluation (2022-ongoing)
+                                </li>
+                                <li>
+                                    <strong>Master's Degree</strong><br />
+                                    Ankara University, Assessment and Evaluation in Education (2016-2020)
+                                </li>
+                                <li>
+                                    <strong>Bachelor's Degree</strong><br />
+                                    Gazi University, Foreign Language Education (2008-2014)
+                                </li>
+                            </ul>
+                        </div>
 
-------------------------------------------------------------------------
+                        <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
+                            <h3 className="text-xl font-bold mb-3">My Interests</h3>
+                            <p>I am passionate about learning and exploring new ideas in the fields of Data Science, Psychometrics, Data Analytics, and Educational Assessment. My current research interest is mostly on NLP, ML, AES, AI, and LLMs.</p>
+                        </div>
 
-**Gazi University**
+                        <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
+                            <h3 className="text-xl font-bold mb-3">1000-Hour Challenge</h3>
+                            <p className="mb-4">I'm tracking my mastery in languages and tools with a goal of reaching 1000 hours in each.</p> 
+                            <p>Here's my current progress:</p>
+                            <div className="space-y-2">
+                                <ProgressBar language="R" percentage={100} />
+                                <ProgressBar language="Python" percentage={100} />
+                                <ProgressBar language="Scikit-Learn" percentage={40} />
+                                <ProgressBar language="TensorFlow" percentage={50} />
+                                <ProgressBar language="TypeScript" percentage={100} />
+                                <ProgressBar language="SQL" percentage={100} />
+                                <ProgressBar language="NoSQL" percentage={50} />
+                                <ProgressBar language="KQL" percentage={80} />
+                                <ProgressBar language="React.js" percentage={20} />
+                                <ProgressBar language="Elastic Search" percentage={10} />
+                                <ProgressBar language="Azure Search Ai" percentage={40} />
+                                <ProgressBar language="Cosmos DB" percentage={80} />
+                                <ProgressBar language="SPSS Modeler" percentage={35} />
+                                <ProgressBar language="Orange" percentage={1} />
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
 
-Faculty of Education (2008-2014) Bachelor's degree in the Department of Foreign Language Education
-:::
-:::
+    ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+```
+</body>
+
+</html>

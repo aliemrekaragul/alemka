@@ -19,18 +19,21 @@ website:
     right:
       - icon: info-square-fill
         href: about-me.qmd
-        text: " "
+        text: "About"
       - icon: github
         href: https://github.com/aliemrekaragul
+        text: "GitHub"
       - icon: linkedin
         href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
+        text: "LinkedIn"
       - icon: rss
         href: index.xml
+        text: "Feed"
     left:
       - text: "My Apps"
         icon: terminal-fill
         href: "my_apps.html"
-      - text: "Favs"
+      - text: "My Favs"
         icon: star-fill
         menu: 
           - text: "R cheatsheets"
@@ -78,7 +81,7 @@ format:
     linestretch: 1.5
     code-link: true
     code-fold: show
-    code-tools: true
+    code-tools: false
     code-block-bg: true # rgb(224, 216, 176) yellowish brown gibi bişi
     code-block-border-left: "#31BAE9"
 editor: source
