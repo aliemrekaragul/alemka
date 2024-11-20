@@ -1,7 +1,7 @@
 ---
 title: "Automated Essay Scoring (AES) with R"
 description: |
-  At the core of Automated Essay Scoring (AES) is natural language processing (NLP) and machine learning. These systems are designed to analyze the text based on a set of predefined criteria, which may include factors such as grammar, sentence structure, vocabulary, coherence, and argumentative quality. The algorithms look for patterns and features in the text, such as the presence of thesis statements, use of evidence, and logical progression of ideas. This data is then used to generate a score that reflects the essay's overall quality. In this blog post, we will explore the basics of NLP and AES with a prominent dataset: Automated Student Assessment Prize (ASAP) dataset sponsored by Hewlett. 
+  At the core of Automated Essay Scoring (AES) is natural language processing (NLP) and machine learning. These systems are designed to analyze the text based on a set of predefined criteria, which may include factors such as grammar, sentence structure, vocabulary, coherence, and argumentative quality. The algorithms look for patterns and features in the text, such as the presence of thesis statements, use of evidence, and logical progression of ideas. This data is then used to generate a score that reflects the essay's overall quality. In this blog post, we will explore the basics of NLP and AES with a prominent dataset: Automated Student Assessment Prize (ASAP) dataset sponsored by Hewlett. To see a deployed AES engine on this issue, see "my apps" tab in the navigation bar.
 author:
   - name: Ali Emre Karagül
     orcid: 0000-0002-5820-8643
@@ -9,7 +9,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2023-10-23
-categories: [psychometrics, Big data, natural language processing, automated essay scoring]
+categories: [readxl,textstem,stopwords,stringr,quanteda,tm,tidyverse,
+  ]
 image: "image.png"
 output:
     self_contained: false

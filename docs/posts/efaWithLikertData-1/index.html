@@ -124,6 +124,18 @@ cookieconsent.run({
 <script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="../../site_libs/plotly-binding-4.10.4/plotly.js"></script><script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script><script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script><link href="../../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
 <script src="../../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="- Exploratory Factor Analysis with Likert Scale Data">
+<meta property="og:description" content="This post focuses on exploratory factor analysis on likert scale data using the conventional principal axis factoring. It also includes the calculation of ordinal alpha coefficient for the reliability of the scale. The analysis is supported with visuals.">
+<meta property="og:image" content="https://emrekaragul.com/posts/efaWithLikertData-1/image.png">
+<meta property="og:site_name" content=" ">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="- Exploratory Factor Analysis with Likert Scale Data">
+<meta name="twitter:description" content="This post focuses on exploratory factor analysis on likert scale data using the conventional principal axis factoring. It also includes the calculation of ordinal alpha coefficient for the reliability of the scale. The analysis is supported with visuals.">
+<meta name="twitter:image" content="https://emrekaragul.com/posts/efaWithLikertData-1/image.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-fixed">
 
@@ -294,7 +306,7 @@ cookieconsent.run({
 </li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#further-remarks" id="toc-further-remarks" class="nav-link" data-scroll-target="#further-remarks">Further Remarks</a></li>
-  </ul></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/aliemrekaragul/alemka/blob/main/posts/efaWithLikertData-1/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/aliemrekaragul/alemka/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -1304,7 +1316,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: TOBB ETU- University of Economics &amp; Technology</span></span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-11-18</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [psychometrics, Dimension Reduction, Explotary Factor Analysis, Principle Axis Factoring, Likert, Polychoric Correlation, scatter plot, scree plot, ggplot2, plotly, psych, dplyr]</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [dplyr, ggplot2, mirt, psych, ]</span></span>
 <span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "image.png"</span></span>
 <span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
 <span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="co">    self_contained: false</span></span>
@@ -1498,13 +1510,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb42-203"><a href="#cb42-203" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-204"><a href="#cb42-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Determine the number of factors</span></span>
 <span id="cb42-205"><a href="#cb42-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-206"><a href="#cb42-206" aria-hidden="true" tabindex="-1"></a>While determining the number of factors to extract, there are many methods that can be used. See a summary of them in Zwick et.al. (1986). Some of the most common methods are: </span>
+<span id="cb42-206"><a href="#cb42-206" aria-hidden="true" tabindex="-1"></a>While determining the number of factors to extract, there are many methods that can be used. See a summary of them in Zwick et.al. (1986). Some of the most common methods are:</span>
 <span id="cb42-207"><a href="#cb42-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-208"><a href="#cb42-208" aria-hidden="true" tabindex="-1"></a>**1. Kaiser Criterion (K1):** we can use the Kaiser criterion, which suggests retaining factors with eigenvalues greater than 1. </span>
+<span id="cb42-208"><a href="#cb42-208" aria-hidden="true" tabindex="-1"></a>**1. Kaiser Criterion (K1):** we can use the Kaiser criterion, which suggests retaining factors with eigenvalues greater than 1.</span>
 <span id="cb42-209"><a href="#cb42-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-210"><a href="#cb42-210" aria-hidden="true" tabindex="-1"></a>**2. Paralell Analysis:** This is a simulation-based method that compares the observed eigenvalues with the eigenvalues obtained from random data. The factors with eigenvalues greater than the random data are retained in this approach. </span>
+<span id="cb42-210"><a href="#cb42-210" aria-hidden="true" tabindex="-1"></a>**2. Paralell Analysis:** This is a simulation-based method that compares the observed eigenvalues with the eigenvalues obtained from random data. The factors with eigenvalues greater than the random data are retained in this approach.</span>
 <span id="cb42-211"><a href="#cb42-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-212"><a href="#cb42-212" aria-hidden="true" tabindex="-1"></a>**3. Very Simple Structure (VSS):** VSS criterion evaluates how well a simplified factor pattern reproduces the original correlation matrix. In this simplified pattern, only the highest loading for each item is kept, while all other loadings are set to zero. The VSS score, ranging from 0 to 1, measures the goodness-of-fit of the factor solution. This evaluation is conducted for solutions with varying numbers of factors, starting from one (k = 1) up to a user-defined maximum. The optimal number of factors is determined by the solution with the highest VSS score. </span>
+<span id="cb42-212"><a href="#cb42-212" aria-hidden="true" tabindex="-1"></a>**3. Very Simple Structure (VSS):** VSS criterion evaluates how well a simplified factor pattern reproduces the original correlation matrix. In this simplified pattern, only the highest loading for each item is kept, while all other loadings are set to zero. The VSS score, ranging from 0 to 1, measures the goodness-of-fit of the factor solution. This evaluation is conducted for solutions with varying numbers of factors, starting from one (k = 1) up to a user-defined maximum. The optimal number of factors is determined by the solution with the highest VSS score.</span>
 <span id="cb42-213"><a href="#cb42-213" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-214"><a href="#cb42-214" aria-hidden="true" tabindex="-1"></a>**4. Minimum Average Partial (MAP):** This method is based on partial correlations matrix. It is very similar to Principal Component Analysis (PCA).</span>
 <span id="cb42-215"><a href="#cb42-215" aria-hidden="true" tabindex="-1"></a></span>
@@ -1684,93 +1696,94 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb42-389"><a href="#cb42-389" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-390"><a href="#cb42-390" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-391"><a href="#cb42-391" aria-hidden="true" tabindex="-1"></a>With this, our explained cumulative variance has risen to 38%. Let's see factor correlations and the reliability score of the scale:</span>
-<span id="cb42-392"><a href="#cb42-392" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
-<span id="cb42-393"><a href="#cb42-393" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
-<span id="cb42-394"><a href="#cb42-394" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
-<span id="cb42-395"><a href="#cb42-395" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
-<span id="cb42-396"><a href="#cb42-396" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
-<span id="cb42-397"><a href="#cb42-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-398"><a href="#cb42-398" aria-hidden="true" tabindex="-1"></a><span class="in">#Factor Correlations:</span></span>
-<span id="cb42-399"><a href="#cb42-399" aria-hidden="true" tabindex="-1"></a><span class="in">round(two_fm$Phi, 2)</span></span>
-<span id="cb42-400"><a href="#cb42-400" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-401"><a href="#cb42-401" aria-hidden="true" tabindex="-1"></a><span class="in">reliability_coef &lt;- psych::alpha(poly_matrix, check.keys=TRUE)</span></span>
-<span id="cb42-402"><a href="#cb42-402" aria-hidden="true" tabindex="-1"></a><span class="in">#Ordinal Alpha:</span></span>
-<span id="cb42-403"><a href="#cb42-403" aria-hidden="true" tabindex="-1"></a><span class="in">print(round(reliability_coef[["total"]][["raw_alpha"]], 2))</span></span>
-<span id="cb42-404"><a href="#cb42-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-405"><a href="#cb42-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-406"><a href="#cb42-406" aria-hidden="true" tabindex="-1"></a>Correlation between factors is -0.24, which indicates a very low and negative correlation.</span>
-<span id="cb42-407"><a href="#cb42-407" aria-hidden="true" tabindex="-1"></a>The ordinal alpha coefficient is 0.84 which is considered as good. The 2-factor model with oblimin rotation is our final solution. Finally let's draw the path diagram of the model:</span>
-<span id="cb42-408"><a href="#cb42-408" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
-<span id="cb42-409"><a href="#cb42-409" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
-<span id="cb42-410"><a href="#cb42-410" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
-<span id="cb42-411"><a href="#cb42-411" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
-<span id="cb42-412"><a href="#cb42-412" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
-<span id="cb42-413"><a href="#cb42-413" aria-hidden="true" tabindex="-1"></a><span class="in">fa.diagram(</span></span>
-<span id="cb42-414"><a href="#cb42-414" aria-hidden="true" tabindex="-1"></a><span class="in">  two_fm, </span></span>
-<span id="cb42-415"><a href="#cb42-415" aria-hidden="true" tabindex="-1"></a><span class="in">  digits = 2,</span></span>
-<span id="cb42-416"><a href="#cb42-416" aria-hidden="true" tabindex="-1"></a><span class="in">  main = "Final Solution for Open Sex Role Inventory",</span></span>
-<span id="cb42-417"><a href="#cb42-417" aria-hidden="true" tabindex="-1"></a><span class="in">  e.size=.07,</span></span>
-<span id="cb42-418"><a href="#cb42-418" aria-hidden="true" tabindex="-1"></a><span class="in">  rsize=.1,</span></span>
-<span id="cb42-419"><a href="#cb42-419" aria-hidden="true" tabindex="-1"></a><span class="in">  cex=0.9)</span></span>
-<span id="cb42-420"><a href="#cb42-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-421"><a href="#cb42-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-392"><a href="#cb42-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-393"><a href="#cb42-393" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb42-394"><a href="#cb42-394" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb42-395"><a href="#cb42-395" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb42-396"><a href="#cb42-396" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb42-397"><a href="#cb42-397" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
+<span id="cb42-398"><a href="#cb42-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-399"><a href="#cb42-399" aria-hidden="true" tabindex="-1"></a><span class="in">#Factor Correlations:</span></span>
+<span id="cb42-400"><a href="#cb42-400" aria-hidden="true" tabindex="-1"></a><span class="in">round(two_fm$Phi, 2)</span></span>
+<span id="cb42-401"><a href="#cb42-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-402"><a href="#cb42-402" aria-hidden="true" tabindex="-1"></a><span class="in">reliability_coef &lt;- psych::alpha(poly_matrix, check.keys=TRUE)</span></span>
+<span id="cb42-403"><a href="#cb42-403" aria-hidden="true" tabindex="-1"></a><span class="in">#Ordinal Alpha:</span></span>
+<span id="cb42-404"><a href="#cb42-404" aria-hidden="true" tabindex="-1"></a><span class="in">print(round(reliability_coef[["total"]][["raw_alpha"]], 2))</span></span>
+<span id="cb42-405"><a href="#cb42-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-406"><a href="#cb42-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-407"><a href="#cb42-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-408"><a href="#cb42-408" aria-hidden="true" tabindex="-1"></a>Correlation between factors is -0.24, which indicates a very low and negative correlation. The ordinal alpha coefficient is 0.84 which is considered as good. The 2-factor model with oblimin rotation is our final solution. Finally let's draw the path diagram of the model:</span>
+<span id="cb42-409"><a href="#cb42-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-410"><a href="#cb42-410" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb42-411"><a href="#cb42-411" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb42-412"><a href="#cb42-412" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb42-413"><a href="#cb42-413" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb42-414"><a href="#cb42-414" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
+<span id="cb42-415"><a href="#cb42-415" aria-hidden="true" tabindex="-1"></a><span class="in">fa.diagram(</span></span>
+<span id="cb42-416"><a href="#cb42-416" aria-hidden="true" tabindex="-1"></a><span class="in">  two_fm, </span></span>
+<span id="cb42-417"><a href="#cb42-417" aria-hidden="true" tabindex="-1"></a><span class="in">  digits = 2,</span></span>
+<span id="cb42-418"><a href="#cb42-418" aria-hidden="true" tabindex="-1"></a><span class="in">  main = "Final Solution for Open Sex Role Inventory",</span></span>
+<span id="cb42-419"><a href="#cb42-419" aria-hidden="true" tabindex="-1"></a><span class="in">  e.size=.07,</span></span>
+<span id="cb42-420"><a href="#cb42-420" aria-hidden="true" tabindex="-1"></a><span class="in">  rsize=.1,</span></span>
+<span id="cb42-421"><a href="#cb42-421" aria-hidden="true" tabindex="-1"></a><span class="in">  cex=0.9)</span></span>
 <span id="cb42-422"><a href="#cb42-422" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-423"><a href="#cb42-423" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-423"><a href="#cb42-423" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-424"><a href="#cb42-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-425"><a href="#cb42-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-426"><a href="#cb42-426" aria-hidden="true" tabindex="-1"></a>The final solution has 10 items in the first factor and 7 items in the second factor. Here are the items in each factor:</span>
-<span id="cb42-427"><a href="#cb42-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-428"><a href="#cb42-428" aria-hidden="true" tabindex="-1"></a>| Factor 1                                                                  | Factor 2                                                                 |</span>
-<span id="cb42-429"><a href="#cb42-429" aria-hidden="true" tabindex="-1"></a>|------------------------------------|------------------------------------|</span>
-<span id="cb42-430"><a href="#cb42-430" aria-hidden="true" tabindex="-1"></a>| Q2 I have thought about dying my hair.                                    | Q3 I have thrown knives, axes or other sharp things.                     |</span>
-<span id="cb42-431"><a href="#cb42-431" aria-hidden="true" tabindex="-1"></a>| Q4 I give people handmade gifts.                                          | Q9 I like guns.                                                          |</span>
-<span id="cb42-432"><a href="#cb42-432" aria-hidden="true" tabindex="-1"></a>| Q14 I dance when I am alone.                                              | Q15 I have thought it would be exciting to be an outlaw.                 |</span>
-<span id="cb42-433"><a href="#cb42-433" aria-hidden="true" tabindex="-1"></a>| Q16 When I was a child, I put on fake concerts and plays with my friends. | Q17 I have considered joining the military.                              |</span>
-<span id="cb42-434"><a href="#cb42-434" aria-hidden="true" tabindex="-1"></a>| Q20 I sometimes feel like crying when I get angry.                        | Q29 I have burned things up with a magnifying glass.                     |</span>
-<span id="cb42-435"><a href="#cb42-435" aria-hidden="true" tabindex="-1"></a>| Q26 I jump up and down in excitement sometimes.                           | Q35 I have taken apart machines just to see how they work.               |</span>
-<span id="cb42-436"><a href="#cb42-436" aria-hidden="true" tabindex="-1"></a>| Q36 I take lots of pictures of my activities.                             | Q39 I have set fuels, aerosols or other chemicals on fire, just for fun. |</span>
-<span id="cb42-437"><a href="#cb42-437" aria-hidden="true" tabindex="-1"></a>| Q38 I leave nice notes for people now and then.                           |                                                                          |</span>
-<span id="cb42-438"><a href="#cb42-438" aria-hidden="true" tabindex="-1"></a>| Q40 I really like dancing.                                                |                                                                          |</span>
-<span id="cb42-439"><a href="#cb42-439" aria-hidden="true" tabindex="-1"></a>| Q44 I decorate my things (e.g. stickers on laptop).                       |                                                                          |</span>
-<span id="cb42-440"><a href="#cb42-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-441"><a href="#cb42-441" aria-hidden="true" tabindex="-1"></a>It is pretty easy now to interpret the factors given that this is a scale named as Open Sex Role Inventory. The first factor seems to be related to femininity while the second factor seems to be related to masculinity. </span>
-<span id="cb42-442"><a href="#cb42-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-443"><a href="#cb42-443" aria-hidden="true" tabindex="-1"></a>As a final touch, let's see the scree plot of the genders of the participants along with their scores on the two factors; **masculinity** and **femininity**. We will use <span class="in">`factor.scores()`</span> to calculate participants' scores and the <span class="in">`ggplot2`</span> package for visualization:</span>
-<span id="cb42-444"><a href="#cb42-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-445"><a href="#cb42-445" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
-<span id="cb42-446"><a href="#cb42-446" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
-<span id="cb42-447"><a href="#cb42-447" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
-<span id="cb42-448"><a href="#cb42-448" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
-<span id="cb42-449"><a href="#cb42-449" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
-<span id="cb42-450"><a href="#cb42-450" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-451"><a href="#cb42-451" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb42-452"><a href="#cb42-452" aria-hidden="true" tabindex="-1"></a><span class="in">OSRI_scores &lt;- factor.scores(df, two_fm)$scores</span></span>
-<span id="cb42-453"><a href="#cb42-453" aria-hidden="true" tabindex="-1"></a><span class="in">colnames(OSRI_scores) &lt;- c("Femininity", "Masculinity")</span></span>
-<span id="cb42-454"><a href="#cb42-454" aria-hidden="true" tabindex="-1"></a><span class="in">scores &lt;- as_tibble(OSRI_scores)</span></span>
-<span id="cb42-455"><a href="#cb42-455" aria-hidden="true" tabindex="-1"></a><span class="in">scores &lt;- bind_cols(df_with_demographics |&gt; select(gender), scores) |&gt;</span></span>
-<span id="cb42-456"><a href="#cb42-456" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(gender %in% c(1, 2)) |&gt;  </span></span>
-<span id="cb42-457"><a href="#cb42-457" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(gender = factor(gender, labels = c("Male", "Female")))  </span></span>
-<span id="cb42-458"><a href="#cb42-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-459"><a href="#cb42-459" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the filtered data</span></span>
-<span id="cb42-460"><a href="#cb42-460" aria-hidden="true" tabindex="-1"></a><span class="in">scores |&gt;</span></span>
-<span id="cb42-461"><a href="#cb42-461" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(Femininity, Masculinity, color = gender)) +</span></span>
-<span id="cb42-462"><a href="#cb42-462" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
-<span id="cb42-463"><a href="#cb42-463" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb42-464"><a href="#cb42-464" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "bottom") +</span></span>
-<span id="cb42-465"><a href="#cb42-465" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(color = "Gender")</span></span>
-<span id="cb42-466"><a href="#cb42-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-425"><a href="#cb42-425" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-426"><a href="#cb42-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-427"><a href="#cb42-427" aria-hidden="true" tabindex="-1"></a>The final solution has 10 items in the first factor and 7 items in the second factor. Here are the items in each factor:</span>
+<span id="cb42-428"><a href="#cb42-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-429"><a href="#cb42-429" aria-hidden="true" tabindex="-1"></a>| Factor 1                                                                  | Factor 2                                                                 |</span>
+<span id="cb42-430"><a href="#cb42-430" aria-hidden="true" tabindex="-1"></a>|------------------------------------|------------------------------------|</span>
+<span id="cb42-431"><a href="#cb42-431" aria-hidden="true" tabindex="-1"></a>| Q2 I have thought about dying my hair.                                    | Q3 I have thrown knives, axes or other sharp things.                     |</span>
+<span id="cb42-432"><a href="#cb42-432" aria-hidden="true" tabindex="-1"></a>| Q4 I give people handmade gifts.                                          | Q9 I like guns.                                                          |</span>
+<span id="cb42-433"><a href="#cb42-433" aria-hidden="true" tabindex="-1"></a>| Q14 I dance when I am alone.                                              | Q15 I have thought it would be exciting to be an outlaw.                 |</span>
+<span id="cb42-434"><a href="#cb42-434" aria-hidden="true" tabindex="-1"></a>| Q16 When I was a child, I put on fake concerts and plays with my friends. | Q17 I have considered joining the military.                              |</span>
+<span id="cb42-435"><a href="#cb42-435" aria-hidden="true" tabindex="-1"></a>| Q20 I sometimes feel like crying when I get angry.                        | Q29 I have burned things up with a magnifying glass.                     |</span>
+<span id="cb42-436"><a href="#cb42-436" aria-hidden="true" tabindex="-1"></a>| Q26 I jump up and down in excitement sometimes.                           | Q35 I have taken apart machines just to see how they work.               |</span>
+<span id="cb42-437"><a href="#cb42-437" aria-hidden="true" tabindex="-1"></a>| Q36 I take lots of pictures of my activities.                             | Q39 I have set fuels, aerosols or other chemicals on fire, just for fun. |</span>
+<span id="cb42-438"><a href="#cb42-438" aria-hidden="true" tabindex="-1"></a>| Q38 I leave nice notes for people now and then.                           |                                                                          |</span>
+<span id="cb42-439"><a href="#cb42-439" aria-hidden="true" tabindex="-1"></a>| Q40 I really like dancing.                                                |                                                                          |</span>
+<span id="cb42-440"><a href="#cb42-440" aria-hidden="true" tabindex="-1"></a>| Q44 I decorate my things (e.g. stickers on laptop).                       |                                                                          |</span>
+<span id="cb42-441"><a href="#cb42-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-442"><a href="#cb42-442" aria-hidden="true" tabindex="-1"></a>It is pretty easy now to interpret the factors given that this is a scale named as Open Sex Role Inventory. The first factor seems to be related to femininity while the second factor seems to be related to masculinity.</span>
+<span id="cb42-443"><a href="#cb42-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-444"><a href="#cb42-444" aria-hidden="true" tabindex="-1"></a>As a final touch, let's see the scree plot of the genders of the participants along with their scores on the two factors; **masculinity** and **femininity**. We will use <span class="in">`factor.scores()`</span> to calculate participants' scores and the <span class="in">`ggplot2`</span> package for visualization:</span>
+<span id="cb42-445"><a href="#cb42-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-446"><a href="#cb42-446" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}</span></span>
+<span id="cb42-447"><a href="#cb42-447" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false </span></span>
+<span id="cb42-448"><a href="#cb42-448" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true </span></span>
+<span id="cb42-449"><a href="#cb42-449" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true </span></span>
+<span id="cb42-450"><a href="#cb42-450" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: false </span></span>
+<span id="cb42-451"><a href="#cb42-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-452"><a href="#cb42-452" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb42-453"><a href="#cb42-453" aria-hidden="true" tabindex="-1"></a><span class="in">OSRI_scores &lt;- factor.scores(df, two_fm)$scores</span></span>
+<span id="cb42-454"><a href="#cb42-454" aria-hidden="true" tabindex="-1"></a><span class="in">colnames(OSRI_scores) &lt;- c("Femininity", "Masculinity")</span></span>
+<span id="cb42-455"><a href="#cb42-455" aria-hidden="true" tabindex="-1"></a><span class="in">scores &lt;- as_tibble(OSRI_scores)</span></span>
+<span id="cb42-456"><a href="#cb42-456" aria-hidden="true" tabindex="-1"></a><span class="in">scores &lt;- bind_cols(df_with_demographics |&gt; select(gender), scores) |&gt;</span></span>
+<span id="cb42-457"><a href="#cb42-457" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(gender %in% c(1, 2)) |&gt;  </span></span>
+<span id="cb42-458"><a href="#cb42-458" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(gender = factor(gender, labels = c("Male", "Female")))  </span></span>
+<span id="cb42-459"><a href="#cb42-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-460"><a href="#cb42-460" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the filtered data</span></span>
+<span id="cb42-461"><a href="#cb42-461" aria-hidden="true" tabindex="-1"></a><span class="in">scores |&gt;</span></span>
+<span id="cb42-462"><a href="#cb42-462" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(Femininity, Masculinity, color = gender)) +</span></span>
+<span id="cb42-463"><a href="#cb42-463" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
+<span id="cb42-464"><a href="#cb42-464" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb42-465"><a href="#cb42-465" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "bottom") +</span></span>
+<span id="cb42-466"><a href="#cb42-466" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(color = "Gender")</span></span>
 <span id="cb42-467"><a href="#cb42-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-468"><a href="#cb42-468" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-469"><a href="#cb42-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-470"><a href="#cb42-470" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb42-471"><a href="#cb42-471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-472"><a href="#cb42-472" aria-hidden="true" tabindex="-1"></a>In this post, we have seen how to conduct an EFA with polychoric correlations and ordinal alpha coefficient. We have also seen how to check the assumptions of EFA, determine the number of factors, and rotate the factors. We have also seen how to drop variables iteratively to reach a final solution. Then, we have seen how to interpret the factors and draw the path diagram of the model. Finally, we have seen how to obtain and visualize the scores of the participants on the factors.</span>
-<span id="cb42-473"><a href="#cb42-473" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-474"><a href="#cb42-474" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Remarks</span></span>
-<span id="cb42-475"><a href="#cb42-475" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-476"><a href="#cb42-476" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The data used here is a likert scale data. Yet, EFA actually expects continuous variables. Therefore, it might be wiser to use IRT based factor reduction methods for likert scale data. We will discuss this in a later post.</span>
-<span id="cb42-477"><a href="#cb42-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-478"><a href="#cb42-478" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The outliers should be checked and removed before running the EFA. Yet, we haven't done it here. Outlier detection is another topic for another post.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-468"><a href="#cb42-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-469"><a href="#cb42-469" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-470"><a href="#cb42-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-471"><a href="#cb42-471" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb42-472"><a href="#cb42-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-473"><a href="#cb42-473" aria-hidden="true" tabindex="-1"></a>In this post, we have seen how to conduct an EFA with polychoric correlations and ordinal alpha coefficient. We have also seen how to check the assumptions of EFA, determine the number of factors, and rotate the factors. We have also seen how to drop variables iteratively to reach a final solution. Then, we have seen how to interpret the factors and draw the path diagram of the model. Finally, we have seen how to obtain and visualize the scores of the participants on the factors.</span>
+<span id="cb42-474"><a href="#cb42-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-475"><a href="#cb42-475" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further Remarks</span></span>
+<span id="cb42-476"><a href="#cb42-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-477"><a href="#cb42-477" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The data used here is a likert scale data. Yet, EFA actually expects continuous variables. Therefore, it might be wiser to use IRT based factor reduction methods for likert scale data. We will discuss this in a later post.</span>
+<span id="cb42-478"><a href="#cb42-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-479"><a href="#cb42-479" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The outliers should be checked and removed before running the EFA. Yet, we haven't done it here. Outlier detection is another topic for another post.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -1779,7 +1792,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 
-<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/aliemrekaragul/alemka/blob/main/posts/efaWithLikertData-1/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/aliemrekaragul/alemka/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
     <div class="nav-footer-right">
 <p>📈❤️☕</p>
 </div>

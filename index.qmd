@@ -1,6 +1,7 @@
 ---
-title: "Psychometrics & Data Visualization"
+title: "Psychometrics"
 listing:
+  id: main-listing
   contents: posts
   fields: [image, title, description, date, categories, reading-time]
   sort: "date desc"
@@ -8,8 +9,8 @@ listing:
   feed: true
   grid-columns: 3
   image-height: 250px
-  page-size: 100
-  categories: true
+  page-size: 9
+  categories: "cloud"
   sort-ui: [date]
   filter-ui: true
 page-layout: full

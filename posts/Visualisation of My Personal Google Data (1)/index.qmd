@@ -10,7 +10,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2022-11-16
-categories: [Google Data, Maps, Data-viz]
+categories: [rjson, tidyr, dplyr, purrr,lubridate,sp,leaflet
+  ]
 image: "image.png"
 output: 
     self_contained: false

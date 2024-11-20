@@ -10,7 +10,7 @@ author:
     email: aliemrekaragul@gmail.com
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
-categories: [psychometrics, SEM]
+categories: [haven,dplyr,lavaan]
 date: 2022-10-30
 image: "image.png"
 output:

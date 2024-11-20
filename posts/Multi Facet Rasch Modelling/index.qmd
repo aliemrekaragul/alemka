@@ -9,7 +9,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2024-10-17
-categories: [psychometrics, Rasch, multi-facet, IRT, ]
+categories: [readr, tidyr, ggplot2,dplyr,tam,cowplot
+  ]
 image: "image.png"
 output:
     self_contained: false

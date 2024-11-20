@@ -3,7 +3,12 @@ project:
   output-dir: docs
 website:
   title: " "
+  reader-mode: false
   favicon: images/alemka.svg
+  open-graph: true
+  twitter-card: true
+  repo-url: https://github.com/aliemrekaragul/alemka
+  repo-actions: [source, issue]
   site-url: https://emrekaragul.com/
   description: "My educational data science blog / notebook"
   navbar:
@@ -53,7 +58,6 @@ website:
     tracking-id: "G-VJBZWP0G2H"
     anonymize-ip: false
     storage: cookies
-    
   page-footer:
     right: "📈❤️☕"
     left: "© Ali Emre Karagül"
@@ -77,5 +81,5 @@ format:
     code-tools: true
     code-block-bg: true # rgb(224, 216, 176) yellowish brown gibi bişi
     code-block-border-left: "#31BAE9"
-editor: visual
+editor: source
 

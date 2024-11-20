@@ -9,7 +9,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2024-10-15
-categories: [psychometrics, measusrement invariance, Big data, SEM, Data-viz]
+categories: [lavaan, semPlot, ggplot2, semTools
+]
 image: "measurement_invariance.png"
 output:
     self_contained: false

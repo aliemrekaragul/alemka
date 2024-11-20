@@ -1805,11 +1805,10 @@ Masculinity     -0.3301980       0.9873525</code></pre>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>Dimension Reduction</category>
-  <category>Explotary Factor Analysis</category>
-  <category>IRT</category>
-  <category>Likert</category>
+  <category>dplyr</category>
+  <category>ggplot2</category>
+  <category>mirt</category>
+  <category>psych</category>
   <guid>https://emrekaragul.com/posts/efaWithLikertData-2/</guid>
   <pubDate>Tue, 19 Nov 2024 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/efaWithLikertData-2/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -3807,18 +3806,10 @@ font-style: inherit;">)</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>Dimension Reduction</category>
-  <category>Explotary Factor Analysis</category>
-  <category>Principle Axis Factoring</category>
-  <category>Likert</category>
-  <category>Polychoric Correlation</category>
-  <category>scatter plot</category>
-  <category>scree plot</category>
-  <category>ggplot2</category>
-  <category>plotly</category>
-  <category>psych</category>
   <category>dplyr</category>
+  <category>ggplot2</category>
+  <category>mirt</category>
+  <category>psych</category>
   <guid>https://emrekaragul.com/posts/efaWithLikertData-1/</guid>
   <pubDate>Sun, 17 Nov 2024 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/efaWithLikertData-1/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -4164,64 +4155,64 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$itemfit
      parameter    Outfit   Outfit_t      Outfit_p  Outfit_pholm     Infit
-1          Con 2.0437233  38.902501  0.000000e+00  0.000000e+00 2.1850694
-2        ProAd 1.5291812  21.836351 1.047993e-105 9.431940e-105 1.6180508
-3         Lang 2.2674019  47.787927  0.000000e+00  0.000000e+00 2.3531293
-4          Nar 1.8349760  32.890957 2.960123e-237 3.256135e-236 1.9389266
-5        step1 0.9486974  -3.698621  2.167736e-04  4.335472e-04 0.9357273
-6        step2 0.4896578 -53.225397  0.000000e+00  0.000000e+00 0.4087587
-7        step3 0.2650904 -96.767430  0.000000e+00  0.000000e+00 0.1831298
-8        step4 0.9155872  -6.648562  2.959709e-11  1.183884e-10 0.5986445
-9       rater1 0.2630695 -84.056474  0.000000e+00  0.000000e+00 0.2021800
-10      rater2 0.2104174 -96.868323  0.000000e+00  0.000000e+00 0.1292558
-11      rater3 0.3429074 -71.206475  0.000000e+00  0.000000e+00 0.1963967
-12   Con:step1 0.8385415  -8.744391  2.242226e-18  1.121113e-17 0.8568668
-13 ProAd:step1 0.6755760 -17.739223  2.088017e-70  1.670414e-69 0.7098348
-14  Lang:step1 0.5189612 -29.148889 8.629441e-187 8.629441e-186 0.5202715
-15   Nar:step1 0.6866065 -16.155773  1.034147e-58  7.239030e-58 0.7067695
-16   Con:step2 0.5291064 -34.052678 3.704735e-254 4.445682e-253 0.4425149
-17 ProAd:step2 0.4289713 -42.432194  0.000000e+00  0.000000e+00 0.3503240
-18  Lang:step2 0.1968609 -75.654607  0.000000e+00  0.000000e+00 0.1639188
-19   Nar:step2 0.3699709 -46.075944  0.000000e+00  0.000000e+00 0.3082609
-20   Con:step3 0.2774671 -67.186355  0.000000e+00  0.000000e+00 0.2262756
-21 ProAd:step3 0.2775210 -63.121020  0.000000e+00  0.000000e+00 0.2094582
-22  Lang:step3 0.1896707 -83.852284  0.000000e+00  0.000000e+00 0.1149761
-23   Nar:step3 0.2471617 -65.073283  0.000000e+00  0.000000e+00 0.1836452
-24   Con:step4 0.9423193  -3.233930  1.220994e-03  1.220994e-03 0.5758781
-25 ProAd:step4 0.8934519  -5.682097  1.330532e-08  3.991597e-08 0.5209888
-26  Lang:step4 0.4640522 -36.730462 2.384593e-295 3.099971e-294 0.2798007
-27   Nar:step4 0.7669118 -12.446215  1.466353e-35  8.798119e-35 0.4610599
+1          Con 2.0585470  39.400899  0.000000e+00  0.000000e+00 2.1997279
+2        ProAd 1.5369865  22.163909 7.660384e-109 6.894345e-108 1.6258684
+3         Lang 2.2662066  47.841294  0.000000e+00  0.000000e+00 2.3468649
+4          Nar 1.8419808  33.231069 3.832185e-242 4.215404e-241 1.9461538
+5        step1 0.9567419  -3.116628  1.829322e-03  3.658643e-03 0.9437283
+6        step2 0.4912645 -53.179892  0.000000e+00  0.000000e+00 0.4085188
+7        step3 0.2717863 -95.710904  0.000000e+00  0.000000e+00 0.1844266
+8        step4 0.9264361  -5.793804  6.880989e-09  2.752395e-08 0.6006956
+9       rater1 0.2621579 -84.439666  0.000000e+00  0.000000e+00 0.2011799
+10      rater2 0.2102910 -97.073351  0.000000e+00  0.000000e+00 0.1288749
+11      rater3 0.3424868 -71.428762  0.000000e+00  0.000000e+00 0.1956220
+12   Con:step1 0.8383549  -8.767845  1.821186e-18  9.105928e-18 0.8567601
+13 ProAd:step1 0.6746071 -17.860710  2.385854e-71  1.908684e-70 0.7093789
+14  Lang:step1 0.5168563 -29.428336 2.384008e-190 2.384008e-189 0.5191105
+15   Nar:step1 0.6848650 -16.325045  6.549193e-60  4.584435e-59 0.7059203
+16   Con:step2 0.5306292 -34.037821 6.146371e-254 7.375646e-253 0.4422111
+17 ProAd:step2 0.4301068 -42.502850  0.000000e+00  0.000000e+00 0.3495629
+18  Lang:step2 0.1968146 -75.897830  0.000000e+00  0.000000e+00 0.1635975
+19   Nar:step2 0.3706675 -46.198429  0.000000e+00  0.000000e+00 0.3078140
+20   Con:step3 0.2786884 -67.291049  0.000000e+00  0.000000e+00 0.2258991
+21 ProAd:step3 0.2765834 -63.618697  0.000000e+00  0.000000e+00 0.2089943
+22  Lang:step3 0.1940462 -83.250195  0.000000e+00  0.000000e+00 0.1146795
+23   Nar:step3 0.2486903 -65.156140  0.000000e+00  0.000000e+00 0.1831799
+24   Con:step4 0.9454987  -3.062781  2.192904e-03  3.658643e-03 0.5753692
+25 ProAd:step4 0.8972583  -5.504223  3.708007e-08  1.112402e-07 0.5197597
+26  Lang:step4 0.4646499 -36.807248 1.413705e-296 1.837816e-295 0.2790765
+27   Nar:step4 0.7695600 -12.352597  4.716384e-35  2.829830e-34 0.4601422
        Infit_t       Infit_p   Infit_pholm
-1    43.038420  0.000000e+00  0.000000e+00
-2    24.978903 1.036591e-137 5.182953e-137
-3    50.279593  0.000000e+00  0.000000e+00
-4    36.220270 2.920572e-287 3.212630e-286
-5    -4.655002  3.239768e-06  3.239768e-06
-6   -64.792309  0.000000e+00  0.000000e+00
-7  -116.909248  0.000000e+00  0.000000e+00
-8   -36.024452 3.465433e-284 3.465433e-283
-9   -96.647717  0.000000e+00  0.000000e+00
-10 -118.183270  0.000000e+00  0.000000e+00
-11  -99.356485  0.000000e+00  0.000000e+00
-12   -7.697321  1.389488e-14  2.778977e-14
-13  -15.626641  4.794180e-55  1.917672e-54
-14  -29.048606 1.602487e-185 1.121741e-184
-15  -14.982148  9.606123e-51  2.881837e-50
-16  -42.384946  0.000000e+00  0.000000e+00
-17  -50.930902  0.000000e+00  0.000000e+00
-18  -81.886312  0.000000e+00  0.000000e+00
-19  -52.995988  0.000000e+00  0.000000e+00
-20  -75.427961  0.000000e+00  0.000000e+00
-21  -73.667719  0.000000e+00  0.000000e+00
-22 -101.210857  0.000000e+00  0.000000e+00
-23  -75.357500  0.000000e+00  0.000000e+00
-24  -27.755757 1.484863e-169 8.909181e-169
-25  -30.139864 1.456424e-199 1.165139e-198
-26  -56.278862  0.000000e+00  0.000000e+00
-27  -33.451484 2.449023e-245 2.204120e-244
+1    43.518674  0.000000e+00  0.000000e+00
+2    25.305265 2.795231e-141 1.397615e-140
+3    50.193787  0.000000e+00  0.000000e+00
+4    36.569488 8.740425e-293 9.614468e-292
+5    -4.072490  4.651324e-05  4.651324e-05
+6   -65.039270  0.000000e+00  0.000000e+00
+7  -117.030438  0.000000e+00  0.000000e+00
+8   -35.943187 6.467215e-283 6.467215e-282
+9   -97.120190  0.000000e+00  0.000000e+00
+10 -118.521551  0.000000e+00  0.000000e+00
+11  -99.762812  0.000000e+00  0.000000e+00
+12   -7.714673  1.212932e-14  2.425863e-14
+13  -15.707699  1.339532e-55  5.358129e-55
+14  -29.253821 4.014915e-188 2.810441e-187
+15  -15.092688  1.809200e-51  5.427601e-51
+16  -42.570434  0.000000e+00  0.000000e+00
+17  -51.243782  0.000000e+00  0.000000e+00
+18  -82.205358  0.000000e+00  0.000000e+00
+19  -53.275846  0.000000e+00  0.000000e+00
+20  -75.825584  0.000000e+00  0.000000e+00
+21  -74.171526  0.000000e+00  0.000000e+00
+22 -101.621224  0.000000e+00  0.000000e+00
+23  -75.808557  0.000000e+00  0.000000e+00
+24  -27.893121 3.233260e-171 1.939956e-170
+25  -30.422787 2.744866e-203 2.195893e-202
+26  -56.571162  0.000000e+00  0.000000e+00
+27  -33.694854 6.876231e-249 6.188608e-248
 
 $time
-[1] "2024-10-17 10:15:15 +03" "2024-10-17 10:15:15 +03"
+[1] "2024-11-20 23:37:39 +03" "2024-11-20 23:37:39 +03"
 
 $CALL
 TAM::tam.fit(tamobj = mod)
@@ -5168,10 +5159,12 @@ font-style: inherit;">)</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>Rasch</category>
-  <category>multi-facet</category>
-  <category>IRT</category>
+  <category>readr</category>
+  <category>tidyr</category>
+  <category>ggplot2</category>
+  <category>dplyr</category>
+  <category>tam</category>
+  <category>cowplot</category>
   <guid>https://emrekaragul.com/posts/Multi Facet Rasch Modelling/</guid>
   <pubDate>Wed, 16 Oct 2024 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Multi Facet Rasch Modelling/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -6875,11 +6868,10 @@ font-style: inherit;">)</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>measusrement invariance</category>
-  <category>Big data</category>
-  <category>SEM</category>
-  <category>Data-viz</category>
+  <category>lavaan</category>
+  <category>semPlot</category>
+  <category>ggplot2</category>
+  <category>semTools</category>
   <guid>https://emrekaragul.com/posts/Measuerement Invariance/</guid>
   <pubDate>Mon, 14 Oct 2024 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Measuerement Invariance/measurement_invariance.png" medium="image" type="image/png" height="144" width="144"/>
@@ -8060,10 +8052,13 @@ font-style: inherit;">confusion_matrix</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>Big data</category>
-  <category>natural language processing</category>
-  <category>automated essay scoring</category>
+  <category>readxl</category>
+  <category>textstem</category>
+  <category>stopwords</category>
+  <category>stringr</category>
+  <category>quanteda</category>
+  <category>tm</category>
+  <category>tidyverse</category>
   <guid>https://emrekaragul.com/posts/Automated Essay Scoring (AES) with R/</guid>
   <pubDate>Sun, 22 Oct 2023 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Automated Essay Scoring (AES) with R/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -8157,8 +8152,6 @@ font-style: inherit;">confusion_matrix</span></span></code></pre></div>
 </section>
 
  ]]></description>
-  <category>psychometrics</category>
-  <category>Big data</category>
   <guid>https://emrekaragul.com/posts/Top 5 Data Sources/</guid>
   <pubDate>Sun, 26 Mar 2023 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Top 5 Data Sources/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -9490,10 +9483,8 @@ font-style: inherit;">)</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>CTT</category>
-  <category>difficulty</category>
-  <category>discrimination</category>
+  <category>ShinyItemAnalysis</category>
+  <category>multilevel</category>
   <guid>https://emrekaragul.com/posts/Exploring the psychometric properties using R/</guid>
   <pubDate>Fri, 03 Mar 2023 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Exploring the psychometric properties using R/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -10068,8 +10059,10 @@ font-style: inherit;">## another option is 'white'</span></span></code></pre></d
 </section> ]]></description>
   <category>Rvest</category>
   <category>Wordcloud</category>
-  <category>Data-viz</category>
-  <category>natural language processing</category>
+  <category>dplyr</category>
+  <category>tm</category>
+  <category>stopwords</category>
+  <category>wordcloud2</category>
   <guid>https://emrekaragul.com/posts/Web scraping with Rvest/</guid>
   <pubDate>Thu, 05 Jan 2023 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Web scraping with Rvest/image.png" medium="image" type="image/png" height="132" width="144"/>
@@ -11054,8 +11047,9 @@ font-style: inherit;">fig</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>Google Data</category>
-  <category>Data-viz</category>
+  <category>psych</category>
+  <category>dplyr</category>
+  <category>plotly</category>
   <guid>https://emrekaragul.com/posts/Visualisation of My Personal Google Data (2)/</guid>
   <pubDate>Sat, 10 Dec 2022 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Visualisation of My Personal Google Data (2)/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -12173,9 +12167,13 @@ font-style: inherit;">)</span></span></code></pre></div>
 <!-- -->
 
 </section></section> ]]></description>
-  <category>Google Data</category>
-  <category>Maps</category>
-  <category>Data-viz</category>
+  <category>rjson</category>
+  <category>tidyr</category>
+  <category>dplyr</category>
+  <category>purrr</category>
+  <category>lubridate</category>
+  <category>sp</category>
+  <category>leaflet</category>
   <guid>https://emrekaragul.com/posts/Visualisation of My Personal Google Data (1)/</guid>
   <pubDate>Tue, 15 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Visualisation of My Personal Google Data (1)/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -13727,8 +13725,9 @@ font-style: inherit;">]</span></span></code></pre></div>
 <!-- -->
 
 </section></section></section> ]]></description>
-  <category>psychometrics</category>
-  <category>SEM</category>
+  <category>haven</category>
+  <category>dplyr</category>
+  <category>lavaan</category>
   <guid>https://emrekaragul.com/posts/Structural Equation Modelling (in Turkish)/</guid>
   <pubDate>Sat, 29 Oct 2022 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Structural Equation Modelling (in Turkish)/image.png" medium="image" type="image/png" height="144" width="144"/>
@@ -14471,9 +14470,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 
 
  ]]></description>
-  <category>psychometrics</category>
-  <category>CTT</category>
-  <category>test equating</category>
+  <category>equate</category>
   <guid>https://emrekaragul.com/posts/Test Equating/</guid>
   <pubDate>Mon, 19 Sep 2022 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Test Equating/image.jpg" medium="image" type="image/jpeg"/>
@@ -17204,8 +17201,10 @@ font-style: inherit;">)</span></span></code></pre></div>
 <!-- -->
 
 </section> ]]></description>
-  <category>psychometrics</category>
-  <category>IRT</category>
+  <category>psych</category>
+  <category>GPArotation</category>
+  <category>sirt</category>
+  <category>ltm</category>
   <guid>https://emrekaragul.com/posts/Item Analysis with Item Response Theory (in Turkish)/</guid>
   <pubDate>Fri, 19 Nov 2021 21:00:00 GMT</pubDate>
   <media:content url="https://emrekaragul.com/posts/Item Analysis with Item Response Theory (in Turkish)/mtk.png" medium="image" type="image/png" height="144" width="144"/>

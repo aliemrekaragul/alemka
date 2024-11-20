@@ -10,7 +10,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: "09.20.2022"
-categories: [psychometrics, CTT, test equating]
+categories: [equate
+  ]
 image: "image.jpg"
 output:
     self_contained: false

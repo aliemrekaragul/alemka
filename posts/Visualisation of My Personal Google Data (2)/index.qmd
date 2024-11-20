@@ -10,7 +10,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2022-12-11
-categories: [Google Data, Data-viz]
+categories: [psych, dplyr, plotly
+]
 image: "image.png"
 ---
 

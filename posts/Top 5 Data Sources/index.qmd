@@ -9,7 +9,7 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2023-03-27
-categories: [psychometrics, Big data]
+categories: []
 image: "image.png"
 output:
     self_contained: false

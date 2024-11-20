@@ -9,7 +9,7 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2024-11-18
-categories: [psychometrics, Dimension Reduction, Explotary Factor Analysis, Principle Axis Factoring, Likert, Polychoric Correlation, scatter plot, scree plot, ggplot2, plotly, psych, dplyr]
+categories: [dplyr, ggplot2, mirt, psych, ]
 image: "image.png"
 output:
     self_contained: false
@@ -203,13 +203,13 @@ As, the assumptions we tested are fulfilled, we can continue with the
 
 ## Determine the number of factors
 
-While determining the number of factors to extract, there are many methods that can be used. See a summary of them in Zwick et.al. (1986). Some of the most common methods are: 
+While determining the number of factors to extract, there are many methods that can be used. See a summary of them in Zwick et.al. (1986). Some of the most common methods are:
 
-**1. Kaiser Criterion (K1):** we can use the Kaiser criterion, which suggests retaining factors with eigenvalues greater than 1. 
+**1. Kaiser Criterion (K1):** we can use the Kaiser criterion, which suggests retaining factors with eigenvalues greater than 1.
 
-**2. Paralell Analysis:** This is a simulation-based method that compares the observed eigenvalues with the eigenvalues obtained from random data. The factors with eigenvalues greater than the random data are retained in this approach. 
+**2. Paralell Analysis:** This is a simulation-based method that compares the observed eigenvalues with the eigenvalues obtained from random data. The factors with eigenvalues greater than the random data are retained in this approach.
 
-**3. Very Simple Structure (VSS):** VSS criterion evaluates how well a simplified factor pattern reproduces the original correlation matrix. In this simplified pattern, only the highest loading for each item is kept, while all other loadings are set to zero. The VSS score, ranging from 0 to 1, measures the goodness-of-fit of the factor solution. This evaluation is conducted for solutions with varying numbers of factors, starting from one (k = 1) up to a user-defined maximum. The optimal number of factors is determined by the solution with the highest VSS score. 
+**3. Very Simple Structure (VSS):** VSS criterion evaluates how well a simplified factor pattern reproduces the original correlation matrix. In this simplified pattern, only the highest loading for each item is kept, while all other loadings are set to zero. The VSS score, ranging from 0 to 1, measures the goodness-of-fit of the factor solution. This evaluation is conducted for solutions with varying numbers of factors, starting from one (k = 1) up to a user-defined maximum. The optimal number of factors is determined by the solution with the highest VSS score.
 
 **4. Minimum Average Partial (MAP):** This method is based on partial correlations matrix. It is very similar to Principal Component Analysis (PCA).
 
@@ -389,6 +389,7 @@ print(two_fm$communality, cutoff = 0.3)
 ```
 
 With this, our explained cumulative variance has risen to 38%. Let's see factor correlations and the reliability score of the scale:
+
 ```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}
 #| warning: false 
 #| eval: true 
@@ -403,8 +404,9 @@ reliability_coef <- psych::alpha(poly_matrix, check.keys=TRUE)
 print(round(reliability_coef[["total"]][["raw_alpha"]], 2))
 
 ```
-Correlation between factors is -0.24, which indicates a very low and negative correlation.
-The ordinal alpha coefficient is 0.84 which is considered as good. The 2-factor model with oblimin rotation is our final solution. Finally let's draw the path diagram of the model:
+
+Correlation between factors is -0.24, which indicates a very low and negative correlation. The ordinal alpha coefficient is 0.84 which is considered as good. The 2-factor model with oblimin rotation is our final solution. Finally let's draw the path diagram of the model:
+
 ```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}
 #| warning: false 
 #| eval: true 
@@ -422,7 +424,6 @@ fa.diagram(
 
 ```
 
-
 The final solution has 10 items in the first factor and 7 items in the second factor. Here are the items in each factor:
 
 | Factor 1                                                                  | Factor 2                                                                 |
@@ -438,7 +439,7 @@ The final solution has 10 items in the first factor and 7 items in the second fa
 | Q40 I really like dancing.                                                |                                                                          |
 | Q44 I decorate my things (e.g. stickers on laptop).                       |                                                                          |
 
-It is pretty easy now to interpret the factors given that this is a scale named as Open Sex Role Inventory. The first factor seems to be related to femininity while the second factor seems to be related to masculinity. 
+It is pretty easy now to interpret the factors given that this is a scale named as Open Sex Role Inventory. The first factor seems to be related to femininity while the second factor seems to be related to masculinity.
 
 As a final touch, let's see the scree plot of the genders of the participants along with their scores on the two factors; **masculinity** and **femininity**. We will use `factor.scores()` to calculate participants' scores and the `ggplot2` package for visualization:
 
@@ -473,6 +474,6 @@ In this post, we have seen how to conduct an EFA with polychoric correlations an
 
 ## Further Remarks
 
-- The data used here is a likert scale data. Yet, EFA actually expects continuous variables. Therefore, it might be wiser to use IRT based factor reduction methods for likert scale data. We will discuss this in a later post.
+-   The data used here is a likert scale data. Yet, EFA actually expects continuous variables. Therefore, it might be wiser to use IRT based factor reduction methods for likert scale data. We will discuss this in a later post.
 
-- The outliers should be checked and removed before running the EFA. Yet, we haven't done it here. Outlier detection is another topic for another post.
+-   The outliers should be checked and removed before running the EFA. Yet, we haven't done it here. Outlier detection is another topic for another post.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>- Psychometrics &amp; Data Visualization</title>
+<title>- Psychometrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-main-listing .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
@@ -115,12 +115,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     const options = {
       valueNames: ['listing-image','listing-title','listing-description','listing-date','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
-      
+      page: 9,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-main-listing'] = new List('listing-main-listing', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -192,7 +193,11 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title=" " href="index.xml" data-external="1"></head>
+<link rel="alternate" type="application/rss+xml" title=" " href="index.xml" data-external="1"><meta property="og:title" content="- Psychometrics">
+<meta property="og:site_name" content=" ">
+<meta name="twitter:title" content="- Psychometrics">
+<meta name="twitter:card" content="summary">
+</head>
 
 <body class="nav-fixed">
 
@@ -293,7 +298,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <div class="quarto-title-block"><div><h1 class="title">Psychometrics &amp; Data Visualization</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Psychometrics</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                       </div>
   </div>
     
@@ -311,7 +316,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="Big data">Big data <span class="quarto-category-count">(3)</span></div><div class="category" data-category="CTT">CTT <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Data-viz">Data-viz <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Dimension Reduction">Dimension Reduction <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Explotary Factor Analysis">Explotary Factor Analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Google Data">Google Data <span class="quarto-category-count">(2)</span></div><div class="category" data-category="IRT">IRT <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Likert">Likert <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Maps">Maps <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Polychoric Correlation">Polychoric Correlation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Principle Axis Factoring">Principle Axis Factoring <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Rasch">Rasch <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Rvest">Rvest <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SEM">SEM <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Wordcloud">Wordcloud <span class="quarto-category-count">(1)</span></div><div class="category" data-category="automated essay scoring">automated essay scoring <span class="quarto-category-count">(1)</span></div><div class="category" data-category="difficulty">difficulty <span class="quarto-category-count">(1)</span></div><div class="category" data-category="discrimination">discrimination <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dplyr">dplyr <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ggplot2">ggplot2 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="measusrement invariance">measusrement invariance <span class="quarto-category-count">(1)</span></div><div class="category" data-category="multi-facet">multi-facet <span class="quarto-category-count">(1)</span></div><div class="category" data-category="natural language processing">natural language processing <span class="quarto-category-count">(2)</span></div><div class="category" data-category="plotly">plotly <span class="quarto-category-count">(1)</span></div><div class="category" data-category="psych">psych <span class="quarto-category-count">(1)</span></div><div class="category" data-category="psychometrics">psychometrics <span class="quarto-category-count">(10)</span></div><div class="category" data-category="scatter plot">scatter plot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scree plot">scree plot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="test equating">test equating <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-cloud"><div class="category" data-category="GPArotation"><span class="quarto-category-count category-cloud-1">GPArotation</span></div><div class="category" data-category="Rvest"><span class="quarto-category-count category-cloud-1">Rvest</span></div><div class="category" data-category="ShinyItemAnalysis"><span class="quarto-category-count category-cloud-1">ShinyItemAnalysis</span></div><div class="category" data-category="Wordcloud"><span class="quarto-category-count category-cloud-1">Wordcloud</span></div><div class="category" data-category="cowplot"><span class="quarto-category-count category-cloud-1">cowplot</span></div><div class="category" data-category="dplyr"><span class="quarto-category-count category-cloud-6">dplyr</span></div><div class="category" data-category="equate"><span class="quarto-category-count category-cloud-1">equate</span></div><div class="category" data-category="ggplot2"><span class="quarto-category-count category-cloud-4">ggplot2</span></div><div class="category" data-category="haven"><span class="quarto-category-count category-cloud-1">haven</span></div><div class="category" data-category="lavaan"><span class="quarto-category-count category-cloud-2">lavaan</span></div><div class="category" data-category="leaflet"><span class="quarto-category-count category-cloud-1">leaflet</span></div><div class="category" data-category="ltm"><span class="quarto-category-count category-cloud-1">ltm</span></div><div class="category" data-category="lubridate"><span class="quarto-category-count category-cloud-1">lubridate</span></div><div class="category" data-category="mirt"><span class="quarto-category-count category-cloud-2">mirt</span></div><div class="category" data-category="multilevel"><span class="quarto-category-count category-cloud-1">multilevel</span></div><div class="category" data-category="plotly"><span class="quarto-category-count category-cloud-1">plotly</span></div><div class="category" data-category="psych"><span class="quarto-category-count category-cloud-4">psych</span></div><div class="category" data-category="purrr"><span class="quarto-category-count category-cloud-1">purrr</span></div><div class="category" data-category="quanteda"><span class="quarto-category-count category-cloud-1">quanteda</span></div><div class="category" data-category="readr"><span class="quarto-category-count category-cloud-1">readr</span></div><div class="category" data-category="readxl"><span class="quarto-category-count category-cloud-1">readxl</span></div><div class="category" data-category="rjson"><span class="quarto-category-count category-cloud-1">rjson</span></div><div class="category" data-category="semPlot"><span class="quarto-category-count category-cloud-1">semPlot</span></div><div class="category" data-category="semTools"><span class="quarto-category-count category-cloud-1">semTools</span></div><div class="category" data-category="sirt"><span class="quarto-category-count category-cloud-1">sirt</span></div><div class="category" data-category="sp"><span class="quarto-category-count category-cloud-1">sp</span></div><div class="category" data-category="stopwords"><span class="quarto-category-count category-cloud-2">stopwords</span></div><div class="category" data-category="stringr"><span class="quarto-category-count category-cloud-1">stringr</span></div><div class="category" data-category="tam"><span class="quarto-category-count category-cloud-1">tam</span></div><div class="category" data-category="textstem"><span class="quarto-category-count category-cloud-1">textstem</span></div><div class="category" data-category="tidyr"><span class="quarto-category-count category-cloud-2">tidyr</span></div><div class="category" data-category="tidyverse"><span class="quarto-category-count category-cloud-1">tidyverse</span></div><div class="category" data-category="tm"><span class="quarto-category-count category-cloud-2">tm</span></div><div class="category" data-category="wordcloud2"><span class="quarto-category-count category-cloud-1">wordcloud2</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -325,11 +330,11 @@ window.Quarto = {
 <!-- -->
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-grid" id="listing-main-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+     <select id="listing-main-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-main-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
        <option value="" disabled="" selected="" hidden="">Order By</option>
        <option value="index" data-direction="asc">Default</option>
          <option value="listing-date-sort" data-direction="asc">
@@ -346,7 +351,7 @@ window.Quarto = {
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="psychometrics,Dimension Reduction,Explotary Factor Analysis,IRT,Likert" data-listing-date-sort="1732050000000" data-listing-file-modified-sort="1732092480040" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3813">
+<div class="g-col-1" data-index="0" data-categories="dplyr,ggplot2,mirt,psych" data-listing-date-sort="1732050000000" data-listing-file-modified-sort="1732134340897" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3829">
 <a href="./posts/efaWithLikertData-2/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -360,20 +365,17 @@ Multidimensional IRT for Factor Exploration
 20 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Dimension Reduction'); return false;">
-Dimension Reduction
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot2'); return false;">
+ggplot2
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Explotary Factor Analysis'); return false;">
-Explotary Factor Analysis
+<div class="listing-category" onclick="window.quartoListingCategory('mirt'); return false;">
+mirt
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('IRT'); return false;">
-IRT
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Likert'); return false;">
-Likert
+<div class="listing-category" onclick="window.quartoListingCategory('psych'); return false;">
+psych
 </div>
 </div>
 <div class="card-text listing-description">
@@ -388,7 +390,7 @@ Nov 20, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="psychometrics,Dimension Reduction,Explotary Factor Analysis,Principle Axis Factoring,Likert,Polychoric Correlation,scatter plot,scree plot,ggplot2,plotly,psych,dplyr" data-listing-date-sort="1731877200000" data-listing-file-modified-sort="1731870043523" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3992">
+<div class="g-col-1" data-index="1" data-categories="dplyr,ggplot2,mirt,psych" data-listing-date-sort="1731877200000" data-listing-file-modified-sort="1732134324262" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3992">
 <a href="./posts/efaWithLikertData-1/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -402,41 +404,17 @@ Exploratory Factor Analysis with Likert Scale Data
 20 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Dimension Reduction'); return false;">
-Dimension Reduction
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Explotary Factor Analysis'); return false;">
-Explotary Factor Analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Principle Axis Factoring'); return false;">
-Principle Axis Factoring
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Likert'); return false;">
-Likert
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Polychoric Correlation'); return false;">
-Polychoric Correlation
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scatter plot'); return false;">
-scatter plot
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scree plot'); return false;">
-scree plot
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
 </div>
 <div class="listing-category" onclick="window.quartoListingCategory('ggplot2'); return false;">
 ggplot2
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('plotly'); return false;">
-plotly
+<div class="listing-category" onclick="window.quartoListingCategory('mirt'); return false;">
+mirt
 </div>
 <div class="listing-category" onclick="window.quartoListingCategory('psych'); return false;">
 psych
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
-dplyr
 </div>
 </div>
 <div class="card-text listing-description">
@@ -451,7 +429,7 @@ Nov 18, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="psychometrics,Rasch,multi-facet,IRT" data-listing-date-sort="1729112400000" data-listing-file-modified-sort="1729149274927" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1929">
+<div class="g-col-1" data-index="2" data-categories="readr,tidyr,ggplot2,dplyr,tam,cowplot" data-listing-date-sort="1729112400000" data-listing-file-modified-sort="1732134409976" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1929">
 <a href="./posts/Multi Facet Rasch Modelling/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -465,17 +443,23 @@ Multi-Facet Rasch Models with R
 10 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('readr'); return false;">
+readr
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Rasch'); return false;">
-Rasch
+<div class="listing-category" onclick="window.quartoListingCategory('tidyr'); return false;">
+tidyr
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('multi-facet'); return false;">
-multi-facet
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot2'); return false;">
+ggplot2
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('IRT'); return false;">
-IRT
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('tam'); return false;">
+tam
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('cowplot'); return false;">
+cowplot
 </div>
 </div>
 <div class="card-text listing-description">
@@ -490,7 +474,7 @@ Oct 17, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="psychometrics,measusrement invariance,Big data,SEM,Data-viz" data-listing-date-sort="1728939600000" data-listing-file-modified-sort="1728991597245" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1722">
+<div class="g-col-1" data-index="3" data-categories="lavaan,semPlot,ggplot2,semTools" data-listing-date-sort="1728939600000" data-listing-file-modified-sort="1732134389474" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1722">
 <a href="./posts/Measuerement Invariance/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -504,20 +488,17 @@ Measurement Invariance
 9 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('lavaan'); return false;">
+lavaan
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('measusrement invariance'); return false;">
-measusrement invariance
+<div class="listing-category" onclick="window.quartoListingCategory('semPlot'); return false;">
+semPlot
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Big data'); return false;">
-Big data
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot2'); return false;">
+ggplot2
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('SEM'); return false;">
-SEM
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Data-viz'); return false;">
-Data-viz
+<div class="listing-category" onclick="window.quartoListingCategory('semTools'); return false;">
+semTools
 </div>
 </div>
 <div class="card-text listing-description">
@@ -532,7 +513,7 @@ Oct 15, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="psychometrics,Big data,natural language processing,automated essay scoring" data-listing-date-sort="1698008400000" data-listing-file-modified-sort="1731799659897" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2668">
+<div class="g-col-1" data-index="4" data-categories="readxl,textstem,stopwords,stringr,quanteda,tm,tidyverse" data-listing-date-sort="1698008400000" data-listing-file-modified-sort="1732134298733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2668">
 <a href="./posts/Automated Essay Scoring (AES) with R/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -546,17 +527,26 @@ Automated Essay Scoring (AES) with R
 14 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('readxl'); return false;">
+readxl
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Big data'); return false;">
-Big data
+<div class="listing-category" onclick="window.quartoListingCategory('textstem'); return false;">
+textstem
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('natural language processing'); return false;">
-natural language processing
+<div class="listing-category" onclick="window.quartoListingCategory('stopwords'); return false;">
+stopwords
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('automated essay scoring'); return false;">
-automated essay scoring
+<div class="listing-category" onclick="window.quartoListingCategory('stringr'); return false;">
+stringr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('quanteda'); return false;">
+quanteda
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('tm'); return false;">
+tm
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('tidyverse'); return false;">
+tidyverse
 </div>
 </div>
 <div class="card-text listing-description">
@@ -571,7 +561,7 @@ Oct 23, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="psychometrics,Big data" data-listing-date-sort="1679864400000" data-listing-file-modified-sort="1728984089396" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1041">
+<div class="g-col-1" data-index="5" data-categories="" data-listing-date-sort="1679864400000" data-listing-file-modified-sort="1732134448976" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1041">
 <a href="./posts/Top 5 Data Sources/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -585,12 +575,7 @@ Top 5 Data Sources
 6 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Big data'); return false;">
-Big data
-</div>
+
 </div>
 <div class="card-text listing-description">
 This blog post explains some of the sources that I personally prefer to obtain data. I became aware of most of these sources from Google Data Analytics Certificate program.…
@@ -604,7 +589,7 @@ Mar 27, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="psychometrics,CTT,difficulty,discrimination" data-listing-date-sort="1677877200000" data-listing-file-modified-sort="1731921641756" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1625">
+<div class="g-col-1" data-index="6" data-categories="ShinyItemAnalysis,multilevel" data-listing-date-sort="1677877200000" data-listing-file-modified-sort="1732134354950" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1625">
 <a href="./posts/Exploring the psychometric properties using R/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -618,17 +603,11 @@ Item difficulty &amp; discrimination: Exploring the psychometric properties usin
 9 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('ShinyItemAnalysis'); return false;">
+ShinyItemAnalysis
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('CTT'); return false;">
-CTT
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('difficulty'); return false;">
-difficulty
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('discrimination'); return false;">
-discrimination
+<div class="listing-category" onclick="window.quartoListingCategory('multilevel'); return false;">
+multilevel
 </div>
 </div>
 <div class="card-text listing-description">
@@ -643,7 +622,7 @@ Mar 4, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="Rvest,Wordcloud,Data-viz,natural language processing" data-listing-date-sort="1672952400000" data-listing-file-modified-sort="1731921351688" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1267">
+<div class="g-col-1" data-index="7" data-categories="Rvest,Wordcloud,dplyr,tm,stopwords,wordcloud2" data-listing-date-sort="1672952400000" data-listing-file-modified-sort="1732134513325" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1267">
 <a href="./posts/Web scraping with Rvest/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -663,11 +642,17 @@ Rvest
 <div class="listing-category" onclick="window.quartoListingCategory('Wordcloud'); return false;">
 Wordcloud
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Data-viz'); return false;">
-Data-viz
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('natural language processing'); return false;">
-natural language processing
+<div class="listing-category" onclick="window.quartoListingCategory('tm'); return false;">
+tm
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('stopwords'); return false;">
+stopwords
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('wordcloud2'); return false;">
+wordcloud2
 </div>
 </div>
 <div class="card-text listing-description">
@@ -682,7 +667,7 @@ Jan 6, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="8" data-categories="Google Data,Data-viz" data-listing-date-sort="1670706000000" data-listing-file-modified-sort="1731917825679" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1686">
+<div class="g-col-1" data-index="8" data-categories="psych,dplyr,plotly" data-listing-date-sort="1670706000000" data-listing-file-modified-sort="1732134490748" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1686">
 <a href="./posts/Visualisation of My Personal Google Data (2)/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -696,11 +681,14 @@ Visualisation of My Personal Google Data (2): My exercise routine
 9 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Google Data'); return false;">
-Google Data
+<div class="listing-category" onclick="window.quartoListingCategory('psych'); return false;">
+psych
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Data-viz'); return false;">
-Data-viz
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('plotly'); return false;">
+plotly
 </div>
 </div>
 <div class="card-text listing-description">
@@ -715,11 +703,11 @@ Dec 11, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="9" data-categories="Google Data,Maps,Data-viz" data-listing-date-sort="1668546000000" data-listing-file-modified-sort="1728984089397" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2266">
+<div class="g-col-1" data-index="9" data-categories="rjson,tidyr,dplyr,purrr,lubridate,sp,leaflet" data-listing-date-sort="1668546000000" data-listing-file-modified-sort="1732134476698" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2266">
 <a href="./posts/Visualisation of My Personal Google Data (1)/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/Visualisation of My Personal Google Data (1)/image.png" class="thumbnail-image card-img" style="height: 250px;">
+<img data-src="./posts/Visualisation of My Personal Google Data (1)/image.png" class="thumbnail-image card-img" style="height: 250px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -729,14 +717,26 @@ Visualisation of My Personal Google Data (1): My Locations
 12 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Google Data'); return false;">
-Google Data
+<div class="listing-category" onclick="window.quartoListingCategory('rjson'); return false;">
+rjson
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Maps'); return false;">
-Maps
+<div class="listing-category" onclick="window.quartoListingCategory('tidyr'); return false;">
+tidyr
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('Data-viz'); return false;">
-Data-viz
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('purrr'); return false;">
+purrr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('lubridate'); return false;">
+lubridate
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('sp'); return false;">
+sp
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('leaflet'); return false;">
+leaflet
 </div>
 </div>
 <div class="card-text listing-description">
@@ -751,11 +751,11 @@ Nov 16, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="10" data-categories="psychometrics,SEM" data-listing-date-sort="1667077200000" data-listing-file-modified-sort="1728984089395" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="76" data-listing-word-count-sort="15001">
+<div class="g-col-1" data-index="10" data-categories="haven,dplyr,lavaan" data-listing-date-sort="1667077200000" data-listing-file-modified-sort="1732134424101" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="76" data-listing-word-count-sort="15001">
 <a href="./posts/Structural Equation Modelling (in Turkish)/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/Structural Equation Modelling (in Turkish)/image.png" class="thumbnail-image card-img" style="height: 250px;">
+<img data-src="./posts/Structural Equation Modelling (in Turkish)/image.png" class="thumbnail-image card-img" style="height: 250px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -765,11 +765,14 @@ Structural Equation Modelling (in Turkish)
 76 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('haven'); return false;">
+haven
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('SEM'); return false;">
-SEM
+<div class="listing-category" onclick="window.quartoListingCategory('dplyr'); return false;">
+dplyr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('lavaan'); return false;">
+lavaan
 </div>
 </div>
 <div class="card-text listing-description">
@@ -784,11 +787,11 @@ Oct 30, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="11" data-categories="psychometrics,CTT,test equating" data-listing-date-sort="1663621200000" data-listing-file-modified-sort="1728984089396" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="927">
+<div class="g-col-1" data-index="11" data-categories="equate" data-listing-date-sort="1663621200000" data-listing-file-modified-sort="1732134436413" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="927">
 <a href="./posts/Test Equating/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/Test Equating/image.jpg" class="thumbnail-image card-img" style="height: 250px;">
+<img data-src="./posts/Test Equating/image.jpg" class="thumbnail-image card-img" style="height: 250px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -798,14 +801,8 @@ Test Equating
 5 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('CTT'); return false;">
-CTT
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('test equating'); return false;">
-test equating
+<div class="listing-category" onclick="window.quartoListingCategory('equate'); return false;">
+equate
 </div>
 </div>
 <div class="card-text listing-description">
@@ -820,11 +817,11 @@ Sep 20, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="12" data-categories="psychometrics,IRT" data-listing-date-sort="1637355600000" data-listing-file-modified-sort="1728978615801" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2965">
+<div class="g-col-1" data-index="12" data-categories="psych,GPArotation,sirt,ltm" data-listing-date-sort="1637355600000" data-listing-file-modified-sort="1732134373110" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2950">
 <a href="./posts/Item Analysis with Item Response Theory (in Turkish)/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./posts/Item Analysis with Item Response Theory (in Turkish)/mtk.png" class="thumbnail-image card-img" style="height: 250px;">
+<img data-src="./posts/Item Analysis with Item Response Theory (in Turkish)/mtk.png" class="thumbnail-image card-img" style="height: 250px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -834,11 +831,17 @@ Item Analysis with Item Response Theory (in Turkish)
 15 min
 </div>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('psychometrics'); return false;">
-psychometrics
+<div class="listing-category" onclick="window.quartoListingCategory('psych'); return false;">
+psych
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('IRT'); return false;">
-IRT
+<div class="listing-category" onclick="window.quartoListingCategory('GPArotation'); return false;">
+GPArotation
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('sirt'); return false;">
+sirt
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('ltm'); return false;">
+ltm
 </div>
 </div>
 <div class="card-text listing-description">
@@ -857,6 +860,9 @@ Nov 20, 2021
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="main-listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1319,22 +1325,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Psychometrics &amp; Data Visualization"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Psychometrics"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">listing:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  contents: posts</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  fields: [image, title, description, date, categories, reading-time]</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  sort: "date desc"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  type: grid </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  feed: true</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  grid-columns: 3</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  image-height: 250px</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">  page-size: 100</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">  categories: true</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">  sort-ui: [date]</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">  filter-ui: true</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="an">page-layout:</span><span class="co"> full</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> true</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  id: main-listing</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  contents: posts</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  fields: [image, title, description, date, categories, reading-time]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  sort: "date desc"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  type: grid </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  feed: true</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  grid-columns: 3</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">  image-height: 250px</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">  page-size: 9</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">  categories: "cloud"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">  sort-ui: [date]</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">  filter-ui: true</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="an">page-layout:</span><span class="co"> full</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> true</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
@@ -1344,7 +1351,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 
-<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/aliemrekaragul/alemka/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/aliemrekaragul/alemka/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
     <div class="nav-footer-right">
 <p>📈❤️☕</p>
 </div>

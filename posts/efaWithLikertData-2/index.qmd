@@ -9,7 +9,8 @@ author:
     affiliations:
       - name: TOBB ETU- University of Economics & Technology
 date: 2024-11-20
-categories: [psychometrics, Dimension Reduction, Explotary Factor Analysis, IRT, Likert]
+categories: [dplyr, ggplot2, mirt, psych
+]
 image: "image.png"
 output:
     self_contained: false
@@ -29,6 +30,10 @@ Also, in the previous post, we have a detailed discussion about the number of th
 The following code is also provided in the previous post. It is used to load the data and filter the participants based on their demographics. Let's just run the same code to get the data ready for the analysis. If you are coming from the previous post, this code is already run. So, you can skip this part.
 
 ```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}
+#| warning: false
+#| eval: true
+#| echo: true
+#| code-fold: false
 
 library(dplyr)
 
@@ -54,7 +59,7 @@ Just to remember how the data is distributed, let's see the summary and structur
 
 summary(df[ ,1:5]) # run summary(df) to see all items.
 
-str(df)
+str(df[ ,1:5]) # run str(df) to see all items.
 ```
 
 ## Multidimensional IRT Model Building
