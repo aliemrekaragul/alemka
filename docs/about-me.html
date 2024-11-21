@@ -215,7 +215,7 @@ About
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-<div id="root" class="container mx-auto px-4 py-12">
+<div id="root" class="container mx-auto px-4 py-6 sm:py-12">
 </div>
 <script type="text/babel">
     const ProgressBar = ({ language, percentage }) => {
@@ -237,7 +237,7 @@ About
         };
         return (
             <div className="mb-2">
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-xs sm:text-sm mb-1">
                     <span>{language}</span>
                     <span>{percentage}%</span>
                 </div>
@@ -253,8 +253,8 @@ About
     const App = () => {
         const [showMoreAbout, setShowMoreAbout] = React.useState(false);
         return (
-            <div className="max-w-4xl mx-auto space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+            <div className="max-w-4xl mx-auto space-y-6 p-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Welcome Card */}
                     <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
                         <h2 className="text-2xl font-bold mb-4">Welcome!</h2>
@@ -279,13 +279,13 @@ About
                     <div className="text-center">
                         <button 
                             onClick={() => setShowMoreAbout(true)}
-                            className="bg-[#E25822] hover:bg-[#FF4500] text-white font-bold py-2 px-4 rounded-full transition duration-300"
+                            className="bg-[#E25822] hover:bg-[#FF4500] text-white font-bold py-2 px-4 rounded-full transition duration-300 text-sm sm:text-base"
                         >
                             More About Me
                         </button>
                     </div>
                 )}
-                {/* More About Me Cards */}
+                {/* More About Me Card */}
                 {showMoreAbout && (
                     <div className="space-y-6">
                         <div className="bg-[#F8F9FA] text-black p-6 rounded-lg shadow-lg">
