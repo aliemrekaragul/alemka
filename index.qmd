@@ -1,5 +1,4 @@
 ---
-title: "Psychometrics"
 listing:
   id: main-listing
   contents: posts
