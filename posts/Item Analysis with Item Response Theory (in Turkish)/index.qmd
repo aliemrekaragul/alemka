@@ -1,7 +1,10 @@
 ---
-title: "Item Analysis with Item Response Theory (in Turkish)"
+title: "Madde Tepki Kuramı Temelli Madde Analizi"
+lang: "tr"
+language: ../../_language-tr.yml
 description: |
-  Madde Tepki Kuramı temelli madde analizi. Hem çok kategorili hem de iki kategorili maddeler için MTK temelli madde analizi uygulama süreçleri...
+  Hem çok kategorili hem de iki kategorili maddeler için MTK temelli madde analizi uygulama süreçleri...
+  Bu çalışma doktora düzeyi 'Madde Tepki Kuramı' dersi kapsamında rapor olarak hazırlanmıştır. 
 author:
   - name: Ali Emre Karagül
     orcid: 0000-0002-5820-8643
@@ -36,7 +39,7 @@ Bu çalışmada çok kategorili puanlanan maddelerden elde edilen bir veri seti 
 -   Test bilgi fonksiyonunu nasıldır?
 -   Birey yetenek puanlarının dağılımı nasıldır?
 
-### **Preprocessing**
+### **Veri Ön Hazırlığı**
 
 Kullanılan paketleri listeleyelim:
 
@@ -59,7 +62,7 @@ Tabi ki işe öncelikle verinin working directory'den yüklenmesi ve ön düzenl
 #| echo: true
 #| code-fold: false
 data1<- read.csv2("sampledata.csv")
-str(data1) #yapısını incelemek için.
+str(data1) 
 ```
 
 Veri setinde ilk sütunun sıra sayıları olduğunu görünce aman tanrım dedik ve sildik.
@@ -69,7 +72,7 @@ Veri setinde ilk sütunun sıra sayıları olduğunu görünce aman tanrım dedi
 #| eval: true
 #| echo: true
 #| code-fold: false
-data1<-data1[,-1] # fazla kalabalığa gerek yok, aynı isimle devam.
+data1<-data1[,-1] 
 ```
 
 Kayıp veri olup olmadığını anlamak için:
@@ -100,7 +103,7 @@ Madem ki öylesine bir veri seti ile öylesine bir analiz yapıyoruz ve practica
 #| eval: true
 #| echo: true
 #| code-fold: false
-set.seed(16611106)  # olur da sen de denemek istersen diye aynı veri setini üretmemizi sağlar.
+set.seed(16611106)  
 data3 <- data2[sample(1:495, 1000, replace = T), ] #adını da değiştirelim 
 ```
 
@@ -111,9 +114,9 @@ Son olarak, veri setinde işimize yaramayacak bir sürü demografik detay var. A
 #| eval: true
 #| echo: true
 #| code-fold: false
-row.names(data3)<- NULL #önce adlarını silelim.
+row.names(data3)<- NULL 
 
-data4<- data3[,5:24]  #5. sütundan sonrası çöp  
+data4<- data3[,5:24]
 ```
 
 Çalışmanın birinci araştırma sorusu kapsamında "data4" adlı veri seti kullanılmıştır. Bu veri seti 1000 gözlemden ve 20 değişkenden oluşmaktadır. Değişkenler, 1 ile 5 arasında bir tam sayı değeri almaktadır. Çalışmanın ikinci araştırma sorusu kapsamında ise her bir madde kendi madde ortalamasından kesilerek iki kategorili veriye dönüştürülmüştür. Bu aşamalar ilgili başlık altında raporlaştırılmıştır. Ön düzenlemelerin ardından araştırma sorularına cevap aramak için ileri analizlere devam edilmiştir.

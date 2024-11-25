@@ -68,9 +68,7 @@ str(df[ ,1:5]) # run str(df) to see all items.
 
 In this post, we are going to build 2-factor model as all the previous analyses suggest that 2-factor model is the best fit for this data. The factors are defined as *Masculinity* and *Femininity* by the origibal authors of the scale.
 
-::: callout-note
-Note on Item Selection
-
+::: {.callout-note title="Note on Item Selection"}
 The item selection processes for both mIRT and EFA are described in the literature strictly, although subjectivity within the boundaries of these definitions may still exist. In other words, although most decisions will be the same, there may be some differences among psychometricians in terms of selecting/discarding an item. One psychometrician might select an item while another might not. And, both might have their logical reasons. The reasoning behind selecting/discarding items might depend on both statistics and knowledge of construct that is being assessed. Thus, although I am not an expert in gender roles, I wanted this post to be a personal experiment to check if I can extract the same factors and items as the original authors. So, **I avoided checking the items in the original scale developed by the authors.** See the documentation of the scale for the original items [here.](https://openpsychometrics.org/tests/OSRI/development/ "documentation")
 :::
 
@@ -228,6 +226,11 @@ The MIRT package provides with 3D plotting options. We can use the `plot()` and 
 #| eval: true
 #| echo: true
 #| code-fold: false
+#| fig-cap: "Expected Total Score Plots"
+#| fig-subcap: 
+#|   - "Unrotated model"
+#|   - "Oblimin rotated model"
+#| layout-ncol: 2
 plot(model_2)
 plot(model_2, rotate = "oblimin")
 ```
@@ -241,6 +244,11 @@ We can also check for item trace plots. Let's see the first item's trace plot fo
 #| eval: true
 #| echo: true
 #| code-fold: false
+#| fig-cap: "Item Trace Plots"
+#| fig-subcap: 
+#|   - "Unrotated model"
+#|   - "Oblimin rotated model"
+#| layout-ncol: 2
 
 itemplot(model_2, 1)
 itemplot(model_2, 1, rotate = "oblimin")
@@ -252,11 +260,12 @@ We can also draw a plot to see the test information. Test information is a measu
 
 We can plot the test information with the following code:
 
-```{r eval=TRUE, echo=TRUE, code_folding=FALSE, warning=FALSE}
+```{r}
 #| warning: false
 #| eval: true
 #| echo: true
 #| code-fold: false
+#| column: margin
 plot(model_2, rotate = "oblimin" ,type="infocontour") 
 ```
 
@@ -283,6 +292,9 @@ These are the factors and their variables.
 | Q38 I leave nice notes for people now and then.                           |                                                                          |
 | Q40 I really like dancing.                                                |                                                                          |
 | Q44 I decorate my things (e.g. stickers on laptop).                       |                                                                          |
+
+: Factors and Items {.striped .hover}
+
 
 ### Factor scores of persons
 

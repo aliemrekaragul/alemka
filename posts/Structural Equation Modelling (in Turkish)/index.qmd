@@ -1,9 +1,11 @@
 ---
-title: "Structural Equation Modelling (in Turkish)"
+title: "Yapısal Eşitlik Modelleme"
+lang: "tr"
+language: ../../_language-tr.yml
 preview: images/paste-A04B6DB6.png
 description: |
   YEM: 'Your View on Science' ölçeğinden elde edilen 2015 PISA Turkiye örneklemi ile bir örnek çalışma. 
-  Bu çalışma Gazi üniversitesi'nde 'Yapısal Eşitlik Modellemeleri' dersi kapsamında rapor olarak hazırlanmıştır. 
+  Bu çalışma doktora düzeyi 'Yapısal Eşitlik Modellemeleri' dersi kapsamında rapor olarak hazırlanmıştır. 
 author:
   - name: Ali Emre Karagül
     orcid: 0000-0002-5820-8643
@@ -25,11 +27,12 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Bu çalışmada PISA 2015 ["student questionnaire: paper based verison"](https://www.oecd.org/pisa/data/CY6_QST_MS_STQ_PBA_Final.pdf) içerisindeki en son alt ölçek olan 'Your View on Science' ölçeğinden elde edilen veriler kullanılmıştır. Türkiye örnekleminden faydalanılmıştır. Bu örneklem ile bahsi geçen ölçeğin yapısal eşitlik modelleri oluşturulmuş ve karşılaştırılmıştır. Adım adım veri setinin R ile analize hazır hale getirilmesi anlatılmaktadır. Doğrudan analiz ile ilgileniyorsanız aşağıda **'Analiz Süreci'** başlığına ilerleyiniz.
 
-## Pre-processing süreci
+## Veri Ön Hazırlık Süreci
 
 Öncelikle [OECD](https://www.oecd.org/pisa/data/2015database/) tarafından yayınlanan veri setini [şuradan](https://webfs.oecd.org/pisa/PUF_SPSS_COMBINED_CMB_STU_QQQ.zip) indiriyoruz. İndirilen bu dosya .sav uzantılı bbir dosya. Bu tür dosyaları açmak için `haven` paketi `read_sav` fonksiyonundan faydalanabiliriz. Veri setinin tamamına ihtiyacımız yok, zaten oldukça büyük bir veri. Ülke değilşkeni ve ilgili ölçeğin maddeleri yeterli olacaktır. İndirdiğimiz .sav uzantılı dosyayı *working directory'*mize taşıdıktan sonra çalıştıracağımız kod satırı şunlar:
 
-```{r eval=FALSE, echo=TRUE, code_folding=TRUE}
+```{r eval=FALSE, echo=TRUE }
+#| code-fold: true
 library(haven) 
 data <- na.omit(read_sav(
   "CY6_MS_CMB_STU_QQQ.sav",
@@ -75,7 +78,7 @@ data <- na.omit(read_sav(
 
 Ülke değişkenine artık ihtiyacımız yok. O nedenle veri setimizi sadece ölçek maddelerini içerecek şekilde yeniden tanımlayalım:
 
-```{r eval=FALSE, echo=TRUE, code_folding=TRUE}
+```{r eval=FALSE, echo=TRUE}
 
 library(dplyr)
 science_data<-filter(data, CNT=="TUR")[,-1]
@@ -90,6 +93,7 @@ write.csv(science_data, "science_data.csv", row.names = FALSE)
 ## Analiz Süreci
 
 İlgili ölçekten elde edilen veriyi [.csv uzantılı dosya](https://drive.google.com/file/d/1HVNyhK1J6PmwS04_W4B7LCVXEDakFShg/view?usp=sharing) olarak indirebilirsiniz. Bunu read.csv fonksiyonu ile R ortamına aktarabilirsiniz. Veri setimiz hazır. Analizimizde öncelikle doğrulayı faktör analizi kullanacağız. Daha sonra da bi-faktör modelleme yapacağız. Veri setimizi tekrar yükleyelim:
+`science_data<-read.csv("science_data.csv",   header = TRUE, sep = ",")`
 
 ```{r}
 science_data<-read.csv("science_data.csv",   header = TRUE, sep = ",")
@@ -316,7 +320,7 @@ science.wls[["fit"]]
 ```{r echo=FALSE, code_folding=FALSE}
 #| warning: false
 #| echo: false
-#| code-fold: false
+#| code-fold: true
 library(lavaan)
 Science.model <- 'ST092 =~ 1* ST092Q01TA+
                               ST092Q02TA+
@@ -390,7 +394,7 @@ science.rml[["fit"]]
 ```{r echo=FALSE, code_folding=FALSE}
 #| warning: false
 #| echo: false
-#| code-fold: false
+#| code-fold: true
 library(lavaan)
 Science.model <- 'ST092 =~ 1* ST092Q01TA+
                               ST092Q02TA+
@@ -461,7 +465,7 @@ science.dwls[["fit"]]
 ```{r echo=FALSE, code_folding=FALSE}
 #| warning: false
 #| echo: false
-#| code-fold: false
+#| code-fold: true
 library(lavaan)
 Science.model <- 'ST092 =~ 1* ST092Q01TA+
                               ST092Q02TA+
@@ -525,7 +529,7 @@ science.dwls[["fit"]]
 
 Tüm bu çıktılar incelendiğinde, en uygun modelin *diagonally weighted least squares (DWLS)* olduğu düşünülmektedir. Veri setinin farklı ölçek düzeyinde olması ve kategorik olması bu durumun sebebi olabilir. DWLS modeli, liteatürde yaygın bir şekilde bu tür veri setleri için önerilmektedir.
 
-### BI-FACTOR MODELLER
+### Bi-factor model oluşturma
 
 Bi faktör modellemede yapıyı oluşturan faktörlerin tüm maddelerden oluşan genel faktör ile ilişkisi incelenerek karar verilir. Bu amaçla DFA örneğinde olduğu gibi model tanımlamamızı yapıyoruz:
 
@@ -663,7 +667,7 @@ bifactor_rml[['fit']]
 ```{r echo=FALSE, code_folding=FALSE}
 #| warning: false
 #| echo: false
-#| code-fold: false
+#| code-fold: true
 
 library(lavaan)
 Science.bifactormodel <- 'general.factor =~
@@ -785,7 +789,7 @@ bifactor_mlm[['fit']]
 ```{r echo=FALSE, code_folding=FALSE}
 #| warning: false
 #| echo: false
-#| code-fold: false
+#| code-fold: true
 library(lavaan)
 Science.bifactormodel <- 'general.factor =~
                               ST092Q01TA+
@@ -902,9 +906,13 @@ bifactor_rml[['fit']]
 
 Bu çıktılar incelendiğinde de bi faktör modelin verimize DWLS model kadar uyumlu olmadığı görülmektedir. Bu nedenle DWLS modelin en uyumlu model olduğu düşünülmektedir. Bu modelin çıktılarını tablolaştıralım.
 
-### EN UYUMLU MODEL:DWLS çıktıları
+### En Uyumlu Model:DWLS çıktıları
 
 NOT: Faktör varyansları sabitlenerek model oluşturulduğu için faktör varyansları tablosu raporlaştırılmamıştır.
+
+::: {.callout-tip title="JASP"}
+Aşağıdaki çıktılar JASP'tan alınmıştır. JASP, istatiksel altyapısını R'dan alan bir açık kaynak kodlu yazılımdır. Kullanımı kolaydır ve çıktıları anlaşılır bir şekilde sunar. İndirmek ve daha fazla bilgi edinmek için [JASP](https://jasp-stats.org/) adresini ziyaret edebilirsiniz.
+:::
 
 #### Model uyum indeksleri
 
