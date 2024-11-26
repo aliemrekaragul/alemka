@@ -1,0 +1,15 @@
+version: 1.0
+author: 
+  name: "Ali Emre Karagül"
+  orcid: 0000-0002-5820-8643
+  email: aliemrekaragul@gmail.com
+
+affiliation.1:
+  name: TOBB ETU- University of Economics & Technology
+  city: Ankara
+  url: https://www.etu.edu.tr/
+
+affiliation.2:
+  name: Gazi University
+  city: Ankara
+  url: https://gazi.edu.tr/
