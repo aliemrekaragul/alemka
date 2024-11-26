@@ -9,8 +9,2163 @@
 <link>https://emrekaragul.com/</link>
 <atom:link href="https://emrekaragul.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>My educational data science blog / notebook</description>
-<generator>quarto-1.4.555</generator>
-<lastBuildDate>Tue, 19 Nov 2024 21:00:00 GMT</lastBuildDate>
+<generator>quarto-1.5.57</generator>
+<lastBuildDate>Tue, 26 Nov 2024 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>How to Build a Custom Chat Bot with R</title>
+  <dc:creator>Ali Emre Karagül</dc:creator>
+  <link>https://emrekaragul.com/posts/ChatBot/</link>
+  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Using LLMs in our daily tasks is a common practice now. Most of the time we use them with user interfaces provided by the companies such as OpenAi. However, they are also highly utilized by developers in chat bots or automation processes. There are dozens of commercial or non-commercial LLMs in the market. You can use any of them to build your own chat bot. In this tutorial, we will use llama to build a custom chat bot with R.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="about R package Elmer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+about R package Elmer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I have read that Hadly Wickham and Posit have been working on an R package into <code>Tidyverse</code> to make LLM API calls from R. It is still experimental; thus can be installed via <a href="https://github.com/tidyverse/elmer">github repository</a>. We are not going to be using it in this tutorial.</p>
+</div>
+</div>
+<p>There are two ways to use llama: 1. Run llama on your local machine if your machine has sufficient hardware. 2. Use an API to send requests to servers of third-party providers such as Groq.</p>
+<p>The first option is pretty easy and there are many interfaces to use llama on your local machine. However, it requires a GPU depending on the model you would like to utilize and is used by only your local environment unless you make your own server out of your computer. The second option, on the other hand, is more scalable and you can deploy it to web. You won’t need to worry about the hardware (GPUs etc) or the maintenance of the server.</p>
+<p>In this tutorial, we will use the second option to build our chat bot, but if you want to use the first option, you can download llama to your local environment from <a href="https://ollama.com/download">here</a>. Also, see a tutorial about how to build a local LMM <a href="https://www.datacamp.com/tutorial/run-llama-3-locally">here</a>.</p>
+</section><section id="getting-started" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<p>Yet, today, we will use Groq’s servers to build our chat bot. <a href="https://groq.com/about-us/">Groq</a> is an amazing web tool that provides free APIs to developers with hourly and daily limits. But, no need to worry as the limits are quite high and it is almost impossible to reach them unless you are using it in your production environment rather than development purposes. You can sign up for free and get your API key from <a href="https://console.groq.com/login">here</a>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/groq_playground.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Groq Playground Interface"><img src="https://emrekaragul.com/posts/ChatBot/images/groq_playground.png" class="img-fluid" alt="Groq Playground Interface"></a> Click to expand.</p>
+</div></div><ol type="1">
+<li>Go to the link and sign up with your prefered method.</li>
+<li>You will be directed to the Groq’s playground where you can try different LLMs with custom system messages or parameters. Click on the image to expand it.</li>
+<li>Click on <strong>API Keys</strong> on the left side of the screen.</li>
+<li>Then, click on the <strong>Create API Key</strong> button on the page.</li>
+<li>Give a name to your API key and click on the <strong>Submit</strong> button.</li>
+<li>You will see your API key on the screen. Copy it and save it in a safe place. You won’t be able to see it again, so if you lose your API key, you will need to create a new one. Never share it with anybody.</li>
+</ol>
+<p>That’s it, you have your API key now. Let’s see some ways to use a free LLM in your R environment.</p>
+</section><section id="using-groq-api-with-r" class="level2"><h2 class="anchored" data-anchor-id="using-groq-api-with-r">Using Groq API with R</h2>
+<p>Assign your API key and <code>model</code> name to variables in your R environment. Model can be any one of the models provided by Groq such as <code>gemma2-9b-it</code> or <code>whisper-large-v3-turbo</code>. You can see the list of models <a href="https://console.groq.com/docs/models">here</a>. We will use <code>llama-3.1-70b-versatile</code> in this tutorial.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"COPY_YOUR_API_KEY_HERE"</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"llama-3.1-70b-versatile"</span></span></code></pre></div>
+</div>
+<p>We can use <code>httr</code> package to send HTTP requests to the server and get the response. We can also use <code>jsonlite</code> package to parse the response.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/">httr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://jeroen.r-universe.dev/jsonlite">jsonlite</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">chatbot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://api.groq.com/openai/v1/chat/completions"</span></span>
+<span>  </span>
+<span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/POST.html">POST</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span>,</span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/add_headers.html">add_headers</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      `Content-Type` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"application/json"</span>,</span>
+<span>      `Authorization` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Bearer"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    body <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>,</span>
+<span>      messages <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, auto_unbox <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    encode <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"json"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/http_status.html">http_status</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">category</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Success"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"API request failed: "</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  </span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">result</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span>, as <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"parsed"</span>, simplifyVector <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">result</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choices"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"message"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"content"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+<p>The given code is a function called <code>chatbot</code> that sends a POST request to the Groq’s server with the given <code>api_key</code>, <code>model</code> and <code>conversation_history</code>. The <code>conversation_history</code> is a list of messages that the chat bot has either received or replied so far. The function returns the response of the LLM as a string. We will be using this function to make requests to the API.</p>
+<p>Let’s make a try:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Hello, tell me a joke about statistics!"</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get the response from the chat bot</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">chatbot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Why did the statistician get lost in the forest? 
+
+Because he was 95% sure he was on the right path.</code></pre>
+</div>
+</div>
+</section><section id="running-the-bot-on-the-console" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="running-the-bot-on-the-console">Running the Bot on the Console</h2>
+<p>Now that we are sure we can get response to our messages, let’s build a simple chat bot that can be run on the console. We will use <code>readline</code> function to get the user input.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chatbot initialized. Type 'exit' to quit."</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/readline.html">readline</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You: "</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"exit"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Goodbye!"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">break</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">chatbot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"assistant"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chat bot:"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span>, sep <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"\n"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+<p>When you run this code, you will be prompted to type your message in the console. You will start a conversation with the chat bot, and you can ask follow-up questions as we inform the API about the conversation history while making the requests. Click on the image to expand.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/chat-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Chat Example-1"><img src="https://emrekaragul.com/posts/ChatBot/images/chat-1.png" class="img-fluid figure-img" style="width:100.0%" alt="Chat Example"></a></p>
+<figcaption>Chat Example-1</figcaption></figure>
+</div>
+<p>The bot will expect you to type a message until you type <code>exit</code> to quit the conversation or close the console. Even if you type <code>exit</code>, your conversation history will be stored in your local R environment. Unless you delete it or reassign an empty list again, the chat bot will remember the previous messages and will reply you accordingly when you start it again. To reassign an empty list, or in other words to clear the chat history, you just need to run the following:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<section id="creating-a-custom-bot-with-a-system-message" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="creating-a-custom-bot-with-a-system-message">Creating a Custom Bot with a System Message</h3>
+<p>We can also give a system message to the API to inform the chat bot about the context of the conversation. This will assign a persona to the bot and it will reply accordingly. For example; “<strong>You are a comedian bot who makes jokes about statistics. No matter what the user says, just make a joke about statistics.</strong>” would be a good system message for our bot called <code>fun_stats_bot</code>. All we need is to <code>append</code> the system message in to the conversation history when it is called for the first time.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fun_stats_bot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">system_message</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You are a comedian bot who makes jokes about statistics. No matter what the user says, just make a joke about statistics."</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"system"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">system_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://api.groq.com/openai/v1/chat/completions"</span></span>
+<span>  </span>
+<span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/POST.html">POST</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span>,</span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/add_headers.html">add_headers</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      `Content-Type` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"application/json"</span>,</span>
+<span>      `Authorization` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Bearer"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    body <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>,</span>
+<span>      messages <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, auto_unbox <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    encode <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"json"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/http_status.html">http_status</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">category</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Success"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"API request failed: "</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  </span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">result</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span>, as <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"parsed"</span>, simplifyVector <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">result</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choices"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"message"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"content"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+<p>Now, we can run the chat bot with the <code>fun_stats_bot</code> function this time. See a sample chat’s image.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/chat-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Chat Example-2"><img src="https://emrekaragul.com/posts/ChatBot/images/chat-2.png" class="img-fluid" style="width:100.0%" alt="Chat Example"></a> Click to expand.</p>
+</div></div><div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chatbot initialized. Type 'exit' to quit."</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/readline.html">readline</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You: "</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"exit"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Goodbye!"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">break</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fun_stats_bot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">api_key</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"assistant"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chat bot:"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span>, sep <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"\n"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+</div>
+</section></section><section id="building-a-shiny-app-of-a-chat-bot" class="level2"><h2 class="anchored" data-anchor-id="building-a-shiny-app-of-a-chat-bot">Building a Shiny App of a Chat Bot</h2>
+<p>That’s it. We have built our own chat bot with R. We can build a web application with it and even deploy it to the web. Here is a sample shiny app: <a href="https://aliemrekaragul.shinyapps.io/fun_stat_bot/">Funny Statistics Bot</a>. The source code for it is also given below (expand the code block to see). This code will create a shiny app that you can run on your local machine or on web. You can find a lot of tutorials on web such as <a href="https://shiny.posit.co/r/deploy.html">how to deploy a shiny app to the web</a>.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://shiny.posit.co/">shiny</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/">httr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://jeroen.r-universe.dev/jsonlite">jsonlite</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/">bslib</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">### UTILITIES &amp; VARIABLES ###</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">groq_k</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"COPY_YOUR_API_KEY_HERE"</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"llama-3.1-70b-versatile"</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">chatbot</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">groq_k</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://api.groq.com/openai/v1/chat/completions"</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">system_message</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You are a comedian bot who makes jokes about statistics. No matter what the user says, just make a joke about statistics."</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"system"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">system_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/POST.html">POST</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url</span>,</span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/add_headers.html">add_headers</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      `Content-Type` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"application/json"</span>,</span>
+<span>      `Authorization` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Bearer"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">groq_k</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    body <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>,</span>
+<span>      messages <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, auto_unbox <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    encode <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"json"</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/http_status.html">http_status</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">category</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Success"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"API request failed: "</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>  </span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">result</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">response</span>, as <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"parsed"</span>, simplifyVector <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">result</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choices"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"message"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"content"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">press_enter_to_send</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$(function() {</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  var $els = $("[data-proxy-click]");</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  $.each(</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    $els,</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    function(idx, el) {</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      var $el = $(el);</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      var $proxy = $("#" + $el.data("proxyClick"));</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      $el.keydown(function (e) {</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">        if (e.keyCode == 13) {</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">          $proxy.click();</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">        }</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">      });</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    }</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">  );</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">});</span></span>
+<span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">### FRONTEND ###</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ui</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/reference/page_sidebar.html">page_sidebar</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">script</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/htmltools/reference/HTML.html">HTML</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">press_enter_to_send</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Funny Statistics Bot"</span>,</span>
+<span>  sidebar <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/reference/sidebar.html">sidebar</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Your old conversations would be here, but this app does not store your data."</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/reference/card.html">card</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/reference/card_body.html">card_header</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Conversation"</span>, class <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bg-dark"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    </span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/reference/card_body.html">card_body</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>class <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bg-light"</span>,</span>
+<span>      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html">uiOutput</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"conversation_display"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    </span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/bslib/reference/card_body.html">card_footer</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/htmltools/reference/tagAppendAttributes.html">tagAppendAttributes</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user_message"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Your Message:"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"100%"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>        `data-proxy-click` <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"send"</span></span>
+<span>      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"send"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Send"</span>, icon <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/icon.html">icon</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"paper-plane"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, class <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"btn-primary"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"clear"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Clear"</span>, icon <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/icon.html">icon</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"trash-alt"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, class <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"btn-danger"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">### BACKEND ###</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">server</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">session</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/reactiveVal.html">reactiveVal</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">send</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/req.html">req</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span>    </span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">user_message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">chatbot</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">groq_k</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span>, error <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">e</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Error: Unable to fetch response. Please try again."</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    </span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>role <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"assistant"</span>, content <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bot_response</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">current_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    </span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/updateTextInput.html">updateTextInput</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">session</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user_message"</span>, value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">clear</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  </span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">conversation_display</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/renderUI.html">renderUI</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">history</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">conversation_history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>      <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rstudio.github.io/htmltools/reference/builder.html">p</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Start chatting!"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>    </span>
+<span>    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">div</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">message</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">history</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span>        <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">role</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>          <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">b</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You: "</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">content</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>          <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">tags</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">b</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chatbot: "</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">message</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">content</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span>      <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run the app</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>ui <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ui</span>, server <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">server</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</details>
+</div>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this tutorial, we have learned how to build a custom chat bot with R using Groq’s API. We have also built a shiny app. There are many use cases for LLMs in production. You can build RAG (retrieval augmented generation), CoT (chain of thought), or HyDE (Hypothetical Document Embeddings) models with R to make your chat bot more intelligent and customized. You can also use the same API to build a question-answering system or a summarization tool. You can build a to-do list generator that can give you items with only a goal phrase. You can create a bot to convert natural language to SQL queries (Text-2-SQL). The possibilities are endless. I hope you enjoyed this tutorial and learned something new. If you have any questions or comments, please feel free to reach out to me. Thank you for reading.</p>
+
+
+</section> ]]></description>
+  <category>httr</category>
+  <category>jsonlite</category>
+  <category>shiny</category>
+  <category>bslib</category>
+  <guid>https://emrekaragul.com/posts/ChatBot/</guid>
+  <pubDate>Tue, 26 Nov 2024 21:00:00 GMT</pubDate>
+  <media:content url="https://emrekaragul.com/posts/ChatBot/image.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Multidimensional IRT for Factor Exploration</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
@@ -24,6 +2179,7 @@
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -249,6 +2405,7 @@ Note on Item Selection
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -375,6 +2532,7 @@ font-style: inherit;">check_monotonic</span> <span class="op" style="color: #5E5
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -434,12 +2592,14 @@ font-style: inherit;">)</span></span>
 <span>  </span>
 <span>  <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op" style="color: #5E5E5E;
@@ -1168,6 +3328,7 @@ font-style: inherit;">## run fscores(model_2) to see all scores.</span></span></
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -1389,6 +3550,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -1884,6 +4046,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -2041,6 +4204,7 @@ font-style: inherit;"># run summary(df) to see all items.</span></span></code></
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -2050,6 +4214,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3547,6 +5712,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3803,6 +5969,7 @@ background-color: null;
 font-style: inherit;"># Load the libraries</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3812,6 +5979,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3821,6 +5989,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3830,6 +5999,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3840,6 +6010,7 @@ font-style: inherit;">)</span></span>
 <span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3849,6 +6020,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3858,6 +6030,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -3867,9 +6040,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 
-</div>
 </div>
 </div>
 </section><section id="understand-the-data" class="level2"><h2 class="anchored" data-anchor-id="understand-the-data">1. Understand the data</h2>
@@ -5155,6 +7326,7 @@ background-color: null;
 font-style: inherit;"># requirements</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -5164,6 +7336,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -5175,6 +7348,7 @@ background-color: null;
 font-style: inherit;"># For additional tools related to SEM</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -5184,6 +7358,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6858,6 +9033,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6870,6 +9046,7 @@ background-color: null;
 font-style: inherit;"># paged_table() </span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6882,6 +9059,7 @@ background-color: null;
 font-style: inherit;"># read_excel()</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6891,6 +9069,7 @@ background-color: null;
 font-style: inherit;">)</span> </span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6903,6 +9082,7 @@ background-color: null;
 font-style: inherit;"># lemmatize_strings()</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6915,6 +9095,7 @@ background-color: null;
 font-style: inherit;"># stopwords()</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6927,6 +9108,7 @@ background-color: null;
 font-style: inherit;"># str_squish()</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -6939,6 +9121,7 @@ background-color: null;
 font-style: inherit;"># remove_words()</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -8132,6 +10315,7 @@ font-style: inherit;">confusion_matrix</span></span></code></pre></div>
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -8141,6 +10325,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -8276,12 +10461,14 @@ background-color: null;
 font-style: inherit;">#calculate rpb for each item:</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -9460,6 +11647,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -9469,6 +11657,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -9478,6 +11667,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -9487,6 +11677,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -9496,6 +11687,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -9505,6 +11697,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -10040,6 +12233,7 @@ font-style: inherit;">## another option is 'white'</span></span></code></pre></d
 <div class="cell" data-code_folding="false">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -10049,6 +12243,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -10058,6 +12253,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="st" style="color: #20794D;
@@ -11028,6 +13224,7 @@ background-color: null;
 font-style: inherit;">##packs for data processing</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11039,6 +13236,7 @@ background-color: null;
 font-style: inherit;"># to read .JSON files.</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11050,6 +13248,7 @@ background-color: null;
 font-style: inherit;"># to process data</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11061,6 +13260,7 @@ background-color: null;
 font-style: inherit;"># to process data</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11072,6 +13272,7 @@ background-color: null;
 font-style: inherit;"># to process data</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11086,6 +13287,7 @@ background-color: null;
 font-style: inherit;">#packs for data viz</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11097,6 +13299,7 @@ background-color: null;
 font-style: inherit;"># a pack for spatial objects</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -11453,6 +13656,7 @@ font-style: inherit;">not_all_na</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -12142,6 +14346,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <details class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -12283,6 +14488,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -12513,6 +14719,7 @@ font-style: inherit;">                            ST129 ~~ ST131'</span></span><
 <div class="cell" data-code_folding="true">
 <details class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -12767,6 +14974,7 @@ font-style: inherit;">]</span></span></code></pre></div>
 <div class="cell" data-code_folding="false">
 <details class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -13864,6 +16072,7 @@ background-color: null;
 font-style: inherit;">#first introduce the equate package:</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -14508,6 +16717,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -14517,6 +16727,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -14526,6 +16737,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -14535,6 +16747,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -15613,12 +17826,14 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -15632,12 +17847,14 @@ background-color: null;
 font-style: inherit;">{</span> </span>
 <span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">j</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -15651,6 +17868,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span>         <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
@@ -15837,12 +18055,14 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -15856,12 +18076,14 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span>  <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">j</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -15875,6 +18097,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span>      <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
@@ -16135,12 +18358,14 @@ background-color: null;
 font-style: inherit;">data4</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -16154,12 +18379,14 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span>   <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">j</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -16173,6 +18400,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
@@ -16224,6 +18452,7 @@ background-color: null;
 font-style: inherit;">}</span> </span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">data5</span><span class="op" style="color: #5E5E5E;
@@ -16970,12 +19199,14 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -16989,12 +19220,14 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span>     <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">j</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
@@ -17008,6 +19241,7 @@ background-color: null;
 font-style: inherit;">{</span></span>
 <span>         <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
