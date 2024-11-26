@@ -85,6 +85,6 @@ format:
     code-fold: show
     code-tools: false
     code-block-bg: true # rgb(224, 216, 176) yellowish brown gibi bişi
-    code-block-border-left: "#31BAE9"
+    code-block-border-left: tomato
 editor: source
 
