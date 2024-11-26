@@ -8,7 +8,19 @@ author:
     orcid: 0000-0002-5820-8643
     email: aliemrekaragul@gmail.com
     affiliations:
-      - name: TOBB ETU- University of Economics & Technology
+      - name: University of Economics & Technology
+        city: Ankara
+        url: https://www.etu.edu.tr/tr
+      - name: Gazi University
+        city: Ankara
+        url: https://gazi.edu.tr/
+lightbox: true
+reference-location: margin
+crossref:
+  fig-labels: alpha a    
+  tbl-labels: alpha a    
+  subref-labels: roman i 
+  chapters: true
 date: 2023-01-06
 categories: [Rvest, Wordcloud, dplyr, tm, stopwords,wordcloud2
 ]

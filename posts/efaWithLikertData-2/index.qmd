@@ -7,7 +7,12 @@ author:
     orcid: 0000-0002-5820-8643
     email: aliemrekaragul@gmail.com
     affiliations:
-      - name: TOBB ETU- University of Economics & Technology
+      - name: University of Economics & Technology
+        city: Ankara
+        url: https://www.etu.edu.tr/tr
+      - name: Gazi University
+        city: Ankara
+        url: https://gazi.edu.tr/
 date: 2024-11-20
 categories: [dplyr, ggplot2, mirt, psych
 ]
@@ -15,6 +20,13 @@ image: "image.png"
 output:
     self_contained: false
     code_folding: false
+lightbox: true
+reference-location: margin
+crossref:
+  fig-labels: alpha a    
+  tbl-labels: alpha a    
+  subref-labels: roman i 
+  chapters: true
 ---
 
 ## Introduction
@@ -256,7 +268,7 @@ itemplot(model_2, 1, rotate = "oblimin")
 
 #### Test Information
 
-We can also draw a plot to see the test information. Test information is a measure of the precision of the test at different levels of the latent traits. In multidimensional models we need to produce a contour plot.
+We can also draw a plot to see the test information. Test information is a measure of the precision of the test at different levels of the latent traits. In multidimensional models we need to produce a contour plot.^[Contour  Plot: Click on the image to expand.]
 
 We can plot the test information with the following code:
 

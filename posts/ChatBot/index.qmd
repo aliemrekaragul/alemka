@@ -2,11 +2,6 @@
 title: "How to Build a Custom Chat Bot with R"
 description: |
   Large language Models (LLMs) are an important part of our daily lives now. We use them for web search, daily tasks, automation etc. Today, we will explore the details of working with LLMs and how to build a custom chat bot with R.
-crossref:
-  fig-labels: alpha a    
-  tbl-labels: alpha a    
-  subref-labels: roman i 
-  chapters: true
 author:
   - name: Ali Emre Karagül
     orcid: 0000-0002-5820-8643
@@ -24,6 +19,13 @@ image: "image.png"
 output:
     self_contained: false
     code_folding: false
+reference-location: margin
+lightbox: true
+crossref:
+  fig-labels: alpha a    
+  tbl-labels: alpha a    
+  subref-labels: roman i 
+  chapters: true
 ---
 
 ## Introduction
@@ -34,7 +36,9 @@ Using LLMs in our daily tasks is a common practice now. Most of the time we use 
 I have read that Hadly Wickham and Posit have been working on an R package into `Tidyverse` to make LLM API calls from R. It is still experimental; thus can be installed via [github repository](https://github.com/tidyverse/elmer). We are not going to be using it in this tutorial.
 :::
 
-There are two ways to use llama: 1. Run llama on your local machine if your machine has sufficient hardware. 2. Use an API to send requests to servers of third-party providers such as Groq.
+There are two ways to use llama: 
+1. Run llama on your local machine if your machine has sufficient hardware. 
+2. Use an API to send requests to servers of third-party providers such as Groq.
 
 The first option is pretty easy and there are many interfaces to use llama on your local machine. However, it requires a GPU depending on the model you would like to utilize and is used by only your local environment unless you make your own server out of your computer. The second option, on the other hand, is more scalable and you can deploy it to web. You won't need to worry about the hardware (GPUs etc) or the maintenance of the server.
 
@@ -45,11 +49,11 @@ In this tutorial, we will use the second option to build our chat bot, but if yo
 Yet, today, we will use Groq's servers to build our chat bot. [Groq](https://groq.com/about-us/) is an amazing web tool that provides free APIs to developers with hourly and daily limits. But, no need to worry as the limits are quite high and it is almost impossible to reach them unless you are using it in your production environment rather than development purposes. You can sign up for free and get your API key from [here](https://console.groq.com/login).
 
 ::: column-margin
-![Groq Playground Interface](images/groq_playground.png){.lightbox} Click to expand.
+![](images/groq_playground.png){.lightbox}
 :::
 
 1.  Go to the link and sign up with your prefered method.
-2.  You will be directed to the Groq's playground where you can try different LLMs with custom system messages or parameters. Click on the image to expand it.
+2.  You will be directed to the Groq's playground where you can try different LLMs with custom system messages or parameters.^[Groq Playground Interface: Click on the image to expand it.]
 3.  Click on **API Keys** on the left side of the screen.
 4.  Then, click on the **Create API Key** button on the page.
 5.  Give a name to your API key and click on the **Submit** button.
@@ -160,9 +164,9 @@ while (TRUE) {
 }
 ```
 
-When you run this code, you will be prompted to type your message in the console. You will start a conversation with the chat bot, and you can ask follow-up questions as we inform the API about the conversation history while making the requests. Click on the image to expand.
+When you run this code, you will be prompted to type your message in the console. You will start a conversation with the chat bot, and you can ask follow-up questions as we inform the API about the conversation history while making the requests.^[A sample chat: Click on the image to expand it.]
 
-![Chat Example-1](images/chat-1.png){.lightbox width="100%" fig-alt="Chat Example"}
+![](images/chat-1.png){.lightbox width="100%" fig-alt="Chat Example"}
 
 The bot will expect you to type a message until you type `exit` to quit the conversation or close the console. Even if you type `exit`, your conversation history will be stored in your local R environment. Unless you delete it or reassign an empty list again, the chat bot will remember the previous messages and will reply you accordingly when you start it again. To reassign an empty list, or in other words to clear the chat history, you just need to run the following:
 
@@ -214,10 +218,10 @@ fun_stats_bot <- function(api_key, model, conversation_history) {
 }
 ```
 
-Now, we can run the chat bot with the `fun_stats_bot` function this time. See a sample chat's image.
+Now, we can run the chat bot with the `fun_stats_bot` function this time. See a sample chat's image.^[A sample chat: Click on the image to expand it.]
 
 ::: column-margin
-![Chat Example-2](images/chat-2.png){.lightbox width="100%" fig-alt="Chat Example"} Click to expand.
+![](images/chat-2.png){.lightbox width="100%" fig-alt="Chat Example"}
 :::
 
 ```{r}

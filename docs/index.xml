@@ -15,7 +15,133 @@
   <title>How to Build a Custom Chat Bot with R</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/ChatBot/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Using LLMs in our daily tasks is a common practice now. Most of the time we use them with user interfaces provided by the companies such as OpenAi. However, they are also highly utilized by developers in chat bots or automation processes. There are dozens of commercial or non-commercial LLMs in the market. You can use any of them to build your own chat bot. In this tutorial, we will use llama to build a custom chat bot with R.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="about R package Elmer">
 <div class="callout-header d-flex align-content-center">
@@ -2170,7 +2296,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Multidimensional IRT for Factor Exploration</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/efaWithLikertData-2/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Can we use multidimensional IRT (mIRT) for exploratory factor detection? What is the relation between EFA and mIRT? In fact, EFA is designed to work with continuous observed variables. And, in many cases, researchers use likert type scales to measure psychological constructs. So, that kind of discrete data may not be so suitable for EFA. However, <a href="https://link.springer.com/article/10.1007/BF02294363" title="ON THE RELATIONSHIP BETWEEN ITEM RESPONSE THEORY AND FACTOR ANALYSIS OF DISCRETIZED VARIABLES">Takane &amp; Leeuw (1987)</a> put forward that there is a relationship between IRT and EFA. That’s why the answer to the question is: Yes, IRT can be used for factor detection, both confirmatory and exploratory.</p>
 <p>Today, we will delve into the use of mIRT for exploratory factor analysis. The data we will use is the same as the one used in <a href="https://emrekaragul.com/posts/efaWithLikertData-1/">the previous post</a> called “Exploratory Factor Analysis with Likert Scale Data”. So, you can check the preprocessing section of that post to see how we filtered the data.</p>
 <p>Also, in the previous post, we have a detailed discussion about the number of the factors that can be extracted from this data. That’s why we are going to skip scree plots, K1, and parallel analysis in this post. I suggest seeing the previous post for those issues.</p>
@@ -3132,13 +3384,13 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-13-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Unrotated model"><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672" alt="Unrotated model"></a></p>
 <figcaption>Unrotated model</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-13-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Oblimin rotated model"><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672" alt="Oblimin rotated model"></a></p>
 <figcaption>Oblimin rotated model</figcaption></figure>
 </div>
 </div>
@@ -3181,13 +3433,13 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Unrotated model"><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672" alt="Unrotated model"></a></p>
 <figcaption>Unrotated model</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-14-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Oblimin rotated model"><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid figure-img" width="672" alt="Oblimin rotated model"></a></p>
 <figcaption>Oblimin rotated model</figcaption></figure>
 </div>
 </div>
@@ -3222,7 +3474,7 @@ font-style: inherit;">)</span> </span></code></pre></div>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-15-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div></div></div>
@@ -3538,7 +3790,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-17-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="https://emrekaragul.com/posts/efaWithLikertData-2/index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -3952,7 +4204,133 @@ Masculinity     -0.3301980       0.9873525</code></pre>
   <title>Exploratory Factor Analysis with Likert Scale Data</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/efaWithLikertData-1/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>EFA is used to identify a potentially lower number of unobservable factors or constructs that can explain the patterns of correlations within a set of observed variables. This technique is widely used in the development of tests and measurements in psychological, educational, and social sciences research to ensure that the test measures what it’s supposed to measure.</p>
 <p>In this post, we will build an EFA model using a Likert scale data obtained from <a href="https://openpsychometrics.org/_rawdata/" title="https://openpsychometrics.org/_rawdata/">Open Psychometrics</a>. Follow the link and find the zip file (OSRI44_dev_data.zip) containing data related to Open Sex Role Inventory. This is an interactive personality test measuring masculinity and femininity (or gendered personality traits) modeled on the Bem Sex-Role Inventory.</p>
 <p>Likert scale data has multiple categories. Thus, it requires running the EFA with polychoric corelations. We will also utilize principle axis factoring. For the reliability of the scale, we will use ordinal Alpha coefficient suggested by <a href="https://digitalcommons.wayne.edu/jmasm/vol6/iss1/4/" title="ordinal alpha paper">Zumbo et al.&nbsp;(2007)</a>. All will be run using R. Unfortunately, software like SPSS do not provide an EFA with polychoric correlations or ordinal alpha coefficient. That’s why we have to use languages like R. Another alternative to SPSS in this regard is JASP (which is also built with R in terms of statistics) but it still doesn’t provide a way to calculate ordinal alpha.</p>
@@ -4659,7 +5037,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -4812,7 +5190,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -4856,7 +5234,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-11-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -5649,7 +6027,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-18-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -5928,7 +6306,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="https://emrekaragul.com/posts/efaWithLikertData-1/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -5955,7 +6333,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Multi-Facet Rasch Models with R</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Multi Facet Rasch Modelling/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>While a basic Rasch model focuses on item difficulty and person ability, the <strong>Multi-Facet Rasch Model</strong> (MFRM) allows us to incorporate additional factors, or facets, such as:</p>
 <ul>
 <li><p><strong>Person Ability</strong> (e.g., the skill level of test-takers),</p></li>
@@ -6297,64 +6801,64 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$itemfit
      parameter    Outfit   Outfit_t      Outfit_p  Outfit_pholm     Infit
-1          Con 2.0585470  39.400899  0.000000e+00  0.000000e+00 2.1997279
-2        ProAd 1.5369865  22.163909 7.660384e-109 6.894345e-108 1.6258684
-3         Lang 2.2662066  47.841294  0.000000e+00  0.000000e+00 2.3468649
-4          Nar 1.8419808  33.231069 3.832185e-242 4.215404e-241 1.9461538
-5        step1 0.9567419  -3.116628  1.829322e-03  3.658643e-03 0.9437283
-6        step2 0.4912645 -53.179892  0.000000e+00  0.000000e+00 0.4085188
-7        step3 0.2717863 -95.710904  0.000000e+00  0.000000e+00 0.1844266
-8        step4 0.9264361  -5.793804  6.880989e-09  2.752395e-08 0.6006956
-9       rater1 0.2621579 -84.439666  0.000000e+00  0.000000e+00 0.2011799
-10      rater2 0.2102910 -97.073351  0.000000e+00  0.000000e+00 0.1288749
-11      rater3 0.3424868 -71.428762  0.000000e+00  0.000000e+00 0.1956220
-12   Con:step1 0.8383549  -8.767845  1.821186e-18  9.105928e-18 0.8567601
-13 ProAd:step1 0.6746071 -17.860710  2.385854e-71  1.908684e-70 0.7093789
-14  Lang:step1 0.5168563 -29.428336 2.384008e-190 2.384008e-189 0.5191105
-15   Nar:step1 0.6848650 -16.325045  6.549193e-60  4.584435e-59 0.7059203
-16   Con:step2 0.5306292 -34.037821 6.146371e-254 7.375646e-253 0.4422111
-17 ProAd:step2 0.4301068 -42.502850  0.000000e+00  0.000000e+00 0.3495629
-18  Lang:step2 0.1968146 -75.897830  0.000000e+00  0.000000e+00 0.1635975
-19   Nar:step2 0.3706675 -46.198429  0.000000e+00  0.000000e+00 0.3078140
-20   Con:step3 0.2786884 -67.291049  0.000000e+00  0.000000e+00 0.2258991
-21 ProAd:step3 0.2765834 -63.618697  0.000000e+00  0.000000e+00 0.2089943
-22  Lang:step3 0.1940462 -83.250195  0.000000e+00  0.000000e+00 0.1146795
-23   Nar:step3 0.2486903 -65.156140  0.000000e+00  0.000000e+00 0.1831799
-24   Con:step4 0.9454987  -3.062781  2.192904e-03  3.658643e-03 0.5753692
-25 ProAd:step4 0.8972583  -5.504223  3.708007e-08  1.112402e-07 0.5197597
-26  Lang:step4 0.4646499 -36.807248 1.413705e-296 1.837816e-295 0.2790765
-27   Nar:step4 0.7695600 -12.352597  4.716384e-35  2.829830e-34 0.4601422
+1          Con 2.0468876  39.006035  0.000000e+00  0.000000e+00 2.1861854
+2        ProAd 1.5290292  21.838141 1.007733e-105 9.069595e-105 1.6152044
+3         Lang 2.2615012  47.632748  0.000000e+00  0.000000e+00 2.3476753
+4          Nar 1.8337563  32.865850 6.763013e-237 7.439314e-236 1.9413806
+5        step1 0.9489488  -3.680241  2.330133e-04  4.660265e-04 0.9355766
+6        step2 0.4901218 -53.167527  0.000000e+00  0.000000e+00 0.4085815
+7        step3 0.2678299 -96.223038  0.000000e+00  0.000000e+00 0.1824288
+8        step4 0.9180641  -6.447744  1.135273e-10  4.541091e-10 0.5984344
+9       rater1 0.2623000 -84.250602  0.000000e+00  0.000000e+00 0.2015800
+10      rater2 0.2100500 -96.978268  0.000000e+00  0.000000e+00 0.1288747
+11      rater3 0.3418223 -71.431136  0.000000e+00  0.000000e+00 0.1956932
+12   Con:step1 0.8387637  -8.730414  2.537432e-18  1.268716e-17 0.8568940
+13 ProAd:step1 0.6751239 -17.774475  1.114359e-70  8.914870e-70 0.7096729
+14  Lang:step1 0.5180129 -29.231213 7.782731e-188 7.782731e-187 0.5203551
+15   Nar:step1 0.6860212 -16.193744  5.582610e-59  3.907827e-58 0.7063656
+16   Con:step2 0.5293268 -34.040306 5.647419e-254 6.776903e-253 0.4426132
+17 ProAd:step2 0.4283863 -42.514007  0.000000e+00  0.000000e+00 0.3496987
+18  Lang:step2 0.1968323 -75.673292  0.000000e+00  0.000000e+00 0.1639588
+19   Nar:step2 0.3701277 -46.077307  0.000000e+00  0.000000e+00 0.3080691
+20   Con:step3 0.2768045 -67.277911  0.000000e+00  0.000000e+00 0.2263787
+21 ProAd:step3 0.2780609 -63.068838  0.000000e+00  0.000000e+00 0.2091267
+22  Lang:step3 0.1892314 -83.983262  0.000000e+00  0.000000e+00 0.1150451
+23   Nar:step3 0.2456698 -65.290594  0.000000e+00  0.000000e+00 0.1835494
+24   Con:step4 0.9429652  -3.198182  1.382968e-03  1.382968e-03 0.5761702
+25 ProAd:step4 0.8942736  -5.641302  1.687693e-08  5.063078e-08 0.5204222
+26  Lang:step4 0.4640429 -36.742800 1.515043e-295 1.969556e-294 0.2800413
+27   Nar:step4 0.7672986 -12.431129  1.771151e-35  1.062691e-34 0.4608649
        Infit_t       Infit_p   Infit_pholm
-1    43.518674  0.000000e+00  0.000000e+00
-2    25.305265 2.795231e-141 1.397615e-140
-3    50.193787  0.000000e+00  0.000000e+00
-4    36.569488 8.740425e-293 9.614468e-292
-5    -4.072490  4.651324e-05  4.651324e-05
-6   -65.039270  0.000000e+00  0.000000e+00
-7  -117.030438  0.000000e+00  0.000000e+00
-8   -35.943187 6.467215e-283 6.467215e-282
-9   -97.120190  0.000000e+00  0.000000e+00
-10 -118.521551  0.000000e+00  0.000000e+00
-11  -99.762812  0.000000e+00  0.000000e+00
-12   -7.714673  1.212932e-14  2.425863e-14
-13  -15.707699  1.339532e-55  5.358129e-55
-14  -29.253821 4.014915e-188 2.810441e-187
-15  -15.092688  1.809200e-51  5.427601e-51
-16  -42.570434  0.000000e+00  0.000000e+00
-17  -51.243782  0.000000e+00  0.000000e+00
-18  -82.205358  0.000000e+00  0.000000e+00
-19  -53.275846  0.000000e+00  0.000000e+00
-20  -75.825584  0.000000e+00  0.000000e+00
-21  -74.171526  0.000000e+00  0.000000e+00
-22 -101.621224  0.000000e+00  0.000000e+00
-23  -75.808557  0.000000e+00  0.000000e+00
-24  -27.893121 3.233260e-171 1.939956e-170
-25  -30.422787 2.744866e-203 2.195893e-202
-26  -56.571162  0.000000e+00  0.000000e+00
-27  -33.694854 6.876231e-249 6.188608e-248
+1    43.079669  0.000000e+00  0.000000e+00
+2    24.891069 9.296058e-137 4.648029e-136
+3    50.142475  0.000000e+00  0.000000e+00
+4    36.312766 1.017461e-288 1.119207e-287
+5    -4.666108  3.069587e-06  3.069587e-06
+6   -64.826653  0.000000e+00  0.000000e+00
+7  -117.143399  0.000000e+00  0.000000e+00
+8   -36.059577 9.761908e-285 9.761908e-284
+9   -96.839610  0.000000e+00  0.000000e+00
+10 -118.333194  0.000000e+00  0.000000e+00
+11  -99.580342  0.000000e+00  0.000000e+00
+12   -7.694795  1.417212e-14  2.834424e-14
+13  -15.642348  3.746523e-55  1.498609e-54
+14  -29.051162 1.487678e-185 1.041375e-184
+15  -15.008350  6.473828e-51  1.942148e-50
+16  -42.384594  0.000000e+00  0.000000e+00
+17  -51.031815  0.000000e+00  0.000000e+00
+18  -81.892520  0.000000e+00  0.000000e+00
+19  -53.039473  0.000000e+00  0.000000e+00
+20  -75.429891  0.000000e+00  0.000000e+00
+21  -73.757600  0.000000e+00  0.000000e+00
+22 -101.215638  0.000000e+00  0.000000e+00
+23  -75.405449  0.000000e+00  0.000000e+00
+24  -27.739449 2.335955e-169 1.401573e-168
+25  -30.212269 1.634441e-200 1.307553e-199
+26  -56.264630  0.000000e+00  0.000000e+00
+27  -33.486768 7.510434e-246 6.759391e-245
 
 $time
-[1] "2024-11-20 23:37:39 +03" "2024-11-20 23:37:39 +03"
+[1] "2024-11-27 01:55:40 +03" "2024-11-27 01:55:40 +03"
 
 $CALL
 TAM::tam.fit(tamobj = mod)
@@ -6546,7 +7050,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Multi Facet Rasch Modelling/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/Multi Facet Rasch Modelling/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -7286,7 +7790,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Multi Facet Rasch Modelling/index_files/figure-html/Wright Map-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/Wright Map-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://emrekaragul.com/posts/Multi Facet Rasch Modelling/index_files/figure-html/Wright Map-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -7313,7 +7817,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Measurement Invariance</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Measuerement Invariance/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Measurement invariance is critical because if a test is not invariant across groups, differences in test scores might reflect biases in how questions are interpreted. For instance, a math test may appear to show that boys score higher than girls, but this could be because certain items function differently for each group.</p>
 <p>There are different levels of MI:</p>
 <p><strong>Configural Invariance:</strong> Tests whether the overall factor structure (i.e., the number and pattern of factors) is the same across groups. It is the smallest restrictive form of invariance. It allows us to conclude that the groups conceptualize the construct in the same way.</p>
@@ -8995,7 +9625,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Measuerement Invariance/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/Measuerement Invariance/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -9022,7 +9652,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Automated Essay Scoring (AES) with R</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Automated Essay Scoring (AES) with R/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In the realm of education and standardized testing, technological advancements have brought forth a significant transformation. Among the noteworthy innovations in this field is the adoption of Automated Essay Scoring (AES), an approach that leverages the capabilities of natural language processing (NLP) and machine learning. AES holds the potential to redefine the essay evaluation and grading process, offering efficiency, consistency, and accessibility in a way previously unattainable.</p>
 <p>At its essence, AES relies on sophisticated algorithms to examine written text, subjecting it to a predefined set of criteria. These criteria encompass various aspects, including grammar, sentence structure, vocabulary, coherence, and the quality of argumentation. In this regard, AES algorithms function akin to meticulous digital assessors, diligently seeking out patterns and features within the text. They assess elements such as the presence of persuasive thesis statements, the adept use of supporting evidence, and the logical flow of ideas within the essay. The result of this is a numerical score that reflects the overall quality of the essay in question.</p>
 <p>Today we will develop a linear regression model to predict essay scores using the famous ASAP dataset. There are eight different essay types in this dataset to explore. Here we will use the essay set 2. Before you continue, please go and read the description and the details <a href="https://www.kaggle.com/competitions/asap-aes/data">on Kaggle.</a> As we will use only one essay set, I have preapared the data as a separate csv file and if you are already familiar with the ASAP data (or you have taken a look at the Kaggle page), please download the data for our use case from <a href="https://docs.google.com/spreadsheets/d/1xi-k1cJGADOgtp85sfJ4ZBr1P-YREhx_/edit?usp=sharing&amp;ouid=109837621769671436242&amp;rtpof=true&amp;sd=true">here</a>. The packages and some of their functions that we will be using in this topic are:</p>
@@ -10221,6 +10977,282 @@ font-style: inherit;">confusion_matrix</span></span></code></pre></div>
 
 
 
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mailchimp Subscription Modal</title>
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+
+    <style>
+
+        /* Modal Background */
+
+        .modal {
+
+            display: none; /* Hidden by default */
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+
+            z-index: 1000;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        #openModalBtn {
+
+            background-color: tomato; /* background */
+
+            color: white; /* White text */
+
+            border: none; /* Remove border */
+
+            padding: 10px 20px; /* Add padding */
+
+            font-size: 24px; /* Adjust font size */
+
+            border-radius: 5px; /* Rounded corners */
+
+            cursor: pointer; /* Pointer cursor on hover */
+
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+
+            width: 100%;
+
+            margin-bottom: 20px; /* Add space after the button */
+
+        }
+
+
+
+        #openModalBtn:hover {
+
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+
+        }
+
+        /* Modal Content */
+
+        .modal-content {
+
+            background-color: #fff;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            max-width: 600px;
+
+            width: 90%;
+
+            text-align: center;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+            overflow: auto;
+
+        }
+
+
+
+        /* Close Button */
+
+        .close-btn {
+
+            position: absolute;
+
+            top: 15px;
+
+            right: 15px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #aaa;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .close-btn:hover {
+
+            color: #000;
+
+        }
+
+    </style>
+
+
+
+
+
+    <!-- Trigger Button -->
+
+    <button id="openModalBtn">Wanna subscribe?</button>
+
+
+
+
+
+    <!-- Modal Structure -->
+
+    <div id="subscriptionModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close-btn">×</span>
+
+            <!-- Mailchimp Signup Form -->
+
+            <div>
+
+                <div id="mc_embed_signup">
+
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+
+                        <div id="mc_embed_signup_scroll">
+
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+
+                            <div class="mc-field-group">
+
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required="">
+
+                                <span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+
+                            </div>
+
+                            <div id="mce-responses" class="clear foot">
+
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+
+                            </div>
+
+                            
+
+                            <div class="optionalParent">
+
+                                <div class="clear foot">
+
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+
+                <script type="text/javascript">
+
+                    (function($) {
+
+                        window.fnames = new Array();
+
+                        window.ftypes = new Array();
+
+                        fnames[0] = 'EMAIL';
+
+                        ftypes[0] = 'email';
+
+                    }(jQuery));
+
+                    var $mcj = jQuery.noConflict(true);
+
+                </script>
+
+                <!--End mc_embed_signup-->
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        // Get the modal, button, and close elements
+
+        const modal = document.getElementById("subscriptionModal");
+
+        const openModalBtn = document.getElementById("openModalBtn");
+
+        const closeBtn = document.querySelector(".close-btn");
+
+
+
+        // Open the modal when the button is clicked
+
+        openModalBtn.addEventListener("click", () => {
+
+            modal.style.display = "flex"; // Show the modal
+
+        });
+
+
+
+        // Close the modal when the close button is clicked
+
+        closeBtn.addEventListener("click", () => {
+
+            modal.style.display = "none"; // Hide the modal
+
+        });
+
+
+
+        // Close the modal when clicking outside of it
+
+        window.addEventListener("click", (e) => {
+
+            if (e.target === modal) {
+
+                modal.style.display = "none";
+
+            }
+
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+
+
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In the world of data analysis, having access to quality data sources can make all the difference. Whether you’re a researcher, a business owner, or just someone who loves playing with numbers, finding the right data can help you uncover insights and make better decisions. With so many data sources available online, it can be hard to know where to start. In this blog post, I’ll be sharing my top 5 favorite data sources, each of which I’ve found to be reliable, user-friendly, and full of valuable information. From the Cloud Google Marketplace to the Bureau of Labor Statistics, these data sources offer a wealth of insights that I hope you’ll find as useful and inspiring as I have. So without further ado, let’s dive in!</p>
@@ -10306,7 +11338,133 @@ font-style: inherit;">confusion_matrix</span></span></code></pre></div>
   <title>Item difficulty &amp; discrimination: Exploring the psychometric properties using R</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Exploring the psychometric properties using R/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Developing and validating psychological measures requires examining their psychometric properties, including their reliability and validity. One aspect of a measure’s validity is its item difficulty, which refers to how easy or difficult each individual item is for respondents to answer correctly. Another important aspect is item discrimination, which measures the extent to which each item distinguishes between participants who have high or low levels of the construct being measured.</p>
 <p>Understanding item difficulty and item discrimination is crucial for several reasons. First, items that are too easy or too difficult can limit the variability of responses, making it harder to discriminate between participants who have different levels of the construct being measured. Second, items with low discrimination may not effectively differentiate between participants with different levels of the construct, leading to decreased validity.</p>
 <p>In this blog post, we’ll explore how to calculate item difficulty and item discrimination in R using <a href="https://drive.google.com/file/d/1Roi2GScsgL_p1j3n0wgO5R8M9LdNlrkZ/view?usp=sharing">an example dataset</a>. We’ll explain what each of these psychometric properties are, why they’re important, and how to interpret the results. We’ll also discuss some limitations and considerations when examining these properties. So let’s get started!</p>
@@ -11618,7 +12776,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Exploring the psychometric properties using R/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/Exploring the psychometric properties using R/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -11641,7 +12799,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Web scraping with Rvest package</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Web scraping with Rvest/</link>
-  <description><![CDATA[ <section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p><strong>In this post, we will delve into harvesting a web page, <a href="https://eksisozluk2023.com/">Ekşi Sözlük</a>. This process won’t include the automation of the process. Yet, <a href="https://aliemrekaragul.shinyapps.io/eksi-kazaR/">a completed web application</a> for harvesting Ekşi Sözlük is available.</strong></p>
 <p>Ekşi Sözlük is a reddit-like satirical web site where users share their ideas on certain topics in Turkish. Our target topic is “veri bilimi” (a.k.a. data science in English). The R packages that we use in this post are as follows:</p>
 <div class="cell" data-code_folding="false">
@@ -11726,7 +13010,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>Rvest allows us to collect any type of HTML tag from the current page. Let’s suppose we would like to collect all the links in a topic page. First, go to the page and press F12 to open the “devtools” tab. Then turn inspect mode on. Hover on an item and check the node name for a random link. This process is shown below.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Web scraping with Rvest/images/image-1666293050.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1045"></p>
+<figure class="figure"><p><a href="images/image-1666293050.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/Web scraping with Rvest/images/image-1666293050.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1045"></a></p>
 </figure>
 </div>
 <p>Then we use the functions <code><a href="https://rvest.tidyverse.org/reference/rename.html">html_nodes()</a></code> on the node name and <code><a href="https://rvest.tidyverse.org/reference/html_attr.html">html_attr()</a></code> on “href” HTML tags. This will get all the href attributes with the node name “a.url” on the given link and turn them into a list:</p>
@@ -11767,7 +13051,7 @@ font-style: inherit;">links</span></span></code></pre></div>
 </div>
 </div>
 <p>If we would like to collect all the entries on the given page, we will need the <code>div</code> attribute name for entries (also shown below).</p>
-<p><img src="https://emrekaragul.com/posts/Web scraping with Rvest/images/image-37950438.png" class="img-fluid"></p>
+<p><a href="images/image-37950438.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://emrekaragul.com/posts/Web scraping with Rvest/images/image-37950438.png" class="img-fluid"></a></p>
 <p>Now, we will use the function <code><a href="https://rvest.tidyverse.org/reference/html_text.html">html_text()</a></code> to collect the entries in these <code>div</code> attributes. There are about 10 entries some of which are quite long. Therefore, let me print only the first three entries via the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function.</p>
 <div class="cell">
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
@@ -12152,7 +13436,7 @@ background-color: null;
 font-style: inherit;">## some custimization for colors</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Web scraping with Rvest/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://emrekaragul.com/posts/Web scraping with Rvest/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -12223,7 +13507,133 @@ font-style: inherit;">## another option is 'white'</span></span></code></pre></d
   <title>Visualisation of My Personal Google Data (2): My exercise routine</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Visualisation of My Personal Google Data (2)/</link>
-  <description><![CDATA[ <section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2"><h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2"><h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
 <p>If you give permission to Google to store your location data, they will keep them in their databases forever. You can also allow them to store it for a while and then ask them delete it. They will directly do so.</p>
 <p>What makes this study a fun project is its being very personal. I decided to analyze my personal data in August, 2022. Therefore, I granted many new permissions to Google along with many previously granted permissions. They keep them in various formats including .csv, .json, .mbox etc. When you query for your personal data, they provide it within a couple of days depending on the size of the data you queried.</p>
 <p>Usually, I provide the readers with the data in my posts. However, in this series, the data are very personal and so I will not.</p>
@@ -12480,7 +13890,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Visualisation of My Personal Google Data (2)/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/Visualisation of My Personal Google Data (2)/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -13211,7 +14621,133 @@ font-style: inherit;">fig</span></span></code></pre></div>
   <title>Visualisation of My Personal Google Data (1): My Locations</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Visualisation of My Personal Google Data (1)/</link>
-  <description><![CDATA[ <section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2"><h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction-to-the-series-visualisation-of-my-personal-google-data" class="level2"><h2 class="anchored" data-anchor-id="introduction-to-the-series-visualisation-of-my-personal-google-data">Introduction to the series: “Visualisation of My Personal Google Data”</h2>
 <p>If you give permission to Google to store your location data, they will keep them in their databases forever. You can also allow them to store it for a while and then ask them delete it. They will directly do so.</p>
 <p>What makes this study a fun project is its being very personal. I decided to analyze my personal data in August, 2022. Therefore, I granted many new permissions to Google along with many previously granted permissions. They keep them in various formats including .csv, .json, .mbox etc. When you query for your personal data, they provide it within a couple of days depending on the size of the data you queried.</p>
 <p>Usually, I provide the readers with the data in my posts. However, in this series, the data are very personal and so I will not.</p>
@@ -14340,7 +15876,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Yapısal Eşitlik Modelleme</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Structural Equation Modelling (in Turkish)/</link>
-  <description><![CDATA[ <p>Bu çalışmada PISA 2015 <a href="https://www.oecd.org/pisa/data/CY6_QST_MS_STQ_PBA_Final.pdf">“student questionnaire: paper based verison”</a> içerisindeki en son alt ölçek olan ‘Your View on Science’ ölçeğinden elde edilen veriler kullanılmıştır. Türkiye örnekleminden faydalanılmıştır. Bu örneklem ile bahsi geçen ölçeğin yapısal eşitlik modelleri oluşturulmuş ve karşılaştırılmıştır. Adım adım veri setinin R ile analize hazır hale getirilmesi anlatılmaktadır. Doğrudan analiz ile ilgileniyorsanız aşağıda <strong>‘Analiz Süreci’</strong> başlığına ilerleyiniz.</p>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><p>Bu çalışmada PISA 2015 <a href="https://www.oecd.org/pisa/data/CY6_QST_MS_STQ_PBA_Final.pdf">“student questionnaire: paper based verison”</a> içerisindeki en son alt ölçek olan ‘Your View on Science’ ölçeğinden elde edilen veriler kullanılmıştır. Türkiye örnekleminden faydalanılmıştır. Bu örneklem ile bahsi geçen ölçeğin yapısal eşitlik modelleri oluşturulmuş ve karşılaştırılmıştır. Adım adım veri setinin R ile analize hazır hale getirilmesi anlatılmaktadır. Doğrudan analiz ile ilgileniyorsanız aşağıda <strong>‘Analiz Süreci’</strong> başlığına ilerleyiniz.</p>
 <section id="veri-ön-hazırlık-süreci" class="level2"><h2 class="anchored" data-anchor-id="veri-ön-hazırlık-süreci">Veri Ön Hazırlık Süreci</h2>
 <p>Öncelikle <a href="https://www.oecd.org/pisa/data/2015database/">OECD</a> tarafından yayınlanan veri setini <a href="https://webfs.oecd.org/pisa/PUF_SPSS_COMBINED_CMB_STU_QQQ.zip">şuradan</a> indiriyoruz. İndirilen bu dosya .sav uzantılı bbir dosya. Bu tür dosyaları açmak için <code>haven</code> paketi <code>read_sav</code> fonksiyonundan faydalanabiliriz. Veri setinin tamamına ihtiyacımız yok, zaten oldukça büyük bir veri. Ülke değilşkeni ve ilgili ölçeğin maddeleri yeterli olacaktır. İndirdiğimiz .sav uzantılı dosyayı <em>working directory’</em>mize taşıdıktan sonra çalıştıracağımız kod satırı şunlar:</p>
 <div class="cell">
@@ -15954,7 +17616,133 @@ JASP
   <title>Test Equating</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Test Equating/</link>
-  <description><![CDATA[ <p>This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here.</p>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><p>This is a simple test equating study. The data used in this study is simulated from real data. We don’t use the real data for privacy purposes here.</p>
 <p>2020-2021 Fall Term A Level’s first quiz has 40 items. 2022-2023 Fall Term A Level’s first quiz has 40 items. 35 of the items in each test forms are unique items while 5 of them are common, thus will be called as “anchor items” in this study. For the readers interest, the items belong to four main domains (listening, structure, vocabbulary and reading), yet the common items are only in the reading section. This is obviously a violation of assumptions of test equating. Still, this study is conveyed for demonstration purposes. Therefore, let’s continue:</p>
 <p>To ensure statistical equation of these two forms, we first introduced the data in R Studio and the first five rows can be seen below:</p>
 <div class="cell" data-code_folding="true">
@@ -16214,7 +18002,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -16237,7 +18025,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-4-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -16308,7 +18096,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -16331,7 +18119,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-5-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -16674,7 +18462,7 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="https://emrekaragul.com/posts/Test Equating/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -16694,7 +18482,133 @@ font-style: inherit;">)</span></span></code></pre></div>
   <title>Madde Tepki Kuramı Temelli Madde Analizi</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
   <link>https://emrekaragul.com/posts/Item Analysis with Item Response Theory (in Turkish)/</link>
-  <description><![CDATA[ <section id="giriş" class="level2"><h2 class="anchored" data-anchor-id="giriş">GİRİŞ</h2>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="giriş" class="level2"><h2 class="anchored" data-anchor-id="giriş">GİRİŞ</h2>
 <p>Bu çalışmada çok kategorili puanlanan maddelerden elde edilen bir veri seti kullanılmıştır. Çalışmanın ilk kısmında çok kategorili maddelere yönelik MTK analizleri yürütülmüştür. Daha sonra aynı veri seti iki kategorili verilere dönüştürülmüştür. Yine MTK süreçleri bu sefer de iki kategorili maddeler için yürütülmüştür. İzlenen adımlar şu şekildedir:</p>
 <p><strong>1. Çoklu puanlanan maddelere yönelik olarak;</strong></p>
 <ul>

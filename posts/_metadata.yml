@@ -21,6 +21,6 @@ comments:
     
 format:
   html:
-    include-after-body: ../footer.html
+    include-before-body: ../subscribe-modal.html
     code-fold: false
     code-tools: false

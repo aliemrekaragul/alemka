@@ -69,7 +69,7 @@ website:
     left: "© Ali Emre Karagül"
 format: 
   html:
-    theme: literia  # morph #simplex  # solar #cerulean  #
+    theme: simplex  # morph #simplex  # solar #cerulean  #
     css: styles.css
     toc: true
     toc-depth: 4
