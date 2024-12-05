@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/localLlm/index.html",
       "/posts/ChatBot/index.html",
       "/posts/efaWithLikertData-2/index.html",
       "/posts/efaWithLikertData-1/index.html",

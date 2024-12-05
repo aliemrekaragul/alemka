@@ -10,7 +10,1920 @@
 <atom:link href="https://emrekaragul.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>My educational data science blog / notebook</description>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Tue, 26 Nov 2024 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 04 Dec 2024 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Language Detection &amp; Sentiment Analysis with Local LLMs</title>
+  <dc:creator>Ali Emre Karagül</dc:creator>
+  <link>https://emrekaragul.com/posts/localLlm/</link>
+  <description><![CDATA[ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>I have recently received an e-mail from Posit about their recent developments. They have released the BETA version of their new IDE, Positron, for data scientists along with several R packages and a chat bot customized for shiny apps, <a href="https://shiny.posit.co/blog/posts/shiny-assistant/?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi2C2rOPNBjAVW1SwVe8Qy-c6SQuWQRpE_vGdNHqd7B4AyQmuYvkCYDOH6eTQdWJNQBXM9mal0BiSbCCx1Za6LGqDU1bHUgkiTfEf9wq7">Shiny Assistant</a>. The packages are <a href="https://elmer.tidyverse.org/?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi3BulXH3PmcuNNnpj_xia93mA1SBo0ctMWi_dJF8-kNxZujHYP6JrQL8KemkBg-dLEqQ2jOd4NIfmwFLn0_FcQktFLjyYUeN8fApLCPN">elmer</a>, <a href="https://github.com/simonpcouch/pal?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi_FVwNiBAxVKZUFZ6hp7Sb71tc8kSSBlnYK_26jg7kx7JfrC5FDchiJAcsuN4TuZx3MnyRb-RKQf1pES_IQi8clt65qzJvUxbDF5Y4P6">pal</a>, and <a href="https://github.com/mlverse/mall?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi4p_MDoSVwPizwPfCnziIInxDDGJOzYifsoOENazWrJEY8UUo_KmbkpRXmbEbTaXO6_XjSfEbjyB1AD4-_BpVMD0KWV8aBvmPkedBebu">mall</a>. Today, we will try <code>mall</code> with a local LLM to automate several tasks and run a sentiment analysis.</p>
+<p>A few years ago, running an LLM locally would be a dream for most of the data scientists. However, with the recent developments in the field, there are many free-to-use LLMs that can be run on your local machine. I am choosing my words carefully here. Since Meta released llama, they advertise it as open-source. Yet, it is not open-source in the sense that you can see the algorithm behind it or/and the data used to train it. It is open-source in the sense that you can use it for free. In this regard, it is more of a free-to-use tool than an open-source tool. However, I should also appreciate the effort behind it as we can use a strong LLM freely on our local computers.</p>
+</section><section id="getting-started" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<p>Enough of politics. Let’s get started by downloading ollama to our local machine.</p>
+<section id="download-ollama" class="level3"><h3 class="anchored" data-anchor-id="download-ollama">Download Ollama</h3>
+<p>Ollama is an open-source LLM service tool that helps users to utilize LLMs locally with a single line of command. You can download it from <a href="https://ollama.com/download">here</a> depending on your operating system. Yet, I will run you through Windows rather than Linux or MacOS.</p>
+<p>Click <code>Windows</code> on the download page and then click the download button. Once the download is complete, open the downloaded installer. As far as I remember, the installer completes without any prompting.</p>
+<p>Before we use R, we need to set some basics. A local LLM is highly dependent on your hardware. You need a good CPU, RAM, and VRAM to run it. Today, I will use <code>llama3.1 8b</code>. <code>8b</code> in the model name refers to the number of parameters that the model is trained with. The more parameters, the more accurate the model. However, the more parameters, the more hardware you need.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Requirements for llama3.1 8b">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Requirements for llama3.1 8b
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>CPU &gt;= 8 cores</p>
+<p>RAM &gt;= 16 GB</p>
+<p>VRAM &gt;= 8GB</p>
+<p>NVIDIA RTX 3070 or better</p>
+</div>
+</div>
+<p>If you do not have sufficient hardware, you can use a smaller model such as <code>llama3.2</code> which comes with <code>1b</code> and <code>3b</code>. <code>Gemma:2b</code> is also a viable option. If you have even a better computer, you can try other models with higher parameters. You can see the list of all available models <a href="https://ollama.com/search">here</a>.</p>
+</section><section id="install-the-model" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="install-the-model">Install the Model</h3>
+<p>There are many ways to install the model. We will discuss two here. You can either use the terminal or <code>mall</code> package in R. My personal preference is to use the terminal as we will need to terminate ollama to end the memory usage when we are done. However, if you are not familiar with the terminal, you can use R.</p>
+<section id="install-the-model-on-the-terminal" class="level4 page-columns page-full"><h4 class="anchored" data-anchor-id="install-the-model-on-the-terminal">Install the Model on the Terminal</h4>
+<p>Once you have decided on your model, open a terminal. You can do that by searching for <code>Windows PowerShell</code> and running it. If you are Rstudio user, you can also open a terminal in Rstudio. They will both work for our use case.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/empty_terminal.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://emrekaragul.com/posts/localLlm/images/empty_terminal.png" class="img-fluid" alt="PowerShell Terminal"></a></p>
+</div></div><p>On the terminal, type the following command with the model name of your preference. <code>ollama run &lt;model name&gt;</code></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/empty_terminal_2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://emrekaragul.com/posts/localLlm/images/empty_terminal_2.png" class="img-fluid" alt="RStudio Terminal"></a></p>
+</div></div><pre class="terminal"><code>ollama run llama3.1:8b</code></pre>
+<p>This will install the model to your computer, if it is not installed already, and then it will start a chat session with the model. You can chat with the bot on the terminal directly. To end the session, simply type <code>/bye</code> or <code>CTRL + C</code>.</p>
+<p>You can install as many models as you like as long as your hardware allows. To see all the models that you have installed so far, run <code>ollama list</code> command on the terminal.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/list_models.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://emrekaragul.com/posts/localLlm/images/list_models.png" class="img-fluid"></a></p>
+</div></div></section><section id="install-the-model-via-r" class="level4"><h4 class="anchored" data-anchor-id="install-the-model-via-r">Install the Model via R</h4>
+<p>To install a model via R, you need to load the <code>mall</code> package. In the mall package, <code>pull("&lt;model name&gt;")</code> function is used to install a model. <code><a href="https://hauselin.github.io/ollama-r/reference/test_connection.html">test_connection()</a></code> is used to see if your local LLM up and running.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://hauselin.github.io/ollama-r/">ollamar</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ollamar' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ollamar'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    embed</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:methods':
+
+    show</code></pre>
+</div>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model_name</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"llama3.1:8b"</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ollamar</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://hauselin.github.io/ollama-r/reference/pull.html">pull</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;httr2_response&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POST http://127.0.0.1:11434/api/pull</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Status: 200 OK</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Content-Type: application/x-ndjson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Body: In memory (861 bytes)</code></pre>
+</div>
+</div>
+<p><code><a href="https://hauselin.github.io/ollama-r/reference/list_models.html">list_models()</a></code> is used to see the models that you have installed so far. That one is more informative than the terminal command as it gives us the parameter size and the quantization level too.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ollamar</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://hauselin.github.io/ollama-r/reference/list_models.html">list_models</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             name   size parameter_size quantization_level            modified
+1        gemma:2b 1.7 GB             3B               Q4_0 2024-12-05T01:49:40
+2     llama3.1:8b 4.9 GB           8.0B             Q4_K_M 2024-12-05T14:25:24
+3 llama3.2:latest   2 GB           3.2B             Q4_K_M 2024-11-29T20:35:04
+4       llama3:8b 4.7 GB           8.0B               Q4_0 2024-12-05T01:19:43
+5   llama3:latest 4.7 GB           8.0B               Q4_0 2024-11-30T00:58:23</code></pre>
+</div>
+</div>
+<p>You can also test the model by giving a prompt. The <code>generate</code> function is used to generate a response from the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ollamar</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://hauselin.github.io/ollama-r/reference/generate.html">generate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model_name</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Tell me a joke about statistics."</span>, output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Here's one:\n\nWhy did the statistician turn down the invitation to the party?\n\nBecause he already had a 99% probability of being bored and a 1% chance of meeting interesting people.\n\nHope that made you laugh!"</code></pre>
+</div>
+</div>
+</section></section></section><section id="task-automation" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="task-automation">Task Automation</h2>
+<p>If you have come so far, you are ready to use your local LLMs for anything. Let’s see some example usage.</p>
+<section id="language-detection" class="level3"><h3 class="anchored" data-anchor-id="language-detection">Language Detection</h3>
+<p>Most LLMs are multi-lingual. You can use them to detect the language of a given text such as a comment or a review. Let’s build such an automation. We will use a dataset of global comments from YouTube videos on Kaggle. You can download the <code>csv</code> file directly from <a href="https://drive.google.com/file/d/16uUKmQKbNOSffKr7X8qvYqHDVHANAAON/view?usp=sharing">my Google drive</a> too.</p>
+<section id="preparing-the-data" class="level4"><h4 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h4>
+<p>The data is too large, so in this part, we will investigate and select a subset of 20 rows that contain multiple languages, emojis, urls etc. We will then detect the language of each comment in the subset using our local LLM.</p>
+<p>We will be using packages such as <code>dplyr</code>, <code>stringr</code>, <code>tidyverse</code>, and <code>purrr</code> to manipulate the data. Also <code>mall</code> package, having very useful functions such as <code><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment()</a></code>, <code><a href="https://rdrr.io/pkg/mall/man/llm_classify.html">llm_classify()</a></code>, <code><a href="https://rdrr.io/pkg/mall/man/llm_extract.html">llm_extract()</a></code>, <code><a href="https://rdrr.io/pkg/mall/man/llm_custom.html">llm_custom()</a></code> etc, will be used to interact with the LLM.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> </span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://mlverse.github.io/mall/">mall</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># set a seed parameter to make the results reproducible</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">123</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Let’s load the data and see the structure of it.</p>
+<div class="cell">
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"GBcomments.csv"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   video_id         comment_text          likes             replies         
+ Length:273551      Length:273551      Length:273551      Length:273551     
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  </code></pre>
+</div>
+</div>
+<p>We need to change the class of <code>likes</code> and <code>replies</code> to numeric. Also, I have checked the data and detected many duplicate rows. So, we need to get rid of the duplicate data entries. Also let’s drop the rows with NA values.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">likes</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">likes</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">replies</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">replies</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># drop rows with the same comment text in the same video</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">video_id</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span>, .keep_all <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> </span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   video_id         comment_text           likes             replies       
+ Length:152589      Length:152589      Min.   :    0.00   Min.   :   0.00  
+ Class :character   Class :character   1st Qu.:    0.00   1st Qu.:   0.00  
+ Mode  :character   Mode  :character   Median :    0.00   Median :   0.00  
+                                       Mean   :   16.94   Mean   :  13.95  
+                                       3rd Qu.:    0.00   3rd Qu.:   0.00  
+                                       Max.   :60630.00   Max.   :3498.00  </code></pre>
+</div>
+</div>
+<p>We have 152589 rows of data. For the demonstration purposes, I will select a couple of videos with comments in multiple languages. There are many ways to detect videos with comments in multiple languages. My approach will be to search for specific strings in Korean, Arabic and German. For example, the first letter of “hello” in Korean is “한” according to Google Translate. Let’s search for this letter in the comments and select the video with the most comments. Also, utilize a similar approach for Arabic and German. Remember we are doing this to create the perfect subset of comments with multiple languages.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">korean_letter</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"한"</span> </span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">arabic_letter</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ا"</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the first letter of arabic letters</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">german_word</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" und "</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># "und" is "and" in German</span></span>
+<span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vid_w_korean_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">korean_letter</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">video_id</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>n_comments <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">n_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vid_w_arabic_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">arabic_letter</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">video_id</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>n_comments <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">n_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vid_w_german_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">german_word</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">video_id</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>n_comments <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">n_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># merge these rows</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vids_multiple_langs</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vid_w_korean_comments</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vid_w_arabic_comments</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vid_w_german_comments</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vids_multiple_langs</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  video_id    n_comments
+  &lt;chr&gt;            &lt;int&gt;
+1 HuoOEry-Yc4         10
+2 jt2OHQh0HoQ         11
+3 11S5tcT2Tm0          1</code></pre>
+</div>
+</div>
+<p>We have selected 3 videos with comments in multiple languages. Let’s create a dataset with these videos and their comments called <code>dat</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">global_comments</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">video_id</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">vids_multiple_langs</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">video_id</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   video_id         comment_text           likes            replies       
+ Length:897         Length:897         Min.   : 0.0000   Min.   : 0.0000  
+ Class :character   Class :character   1st Qu.: 0.0000   1st Qu.: 0.0000  
+ Mode  :character   Mode  :character   Median : 0.0000   Median : 0.0000  
+                                       Mean   : 0.6722   Mean   : 0.1538  
+                                       3rd Qu.: 0.0000   3rd Qu.: 0.0000  
+                                       Max.   :31.0000   Max.   :12.0000  </code></pre>
+</div>
+</div>
+<p>There are 897 comments in total. I checked it with a glimpse and it actually contains comments in many languages. For example:</p>
+<div class="cell">
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Marvelous, as Always!"                                                                                                                                                                                                                                                                                  
+ [2] "Bellisimo :3Saludos desde Mexico cdmx"                                                                                                                                                                                                                                                                  
+ [3] "Pure! Serene! and Marvelous!"                                                                                                                                                                                                                                                                           
+ [4] "So diverse. Much ethnic. Wow."                                                                                                                                                                                                                                                                          
+ [5] "Enough said"                                                                                                                                                                                                                                                                                            
+ [6] "😘😘😘😱😱"                                                                                                                                                                                                                                                                                                  
+ [7] "woow.. eres magnifica, por ti me apasione con el violin y compre el mio... soy tu mas grande admiradora, dios y algun dia me lo permita conocerte es mi mayor sueño y aprender a tocar el violin.. sigue triunfando y robando los carazones de las personas asi como me lo robaste a mi con tu melodia."
+ [8] "Cuando veniste a Guadalajara y escuche esta canción I couldnt believe it was just like no mames 😍😍😍"                                                                                                                                                                                                    
+ [9] "man kann richtig sehen wie dir das Tanze und Violine spielen spass und freude macht. 👍\\n\\nSo macht das zuschauen nochmal so viel spass.\\n\\nSuper Video☺️👍"                                                                                                                                           
+[10] "Heisses Outfit , dass der Sound gut ist, ist ja schon bald selbstverständlich."                                                                                                                                                                                                                         </code></pre>
+</div>
+</div>
+<p>I can see many languages except for Korean and Arabic in the tail. :D Let’s select a random subset of this data to test our language detection bot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># select random 20 comments.</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "YOU ARE SO CLOSE TO 10 MILLION!!!"                                                                                                                                                                                                                                                                              
+ [2] "😍"                                                                                                                                                                                                                                                                                                              
+ [3] "Also watch https://youtu.be/7QkYTgDMpCs"                                                                                                                                                                                                                                                                        
+ [4] "I❤️U 💋💋💋💋💋💋💋💋💋😍😍😍😍😍😍😍😍😘😘😘😘😘😘😘😘😘💖💖💖💖💖💖💖💖😻😻😻😻😻😻👸👸👸👸👸👸💟💟💟💟💝💝💝💝💓💓💓💗💗💗💜💜💜💋💋💋👰👰👰"                                                                                                                                                                                                                                      
+ [5] "Ya lo tengo y estoy escribiendo de acá del iPhone me anda de 10"                                                                                                                                                                                                                                                
+ [6] "Amazing video I love the Bollywood touch in this video keep going Lindsey!!"                                                                                                                                                                                                                                    
+ [7] "Where's iPhone 9? Just skips to iPhone x. Lol okay nice math there Apple"                                                                                                                                                                                                                                       
+ [8] "عملت قنات جديدة تختص في تقديم أنجح و أسهل وصفات الحلويات، تعالو شوفو الفديوهات التي اعملها والله ما رح تندمو ❤"                                                                                                                                                                                                 
+ [9] "Nothing new..\\nIphoneX is copy of essiential phone.\\nAndy Rubin has developed more advanced features than iPhoneX.\\nIPHONE X 👎👎👎"                                                                                                                                                                            
+[10] "Lol @22:46:09\\n\\nTim's kinda an ass"                                                                                                                                                                                                                                                                          
+[11] "3 years late on wireless charging, 3 years late on oled technology , old facial recognition tech enhanced by old IR tech. So your late on just about every front....what to do? I know, lets lose what makes our product instantly recognizable! This is Apples windows 8, Samsung are bound to be loving this."
+[12] "https://youtu.be/Kp_DBWtS6SU"                                                                                                                                                                                                                                                                                   
+[13] "I love your music videos their always great and inspiring!"                                                                                                                                                                                                                                                     
+[14] "I like for Linsey. Love yours full themes. Great job."                                                                                                                                                                                                                                                          
+[15] "I love that blond hair!!!!"                                                                                                                                                                                                                                                                                     
+[16] "黒髪もも可愛すぎ😍💕💕"                                                                                                                                                                                                                                                                                            
+[17] "Sana is my damn bias wrecker, i swear. between her and Nayeon it's so hard😂❤"                                                                                                                                                                                                                                   
+[18] "where is Steve Wozniak, fuck apple authority"                                                                                                                                                                                                                                                                   
+[19] "just one question, wtf?"                                                                                                                                                                                                                                                                                        
+[20] "She is BEA-UTIFUL. And this showed a side I've never seen before. Which is not surprising. She's always giving us surprises....she keeps me in my toes"                                                                                                                                                         </code></pre>
+</div>
+</div>
+</section><section id="detecting-languages" class="level4"><h4 class="anchored" data-anchor-id="detecting-languages">Detecting languages</h4>
+<p>That subset looks good. I can see emojis, urls and multiple languages along with English. That’s a perfect subset to test the language detection capabilities of our LLM. Here is what we will do: 1. Attach the model with <code><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use()</a></code>. 2. Define a system prompt for language detection. 3. OPTIONAL: Define the valid responses that you expect from the LLM. If this is defined, any response that do not fit the valid responses will be replaced with <code>NA</code>. 4. Detect the language of each comment in the data and add the results as a new column.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ollama"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model_name</span>, seed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, .silent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sys_prompt</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You are a language detection bot."</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"I will provide you with Youtube comments on a video."</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Try to detect the language of the comment and reply with the ISO 639-1 language code used in the given comment."</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Reply only with the language code."</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"If you cannot detect a language as the comments might contain emojis or urls only, reply with 'UNDETECTABLE' with uppercase"</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Some examples:"</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"comment text: 'Thumbs up asap', your response: 'en'."</span>,</span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"comment text: 'Hola, ¿cómo estás?', your response: 'es'."</span>, </span>
+<span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Here is the comment:"</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># I am not adding 'UNDETECTABLE' to valid responses as the function will tag such cases as NA.</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">valid_responses</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"aa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ab"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ae"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"af"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ak"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"am"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"an"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-ae"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-bh"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-dz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-eg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-iq"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-jo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-kw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-lb"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-ly"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-ma"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-om"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-qa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-sa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-sy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-tn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar-ye"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ar"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"as"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"av"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ay"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"az"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ba"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"be"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bh"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bm"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"br"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bs"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ca"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ce"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ch"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"co"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cs"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"da"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"de-at"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"de-ch"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"de-de"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"de-li"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"de-lu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"de"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"div"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ee"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"el"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-au"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-bz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-ca"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-cb"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-gb"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-ie"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-jm"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-nz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-ph"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-tt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-us"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-za"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-zw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"eo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-ar"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-bo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-cl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-co"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-cr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-do"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-ec"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-es"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-gt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-hn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-mx"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-ni"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-pa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-pe"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-pr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-py"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-sv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-us"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-uy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es-ve"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"es"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"et"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"eu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ff"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fj"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr-be"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr-ca"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr-ch"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr-fr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr-lu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr-mc"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ga"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ha"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"he"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ho"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hr-ba"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hr-hr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ht"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ia"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"id"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ie"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ig"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ii"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ik"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"in"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"io"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"is"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"it-ch"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"it-it"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"it"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"iu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"iw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ja"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ji"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"jv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"jw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ka"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ki"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kj"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kk"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"km"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ko"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kok"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ks"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ku"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ky"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"kz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"la"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lb"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"li"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ln"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ls"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mh"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mk"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ml"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ms-bn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ms-my"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ms"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"my"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"na"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nb"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ne"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ng"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nl-be"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nl-nl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"no"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ns"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ny"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"oc"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"oj"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"om"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"or"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"os"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ps"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pt-br"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pt-pt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"qu-bo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"qu-ec"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"qu-pe"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"qu"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rm"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ro"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ru"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sb"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sc"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sd"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"se-fi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"se-no"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"se-se"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"se"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sh"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"si"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sk"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sm"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"so"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sq"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sr-ba"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sr-sp"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ss"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"st"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"su"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sv-fi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sv-se"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sv"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sx"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"syr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ta"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"te"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"th"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ti"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tk"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tl"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"to"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tr"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ts"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tt"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ty"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ug"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"uk"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ur"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"us"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"uz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ve"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"vi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"vo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wa"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"xh"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"yi"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"yo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"za"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zh-cn"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zh-hk"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zh-mo"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zh-sg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zh-tw"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zh"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zu"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/mall/man/llm_custom.html">llm_custom</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sys_prompt</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"language"</span>, valid_resps <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">valid_responses</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>! There were 3 predictions with invalid output, they were coerced to NA</code></pre>
+</div>
+</div>
+<p>Let’s see the results.</p>
+<div class="cell">
+<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># convert dat to tibble (optional)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">language</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   language comment_text                                                        
+   &lt;chr&gt;    &lt;chr&gt;                                                               
+ 1 en       "YOU ARE SO CLOSE TO 10 MILLION!!!"                                 
+ 2 &lt;NA&gt;     "\U0001f60d"                                                        
+ 3 &lt;NA&gt;     "Also watch https://youtu.be/7QkYTgDMpCs"                           
+ 4 en       "I❤️U \U0001f48b\U0001f48b\U0001f48b\U0001f48b\U0001f48b\U0001f48b\U…
+ 5 es       "Ya lo tengo y estoy escribiendo de acá del iPhone me anda de 10"   
+ 6 en       "Amazing video I love the Bollywood touch in this video keep going …
+ 7 en       "Where's iPhone 9? Just skips to iPhone x. Lol okay nice math there…
+ 8 ar       "عملت قنات جديدة تختص في تقديم أنجح و أسهل وصفات الحلويات، تعالو شو…
+ 9 en       "Nothing new..\\nIphoneX is copy of essiential phone.\\nAndy Rubin …
+10 en       "Lol @22:46:09\\n\\nTim's kinda an ass"                             
+11 en       "3 years late on wireless charging, 3 years late on oled technology…
+12 &lt;NA&gt;     "https://youtu.be/Kp_DBWtS6SU"                                      
+13 en       "I love your music videos their always great and inspiring!"        
+14 en       "I like for Linsey. Love yours full themes. Great job."             
+15 en       "I love that blond hair!!!!"                                        
+16 ja       "黒髪もも可愛すぎ\U0001f60d\U0001f495\U0001f495"                    
+17 ko       "Sana is my damn bias wrecker, i swear. between her and Nayeon it's…
+18 en       "where is Steve Wozniak, fuck apple authority"                      
+19 en       "just one question, wtf?"                                           
+20 en       "She is BEA-UTIFUL. And this showed a side I've never seen before. …</code></pre>
+</div>
+</div>
+<p>Nice, we have detected the languages of the comments. We can also see that some comments are tagged as <code>NA</code>. These are the comments that contain emojis, urls, or gibberish.</p>
+</section></section><section id="sentiment-analysis" class="level3"><h3 class="anchored" data-anchor-id="sentiment-analysis">Sentiment Analysis</h3>
+<p>For the sentiment analysis we will use another <a href="https://www.kaggle.com/datasets/arhamrumi/amazon-product-reviews">Kaggle</a> dataset. You can download it from my Google Drive <a href="https://drive.google.com/file/d/1Q5pFKuwwKrwcQnDyBixW98VwVt7cZYnT/view?usp=sharing">here</a>. The dataset contains Amazon product reviews. We will select random 20 comments and run a sentiment analysis on them.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reviews.csv"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Id         ProductId            UserId          ProfileName       
+ Min.   :    1   Length:35173       Length:35173       Length:35173      
+ 1st Qu.: 8794   Class :character   Class :character   Class :character  
+ Median :17587   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :17587                                                           
+ 3rd Qu.:26380                                                           
+ Max.   :35173                                                           
+                                                                         
+ HelpfulnessNumerator HelpfulnessDenominator     Score      
+ Min.   :  0.000      Min.   :  0.000        Min.   :1.000  
+ 1st Qu.:  0.000      1st Qu.:  0.000        1st Qu.:4.000  
+ Median :  0.000      Median :  1.000        Median :5.000  
+ Mean   :  1.558      Mean   :  2.002        Mean   :4.156  
+ 3rd Qu.:  1.000      3rd Qu.:  2.000        3rd Qu.:5.000  
+ Max.   :203.000      Max.   :219.000        Max.   :5.000  
+ NA's   :1            NA's   :1              NA's   :1      
+      Time             Summary              Text          
+ Min.   :9.617e+08   Length:35173       Length:35173      
+ 1st Qu.:1.268e+09   Class :character   Class :character  
+ Median :1.307e+09   Mode  :character   Mode  :character  
+ Mean   :1.294e+09                                        
+ 3rd Qu.:1.330e+09                                        
+ Max.   :1.351e+09                                        
+ NA's   :1                                                </code></pre>
+</div>
+</div>
+<section id="preparing-the-data-1" class="level4"><h4 class="anchored" data-anchor-id="preparing-the-data-1">Preparing the Data</h4>
+<p>The data actually contains a <code>score</code> column which is the rating of the product. We will select 4 random reviews for each score from 1 to 5 so that we can also test the LLM performance this time.</p>
+<div class="cell">
+<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews_sample</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Score</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</section><section id="running-sentiment-analysis" class="level4"><h4 class="anchored" data-anchor-id="running-sentiment-analysis">Running Sentiment Analysis</h4>
+<p>We can use <code><a href="https://rdrr.io/pkg/mall/man/llm_custom.html">llm_custom()</a></code> function again with a well developed system prompt by ourselves. Yet, the package <code>mall</code> already contains a function for sentiment analysis called <code><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment()</a></code>. Let’s try it out:</p>
+<p>First, attach the model. Then run the sentiment analysis on the reviews. We will use the <code>Text</code> column as the target variable and <code>comment_sentiment</code> as the new column name for the sentiment analysis results.</p>
+<div class="cell">
+<div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ollama"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">model_name</span>, seed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, .silent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews_sample</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews_sample</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Text</span>, pred_name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"comment_sentiment"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Let’s see the results.</p>
+<div class="cell">
+<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reviews_sample</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comment_sentiment</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Score</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Text</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   comment_sentiment Score Text                                                 
+   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;                                                
+ 1 negative              1 "I have 2 chihuahua's and they are not at all intere…
+ 2 negative              1 "I am sure that this coffee tastes good, but I am no…
+ 3 negative              1 "I bought this gourmet popping corn believing I was …
+ 4 negative              1 "I strongly suspect this caviar, which is widely ava…
+ 5 negative              2 "I ordered this for my birthday. I got birthday mone…
+ 6 negative              2 "I love raspberry and chocolate.  I could live on Se…
+ 7 negative              2 "As with most of the reviews here my tins arrived wi…
+ 8 negative              2 "These dried strawberries do taste good - indeed, th…
+ 9 negative              3 "It was my mistake - I thought there were 6 bags rat…
+10 neutral               3 "I have been feeding Canidae for a long time, and wh…
+11 negative              3 "I usually buy this at our local Whole Foods or Harr…
+12 neutral               3 "This carbonated product has a nice natural juice ta…
+13 negative              4 "If you read the first review and then read the comp…
+14 positive              4 "This Wolfgang Puck coffee tasted great. The vanilla…
+15 positive              4 "Being a peanut butter lover, have to keep it out of…
+16 positive              4 "My dogs are bone lovers.  These are a little messy …
+17 positive              5 "Received aj&amp;iacute; amarillo in a well-wrapped box.…
+18 positive              5 "This coffee is bold and strong, just how I like it.…
+19 positive              5 "Having been on a gluten free diet for less than a y…
+20 neutral               5 "I have to admit, when I saw this available on vine …</code></pre>
+</div>
+</div>
+<p>We can see that although our bot is mostly successful, there are some false negative (where the detected sentiment is negative while the score is 4 or 5) results. A larger model would be more successful in this task. Yet, there are no false positive results as all 1 and 2 scores are detected as negative. Naturally, we expect scores 3 to be neutral, but the comment might be more on the negative or positive side. So it is ok if the model detects a 3 as negative or positive rather than neutral.</p>
+</section></section><section id="terminate-the-ollama-session" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="terminate-the-ollama-session">Terminate the Ollama Session</h3>
+<p>Whatever the task is, after using a local LLM, it would be wise to terminate the session to free up the memory. You can do this by running the following command in the terminal.</p>
+<pre class="terminal"><code> Get-Process | Where-Object {$_.ProcessName -like '*ollama*'} | Stop-Process</code></pre>
+<p>What I do to make sure that the session is terminated is to check the memory usage of the LLM on the Task Manager. Just press <code>CTRL + ALT + DEL</code> and select Task Manager on Windows. Then go to the <code>Processes</code> tab and order by <code>Memory</code>. You will see the memory usage of Ollama. If ollama is not in the list or its memory usage value is close to zero, then the session is terminated. See the screen shot before the termination below. The memory usage is up above of the list. After stopping the process, it was gone.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/task_manager_before.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://emrekaragul.com/posts/localLlm/images/task_manager_before.png" class="img-fluid"></a></p>
+</div></div></section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this post, we discussed how to use a local LLM for language detection and sentiment analysis. Ollama services were used to install <code>llama3.1:8b</code> We used the <code>mall</code> package to interact with the LLM. We also discussed how to install the model and how to terminate the session on the terminal.</p>
+<p>We have seen that the LLM is quite successful in detecting the languages of the comments or the sentiments of the reviews. <strong>An important final mark would be to remember that the larger the model, the better the accuracy.</strong> However, the larger the model, the more hardware you need. So, it is always a trade-off between accuracy and resources.</p>
+
+
+</section> ]]></description>
+  <category>ollamar</category>
+  <category>mall</category>
+  <category>dplyr</category>
+  <category>stringr</category>
+  <category>purrr</category>
+  <category>tidyverse</category>
+  <guid>https://emrekaragul.com/posts/localLlm/</guid>
+  <pubDate>Wed, 04 Dec 2024 21:00:00 GMT</pubDate>
+  <media:content url="https://emrekaragul.com/posts/localLlm/image.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>How to Build a Custom Chat Bot with R</title>
   <dc:creator>Ali Emre Karagül</dc:creator>
@@ -3380,7 +5293,7 @@ background-color: null;
 font-style: inherit;">"oblimin"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell quarto-layout-panel" data-code_folding="false" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-code_folding="false">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -3429,7 +5342,7 @@ background-color: null;
 font-style: inherit;">"oblimin"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell quarto-layout-panel" data-code_folding="false" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-code_folding="false">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -6801,64 +8714,64 @@ font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$itemfit
      parameter    Outfit   Outfit_t      Outfit_p  Outfit_pholm     Infit
-1          Con 2.0468876  39.006035  0.000000e+00  0.000000e+00 2.1861854
-2        ProAd 1.5290292  21.838141 1.007733e-105 9.069595e-105 1.6152044
-3         Lang 2.2615012  47.632748  0.000000e+00  0.000000e+00 2.3476753
-4          Nar 1.8337563  32.865850 6.763013e-237 7.439314e-236 1.9413806
-5        step1 0.9489488  -3.680241  2.330133e-04  4.660265e-04 0.9355766
-6        step2 0.4901218 -53.167527  0.000000e+00  0.000000e+00 0.4085815
-7        step3 0.2678299 -96.223038  0.000000e+00  0.000000e+00 0.1824288
-8        step4 0.9180641  -6.447744  1.135273e-10  4.541091e-10 0.5984344
-9       rater1 0.2623000 -84.250602  0.000000e+00  0.000000e+00 0.2015800
-10      rater2 0.2100500 -96.978268  0.000000e+00  0.000000e+00 0.1288747
-11      rater3 0.3418223 -71.431136  0.000000e+00  0.000000e+00 0.1956932
-12   Con:step1 0.8387637  -8.730414  2.537432e-18  1.268716e-17 0.8568940
-13 ProAd:step1 0.6751239 -17.774475  1.114359e-70  8.914870e-70 0.7096729
-14  Lang:step1 0.5180129 -29.231213 7.782731e-188 7.782731e-187 0.5203551
-15   Nar:step1 0.6860212 -16.193744  5.582610e-59  3.907827e-58 0.7063656
-16   Con:step2 0.5293268 -34.040306 5.647419e-254 6.776903e-253 0.4426132
-17 ProAd:step2 0.4283863 -42.514007  0.000000e+00  0.000000e+00 0.3496987
-18  Lang:step2 0.1968323 -75.673292  0.000000e+00  0.000000e+00 0.1639588
-19   Nar:step2 0.3701277 -46.077307  0.000000e+00  0.000000e+00 0.3080691
-20   Con:step3 0.2768045 -67.277911  0.000000e+00  0.000000e+00 0.2263787
-21 ProAd:step3 0.2780609 -63.068838  0.000000e+00  0.000000e+00 0.2091267
-22  Lang:step3 0.1892314 -83.983262  0.000000e+00  0.000000e+00 0.1150451
-23   Nar:step3 0.2456698 -65.290594  0.000000e+00  0.000000e+00 0.1835494
-24   Con:step4 0.9429652  -3.198182  1.382968e-03  1.382968e-03 0.5761702
-25 ProAd:step4 0.8942736  -5.641302  1.687693e-08  5.063078e-08 0.5204222
-26  Lang:step4 0.4640429 -36.742800 1.515043e-295 1.969556e-294 0.2800413
-27   Nar:step4 0.7672986 -12.431129  1.771151e-35  1.062691e-34 0.4608649
+1          Con 2.0591522  39.361636  0.000000e+00  0.000000e+00 2.1979266
+2        ProAd 1.5301160  21.894545 2.928160e-106 2.635344e-105 1.6156500
+3         Lang 2.2535201  47.334138  0.000000e+00  0.000000e+00 2.3403618
+4          Nar 1.8429272  33.147291 6.196043e-241 6.815647e-240 1.9492346
+5        step1 0.9494058  -3.647927  2.643645e-04  5.287290e-04 0.9369712
+6        step2 0.4917571 -52.934061  0.000000e+00  0.000000e+00 0.4102024
+7        step3 0.2640096 -96.962995  0.000000e+00  0.000000e+00 0.1816552
+8        step4 0.9177011  -6.474657  9.502735e-11  3.801094e-10 0.5978796
+9       rater1 0.2665086 -83.397247  0.000000e+00  0.000000e+00 0.2045924
+10      rater2 0.2126247 -96.365947  0.000000e+00  0.000000e+00 0.1305165
+11      rater3 0.3471616 -70.514947  0.000000e+00  0.000000e+00 0.1985980
+12   Con:step1 0.8398256  -8.668278  4.387050e-18  2.193525e-17 0.8568111
+13 ProAd:step1 0.6746766 -17.811336  5.771558e-71  4.617246e-70 0.7091680
+14  Lang:step1 0.5180443 -29.210127 1.442217e-187 1.442217e-186 0.5202205
+15   Nar:step1 0.6858151 -16.202919  4.808891e-59  3.366224e-58 0.7063609
+16   Con:step2 0.5296627 -33.996303 2.526439e-253 3.031727e-252 0.4427496
+17 ProAd:step2 0.4289933 -42.461731  0.000000e+00  0.000000e+00 0.3497186
+18  Lang:step2 0.1969640 -75.560345  0.000000e+00  0.000000e+00 0.1640074
+19   Nar:step2 0.3698636 -46.072478  0.000000e+00  0.000000e+00 0.3082262
+20   Con:step3 0.2804214 -66.678683  0.000000e+00  0.000000e+00 0.2265406
+21 ProAd:step3 0.2855422 -62.035576  0.000000e+00  0.000000e+00 0.2089630
+22  Lang:step3 0.1888063 -83.889912  0.000000e+00  0.000000e+00 0.1150833
+23   Nar:step3 0.2510021 -64.460639  0.000000e+00  0.000000e+00 0.1836688
+24   Con:step4 0.9436611  -3.155082  1.604530e-03  1.604530e-03 0.5763329
+25 ProAd:step4 0.8958462  -5.556046  2.759535e-08  8.278605e-08 0.5200940
+26  Lang:step4 0.4643230 -36.676871 1.707308e-294 2.219500e-293 0.2799968
+27   Nar:step4 0.7677798 -12.393932  2.818774e-35  1.691264e-34 0.4609557
        Infit_t       Infit_p   Infit_pholm
-1    43.079669  0.000000e+00  0.000000e+00
-2    24.891069 9.296058e-137 4.648029e-136
-3    50.142475  0.000000e+00  0.000000e+00
-4    36.312766 1.017461e-288 1.119207e-287
-5    -4.666108  3.069587e-06  3.069587e-06
-6   -64.826653  0.000000e+00  0.000000e+00
-7  -117.143399  0.000000e+00  0.000000e+00
-8   -36.059577 9.761908e-285 9.761908e-284
-9   -96.839610  0.000000e+00  0.000000e+00
-10 -118.333194  0.000000e+00  0.000000e+00
-11  -99.580342  0.000000e+00  0.000000e+00
-12   -7.694795  1.417212e-14  2.834424e-14
-13  -15.642348  3.746523e-55  1.498609e-54
-14  -29.051162 1.487678e-185 1.041375e-184
-15  -15.008350  6.473828e-51  1.942148e-50
-16  -42.384594  0.000000e+00  0.000000e+00
-17  -51.031815  0.000000e+00  0.000000e+00
-18  -81.892520  0.000000e+00  0.000000e+00
-19  -53.039473  0.000000e+00  0.000000e+00
-20  -75.429891  0.000000e+00  0.000000e+00
-21  -73.757600  0.000000e+00  0.000000e+00
-22 -101.215638  0.000000e+00  0.000000e+00
-23  -75.405449  0.000000e+00  0.000000e+00
-24  -27.739449 2.335955e-169 1.401573e-168
-25  -30.212269 1.634441e-200 1.307553e-199
-26  -56.264630  0.000000e+00  0.000000e+00
-27  -33.486768 7.510434e-246 6.759391e-245
+1    43.404732  0.000000e+00  0.000000e+00
+2    24.924232 4.064309e-137 2.032154e-136
+3    49.864878  0.000000e+00  0.000000e+00
+4    36.540091 2.561982e-292 2.818181e-291
+5    -4.563129  5.039684e-06  5.039684e-06
+6   -64.563804  0.000000e+00  0.000000e+00
+7  -117.289175  0.000000e+00  0.000000e+00
+8   -36.103138 2.024933e-285 2.024933e-284
+9   -96.095647  0.000000e+00  0.000000e+00
+10 -117.784465  0.000000e+00  0.000000e+00
+11  -98.836404  0.000000e+00  0.000000e+00
+12   -7.698737  1.374172e-14  2.748343e-14
+13  -15.680881  2.043984e-55  8.175938e-55
+14  -29.043052 1.883337e-185 1.318336e-184
+15  -15.006236  6.683443e-51  2.005033e-50
+16  -42.353408  0.000000e+00  0.000000e+00
+17  -51.040009  0.000000e+00  0.000000e+00
+18  -81.785151  0.000000e+00  0.000000e+00
+19  -52.982695  0.000000e+00  0.000000e+00
+20  -75.326822  0.000000e+00  0.000000e+00
+21  -73.806223  0.000000e+00  0.000000e+00
+22 -101.040972  0.000000e+00  0.000000e+00
+23  -75.311205  0.000000e+00  0.000000e+00
+24  -27.699201 7.138532e-169 4.283119e-168
+25  -30.243052 6.438903e-201 5.151122e-200
+26  -56.207040  0.000000e+00  0.000000e+00
+27  -33.454655 2.202305e-245 1.982075e-244
 
 $time
-[1] "2024-11-27 01:55:40 +03" "2024-11-27 01:55:40 +03"
+[1] "2024-12-05 13:54:56 +03" "2024-12-05 13:54:56 +03"
 
 $CALL
 TAM::tam.fit(tamobj = mod)
@@ -7796,7 +9709,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 </div>
 <p>This final chart is developed as an alternative to <code>wrightmap</code>. Each facet can be seen easily on it. There are four grids. The first is the person thetas. We have seen this above. The second is the rater facet. The strictness of the raters are very distinctive. Actually the only real data here is rater 2 and the others were simulated using it to be stricter and lenient. So we exactly see what the data is about. The third grid is about the domains/item difficulty. Pompt Adherence is the most difficult domain. Content, Narrative and Language follows it respectively.</p>
-</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">4. Conclusion</h2>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">5. Conclusion</h2>
 <p>In this post, we explored the <strong>Multi-Facet Rasch Model (MFRM)</strong> using simulated essay scores rated by multiple raters across four different domains: Content, Prompt Adherence, Language, and Narrativity. The model helped us account for the varying levels of item difficulty and the potential differences in rater severity. By fitting the MFRM and examining key model outputs—like <strong>Infit/Outfit statistics</strong> and <strong>thresholds</strong>—we identified areas where raters were either more lenient or more severe, and items that displayed more noise or predictability than expected.</p>
 <p>The high <strong>WLE reliability</strong> of 0.97 indicates that the model provides consistent and accurate estimates of person abilities. However, the rater-specific thresholds revealed some important differences in how each rater scored the essays, with certain raters being significantly stricter or more lenient. This highlights the importance of accounting for rater bias in assessments that rely on subjective judgments, such as essay scoring.</p>
 <p>Going forward, addressing these rater differences and ensuring well-functioning rating categories can further refine the assessment process. By doing so, we can ensure that the scores are fairer and more representative of true essay quality, free from the influence of individual rater biases. Overall, the MFRM proves to be a valuable tool in maintaining the validity and reliability of assessments involving subjective judgments.</p>

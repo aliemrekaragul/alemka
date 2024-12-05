@@ -1,0 +1,395 @@
+---
+title: "Language Detection & Sentiment Analysis with Local LLMs"
+description: |
+  In this post we will work on how to automate tasks such as language detection and sentiment analysis with R using an LLM on the local computer. 
+author:
+  - name: Ali Emre Karagül
+    orcid: 0000-0002-5820-8643
+    email: aliemrekaragul@gmail.com
+    affiliations:
+      - name: University of Economics & Technology
+        city: Ankara
+        url: https://www.etu.edu.tr/tr
+      - name: Gazi University
+        city: Ankara
+        url: https://gazi.edu.tr/
+date: 2024-12-05
+categories: [ollamar, mall, dplyr, stringr, purrr, tidyverse]
+image: "image.png"
+output:
+    self_contained: false
+    code_folding: false
+reference-location: margin
+lightbox: true
+crossref:
+  fig-labels: alpha a    
+  tbl-labels: alpha a    
+  subref-labels: roman i 
+  chapters: true
+---
+
+## Introduction
+
+I have recently received an e-mail from Posit about their recent developments. They have released the BETA version of their new IDE, Positron, for data scientists along with several R packages and a chat bot customized for shiny apps, [Shiny Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi2C2rOPNBjAVW1SwVe8Qy-c6SQuWQRpE_vGdNHqd7B4AyQmuYvkCYDOH6eTQdWJNQBXM9mal0BiSbCCx1Za6LGqDU1bHUgkiTfEf9wq7). The packages are [elmer](https://elmer.tidyverse.org/?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi3BulXH3PmcuNNnpj_xia93mA1SBo0ctMWi_dJF8-kNxZujHYP6JrQL8KemkBg-dLEqQ2jOd4NIfmwFLn0_FcQktFLjyYUeN8fApLCPN), [pal](https://github.com/simonpcouch/pal?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi_FVwNiBAxVKZUFZ6hp7Sb71tc8kSSBlnYK_26jg7kx7JfrC5FDchiJAcsuN4TuZx3MnyRb-RKQf1pES_IQi8clt65qzJvUxbDF5Y4P6), and [mall](https://github.com/mlverse/mall?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi4p_MDoSVwPizwPfCnziIInxDDGJOzYifsoOENazWrJEY8UUo_KmbkpRXmbEbTaXO6_XjSfEbjyB1AD4-_BpVMD0KWV8aBvmPkedBebu). Today, we will try `mall` with a local LLM to automate several tasks and run a sentiment analysis.
+
+A few years ago, running an LLM locally would be a dream for most of the data scientists. However, with the recent developments in the field, there are many free-to-use LLMs that can be run on your local machine. I am choosing my words carefully here. Since Meta released llama, they advertise it as open-source. Yet, it is not open-source in the sense that you can see the algorithm behind it or/and the data used to train it. It is open-source in the sense that you can use it for free. In this regard, it is more of a free-to-use tool than an open-source tool. However, I should also appreciate the effort behind it as we can use a strong LLM freely on our local computers.
+
+## Getting Started
+
+Enough of politics. Let's get started by downloading ollama to our local machine. 
+
+### Download Ollama
+
+Ollama is an open-source LLM service tool that helps users to utilize LLMs locally with a single line of command. You can download it from [here](https://ollama.com/download) depending on your operating system. Yet, I will run you through Windows rather than Linux or MacOS. 
+
+Click `Windows` on the download page and then click the download button. Once the download is complete, open the downloaded installer. As far as I remember, the installer completes without any prompting.
+
+Before we use R, we need to set some basics. A local LLM is highly dependent on your hardware. You need a good CPU, RAM, and VRAM to run it. Today, I will use `llama3.1 8b`. `8b` in the model name refers to the number of parameters that the model is trained with. The more parameters, the more accurate the model. However, the more parameters, the more hardware you need.
+
+::: {.callout-note title="Requirements for llama3.1 8b"}
+
+CPU \>= 8 cores
+
+RAM \>= 16 GB 
+
+VRAM \>= 8GB 
+
+NVIDIA RTX 3070 or better 
+
+:::
+
+If you do not have sufficient hardware, you can use a smaller model such as `llama3.2` which comes with `1b` and `3b`. `Gemma:2b` is also a viable option. If you have even a better computer, you can try other models with higher parameters. You can see the list of all available models [here](https://ollama.com/search).
+
+### Install the Model
+
+There are many ways to install the model. We will discuss two here. You can either use the terminal or `mall` package in R. My personal preference is to use the terminal as we will need to terminate ollama to end the memory usage when we are done. However, if you are not familiar with the terminal, you can use R.
+
+#### Install the Model on the Terminal
+
+Once you have decided on your model, open a terminal. You can do that by searching for `Windows PowerShell` and running it. If you are Rstudio user, you can also open a terminal in Rstudio. They will both work for our use case.
+
+::: column-margin
+![](images/empty_terminal.png){.lightbox fig-alt="PowerShell Terminal"}
+:::
+
+On the terminal, type the following command with the model name of your preference. `ollama run <model name>`
+
+::: column-margin
+![](images/empty_terminal_2.png){.lightbox fig-alt="RStudio Terminal"}
+:::
+
+``` {.terminal}
+ollama run llama3.1:8b
+```
+
+This will install the model to your computer, if it is not installed already, and then it will start a chat session with the model. You can chat with the bot on the terminal directly. To end the session, simply type `/bye` or `CTRL + C`.
+
+You can install as many models as you like as long as your hardware allows. To see all the models that you have installed so far, run `ollama list` command on the terminal.
+
+::: column-margin
+![](images/list_models.png){.lightbox}
+:::
+
+#### Install the Model via R
+
+To install a model via R, you need to load the `mall` package. In the mall package, `pull("<model name>")` function is used to install a model. `test_connection()` is used to see if your local LLM up and running. 
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+library(ollamar)
+model_name <- "llama3.1:8b"
+ollamar::pull(model_name)
+```
+
+`list_models()` is used to see the models that you have installed so far. That one is more informative than the terminal command as it gives us the parameter size and the quantization level too.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+ollamar::list_models()
+```
+
+You can also test the model by giving a prompt. The `generate` function is used to generate a response from the model.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+ollamar::generate(model_name, "Tell me a joke about statistics.", output = "text") 
+```
+
+## Task Automation
+
+If you have come so far, you are ready to use your local LLMs for anything. Let's see some example usage. 
+
+### Language Detection
+Most LLMs are multi-lingual. You can use them to detect the language of a given text such as a comment or a review. Let's build such an automation. We will use a dataset of global comments from YouTube videos on [Kaggle](# data source: https://www.kaggle.com/code/tanmay111/youtube-comments-sentiment-analysis/input). You can download the `csv` file directly from [my Google drive](https://drive.google.com/file/d/16uUKmQKbNOSffKr7X8qvYqHDVHANAAON/view?usp=sharing) too. 
+
+#### Preparing the Data
+The data is too large, so in this part, we will investigate and select a subset of 20 rows that contain multiple languages, emojis, urls etc. We will then detect the language of each comment in the subset using our local LLM.
+
+We will be using packages such as `dplyr`, `stringr`, `tidyverse`, and `purrr` to manipulate the data. Also `mall` package, having very useful functions such as `llm_sentiment()`, `llm_classify()`, `llm_extract()`, `llm_custom()` etc, will be used to interact with the LLM.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+library(dplyr)
+library(stringr)
+library(purrr) 
+library(mall)
+library(tidyverse)
+
+# set a seed parameter to make the results reproducible
+set.seed(123)
+```
+
+Let's load the data and see the structure of it.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+global_comments <- read.csv("GBcomments.csv")
+summary(global_comments)
+```
+
+We need to change the class of `likes` and `replies` to numeric. Also, I have checked the data and detected many duplicate rows. So, we need to get rid of the duplicate data entries. Also let's drop the rows with NA values.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+global_comments$likes <- as.numeric(global_comments$likes)
+global_comments$replies <- as.numeric(global_comments$replies)
+
+# drop rows with the same comment text in the same video
+global_comments <- global_comments %>% 
+  distinct(video_id, comment_text, .keep_all = TRUE) %>% 
+  drop_na()
+
+global_comments <- global_comments 
+
+summary(global_comments)
+```
+
+We have 152589 rows of data. For the demonstration purposes, I will select a couple of videos with comments in multiple languages. There are many ways to detect videos with comments in multiple languages. My approach will be to search for specific strings in Korean, Arabic and German. For example, the first letter of "hello" in Korean is "한" according to Google Translate. Let's search for this letter in the comments and select the video with the most comments. Also, utilize a similar approach for Arabic and German. Remember we are doing this to create the perfect subset of comments with multiple languages.
+
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+korean_letter <- "한" 
+arabic_letter <- "ا" # the first letter of arabic letters
+german_word <- " und " # "und" is "and" in German
+
+
+vid_w_korean_comments <- global_comments %>% 
+  filter(str_detect(comment_text,korean_letter)) %>% 
+  group_by(video_id) %>% 
+  summarise(n_comments = n()) %>% 
+  arrange(desc(n_comments)) %>% 
+  head(1)
+
+vid_w_arabic_comments <- global_comments %>%
+  filter(str_detect(comment_text, arabic_letter)) %>%
+  group_by(video_id) %>%
+  summarise(n_comments = n()) %>%
+  arrange(desc(n_comments)) %>%
+  head(1)
+
+vid_w_german_comments <- global_comments %>%
+  filter(str_detect(comment_text, german_word)) %>%
+  group_by(video_id) %>%
+  summarise(n_comments = n()) %>%
+  arrange(desc(n_comments)) %>%
+  head(1)
+
+# merge these rows
+vids_multiple_langs <- rbind(vid_w_korean_comments, vid_w_arabic_comments, vid_w_german_comments)
+print(vids_multiple_langs)
+```
+
+We have selected 3 videos with comments in multiple languages. Let's create a dataset with these videos and their comments called `dat`.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+dat <- global_comments %>% 
+  filter(video_id %in% vids_multiple_langs$video_id)
+summary(dat)
+```
+
+There are 897 comments in total. I checked it with a glimpse and it actually contains comments in many languages. For example:
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+tail(dat$comment_text, 10)
+```
+
+I can see many languages except for Korean and Arabic in the tail. :D 
+Let's select a random subset of this data to test our language detection bot.
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+# select random 20 comments.
+dat <- dat %>% 
+  sample_n(20)
+print(dat$comment_text)
+
+
+```
+
+#### Detecting languages
+
+That subset looks good. I can see emojis, urls and multiple languages along with English. That's a perfect subset to test the language detection capabilities of our LLM. Here is what we will do:
+1. Attach the model with `llm_use()`.
+2. Define a system prompt for language detection.
+3. OPTIONAL: Define the valid responses that you expect from the LLM. If this is defined, any response that do not fit the valid responses will be replaced with `NA`.
+4. Detect the language of each comment in the data as [the ISO 639-1 language codes](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) and add the results as a new column.
+
+```{r}
+#| warning: true 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+llm_use("ollama", model_name, seed = 100, .silent = TRUE)
+
+sys_prompt <- paste(
+  "You are a language detection bot.",
+  "I will provide you with Youtube comments on a video.",
+  "Try to detect the language of the comment and reply with the ISO 639-1 language code used in the given comment.",
+  "Reply only with the language code.",
+  "If you cannot detect a language as the comments might contain emojis or urls only, reply with 'UNDETECTABLE' with uppercase",
+  "Some examples:",
+  "comment text: 'Thumbs up asap', your response: 'en'.",
+  "comment text: 'Hola, ¿cómo estás?', your response: 'es'.", 
+  "Here is the comment:"
+)
+
+# I am not adding 'UNDETECTABLE' to valid responses as the function will tag such cases as NA.
+# see for language codes: https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+valid_responses <- c("aa", "ab", "ae", "af", "ak", "am", "an", "ar-ae", "ar-bh", "ar-dz", "ar-eg", "ar-iq", "ar-jo", "ar-kw", "ar-lb", "ar-ly", "ar-ma", "ar-om", "ar-qa", "ar-sa", "ar-sy", "ar-tn", "ar-ye", "ar", "as", "av", "ay", "az", "ba", "be", "bg", "bh", "bi", "bm", "bn", "bo", "br", "bs", "ca", "ce", "ch", "co", "cr", "cs", "cu", "cv", "cy", "da", "de-at", "de-ch", "de-de", "de-li", "de-lu", "de", "div", "dv", "dz", "ee", "el", "en-au", "en-bz", "en-ca", "en-cb", "en-gb", "en-ie", "en-jm", "en-nz", "en-ph", "en-tt", "en-us", "en-za", "en-zw", "en", "eo", "es-ar", "es-bo", "es-cl", "es-co", "es-cr", "es-do", "es-ec", "es-es", "es-gt", "es-hn", "es-mx", "es-ni", "es-pa", "es-pe", "es-pr", "es-py", "es-sv", "es-us", "es-uy", "es-ve", "es", "et", "eu", "fa", "ff", "fi", "fj", "fo", "fr-be", "fr-ca", "fr-ch", "fr-fr", "fr-lu", "fr-mc", "fr", "fy", "ga", "gd", "gl", "gn", "gu", "gv", "ha", "he", "hi", "ho", "hr-ba", "hr-hr", "hr", "ht", "hu", "hy", "hz", "ia", "id", "ie", "ig", "ii", "ik", "in", "io", "is", "it-ch", "it-it", "it", "iu", "iw", "ja", "ji", "jv", "jw", "ka", "kg", "ki", "kj", "kk", "kl", "km", "kn", "ko", "kok", "kr", "ks", "ku", "kv", "kw", "ky", "kz", "la", "lb", "lg", "li", "ln", "lo", "ls", "lt", "lu", "lv", "mg", "mh", "mi", "mk", "ml", "mn", "mo", "mr", "ms-bn", "ms-my", "ms", "mt", "my", "na", "nb", "nd", "ne", "ng", "nl-be", "nl-nl", "nl", "nn", "no", "nr", "ns", "nv", "ny", "oc", "oj", "om", "or", "os", "pa", "pi", "pl", "ps", "pt-br", "pt-pt", "pt", "qu-bo", "qu-ec", "qu-pe", "qu", "rm", "rn", "ro", "ru", "rw", "sa", "sb", "sc", "sd", "se-fi", "se-no", "se-se", "se", "sg", "sh", "si", "sk", "sl", "sm", "sn", "so", "sq", "sr-ba", "sr-sp", "sr", "ss", "st", "su", "sv-fi", "sv-se", "sv", "sw", "sx", "syr", "ta", "te", "tg", "th", "ti", "tk", "tl", "tn", "to", "tr", "ts", "tt", "tw", "ty", "ug", "uk", "ur", "us", "uz", "ve", "vi", "vo", "wa", "wo", "xh", "yi", "yo", "za", "zh-cn", "zh-hk", "zh-mo", "zh-sg", "zh-tw", "zh", "zu")
+
+dat <- dat |>
+  llm_custom(comment_text, sys_prompt, "language", valid_resps = valid_responses)
+
+```
+
+Let's see the results.
+
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+dat <- as_tibble(dat) # convert dat to tibble (optional)
+print(dat %>% select(language, comment_text))
+```
+
+Nice, we have detected the languages of the comments. We can also see that some comments are tagged as `NA`. These are the comments that contain emojis, urls, or gibberish. 
+
+### Sentiment Analysis
+
+For the sentiment analysis we will use another [Kaggle](https://www.kaggle.com/datasets/arhamrumi/amazon-product-reviews) dataset. You can download it from my Google Drive [here](https://drive.google.com/file/d/1Q5pFKuwwKrwcQnDyBixW98VwVt7cZYnT/view?usp=sharing). The dataset contains Amazon product reviews. We will select random 20 comments and run a sentiment analysis on them.
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+reviews <- read.csv("reviews.csv")
+summary(reviews)
+```
+
+#### Preparing the Data
+
+The data actually contains a `score` column which is the rating of the product. We will select 4 random reviews for each score from 1 to 5 so that we can also test the LLM performance this time. 
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+reviews_sample <- reviews %>% 
+  drop_na() %>%
+  group_by(Score) %>% 
+  sample_n(4) %>% 
+  ungroup()
+```
+#### Running Sentiment Analysis
+
+We can use `llm_custom()` function again with a well developed system prompt by ourselves. Yet, the package `mall` already contains a function for sentiment analysis called `llm_sentiment()`. Let's try it out:
+
+First, attach the model. 
+Then run the sentiment analysis on the reviews. We will use the `Text` column as the target variable and `comment_sentiment` as the new column name for the sentiment analysis results.
+
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+llm_use("ollama", model_name, seed = 100, .silent = TRUE)
+
+reviews_sample <- llm_sentiment(reviews_sample, Text, pred_name = "comment_sentiment")
+
+```
+
+
+Let's see the results.
+
+
+```{r}
+#| warning: false 
+#| eval: true 
+#| echo: true 
+#| code-fold: false 
+
+print(reviews_sample %>% select(comment_sentiment, Score, Text))
+```
+We can see that although our bot is mostly successful, there are some false negative (where the detected sentiment is negative while the score is 4 or 5) results. A larger model would be more successful in this task. Yet, there are no false positive results as all 1 and 2 scores are detected as negative. Naturally, we expect scores 3 to be neutral, but the comment might be more on the negative or positive side. So it is ok if the model detects a 3 as negative or positive rather than neutral.
+
+### Terminate the Ollama Session
+
+Whatever the task is, after using a local LLM, it would be wise to terminate the session to free up the memory. You can do this by running the following command in the terminal.
+
+``` {.terminal}
+ Get-Process | Where-Object {$_.ProcessName -like '*ollama*'} | Stop-Process
+```
+
+What I do to make sure that the session is terminated is to check the memory usage of the LLM on the Task Manager. Just press `CTRL + ALT + DEL` and select Task Manager on Windows. Then go to the `Processes` tab and order by `Memory`. You will see the memory usage of Ollama. If ollama is not in the list or its memory usage value is close to zero, then the session is terminated. See the screen shot before the termination below. The memory usage is up above of the list. After stopping the process, it was gone.
+
+::: column-margin
+![](images/task_manager_before.png){.lightbox}
+:::
+## Conclusion
+In this post, we discussed how to use a local LLM for language detection and sentiment analysis. Ollama services were used to install `llama3.1:8b` We used the `mall` package to interact with the LLM. We also discussed how to install the model and how to terminate the session on the terminal. 
+
+We have seen that the LLM is quite successful in detecting the languages of the comments or the sentiments of the reviews. **An important final mark would be to remember that the larger the model, the better the accuracy.** However, the larger the model, the more hardware you need. So, it is always a trade-off between accuracy and resources.
+

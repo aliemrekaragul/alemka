@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Ali Emre Karagül">
+<meta name="dcterms.date" content="2024-11-27">
+<meta name="description" content="In this post we will work on how to automate tasks such as language detection and sentiment analysis with R using an LLM on the local computer.">
+<title>Language Detection &amp; Sentiment Analysis with Local LLMs –</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/alemka.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VJBZWP0G2H"></script><script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VJBZWP0G2H', { 'anonymize_ip': false});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script><link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Language Detection &amp; Sentiment Analysis with Local LLMs –">
+<meta property="og:description" content="In this post we will work on how to automate tasks such as language detection and sentiment analysis with R using an LLM on the local computer.">
+<meta property="og:image" content="https://emrekaragul.com/posts/localLlm/image.png">
+<meta property="og:site_name" content=" ">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="Language Detection &amp; Sentiment Analysis with Local LLMs –">
+<meta name="twitter:description" content="In this post we will work on how to automate tasks such as language detection and sentiment analysis with R using an LLM on the local computer.">
+<meta name="twitter:image" content="https://emrekaragul.com/posts/localLlm/image.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title"></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> <i class="bi bi-text-paragraph" role="img">
+</i> 
+<span class="menu-text">My Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../my_apps.html"> <i class="bi bi-terminal-fill" role="img">
+</i> 
+<span class="menu-text">My Apps</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-my-favs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-star-fill" role="img">
+</i> 
+ <span class="menu-text">My Favs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-my-favs">
+<li>
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
+ <span class="dropdown-text">R cheatsheets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
+ <span class="dropdown-text">R 4 D S</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
+ <span class="dropdown-text">Generate IRT Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://books.google.com/ngrams/">
+ <span class="dropdown-text">Google Ngram Viewer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+ <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+ <span class="dropdown-text">Style Guide (Google)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://agreestat360.com/">
+ <span class="dropdown-text">AgreeStat 360-Interrater reliability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../aes.html">
+ <span class="dropdown-text">My AES Engine</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about-me.html"> <i class="bi bi-info-square-fill" role="img">
+</i> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">GitHub</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text">LinkedIn</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text">Feed</span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Language Detection &amp; Sentiment Analysis with Local LLMs</h1>
+                  <div>
+        <div class="description">
+          <p>In this post we will work on how to automate tasks such as language detection and sentiment analysis with R using an LLM on the local computer.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">ollamar</div>
+                <div class="quarto-category">mall</div>
+                <div class="quarto-category">dplyr</div>
+                <div class="quarto-category">stringr</div>
+                <div class="quarto-category">purrr</div>
+                <div class="quarto-category">tidyverse</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliations</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Ali Emre Karagül <a href="mailto:aliemrekaragul@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-5820-8643" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.etu.edu.tr/tr">
+              University of Economics &amp; Technology
+              </a>
+            </p>
+          <p class="affiliation">
+              <a href="https://gazi.edu.tr/">
+              Gazi University
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 27, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li>
+<a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
+  <ul>
+<li><a href="#download-ollama" id="toc-download-ollama" class="nav-link" data-scroll-target="#download-ollama">Download Ollama</a></li>
+  <li>
+<a href="#install-the-model" id="toc-install-the-model" class="nav-link" data-scroll-target="#install-the-model">Install the Model</a>
+  <ul class="collapse">
+<li><a href="#install-the-model-on-the-terminal" id="toc-install-the-model-on-the-terminal" class="nav-link" data-scroll-target="#install-the-model-on-the-terminal">Install the Model on the Terminal</a></li>
+  <li><a href="#install-the-model-via-r" id="toc-install-the-model-via-r" class="nav-link" data-scroll-target="#install-the-model-via-r">Install the Model via R</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#task-automation" id="toc-task-automation" class="nav-link" data-scroll-target="#task-automation">Task Automation</a>
+  <ul>
+<li>
+<a href="#language-detection" id="toc-language-detection" class="nav-link" data-scroll-target="#language-detection">Language Detection</a>
+  <ul class="collapse">
+<li><a href="#preparing-the-data" id="toc-preparing-the-data" class="nav-link" data-scroll-target="#preparing-the-data">Preparing the Data</a></li>
+  <li><a href="#detecting-languages" id="toc-detecting-languages" class="nav-link" data-scroll-target="#detecting-languages">Detecting languages</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sentiment-analysis" id="toc-sentiment-analysis" class="nav-link" data-scroll-target="#sentiment-analysis">Sentiment Analysis</a>
+  <ul class="collapse">
+<li><a href="#preparing-the-data-1" id="toc-preparing-the-data-1" class="nav-link" data-scroll-target="#preparing-the-data-1">Preparing the Data</a></li>
+  <li><a href="#running-sentiment-analysis" id="toc-running-sentiment-analysis" class="nav-link" data-scroll-target="#running-sentiment-analysis">Running Sentiment Analysis</a></li>
+  </ul>
+</li>
+  <li><a href="#terminate-the-ollama-session" id="toc-terminate-the-ollama-session" class="nav-link" data-scroll-target="#terminate-the-ollama-session">Terminate the Ollama Session</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/aliemrekaragul/alemka/blob/main/posts/localLlm/index.qmd" class="toc-action"><i class="bi bi-github"></i>Source</a></li><li><a href="https://github.com/aliemrekaragul/alemka/issues/new" class="toc-action"><i class="bi empty"></i>Report</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailchimp Subscription Modal</title>
+<link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css">
+<style>
+        /* Modal Background */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #openModalBtn {
+            background-color: tomato; /* background */
+            color: white; /* White text */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            font-size: 24px; /* Adjust font size */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            width: 100%;
+            margin-bottom: 20px; /* Add space after the button */
+        }
+
+        #openModalBtn:hover {
+            background-color: rgb(255, 58, 23); /* Darker on hover */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: auto;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+<!-- Trigger Button --><button id="openModalBtn">Wanna subscribe?</button>
+
+
+    <!-- Modal Structure -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <!-- Mailchimp Signup Form -->
+            <div>
+                <div id="mc_embed_signup">
+                    <form action="https://emrekaragul.us21.list-manage.com/subscribe/post?u=e72720e0214b2266cab41097e&amp;id=5cddb1a68e&amp;f_id=0038dfe1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <div id="mc_embed_signup_scroll">
+                            <h2 class="anchored">Submit your e-mail to subscribe!</h2>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required=""><span id="mce-EMAIL-HELPERTEXT" class="helper_text"></span>
+                            </div>
+                            <div id="mce-responses" class="clear foot">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                <input type="text" name="b_e72720e0214b2266cab41097e_5cddb1a68e" tabindex="-1" value="">
+</div>
+                            <div class="optionalParent">
+                                <div class="clear foot">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0] = 'EMAIL';
+                        ftypes[0] = 'email';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                </script><!--End mc_embed_signup-->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, button, and close elements
+        const modal = document.getElementById("subscriptionModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        // Open the modal when the button is clicked
+        openModalBtn.addEventListener("click", () => {
+            modal.style.display = "flex"; // Show the modal
+        });
+
+        // Close the modal when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>I have recently received an e-mail from Posit about their recent developments. They have released the BETA version of their new IDE, Positron, for data scientists along with several R packages and a chat bot customized for shiny apps, <a href="https://shiny.posit.co/blog/posts/shiny-assistant/?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi2C2rOPNBjAVW1SwVe8Qy-c6SQuWQRpE_vGdNHqd7B4AyQmuYvkCYDOH6eTQdWJNQBXM9mal0BiSbCCx1Za6LGqDU1bHUgkiTfEf9wq7">Shiny Assistant</a>. The packages are <a href="https://elmer.tidyverse.org/?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi3BulXH3PmcuNNnpj_xia93mA1SBo0ctMWi_dJF8-kNxZujHYP6JrQL8KemkBg-dLEqQ2jOd4NIfmwFLn0_FcQktFLjyYUeN8fApLCPN">elmer</a>, <a href="https://github.com/simonpcouch/pal?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi_FVwNiBAxVKZUFZ6hp7Sb71tc8kSSBlnYK_26jg7kx7JfrC5FDchiJAcsuN4TuZx3MnyRb-RKQf1pES_IQi8clt65qzJvUxbDF5Y4P6">pal</a>, and <a href="https://github.com/mlverse/mall?mkt_tok=NzA5LU5YTi03MDYAAAGXLPFmi4p_MDoSVwPizwPfCnziIInxDDGJOzYifsoOENazWrJEY8UUo_KmbkpRXmbEbTaXO6_XjSfEbjyB1AD4-_BpVMD0KWV8aBvmPkedBebu">mall</a>. Today, we will try <code>mall</code> with a local LLM to automate several tasks and run a sentiment analysis.</p>
+<p>A few years ago, running an LLM locally would be a dream for most of the data scientists. However, with the recent developments in the field, there are many free-to-use LLMs that can be run on your local machine. I am choosing my words carefully here. Since Meta released llama, they advertise it as open-source. Yet, it is not open-source in the sense that you can see the algorithm behind it or/and the data used to train it. It is open-source in the sense that you can use it for free. In this regard, it is more of a free-to-use tool than an open-source tool. However, I should also appreciate the effort behind it as we can use a strong LLM freely on our local computers.</p>
+</section><section id="getting-started" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<p>Enough of politics. Let’s get started by downloading ollama to our local machine.</p>
+<section id="download-ollama" class="level3"><h3 class="anchored" data-anchor-id="download-ollama">Download Ollama</h3>
+<p>Ollama is an open-source LLM service tool that helps users to utilize LLMs locally with a single line of command. You can download it from <a href="https://ollama.com/download">here</a> depending on your operating system. Yet, I will run you through Windows rather than Linux or MacOS.</p>
+<p>Click <code>Windows</code> on the download page and then click the download button. Once the download is complete, open the downloaded installer. As far as I remember, the installer completes without any prompting.</p>
+<p>Before we use R, we need to set some basics. A local LLM is highly dependent on your hardware. You need a good CPU, RAM, and VRAM to run it. Today, I will use <code>llama3.1 8b</code>. <code>8b</code> in the model name refers to the number of parameters that the model is trained with. The more parameters, the more accurate the model. However, the more parameters, the more hardware you need.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Requirements for llama3.1 8b">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Requirements for llama3.1 8b
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>CPU &gt;= 8 cores</p>
+<p>RAM &gt;= 16 GB</p>
+<p>VRAM &gt;= 8GB</p>
+<p>NVIDIA RTX 3070 or better</p>
+</div>
+</div>
+<p>If you do not have sufficient hardware, you can use a smaller model such as <code>llama3.2</code> which comes with <code>1b</code> and <code>3b</code>. <code>Gemma:2b</code> is also a viable option. If you have even a better computer, you can try other models with higher parameters. You can see the list of all available models <a href="https://ollama.com/search">here</a>.</p>
+</section><section id="install-the-model" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="install-the-model">Install the Model</h3>
+<p>There are many ways to install the model. We will discuss two here. You can either use the terminal or <code>mall</code> package in R. My personal preference is to use the terminal as we will need to terminate ollama to end the memory usage when we are done. However, if you are not familiar with the terminal, you can use R.</p>
+<section id="install-the-model-on-the-terminal" class="level4 page-columns page-full"><h4 class="anchored" data-anchor-id="install-the-model-on-the-terminal">Install the Model on the Terminal</h4>
+<p>Once you have decided on your model, open a terminal. You can do that by searching for <code>Windows PowerShell</code> and running it. If you are Rstudio user, you can also open a terminal in Rstudio. They will both work for our use case.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/empty_terminal.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/empty_terminal.png" class="img-fluid" alt="PowerShell Terminal"></a></p>
+</div></div><p>On the terminal, type the following command with the model name of your preference. <code>ollama run &lt;model name&gt;</code></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/empty_terminal_2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/empty_terminal_2.png" class="img-fluid" alt="RStudio Terminal"></a></p>
+</div></div><pre class="terminal"><code>ollama run llama3.1:8b</code></pre>
+<p>This will install the model to your computer, if it is not installed already, and then it will start a chat session with the model. You can chat with the bot on the terminal directly. To end the session, simply type <code>/bye</code> or <code>CTRL + C</code>.</p>
+<p>You can install as many models as you like as long as your hardware allows. To see all the models that you have installed so far, run <code>ollama list</code> command on the terminal.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/list_models.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/list_models.png" class="img-fluid"></a></p>
+</div></div></section><section id="install-the-model-via-r" class="level4"><h4 class="anchored" data-anchor-id="install-the-model-via-r">Install the Model via R</h4>
+<p>To install a model via R, you need to load the <code>mall</code> package. In the mall package, <code>pull("&lt;model name&gt;")</code> function is used to install a model. <code><a href="https://hauselin.github.io/ollama-r/reference/test_connection.html">test_connection()</a></code> is used to see if your local LLM up and running.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hauselin.github.io/ollama-r/">ollamar</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ollamar' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ollamar'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    embed</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:methods':
+
+    show</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_name</span> <span class="op">&lt;-</span> <span class="st">"llama3.1:8b"</span></span>
+<span><span class="fu">ollamar</span><span class="fu">::</span><span class="fu"><a href="https://hauselin.github.io/ollama-r/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">model_name</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;httr2_response&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POST http://127.0.0.1:11434/api/pull</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Status: 200 OK</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Content-Type: application/x-ndjson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Body: In memory (861 bytes)</code></pre>
+</div>
+</div>
+<p><code><a href="https://hauselin.github.io/ollama-r/reference/list_models.html">list_models()</a></code> is used to see the models that you have installed so far. That one is more informative than the terminal command as it gives us the parameter size and the quantization level too.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ollamar</span><span class="fu">::</span><span class="fu"><a href="https://hauselin.github.io/ollama-r/reference/list_models.html">list_models</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             name   size parameter_size quantization_level            modified
+1        gemma:2b 1.7 GB             3B               Q4_0 2024-12-05T01:49:40
+2     llama3.1:8b 4.9 GB           8.0B             Q4_K_M 2024-12-05T14:25:24
+3 llama3.2:latest   2 GB           3.2B             Q4_K_M 2024-11-29T20:35:04
+4       llama3:8b 4.7 GB           8.0B               Q4_0 2024-12-05T01:19:43
+5   llama3:latest 4.7 GB           8.0B               Q4_0 2024-11-30T00:58:23</code></pre>
+</div>
+</div>
+<p>You can also test the model by giving a prompt. The <code>generate</code> function is used to generate a response from the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ollamar</span><span class="fu">::</span><span class="fu"><a href="https://hauselin.github.io/ollama-r/reference/generate.html">generate</a></span><span class="op">(</span><span class="va">model_name</span>, <span class="st">"Tell me a joke about statistics."</span>, output <span class="op">=</span> <span class="st">"text"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Here's one:\n\nWhy did the statistician turn down the invitation to the party?\n\nBecause he already had a 99% probability of being bored and a 1% chance of meeting interesting people.\n\nHope that made you laugh!"</code></pre>
+</div>
+</div>
+</section></section></section><section id="task-automation" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="task-automation">Task Automation</h2>
+<p>If you have come so far, you are ready to use your local LLMs for anything. Let’s see some example usage.</p>
+<section id="language-detection" class="level3"><h3 class="anchored" data-anchor-id="language-detection">Language Detection</h3>
+<p>Most LLMs are multi-lingual. You can use them to detect the language of a given text such as a comment or a review. Let’s build such an automation. We will use a dataset of global comments from YouTube videos on <a href="#%20data%20source:%20https://www.kaggle.com/code/tanmay111/youtube-comments-sentiment-analysis/input">Kaggle</a>. You can download the <code>csv</code> file directly from <a href="https://drive.google.com/file/d/16uUKmQKbNOSffKr7X8qvYqHDVHANAAON/view?usp=sharing">my Google drive</a> too.</p>
+<section id="preparing-the-data" class="level4"><h4 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h4>
+<p>The data is too large, so in this part, we will investigate and select a subset of 20 rows that contain multiple languages, emojis, urls etc. We will then detect the language of each comment in the subset using our local LLM.</p>
+<p>We will be using packages such as <code>dplyr</code>, <code>stringr</code>, <code>tidyverse</code>, and <code>purrr</code> to manipulate the data. Also <code>mall</code> package, having very useful functions such as <code><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment()</a></code>, <code><a href="https://rdrr.io/pkg/mall/man/llm_classify.html">llm_classify()</a></code>, <code><a href="https://rdrr.io/pkg/mall/man/llm_extract.html">llm_extract()</a></code>, <code><a href="https://rdrr.io/pkg/mall/man/llm_custom.html">llm_custom()</a></code> etc, will be used to interact with the LLM.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlverse.github.io/mall/">mall</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set a seed parameter to make the results reproducible</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s load the data and see the structure of it.</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">global_comments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"GBcomments.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">global_comments</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   video_id         comment_text          likes             replies         
+ Length:273551      Length:273551      Length:273551      Length:273551     
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  </code></pre>
+</div>
+</div>
+<p>We need to change the class of <code>likes</code> and <code>replies</code> to numeric. Also, I have checked the data and detected many duplicate rows. So, we need to get rid of the duplicate data entries. Also let’s drop the rows with NA values.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">global_comments</span><span class="op">$</span><span class="va">likes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">global_comments</span><span class="op">$</span><span class="va">likes</span><span class="op">)</span></span>
+<span><span class="va">global_comments</span><span class="op">$</span><span class="va">replies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">global_comments</span><span class="op">$</span><span class="va">replies</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># drop rows with the same comment text in the same video</span></span>
+<span><span class="va">global_comments</span> <span class="op">&lt;-</span> <span class="va">global_comments</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">video_id</span>, <span class="va">comment_text</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">global_comments</span> <span class="op">&lt;-</span> <span class="va">global_comments</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">global_comments</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   video_id         comment_text           likes             replies       
+ Length:152589      Length:152589      Min.   :    0.00   Min.   :   0.00  
+ Class :character   Class :character   1st Qu.:    0.00   1st Qu.:   0.00  
+ Mode  :character   Mode  :character   Median :    0.00   Median :   0.00  
+                                       Mean   :   16.94   Mean   :  13.95  
+                                       3rd Qu.:    0.00   3rd Qu.:   0.00  
+                                       Max.   :60630.00   Max.   :3498.00  </code></pre>
+</div>
+</div>
+<p>We have 152589 rows of data. For the demonstration purposes, I will select a couple of videos with comments in multiple languages. There are many ways to detect videos with comments in multiple languages. My approach will be to search for specific strings in Korean, Arabic and German. For example, the first letter of “hello” in Korean is “한” according to Google Translate. Let’s search for this letter in the comments and select the video with the most comments. Also, utilize a similar approach for Arabic and German. Remember we are doing this to create the perfect subset of comments with multiple languages.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">korean_letter</span> <span class="op">&lt;-</span> <span class="st">"한"</span> </span>
+<span><span class="va">arabic_letter</span> <span class="op">&lt;-</span> <span class="st">"ا"</span> <span class="co"># the first letter of arabic letters</span></span>
+<span><span class="va">german_word</span> <span class="op">&lt;-</span> <span class="st">" und "</span> <span class="co"># "und" is "and" in German</span></span>
+<span></span>
+<span></span>
+<span><span class="va">vid_w_korean_comments</span> <span class="op">&lt;-</span> <span class="va">global_comments</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">comment_text</span>,<span class="va">korean_letter</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">video_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n_comments <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n_comments</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vid_w_arabic_comments</span> <span class="op">&lt;-</span> <span class="va">global_comments</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">comment_text</span>, <span class="va">arabic_letter</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">video_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n_comments <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n_comments</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vid_w_german_comments</span> <span class="op">&lt;-</span> <span class="va">global_comments</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">comment_text</span>, <span class="va">german_word</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">video_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n_comments <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n_comments</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># merge these rows</span></span>
+<span><span class="va">vids_multiple_langs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">vid_w_korean_comments</span>, <span class="va">vid_w_arabic_comments</span>, <span class="va">vid_w_german_comments</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">vids_multiple_langs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  video_id    n_comments
+  &lt;chr&gt;            &lt;int&gt;
+1 HuoOEry-Yc4         10
+2 jt2OHQh0HoQ         11
+3 11S5tcT2Tm0          1</code></pre>
+</div>
+</div>
+<p>We have selected 3 videos with comments in multiple languages. Let’s create a dataset with these videos and their comments called <code>dat</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">global_comments</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">video_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">vids_multiple_langs</span><span class="op">$</span><span class="va">video_id</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   video_id         comment_text           likes            replies       
+ Length:897         Length:897         Min.   : 0.0000   Min.   : 0.0000  
+ Class :character   Class :character   1st Qu.: 0.0000   1st Qu.: 0.0000  
+ Mode  :character   Mode  :character   Median : 0.0000   Median : 0.0000  
+                                       Mean   : 0.6722   Mean   : 0.1538  
+                                       3rd Qu.: 0.0000   3rd Qu.: 0.0000  
+                                       Max.   :31.0000   Max.   :12.0000  </code></pre>
+</div>
+</div>
+<p>There are 897 comments in total. I checked it with a glimpse and it actually contains comments in many languages. For example:</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">comment_text</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Marvelous, as Always!"                                                                                                                                                                                                                                                                                  
+ [2] "Bellisimo :3Saludos desde Mexico cdmx"                                                                                                                                                                                                                                                                  
+ [3] "Pure! Serene! and Marvelous!"                                                                                                                                                                                                                                                                           
+ [4] "So diverse. Much ethnic. Wow."                                                                                                                                                                                                                                                                          
+ [5] "Enough said"                                                                                                                                                                                                                                                                                            
+ [6] "😘😘😘😱😱"                                                                                                                                                                                                                                                                                                  
+ [7] "woow.. eres magnifica, por ti me apasione con el violin y compre el mio... soy tu mas grande admiradora, dios y algun dia me lo permita conocerte es mi mayor sueño y aprender a tocar el violin.. sigue triunfando y robando los carazones de las personas asi como me lo robaste a mi con tu melodia."
+ [8] "Cuando veniste a Guadalajara y escuche esta canción I couldnt believe it was just like no mames 😍😍😍"                                                                                                                                                                                                    
+ [9] "man kann richtig sehen wie dir das Tanze und Violine spielen spass und freude macht. 👍\\n\\nSo macht das zuschauen nochmal so viel spass.\\n\\nSuper Video☺️👍"                                                                                                                                           
+[10] "Heisses Outfit , dass der Sound gut ist, ist ja schon bald selbstverständlich."                                                                                                                                                                                                                         </code></pre>
+</div>
+</div>
+<p>I can see many languages except for Korean and Arabic in the tail. :D Let’s select a random subset of this data to test our language detection bot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># select random 20 comments.</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">comment_text</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "YOU ARE SO CLOSE TO 10 MILLION!!!"                                                                                                                                                                                                                                                                              
+ [2] "😍"                                                                                                                                                                                                                                                                                                              
+ [3] "Also watch https://youtu.be/7QkYTgDMpCs"                                                                                                                                                                                                                                                                        
+ [4] "I❤️U 💋💋💋💋💋💋💋💋💋😍😍😍😍😍😍😍😍😘😘😘😘😘😘😘😘😘💖💖💖💖💖💖💖💖😻😻😻😻😻😻👸👸👸👸👸👸💟💟💟💟💝💝💝💝💓💓💓💗💗💗💜💜💜💋💋💋👰👰👰"                                                                                                                                                                                                                                      
+ [5] "Ya lo tengo y estoy escribiendo de acá del iPhone me anda de 10"                                                                                                                                                                                                                                                
+ [6] "Amazing video I love the Bollywood touch in this video keep going Lindsey!!"                                                                                                                                                                                                                                    
+ [7] "Where's iPhone 9? Just skips to iPhone x. Lol okay nice math there Apple"                                                                                                                                                                                                                                       
+ [8] "عملت قنات جديدة تختص في تقديم أنجح و أسهل وصفات الحلويات، تعالو شوفو الفديوهات التي اعملها والله ما رح تندمو ❤"                                                                                                                                                                                                 
+ [9] "Nothing new..\\nIphoneX is copy of essiential phone.\\nAndy Rubin has developed more advanced features than iPhoneX.\\nIPHONE X 👎👎👎"                                                                                                                                                                            
+[10] "Lol @22:46:09\\n\\nTim's kinda an ass"                                                                                                                                                                                                                                                                          
+[11] "3 years late on wireless charging, 3 years late on oled technology , old facial recognition tech enhanced by old IR tech. So your late on just about every front....what to do? I know, lets lose what makes our product instantly recognizable! This is Apples windows 8, Samsung are bound to be loving this."
+[12] "https://youtu.be/Kp_DBWtS6SU"                                                                                                                                                                                                                                                                                   
+[13] "I love your music videos their always great and inspiring!"                                                                                                                                                                                                                                                     
+[14] "I like for Linsey. Love yours full themes. Great job."                                                                                                                                                                                                                                                          
+[15] "I love that blond hair!!!!"                                                                                                                                                                                                                                                                                     
+[16] "黒髪もも可愛すぎ😍💕💕"                                                                                                                                                                                                                                                                                            
+[17] "Sana is my damn bias wrecker, i swear. between her and Nayeon it's so hard😂❤"                                                                                                                                                                                                                                   
+[18] "where is Steve Wozniak, fuck apple authority"                                                                                                                                                                                                                                                                   
+[19] "just one question, wtf?"                                                                                                                                                                                                                                                                                        
+[20] "She is BEA-UTIFUL. And this showed a side I've never seen before. Which is not surprising. She's always giving us surprises....she keeps me in my toes"                                                                                                                                                         </code></pre>
+</div>
+</div>
+</section><section id="detecting-languages" class="level4"><h4 class="anchored" data-anchor-id="detecting-languages">Detecting languages</h4>
+<p>That subset looks good. I can see emojis, urls and multiple languages along with English. That’s a perfect subset to test the language detection capabilities of our LLM. Here is what we will do: 1. Attach the model with <code><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use()</a></code>. 2. Define a system prompt for language detection. 3. OPTIONAL: Define the valid responses that you expect from the LLM. If this is defined, any response that do not fit the valid responses will be replaced with <code>NA</code>. 4. Detect the language of each comment in the data and add the results as a new column.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span><span class="st">"ollama"</span>, <span class="va">model_name</span>, seed <span class="op">=</span> <span class="fl">100</span>, .silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sys_prompt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span></span>
+<span>  <span class="st">"You are a language detection bot."</span>,</span>
+<span>  <span class="st">"I will provide you with Youtube comments on a video."</span>,</span>
+<span>  <span class="st">"Try to detect the language of the comment and reply with the ISO 639-1 language code used in the given comment."</span>,</span>
+<span>  <span class="st">"Reply only with the language code."</span>,</span>
+<span>  <span class="st">"If you cannot detect a language as the comments might contain emojis or urls only, reply with 'UNDETECTABLE' with uppercase"</span>,</span>
+<span>  <span class="st">"Some examples:"</span>,</span>
+<span>  <span class="st">"comment text: 'Thumbs up asap', your response: 'en'."</span>,</span>
+<span>  <span class="st">"comment text: 'Hola, ¿cómo estás?', your response: 'es'."</span>, </span>
+<span>  <span class="st">"Here is the comment:"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># I am not adding 'UNDETECTABLE' to valid responses as the function will tag such cases as NA.</span></span>
+<span><span class="va">valid_responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aa"</span>, <span class="st">"ab"</span>, <span class="st">"ae"</span>, <span class="st">"af"</span>, <span class="st">"ak"</span>, <span class="st">"am"</span>, <span class="st">"an"</span>, <span class="st">"ar-ae"</span>, <span class="st">"ar-bh"</span>, <span class="st">"ar-dz"</span>, <span class="st">"ar-eg"</span>, <span class="st">"ar-iq"</span>, <span class="st">"ar-jo"</span>, <span class="st">"ar-kw"</span>, <span class="st">"ar-lb"</span>, <span class="st">"ar-ly"</span>, <span class="st">"ar-ma"</span>, <span class="st">"ar-om"</span>, <span class="st">"ar-qa"</span>, <span class="st">"ar-sa"</span>, <span class="st">"ar-sy"</span>, <span class="st">"ar-tn"</span>, <span class="st">"ar-ye"</span>, <span class="st">"ar"</span>, <span class="st">"as"</span>, <span class="st">"av"</span>, <span class="st">"ay"</span>, <span class="st">"az"</span>, <span class="st">"ba"</span>, <span class="st">"be"</span>, <span class="st">"bg"</span>, <span class="st">"bh"</span>, <span class="st">"bi"</span>, <span class="st">"bm"</span>, <span class="st">"bn"</span>, <span class="st">"bo"</span>, <span class="st">"br"</span>, <span class="st">"bs"</span>, <span class="st">"ca"</span>, <span class="st">"ce"</span>, <span class="st">"ch"</span>, <span class="st">"co"</span>, <span class="st">"cr"</span>, <span class="st">"cs"</span>, <span class="st">"cu"</span>, <span class="st">"cv"</span>, <span class="st">"cy"</span>, <span class="st">"da"</span>, <span class="st">"de-at"</span>, <span class="st">"de-ch"</span>, <span class="st">"de-de"</span>, <span class="st">"de-li"</span>, <span class="st">"de-lu"</span>, <span class="st">"de"</span>, <span class="st">"div"</span>, <span class="st">"dv"</span>, <span class="st">"dz"</span>, <span class="st">"ee"</span>, <span class="st">"el"</span>, <span class="st">"en-au"</span>, <span class="st">"en-bz"</span>, <span class="st">"en-ca"</span>, <span class="st">"en-cb"</span>, <span class="st">"en-gb"</span>, <span class="st">"en-ie"</span>, <span class="st">"en-jm"</span>, <span class="st">"en-nz"</span>, <span class="st">"en-ph"</span>, <span class="st">"en-tt"</span>, <span class="st">"en-us"</span>, <span class="st">"en-za"</span>, <span class="st">"en-zw"</span>, <span class="st">"en"</span>, <span class="st">"eo"</span>, <span class="st">"es-ar"</span>, <span class="st">"es-bo"</span>, <span class="st">"es-cl"</span>, <span class="st">"es-co"</span>, <span class="st">"es-cr"</span>, <span class="st">"es-do"</span>, <span class="st">"es-ec"</span>, <span class="st">"es-es"</span>, <span class="st">"es-gt"</span>, <span class="st">"es-hn"</span>, <span class="st">"es-mx"</span>, <span class="st">"es-ni"</span>, <span class="st">"es-pa"</span>, <span class="st">"es-pe"</span>, <span class="st">"es-pr"</span>, <span class="st">"es-py"</span>, <span class="st">"es-sv"</span>, <span class="st">"es-us"</span>, <span class="st">"es-uy"</span>, <span class="st">"es-ve"</span>, <span class="st">"es"</span>, <span class="st">"et"</span>, <span class="st">"eu"</span>, <span class="st">"fa"</span>, <span class="st">"ff"</span>, <span class="st">"fi"</span>, <span class="st">"fj"</span>, <span class="st">"fo"</span>, <span class="st">"fr-be"</span>, <span class="st">"fr-ca"</span>, <span class="st">"fr-ch"</span>, <span class="st">"fr-fr"</span>, <span class="st">"fr-lu"</span>, <span class="st">"fr-mc"</span>, <span class="st">"fr"</span>, <span class="st">"fy"</span>, <span class="st">"ga"</span>, <span class="st">"gd"</span>, <span class="st">"gl"</span>, <span class="st">"gn"</span>, <span class="st">"gu"</span>, <span class="st">"gv"</span>, <span class="st">"ha"</span>, <span class="st">"he"</span>, <span class="st">"hi"</span>, <span class="st">"ho"</span>, <span class="st">"hr-ba"</span>, <span class="st">"hr-hr"</span>, <span class="st">"hr"</span>, <span class="st">"ht"</span>, <span class="st">"hu"</span>, <span class="st">"hy"</span>, <span class="st">"hz"</span>, <span class="st">"ia"</span>, <span class="st">"id"</span>, <span class="st">"ie"</span>, <span class="st">"ig"</span>, <span class="st">"ii"</span>, <span class="st">"ik"</span>, <span class="st">"in"</span>, <span class="st">"io"</span>, <span class="st">"is"</span>, <span class="st">"it-ch"</span>, <span class="st">"it-it"</span>, <span class="st">"it"</span>, <span class="st">"iu"</span>, <span class="st">"iw"</span>, <span class="st">"ja"</span>, <span class="st">"ji"</span>, <span class="st">"jv"</span>, <span class="st">"jw"</span>, <span class="st">"ka"</span>, <span class="st">"kg"</span>, <span class="st">"ki"</span>, <span class="st">"kj"</span>, <span class="st">"kk"</span>, <span class="st">"kl"</span>, <span class="st">"km"</span>, <span class="st">"kn"</span>, <span class="st">"ko"</span>, <span class="st">"kok"</span>, <span class="st">"kr"</span>, <span class="st">"ks"</span>, <span class="st">"ku"</span>, <span class="st">"kv"</span>, <span class="st">"kw"</span>, <span class="st">"ky"</span>, <span class="st">"kz"</span>, <span class="st">"la"</span>, <span class="st">"lb"</span>, <span class="st">"lg"</span>, <span class="st">"li"</span>, <span class="st">"ln"</span>, <span class="st">"lo"</span>, <span class="st">"ls"</span>, <span class="st">"lt"</span>, <span class="st">"lu"</span>, <span class="st">"lv"</span>, <span class="st">"mg"</span>, <span class="st">"mh"</span>, <span class="st">"mi"</span>, <span class="st">"mk"</span>, <span class="st">"ml"</span>, <span class="st">"mn"</span>, <span class="st">"mo"</span>, <span class="st">"mr"</span>, <span class="st">"ms-bn"</span>, <span class="st">"ms-my"</span>, <span class="st">"ms"</span>, <span class="st">"mt"</span>, <span class="st">"my"</span>, <span class="st">"na"</span>, <span class="st">"nb"</span>, <span class="st">"nd"</span>, <span class="st">"ne"</span>, <span class="st">"ng"</span>, <span class="st">"nl-be"</span>, <span class="st">"nl-nl"</span>, <span class="st">"nl"</span>, <span class="st">"nn"</span>, <span class="st">"no"</span>, <span class="st">"nr"</span>, <span class="st">"ns"</span>, <span class="st">"nv"</span>, <span class="st">"ny"</span>, <span class="st">"oc"</span>, <span class="st">"oj"</span>, <span class="st">"om"</span>, <span class="st">"or"</span>, <span class="st">"os"</span>, <span class="st">"pa"</span>, <span class="st">"pi"</span>, <span class="st">"pl"</span>, <span class="st">"ps"</span>, <span class="st">"pt-br"</span>, <span class="st">"pt-pt"</span>, <span class="st">"pt"</span>, <span class="st">"qu-bo"</span>, <span class="st">"qu-ec"</span>, <span class="st">"qu-pe"</span>, <span class="st">"qu"</span>, <span class="st">"rm"</span>, <span class="st">"rn"</span>, <span class="st">"ro"</span>, <span class="st">"ru"</span>, <span class="st">"rw"</span>, <span class="st">"sa"</span>, <span class="st">"sb"</span>, <span class="st">"sc"</span>, <span class="st">"sd"</span>, <span class="st">"se-fi"</span>, <span class="st">"se-no"</span>, <span class="st">"se-se"</span>, <span class="st">"se"</span>, <span class="st">"sg"</span>, <span class="st">"sh"</span>, <span class="st">"si"</span>, <span class="st">"sk"</span>, <span class="st">"sl"</span>, <span class="st">"sm"</span>, <span class="st">"sn"</span>, <span class="st">"so"</span>, <span class="st">"sq"</span>, <span class="st">"sr-ba"</span>, <span class="st">"sr-sp"</span>, <span class="st">"sr"</span>, <span class="st">"ss"</span>, <span class="st">"st"</span>, <span class="st">"su"</span>, <span class="st">"sv-fi"</span>, <span class="st">"sv-se"</span>, <span class="st">"sv"</span>, <span class="st">"sw"</span>, <span class="st">"sx"</span>, <span class="st">"syr"</span>, <span class="st">"ta"</span>, <span class="st">"te"</span>, <span class="st">"tg"</span>, <span class="st">"th"</span>, <span class="st">"ti"</span>, <span class="st">"tk"</span>, <span class="st">"tl"</span>, <span class="st">"tn"</span>, <span class="st">"to"</span>, <span class="st">"tr"</span>, <span class="st">"ts"</span>, <span class="st">"tt"</span>, <span class="st">"tw"</span>, <span class="st">"ty"</span>, <span class="st">"ug"</span>, <span class="st">"uk"</span>, <span class="st">"ur"</span>, <span class="st">"us"</span>, <span class="st">"uz"</span>, <span class="st">"ve"</span>, <span class="st">"vi"</span>, <span class="st">"vo"</span>, <span class="st">"wa"</span>, <span class="st">"wo"</span>, <span class="st">"xh"</span>, <span class="st">"yi"</span>, <span class="st">"yo"</span>, <span class="st">"za"</span>, <span class="st">"zh-cn"</span>, <span class="st">"zh-hk"</span>, <span class="st">"zh-mo"</span>, <span class="st">"zh-sg"</span>, <span class="st">"zh-tw"</span>, <span class="st">"zh"</span>, <span class="st">"zu"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_custom.html">llm_custom</a></span><span class="op">(</span><span class="va">comment_text</span>, <span class="va">sys_prompt</span>, <span class="st">"language"</span>, valid_resps <span class="op">=</span> <span class="va">valid_responses</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>! There were 3 predictions with invalid output, they were coerced to NA</code></pre>
+</div>
+</div>
+<p>Let’s see the results.</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="co"># convert dat to tibble (optional)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">language</span>, <span class="va">comment_text</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   language comment_text                                                        
+   &lt;chr&gt;    &lt;chr&gt;                                                               
+ 1 en       "YOU ARE SO CLOSE TO 10 MILLION!!!"                                 
+ 2 &lt;NA&gt;     "\U0001f60d"                                                        
+ 3 &lt;NA&gt;     "Also watch https://youtu.be/7QkYTgDMpCs"                           
+ 4 en       "I❤️U \U0001f48b\U0001f48b\U0001f48b\U0001f48b\U0001f48b\U0001f48b\U…
+ 5 es       "Ya lo tengo y estoy escribiendo de acá del iPhone me anda de 10"   
+ 6 en       "Amazing video I love the Bollywood touch in this video keep going …
+ 7 en       "Where's iPhone 9? Just skips to iPhone x. Lol okay nice math there…
+ 8 ar       "عملت قنات جديدة تختص في تقديم أنجح و أسهل وصفات الحلويات، تعالو شو…
+ 9 en       "Nothing new..\\nIphoneX is copy of essiential phone.\\nAndy Rubin …
+10 en       "Lol @22:46:09\\n\\nTim's kinda an ass"                             
+11 en       "3 years late on wireless charging, 3 years late on oled technology…
+12 &lt;NA&gt;     "https://youtu.be/Kp_DBWtS6SU"                                      
+13 en       "I love your music videos their always great and inspiring!"        
+14 en       "I like for Linsey. Love yours full themes. Great job."             
+15 en       "I love that blond hair!!!!"                                        
+16 ja       "黒髪もも可愛すぎ\U0001f60d\U0001f495\U0001f495"                    
+17 ko       "Sana is my damn bias wrecker, i swear. between her and Nayeon it's…
+18 en       "where is Steve Wozniak, fuck apple authority"                      
+19 en       "just one question, wtf?"                                           
+20 en       "She is BEA-UTIFUL. And this showed a side I've never seen before. …</code></pre>
+</div>
+</div>
+<p>Nice, we have detected the languages of the comments. We can also see that some comments are tagged as <code>NA</code>. These are the comments that contain emojis, urls, or gibberish.</p>
+</section></section><section id="sentiment-analysis" class="level3"><h3 class="anchored" data-anchor-id="sentiment-analysis">Sentiment Analysis</h3>
+<p>For the sentiment analysis we will use another <a href="https://www.kaggle.com/datasets/arhamrumi/amazon-product-reviews">Kaggle</a> dataset. You can download it from my Google Drive <a href="https://drive.google.com/file/d/1Q5pFKuwwKrwcQnDyBixW98VwVt7cZYnT/view?usp=sharing">here</a>. The dataset contains Amazon product reviews. We will select random 20 comments and run a sentiment analysis on them.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reviews</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"reviews.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">reviews</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Id         ProductId            UserId          ProfileName       
+ Min.   :    1   Length:35173       Length:35173       Length:35173      
+ 1st Qu.: 8794   Class :character   Class :character   Class :character  
+ Median :17587   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :17587                                                           
+ 3rd Qu.:26380                                                           
+ Max.   :35173                                                           
+                                                                         
+ HelpfulnessNumerator HelpfulnessDenominator     Score      
+ Min.   :  0.000      Min.   :  0.000        Min.   :1.000  
+ 1st Qu.:  0.000      1st Qu.:  0.000        1st Qu.:4.000  
+ Median :  0.000      Median :  1.000        Median :5.000  
+ Mean   :  1.558      Mean   :  2.002        Mean   :4.156  
+ 3rd Qu.:  1.000      3rd Qu.:  2.000        3rd Qu.:5.000  
+ Max.   :203.000      Max.   :219.000        Max.   :5.000  
+ NA's   :1            NA's   :1              NA's   :1      
+      Time             Summary              Text          
+ Min.   :9.617e+08   Length:35173       Length:35173      
+ 1st Qu.:1.268e+09   Class :character   Class :character  
+ Median :1.307e+09   Mode  :character   Mode  :character  
+ Mean   :1.294e+09                                        
+ 3rd Qu.:1.330e+09                                        
+ Max.   :1.351e+09                                        
+ NA's   :1                                                </code></pre>
+</div>
+</div>
+<section id="preparing-the-data-1" class="level4"><h4 class="anchored" data-anchor-id="preparing-the-data-1">Preparing the Data</h4>
+<p>The data actually contains a <code>score</code> column which is the rating of the product. We will select 4 random reviews for each score from 1 to 5 so that we can also test the LLM performance this time.</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reviews_sample</span> <span class="op">&lt;-</span> <span class="va">reviews</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Score</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="running-sentiment-analysis" class="level4"><h4 class="anchored" data-anchor-id="running-sentiment-analysis">Running Sentiment Analysis</h4>
+<p>We can use <code><a href="https://rdrr.io/pkg/mall/man/llm_custom.html">llm_custom()</a></code> function again with a well developed system prompt by ourselves. Yet, the package <code>mall</code> already contains a function for sentiment analysis called <code><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment()</a></code>. Let’s try it out:</p>
+<p>First, attach the model. Then run the sentiment analysis on the reviews. We will use the <code>Text</code> column as the target variable and <code>comment_sentiment</code> as the new column name for the sentiment analysis results.</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span><span class="st">"ollama"</span>, <span class="va">model_name</span>, seed <span class="op">=</span> <span class="fl">100</span>, .silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">reviews_sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_sentiment.html">llm_sentiment</a></span><span class="op">(</span><span class="va">reviews_sample</span>, <span class="va">Text</span>, pred_name <span class="op">=</span> <span class="st">"comment_sentiment"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see the results.</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">reviews_sample</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">comment_sentiment</span>, <span class="va">Score</span>, <span class="va">Text</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   comment_sentiment Score Text                                                 
+   &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;                                                
+ 1 negative              1 "I have 2 chihuahua's and they are not at all intere…
+ 2 negative              1 "I am sure that this coffee tastes good, but I am no…
+ 3 negative              1 "I bought this gourmet popping corn believing I was …
+ 4 negative              1 "I strongly suspect this caviar, which is widely ava…
+ 5 negative              2 "I ordered this for my birthday. I got birthday mone…
+ 6 negative              2 "I love raspberry and chocolate.  I could live on Se…
+ 7 negative              2 "As with most of the reviews here my tins arrived wi…
+ 8 negative              2 "These dried strawberries do taste good - indeed, th…
+ 9 negative              3 "It was my mistake - I thought there were 6 bags rat…
+10 neutral               3 "I have been feeding Canidae for a long time, and wh…
+11 negative              3 "I usually buy this at our local Whole Foods or Harr…
+12 neutral               3 "This carbonated product has a nice natural juice ta…
+13 negative              4 "If you read the first review and then read the comp…
+14 positive              4 "This Wolfgang Puck coffee tasted great. The vanilla…
+15 positive              4 "Being a peanut butter lover, have to keep it out of…
+16 positive              4 "My dogs are bone lovers.  These are a little messy …
+17 positive              5 "Received aj&amp;iacute; amarillo in a well-wrapped box.…
+18 positive              5 "This coffee is bold and strong, just how I like it.…
+19 positive              5 "Having been on a gluten free diet for less than a y…
+20 neutral               5 "I have to admit, when I saw this available on vine …</code></pre>
+</div>
+</div>
+<p>We can see that although our bot is mostly successful, there are some false negative (where the detected sentiment is negative while the score is 4 or 5) results. A larger model would be more successful in this task. Yet, there are no false positive results as all 1 and 2 scores are detected as negative. Naturally, we expect scores 3 to be neutral, but the comment might be more on the negative or positive side. So it is ok if the model detects a 3 as negative or positive rather than neutral.</p>
+</section></section><section id="terminate-the-ollama-session" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="terminate-the-ollama-session">Terminate the Ollama Session</h3>
+<p>Whatever the task is, after using a local LLM, it would be wise to terminate the session to free up the memory. You can do this by running the following command in the terminal.</p>
+<pre class="terminal"><code> Get-Process | Where-Object {$_.ProcessName -like '*ollama*'} | Stop-Process</code></pre>
+<p>What I do to make sure that the session is terminated is to check the memory usage of the LLM on the Task Manager. Just press <code>CTRL + ALT + DEL</code> and select Task Manager on Windows. Then go to the <code>Processes</code> tab and order by <code>Memory</code>. You will see the memory usage of Ollama. If ollama is not in the list or its memory usage value is close to zero, then the session is terminated. See the screen shot before the termination below. The memory usage is up above of the list. After stopping the process, it was gone.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/task_manager_before.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/task_manager_before.png" class="img-fluid"></a></p>
+</div></div></section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this post, we discussed how to use a local LLM for language detection and sentiment analysis. Ollama services were used to install <code>llama3.1:8b</code> We used the <code>mall</code> package to interact with the LLM. We also discussed how to install the model and how to terminate the session on the terminal.</p>
+<p>We have seen that the LLM is quite successful in detecting the languages of the comments or the sentiments of the reviews. <strong>An important final mark would be to remember that the larger the model, the better the accuracy.</strong> However, the larger the model, the more hardware you need. So, it is always a trade-off between accuracy and resources.</p>
+
+
+</section></main><!-- /main --><footer style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 11px; border-top: 1px solid #ddd;"><p>
+      Disclaimer: The content on this blog is for informational and educational purposes only. While I strive for accuracy and citing, I cannot guarantee that all information is complete, reliable, or original. Some content may include ideas, examples, or code inspired by external sources. If you have questions or require citations, feel free to reach out.
+    </p>
+  </footer><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrekaragul\.com\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="aliemrekaragul/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Ali Emre Karagül</p>
+</div>   
+    <div class="nav-footer-center">
+
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/aliemrekaragul/alemka/blob/main/posts/localLlm/index.qmd" class="toc-action"><i class="bi bi-github"></i>Source</a></li><li><a href="https://github.com/aliemrekaragul/alemka/issues/new" class="toc-action"><i class="bi empty"></i>Report</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">🍪 Cookies</a></div></div>
+    <div class="nav-footer-right">
+<p>📈❤️☕</p>
+</div>
+  </div>
+</footer><script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+</body></html>

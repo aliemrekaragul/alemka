@@ -292,7 +292,7 @@ plot_grid(f1, f2, f3, nrow = 1, rel_widths = c(0.7, .15, .15))
 
 This final chart is developed as an alternative to `wrightmap`. Each facet can be seen easily on it. There are four grids. The first is the person thetas. We have seen this above. The second is the rater facet. The strictness of the raters are very distinctive. Actually the only real data here is rater 2 and the others were simulated using it to be stricter and lenient. So we exactly see what the data is about. The third grid is about the domains/item difficulty. Pompt Adherence is the most difficult domain. Content, Narrative and Language follows it respectively.
 
-## 4. Conclusion
+## 5. Conclusion
 
 In this post, we explored the **Multi-Facet Rasch Model (MFRM)** using simulated essay scores rated by multiple raters across four different domains: Content, Prompt Adherence, Language, and Narrativity. The model helped us account for the varying levels of item difficulty and the potential differences in rater severity. By fitting the MFRM and examining key model outputs—like **Infit/Outfit statistics** and **thresholds**—we identified areas where raters were either more lenient or more severe, and items that displayed more noise or predictability than expected.
 
