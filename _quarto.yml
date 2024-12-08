@@ -68,7 +68,8 @@ website:
     right: "📈❤️☕"
     left: "© Ali Emre Karagül"
 format: 
-  html:
+  html:  
+    include-in-header: adsense.html
     theme: simplex  # morph #simplex  # solar #cerulean  #
     css: styles.css
     toc: true
