@@ -4,7 +4,11 @@
 .Ruserdata
 *.csv
 *.xlsx
+/posts/Visualisation of My Personal Google Data (1)/2022_NOVEMBER.json
 
 /_*.local
 /.quarto/
 /docs/CNAME
+/_freeze/
+/_extensions/
+
