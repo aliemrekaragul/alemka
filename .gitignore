@@ -9,6 +9,3 @@
 /_*.local
 /.quarto/
 /docs/CNAME
-/_freeze/
-/_extensions/
-
