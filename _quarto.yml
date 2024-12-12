@@ -11,6 +11,12 @@ website:
   repo-actions: [source, issue]
   site-url: https://emrekaragul.com/
   description: "My educational data science blog / notebook"
+  announcement: 
+    icon: info-circle
+    dismissable: true
+    content: "**For the Best Experience** - It is highly recommended browsing this blog on a desktop or laptop computer for the most optimized viewing experience. Enjoy exploring!"
+    type: primary
+    position: below-navbar
   navbar:
     pinned: true
     title: false
