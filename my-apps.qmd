@@ -5,12 +5,6 @@ title-block-banner: false
 ---
 ```{=html}
   <style>
-    /* html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    } */
     iframe {
       position: absolute;
       top: 0;
