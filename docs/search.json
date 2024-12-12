@@ -259,13 +259,6 @@
     "text": "Conclusion\nOur exploration into AES has shed light on the impressive potential of this technology in revolutionizing the evaluation of written content. Our application of a Linear Regression model, even when considering a limited set of extracted features such as the number of words, sentences, and paragraphs, demonstrated the robustness of this approach. It is evident that by harnessing machine learning algorithms, we can achieve consistent and objective grading, streamlining the assessment process for educators and administrators.\nHowever, it’s important to note that Linear Regression is just one of the many models available for AES. The field of automated essay scoring continues to evolve, and researchers are exploring a range of models and techniques to enhance accuracy and broaden the scope of assessment. Some alternatives to LR include Support Vector Machines (SVM), Random Forests, Neural Networks, and Natural Language Processing models like Recurrent Neural Networks (RNNs) or Transformers, such as BERT and GPT-3. These models bring their unique strengths and capabilities to the table, offering a diverse array of tools for essay evaluation.\nAs AES advances, the synergy of these models with increasingly sophisticated feature extraction procedures promises to further elevate the quality and reliability of automated essay scoring. With this, we look to a future where technology and human expertise collaborate seamlessly to offer more efficient, accurate, and comprehensive assessment in the realm of written expression."
   },
   {
-    "objectID": "about-me.html",
-    "href": "about-me.html",
-    "title": "Alemka",
-    "section": "",
-    "text": "About"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Notebook",

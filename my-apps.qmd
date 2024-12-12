@@ -1,7 +1,5 @@
 ---
-title: "About"
-about:
-  template: jolla
+title: "My Apps"
 page-layout: full
 title-block-banner: false
 ---
@@ -25,7 +23,7 @@ title-block-banner: false
   </style>
 <body>
   <iframe
-    src="about_me.html"
+    src="my_apps.html"
     frameborder="0"
   ></iframe>
 </body>

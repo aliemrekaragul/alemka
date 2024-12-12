@@ -15,34 +15,17 @@ website:
     pinned: true
     title: false
     logo: "images/alemka.svg"
-    background: tomato  #previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
-    right:
-      - icon: info-square-fill
-        href: about-me.qmd
-        text: "About"
-      - icon: github
-        href: https://github.com/aliemrekaragul
-        text: "GitHub"
-        target: _blank
-      - icon: linkedin
-        href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
-        text: "LinkedIn"
-        target: _blank
-      - icon: rss
-        href: index.xml
-        text: "Feed"
-        target: _blank
     left:
       - text: "" # the first navbar item has a bug about font.
         href: "index.html"
-      - text: "My Posts"
+      - text: "Notebook"
         icon: file-earmark-text-fill
         href: "index.html"
-      - text: "My Apps"
+      - text: "Apps"
         icon: terminal-fill
-        href: "my_apps.html"
-      - text: "My Favs"
+        href: "my-apps.qmd"
+      - text: "Favs"
         icon: star-fill
         menu: 
           - text: "R cheatsheets"
@@ -69,6 +52,22 @@ website:
           - text: "My AES Engine"
             href: "aes.html"
             target: _blank
+    right:
+      - icon: info-square-fill
+        href: about-me.qmd
+        text: "About"
+      - icon: github
+        href: https://github.com/aliemrekaragul
+        text: "GitHub"
+        target: _blank
+      - icon: linkedin
+        href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
+        text: "LinkedIn"
+        target: _blank
+      - icon: rss
+        href: index.xml
+        text: "Feed"
+        target: _blank
   cookie-consent:
     type: implied
     style: simple
@@ -98,8 +97,7 @@ format:
     code-link: true
     code-fold: show
     code-tools: false
-    code-block-bg: rgb(52, 58, 64) 
-    code-block-color: white
+    code-block-bg: rgb(155, 162, 168) 
     code-block-border-left: tomato
 editor: source
 

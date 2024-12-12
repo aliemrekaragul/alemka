@@ -1,6 +1,7 @@
 ---
-title: ""
+title: "Page Not Found"
 page-layout: full
+title-block-banner: false
 ---
 :::{.column-body-outset}
 ![](images/404.png){fig-align="center"}
