@@ -5,11 +5,11 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title> </title>
+<title>Alemka</title>
 <link>https://emrekaragul.com/</link>
 <atom:link href="https://emrekaragul.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>My educational data science blog / notebook</description>
-<generator>quarto-1.5.57</generator>
+<generator>quarto-1.6.39</generator>
 <lastBuildDate>Wed, 04 Dec 2024 21:00:00 GMT</lastBuildDate>
 <item>
   <title>Language Detection &amp; Sentiment Analysis with Local LLMs</title>
@@ -5293,7 +5293,7 @@ background-color: null;
 font-style: inherit;">"oblimin"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell quarto-layout-panel" data-code_folding="false" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-code_folding="false">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -5342,7 +5342,7 @@ background-color: null;
 font-style: inherit;">"oblimin"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
-<div class="cell quarto-layout-panel" data-code_folding="false" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-code_folding="false">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">

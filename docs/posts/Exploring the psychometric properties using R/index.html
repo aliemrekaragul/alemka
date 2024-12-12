@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Ali Emre Karagül">
 <meta name="dcterms.date" content="2023-04-03">
 <meta name="description" content="This blog post explains the importance of examining item difficulty and discrimination in the development and validation of psychological measures and provides a step-by-step guide on how to calculate item difficulty and discrimination in R using an example dataset.">
-<title>Item difficulty &amp; discrimination: Exploring the psychometric properties using R –</title>
+<title>Item difficulty &amp; discrimination: Exploring the psychometric properties using R – Alemka</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-112432f290f908cd26e86050527f7c06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
@@ -124,13 +124,13 @@ cookieconsent.run({
   });
 });
 </script><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402" crossorigin="anonymous"></script><link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Item difficulty &amp; discrimination: Exploring the psychometric properties using R –">
+<meta property="og:title" content="Item difficulty &amp; discrimination: Exploring the psychometric properties using R – Alemka">
 <meta property="og:description" content="This blog post explains the importance of examining item difficulty and discrimination in the development and validation of psychological measures and provides a step-by-step guide on how to calculate item difficulty and discrimination in R using an example dataset.">
 <meta property="og:image" content="https://emrekaragul.com/posts/Exploring the psychometric properties using R/image.png">
-<meta property="og:site_name" content=" ">
+<meta property="og:site_name" content="Alemka">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="Item difficulty &amp; discrimination: Exploring the psychometric properties using R –">
+<meta name="twitter:title" content="Item difficulty &amp; discrimination: Exploring the psychometric properties using R – Alemka">
 <meta name="twitter:description" content="This blog post explains the importance of examining item difficulty and discrimination in the development and validation of psychological measures and provides a step-by-step guide on how to calculate item difficulty and discrimination in R using an example dataset.">
 <meta name="twitter:image" content="https://emrekaragul.com/posts/Exploring the psychometric properties using R/image.png">
 <meta name="twitter:image-height" content="1024">
@@ -143,10 +143,7 @@ cookieconsent.run({
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../images/logo with title.svg" alt="" class="navbar-logo"></a>
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title"></span>
-    </a>
+    <img src="../../images/alemka.svg" alt="" class="navbar-logo"></a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -155,7 +152,11 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> <i class="bi bi-text-paragraph" role="img">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> <i class="bi bi-file-earmark-text-fill" role="img">
 </i> 
 <span class="menu-text">My Posts</span></a>
   </li>  
@@ -172,35 +173,35 @@ cookieconsent.run({
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-my-favs">
 <li>
-    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets">
+    <a class="dropdown-item" href="https://posit.cloud/learn/cheat-sheets" target="_blank">
  <span class="dropdown-text">R cheatsheets</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://r4ds.hadley.nz/">
+    <a class="dropdown-item" href="https://r4ds.hadley.nz/" target="_blank">
  <span class="dropdown-text">R 4 D S</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/">
+    <a class="dropdown-item" href="https://erguldemir.shinyapps.io/ED_GenerateIRTdata/" target="_blank">
  <span class="dropdown-text">Generate IRT Data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://books.google.com/ngrams/">
+    <a class="dropdown-item" href="https://books.google.com/ngrams/" target="_blank">
  <span class="dropdown-text">Google Ngram Viewer</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html">
+    <a class="dropdown-item" href="http://adv-r.had.co.nz/Style.html" target="_blank">
  <span class="dropdown-text">Style Guide (H.Wickham)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html">
+    <a class="dropdown-item" href="https://google.github.io/styleguide/Rguide.html" target="_blank">
  <span class="dropdown-text">Style Guide (Google)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://agreestat360.com/">
+    <a class="dropdown-item" href="https://agreestat360.com/" target="_blank">
  <span class="dropdown-text">AgreeStat 360-Interrater reliability</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../aes.html">
+    <a class="dropdown-item" href="../../aes.html" target="_blank">
  <span class="dropdown-text">My AES Engine</span></a>
   </li>  
     </ul>
@@ -213,17 +214,17 @@ cookieconsent.run({
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/aliemrekaragul"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/aliemrekaragul" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text">GitHub</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/ali-emre-karag%C3%BCl/" target="_blank"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text">LinkedIn</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml" target="_blank"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text">Feed</span></a>
   </li>  
@@ -241,10 +242,8 @@ cookieconsent.run({
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">psychometrics</div>
-                <div class="quarto-category">CTT</div>
-                <div class="quarto-category">difficulty</div>
-                <div class="quarto-category">discrimination</div>
+                <div class="quarto-category">ShinyItemAnalysis</div>
+                <div class="quarto-category">multilevel</div>
               </div>
                   </div>
   </div>
@@ -1584,8 +1583,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1696,7 +1693,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1935,7 +1931,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p>📈❤️☕</p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

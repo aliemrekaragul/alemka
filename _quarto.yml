@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs
 website:
-  title: " "
+  title: "Alemka"
   reader-mode: false
   favicon: images/alemka.svg
   open-graph: true
@@ -13,7 +13,8 @@ website:
   description: "My educational data science blog / notebook"
   navbar:
     pinned: true
-    logo: "images/logo with title.svg"
+    title: false
+    logo: "images/alemka.svg"
     background: tomato  #previously: 196, 223, 170 a soft green
     foreground: rgb(17, 43, 60) #laci
     right:
@@ -23,15 +24,20 @@ website:
       - icon: github
         href: https://github.com/aliemrekaragul
         text: "GitHub"
+        target: _blank
       - icon: linkedin
         href: https://www.linkedin.com/in/ali-emre-karag%C3%BCl/
         text: "LinkedIn"
+        target: _blank
       - icon: rss
         href: index.xml
         text: "Feed"
+        target: _blank
     left:
+      - text: "" # the first navbar item has a bug about font.
+        href: "index.html"
       - text: "My Posts"
-        icon: text-paragraph
+        icon: file-earmark-text-fill
         href: "index.html"
       - text: "My Apps"
         icon: terminal-fill
@@ -41,20 +47,28 @@ website:
         menu: 
           - text: "R cheatsheets"
             href: https://posit.cloud/learn/cheat-sheets
+            target: _blank
           - text: "R 4 D S"
-            href: https://r4ds.hadley.nz/          
+            href: https://r4ds.hadley.nz/         
+            target: _blank 
           - text: "Generate IRT Data"
             href: https://erguldemir.shinyapps.io/ED_GenerateIRTdata/
+            target: _blank
           - text: "Google Ngram Viewer"
             href: https://books.google.com/ngrams/
+            target: _blank
           - text: "Style Guide (H.Wickham)"
             href: http://adv-r.had.co.nz/Style.html
+            target: _blank
           - text: "Style Guide (Google)"
             href: https://google.github.io/styleguide/Rguide.html
+            target: _blank
           - text: "AgreeStat 360-Interrater reliability"
             href: https://agreestat360.com/
+            target: _blank
           - text: "My AES Engine"
             href: "aes.html"
+            target: _blank
   cookie-consent:
     type: implied
     style: simple
@@ -76,8 +90,7 @@ format:
     toc-depth: 4
     citations-hover: true
     footnotes-hover: true
-    # font-family: Gill Sans  #
-    mainfont: roboto #monospace
+    mainfont: sans-serif
     background: rgb(239, 239, 239) # mat bir  beyaz
     fontcolor: rgb(17, 43, 60) #navy?
     fontsize: 1.1em
@@ -85,7 +98,8 @@ format:
     code-link: true
     code-fold: show
     code-tools: false
-    code-block-bg: true # rgb(224, 216, 176) yellowish brown gibi bişi
+    code-block-bg: rgb(52, 58, 64) 
+    code-block-color: white
     code-block-border-left: tomato
 editor: source
 
