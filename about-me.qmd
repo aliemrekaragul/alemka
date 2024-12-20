@@ -4,6 +4,8 @@ about:
   template: jolla
 page-layout: full
 title-block-banner: false
+adsense:
+  enable-ads: false
 ---
 ```{=html}
   <style>

@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+  - ads.txt 
 website:
   title: "Alemka"
   reader-mode: false
@@ -106,4 +108,7 @@ format:
     code-block-bg: rgb(155, 162, 168) 
     code-block-border-left: tomato
 editor: source
-
+adsense:
+  publisher-id: ca-pub-6141054186060402
+filters:
+- adsense

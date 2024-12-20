@@ -23,6 +23,10 @@ format:
   html:
     include-before-body: ../subscribe-modal.html
     include-after-body: ../footer.html
-    include-in-header: ../adsense.html
     code-fold: false
     code-tools: false
+
+adsense:
+  publisher-id: ca-pub-6141054186060402
+filters:
+- adsense
