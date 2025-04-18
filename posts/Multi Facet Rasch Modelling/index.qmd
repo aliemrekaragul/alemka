@@ -94,6 +94,23 @@ summary(data)
 
 There are 1800 rows of data. Each domain is scored between 0 and 4. Perfect as zero must exist in the ordinal data for MFRM. The data set consists of scores from three raters on four domains, so we need to account for the three key facets: **person ability** (the essays), **item difficulty** (the domains), and **rater severity** (the three raters).
 
+
+``` {=html}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402"
+     crossorigin="anonymous"></script>
+<!-- square_ad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6141054186060402"
+     data-ad-slot="9204640472"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+```
+
+
 ## 2. Fit the model
 
 Now that we've explored our data set, it's time to fit the Multi-Facet Rasch Model (MFRM). To do this, we'll use the `TAM` package in R, which provides functions for fitting various Rasch models, including MFRM. The `formulaA` provided into the mfr function decides on the model. For PCM, we define interaction between item and step along with the rater facet:

@@ -21,8 +21,7 @@ crossref:
   subref-labels: roman i 
   chapters: true
 date: "03.04.2023"
-categories: [ShinyItemAnalysis, multilevel
-]
+categories: [ShinyItemAnalysis, multilevel]
 image: "image.png"
 output:
     self_contained: false
@@ -82,6 +81,23 @@ item_difficulty
 ```
 
 Interpreting the results of item difficulty is straightforward. Items with higher difficulty values indicate that they were easier for participants to answer correctly, while items with lower difficulty values were more difficult. In our example dataset, the output shows that item 40 had the highest difficulty value of 0.952, meaning that 95.2% of participants answered this item correctly. Item 30, on the other hand, had the lowest difficulty value of 0.044, meaning that only 4.4% of participants answered this item correctly.
+
+
+``` {=html}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402"
+     crossorigin="anonymous"></script>
+<!-- square_ad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6141054186060402"
+     data-ad-slot="9204640472"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+```
+
 
 It's important to note that each construct should be evaluated within its own concept while interpreting item difficulties. Yet, for achievement tests, a generic classification might be defined as **"easy" if the index is 0.85 or above; "moderate" if it is between 0.41 and 0.84; and "hard" if it is 0.40 or below**. Also, item difficulty is not the only factor to consider when evaluating the quality of a measure. Items that are too easy or too difficult may still be valid and reliable, depending on the construct being measured and the purpose of the measure. However, examining item difficulty can provide valuable insights into the psychometric properties of the measure and inform decisions about item selection and revision.
 

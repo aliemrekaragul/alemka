@@ -28,5 +28,6 @@ format:
 
 adsense:
   publisher-id: ca-pub-6141054186060402
+  enable-ads: false
 filters:
 - adsense

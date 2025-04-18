@@ -123,7 +123,8 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402" crossorigin="anonymous"></script><script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402" crossorigin="anonymous"></script><link rel="stylesheet" href="../../styles.css">
+</script><!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402"
+     crossorigin="anonymous"></script> --><link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Multi-Facet Rasch Models with R – Alemka">
 <meta property="og:description" content="In this post, we’ll explore the Multi-Facet Rasch Model, understand how it works, and demonstrate how to fit this model using R. We’ll also visualize the results to better interpret them.">
 <meta property="og:image" content="https://emrekaragul.com/posts/Multi Facet Rasch Modelling/image.png">
@@ -518,7 +519,10 @@ cookieconsent.run({
 </div>
 </div>
 <p>There are 1800 rows of data. Each domain is scored between 0 and 4. Perfect as zero must exist in the ordinal data for MFRM. The data set consists of scores from three raters on four domains, so we need to account for the three key facets: <strong>person ability</strong> (the essays), <strong>item difficulty</strong> (the domains), and <strong>rater severity</strong> (the three raters).</p>
-</section><section id="fit-the-model" class="level2"><h2 class="anchored" data-anchor-id="fit-the-model">2. Fit the model</h2>
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6141054186060402" crossorigin="anonymous"></script><!-- square_ad --><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6141054186060402" data-ad-slot="9204640472" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></section><section id="fit-the-model" class="level2"><h2 class="anchored" data-anchor-id="fit-the-model">2. Fit the model</h2>
 <p>Now that we’ve explored our data set, it’s time to fit the Multi-Facet Rasch Model (MFRM). To do this, we’ll use the <code>TAM</code> package in R, which provides functions for fitting various Rasch models, including MFRM. The <code>formulaA</code> provided into the mfr function decides on the model. For PCM, we define interaction between item and step along with the rater facet:</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facets</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span>, <span class="st">"rater"</span>, drop<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>  <span class="co"># define facet (rater)</span></span>
@@ -542,64 +546,64 @@ cookieconsent.run({
 <div class="cell-output cell-output-stdout">
 <pre><code>$itemfit
      parameter    Outfit   Outfit_t      Outfit_p  Outfit_pholm     Infit
-1          Con 2.0591522  39.361636  0.000000e+00  0.000000e+00 2.1979266
-2        ProAd 1.5301160  21.894545 2.928160e-106 2.635344e-105 1.6156500
-3         Lang 2.2535201  47.334138  0.000000e+00  0.000000e+00 2.3403618
-4          Nar 1.8429272  33.147291 6.196043e-241 6.815647e-240 1.9492346
-5        step1 0.9494058  -3.647927  2.643645e-04  5.287290e-04 0.9369712
-6        step2 0.4917571 -52.934061  0.000000e+00  0.000000e+00 0.4102024
-7        step3 0.2640096 -96.962995  0.000000e+00  0.000000e+00 0.1816552
-8        step4 0.9177011  -6.474657  9.502735e-11  3.801094e-10 0.5978796
-9       rater1 0.2665086 -83.397247  0.000000e+00  0.000000e+00 0.2045924
-10      rater2 0.2126247 -96.365947  0.000000e+00  0.000000e+00 0.1305165
-11      rater3 0.3471616 -70.514947  0.000000e+00  0.000000e+00 0.1985980
-12   Con:step1 0.8398256  -8.668278  4.387050e-18  2.193525e-17 0.8568111
-13 ProAd:step1 0.6746766 -17.811336  5.771558e-71  4.617246e-70 0.7091680
-14  Lang:step1 0.5180443 -29.210127 1.442217e-187 1.442217e-186 0.5202205
-15   Nar:step1 0.6858151 -16.202919  4.808891e-59  3.366224e-58 0.7063609
-16   Con:step2 0.5296627 -33.996303 2.526439e-253 3.031727e-252 0.4427496
-17 ProAd:step2 0.4289933 -42.461731  0.000000e+00  0.000000e+00 0.3497186
-18  Lang:step2 0.1969640 -75.560345  0.000000e+00  0.000000e+00 0.1640074
-19   Nar:step2 0.3698636 -46.072478  0.000000e+00  0.000000e+00 0.3082262
-20   Con:step3 0.2804214 -66.678683  0.000000e+00  0.000000e+00 0.2265406
-21 ProAd:step3 0.2855422 -62.035576  0.000000e+00  0.000000e+00 0.2089630
-22  Lang:step3 0.1888063 -83.889912  0.000000e+00  0.000000e+00 0.1150833
-23   Nar:step3 0.2510021 -64.460639  0.000000e+00  0.000000e+00 0.1836688
-24   Con:step4 0.9436611  -3.155082  1.604530e-03  1.604530e-03 0.5763329
-25 ProAd:step4 0.8958462  -5.556046  2.759535e-08  8.278605e-08 0.5200940
-26  Lang:step4 0.4643230 -36.676871 1.707308e-294 2.219500e-293 0.2799968
-27   Nar:step4 0.7677798 -12.393932  2.818774e-35  1.691264e-34 0.4609557
+1          Con 2.0396741  38.817526  0.000000e+00  0.000000e+00 2.1793372
+2        ProAd 1.5298042  21.883886 3.699348e-106 3.329413e-105 1.6168027
+3         Lang 2.2602295  47.650728  0.000000e+00  0.000000e+00 2.3485230
+4          Nar 1.8447442  33.281373 7.182166e-243 7.900382e-242 1.9498497
+5        step1 0.9543949  -3.288670  1.006621e-03  2.013241e-03 0.9410847
+6        step2 0.4922764 -53.002092  0.000000e+00  0.000000e+00 0.4103578
+7        step3 0.2689941 -96.228578  0.000000e+00  0.000000e+00 0.1834748
+8        step4 0.9216069  -6.179676  6.423320e-10  2.569328e-09 0.6008937
+9       rater1 0.2643122 -83.975954  0.000000e+00  0.000000e+00 0.2029569
+10      rater2 0.2110272 -96.835436  0.000000e+00  0.000000e+00 0.1294620
+11      rater3 0.3442307 -71.093847  0.000000e+00  0.000000e+00 0.1968761
+12   Con:step1 0.8389341  -8.727159  2.611494e-18  1.305747e-17 0.8570165
+13 ProAd:step1 0.6734814 -17.903203  1.113312e-71  8.906493e-71 0.7085371
+14  Lang:step1 0.5178259 -29.301457 9.937253e-189 9.937253e-188 0.5198986
+15   Nar:step1 0.6854269 -16.259538  1.911745e-59  1.338222e-58 0.7061508
+16   Con:step2 0.5296123 -34.098057 7.881829e-255 9.458195e-254 0.4422357
+17 ProAd:step2 0.4284229 -42.620611  0.000000e+00  0.000000e+00 0.3495345
+18  Lang:step2 0.1960627 -75.987945  0.000000e+00  0.000000e+00 0.1635437
+19   Nar:step2 0.3697487 -46.243245  0.000000e+00  0.000000e+00 0.3078524
+20   Con:step3 0.2759889 -67.579950  0.000000e+00  0.000000e+00 0.2259154
+21 ProAd:step3 0.2783703 -63.219530  0.000000e+00  0.000000e+00 0.2090093
+22  Lang:step3 0.1897049 -84.044838  0.000000e+00  0.000000e+00 0.1146451
+23   Nar:step3 0.2458631 -65.447236  0.000000e+00  0.000000e+00 0.1832682
+24   Con:step4 0.9420674  -3.257108  1.125537e-03  2.013241e-03 0.5754066
+25 ProAd:step4 0.8930456  -5.728076  1.015760e-08  3.047279e-08 0.5194547
+26  Lang:step4 0.4625932 -36.952981 6.523153e-299 8.480099e-298 0.2791456
+27   Nar:step4 0.7666748 -12.501163  7.356669e-36  4.414002e-35 0.4602088
        Infit_t       Infit_p   Infit_pholm
-1    43.404732  0.000000e+00  0.000000e+00
-2    24.924232 4.064309e-137 2.032154e-136
-3    49.864878  0.000000e+00  0.000000e+00
-4    36.540091 2.561982e-292 2.818181e-291
-5    -4.563129  5.039684e-06  5.039684e-06
-6   -64.563804  0.000000e+00  0.000000e+00
-7  -117.289175  0.000000e+00  0.000000e+00
-8   -36.103138 2.024933e-285 2.024933e-284
-9   -96.095647  0.000000e+00  0.000000e+00
-10 -117.784465  0.000000e+00  0.000000e+00
-11  -98.836404  0.000000e+00  0.000000e+00
-12   -7.698737  1.374172e-14  2.748343e-14
-13  -15.680881  2.043984e-55  8.175938e-55
-14  -29.043052 1.883337e-185 1.318336e-184
-15  -15.006236  6.683443e-51  2.005033e-50
-16  -42.353408  0.000000e+00  0.000000e+00
-17  -51.040009  0.000000e+00  0.000000e+00
-18  -81.785151  0.000000e+00  0.000000e+00
-19  -52.982695  0.000000e+00  0.000000e+00
-20  -75.326822  0.000000e+00  0.000000e+00
-21  -73.806223  0.000000e+00  0.000000e+00
-22 -101.040972  0.000000e+00  0.000000e+00
-23  -75.311205  0.000000e+00  0.000000e+00
-24  -27.699201 7.138532e-169 4.283119e-168
-25  -30.243052 6.438903e-201 5.151122e-200
-26  -56.207040  0.000000e+00  0.000000e+00
-27  -33.454655 2.202305e-245 1.982075e-244
+1    42.914851  0.000000e+00  0.000000e+00
+2    24.968259 1.352802e-137 6.764008e-137
+3    50.223864  0.000000e+00  0.000000e+00
+4    36.641499 6.249904e-294 6.874895e-293
+5    -4.266570  1.985015e-05  1.985015e-05
+6   -64.706289  0.000000e+00  0.000000e+00
+7  -117.168552  0.000000e+00  0.000000e+00
+8   -35.880441 6.167045e-282 6.167045e-281
+9   -96.655291  0.000000e+00  0.000000e+00
+10 -118.250654  0.000000e+00  0.000000e+00
+11  -99.393691  0.000000e+00  0.000000e+00
+12   -7.693538  1.431211e-14  2.862422e-14
+13  -15.733804  8.871734e-56  3.548694e-55
+14  -29.142178 1.049582e-186 7.347076e-186
+15  -15.049670  3.469596e-51  1.040879e-50
+16  -42.527279  0.000000e+00  0.000000e+00
+17  -51.183264  0.000000e+00  0.000000e+00
+18  -82.167561  0.000000e+00  0.000000e+00
+19  -53.210129  0.000000e+00  0.000000e+00
+20  -75.715101  0.000000e+00  0.000000e+00
+21  -74.030909  0.000000e+00  0.000000e+00
+22 -101.550010  0.000000e+00  0.000000e+00
+23  -75.674296  0.000000e+00  0.000000e+00
+24  -27.857471 8.745396e-171 5.247237e-170
+25  -30.385263 8.600609e-203 6.880487e-202
+26  -56.497840  0.000000e+00  0.000000e+00
+27  -33.629626 6.191398e-248 5.572258e-247
 
 $time
-[1] "2024-12-05 13:54:56 +03" "2024-12-05 13:54:56 +03"
+[1] "2025-04-18 08:43:58 +03" "2025-04-18 08:43:58 +03"
 
 $CALL
 TAM::tam.fit(tamobj = mod)
